@@ -1,0 +1,79 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+           http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+           http://www.springframework.org/schema/context
+           http://www.springframework.org/schema/context/spring-context-2.5.xsd">
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">
+					org.hibernate.dialect.HSQLDialect
+				</prop>
+				<!-- 选择查询翻译器hibernate2.0 -->
+				<!-- 
+					<prop key="hibernate.query.factory_class">
+					org.hibernate.hql.classic.ClassicQueryTranslatorFactory
+					</prop>
+				-->
+				<!-- 选择查询翻译器 hibernate3.0 采用新的基于ANTLR的HQL/SQL查询翻译器 -->
+				<prop key="hibernate.query.factory_class">
+					org.hibernate.hql.ast.ASTQueryTranslatorFactory
+				</prop>
+
+			</props>
+		</property>
+		<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+		<property name="mappingResources">
+			<list>
+
+			<value>org/ndot/ips/db/pojo/IpsDevTranslimit.hbm.xml</value>
+			<value>org/ndot/ips/db/pojo/IpsSaf.hbm.xml</value>
+			<value>org/ndot/ips/db/pojo/IpsCardbin.hbm.xml</value>
+			<value>org/ndot/ips/db/pojo/IpsEvilCard.hbm.xml</value>
+			<value>org/ndot/ips/db/pojo/IpsDevStat.hbm.xml</value>
+			<value>org/ndot/ips/db/pojo/IpsSysParam.hbm.xml</value></list>
+		</property>
+	</bean>
+
+
+	<bean id="IpsDevTranslimitDAO"
+		class="org.ndot.ips.db.pojo.IpsDevTranslimitDAO">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="IpsSafDAO" class="org.ndot.ips.db.pojo.IpsSafDAO">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="IpsCardbinDAO"
+		class="org.ndot.ips.db.pojo.IpsCardbinDAO">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="IpsEvilCardDAO"
+		class="org.ndot.ips.db.pojo.IpsEvilCardDAO">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="IpsDevStatDAO"
+		class="org.ndot.ips.db.pojo.IpsDevStatDAO">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="IpsSysParamDAO"
+		class="org.ndot.ips.db.pojo.IpsSysParamDAO">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean></beans>
