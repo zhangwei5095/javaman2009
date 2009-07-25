@@ -1,0 +1,398 @@
+<?xml version="1.0"?>
+<project name="uuservice" basedir="." default="all">
+	<property name="src" value=".." />
+	<property name="target" value="C:\MyTools\jboss-3.2.8.SP1\server\default" />
+	<property name="syn.target" value="E:\new_yk_syn" />
+	<property name="lib.dir" value="${src}/lib" />
+	<property name="lib.client.dir" value="${src}/lib/client" />
+	<property name="synchome.dir" value="${src}/yk_syn" />
+
+	<property name="jdk.home" value="C:\Program Files\Java\jdk1.5.0" />
+
+	<property name="deploy.root" value="${target}/deploy" />
+	<property name="lib.root" value="${target}/lib" />
+
+	<property name="kernel.name" value="us_kernel-0.1.0.jar" />
+	<property name="kernel.src" value="${src}/kernel/src/src/main" />
+
+	<property name="client.name" value="us_client-0.1.0.jar" />
+	<property name="client.src" value="${src}/client/src/uuservice_client/src/main" />
+
+	<property name="adminconsole" value="${src}/adminconsole/src/src/main" />
+	<property name="userviewmgr" value="${src}/userviewmgr/src/src/main" />
+	<property name="adminconsole.src" value="${src}/adminconsole/src/src/main/java" />
+	<property name="userviewmgr.src" value="${src}/userviewmgr/src/src/main/java" />
+	<property name="wsadapter" value="${src}/adapter/src/ws_adapter/src/main" />
+	<property name="wsadapter.name" value="wsadpater-0.1.0.jar" />
+
+	<property name="cas.home" value="${src}/sso/casserver" />
+
+	<property name="adminconsole.target" value="${deploy.root}/adminconsole.war" />
+	<property name="userviewmgr.target" value="${deploy.root}/userviewmgr.war" />
+	<property name="wsadapter.target" value="${deploy.root}/ws_adapter.war" />
+	<property name="cas.target" value="${deploy.root}/cas.war" />
+	<property name="adapter.ejb.dir" value="${src}/adapter/src/ejb_adapter" />
+	<property name="adapter.ejb.target" value="${target}/deploy" />
+	<property name="adapter.ejb.name" value="UUserviceEJB.jar" />
+	<property name="client.ejb.name" value="client_ejb.jar" />
+
+	<property name="synchronizer.name" value="synchronizer-0.1.0.jar" />
+	<property name="synchronizer.src" value="${src}/synchronizer/src/src" />
+	<property name="synchronizer.usersysimpl.name" value="usersysimpl-0.1.0.jar" />
+
+	
+	<path id="all-libs">
+		<fileset dir="${lib.dir}">
+			<include name="*.jar" />
+		</fileset>
+		<fileset dir="${lib.dir}/client">
+			<include name="*.jar" />
+		</fileset>
+	</path>
+	<path id="all-client-libs">
+		<fileset dir="${lib.dir}">
+			<include name="*.jar" />
+		</fileset>
+		<fileset dir="${lib.client.dir}">
+			<include name="*.jar" />
+		</fileset>
+	</path>
+
+
+	<!-- jar kernel -->
+	<target name="kernel" description="Compile kernel src file">
+
+		<mkdir dir="${lib.root}" />
+
+		<delete file="${deploy.root}/${kernel.name}" />
+		<delete dir="${kernel.src}/classes" />
+		<mkdir dir="${kernel.src}/classes" />
+
+		<javac srcdir="${kernel.src}/java" destdir="${kernel.src}/classes" debug="on">
+			<classpath refid="all-libs" />
+		</javac>
+		<copy todir="${kernel.src}/classes">
+			<fileset dir="${src}/server">
+				<include name="uuservice-resources.xml" />
+				<include name="uuservice-service.xml" />
+			</fileset>
+		</copy>
+		<copy todir="${kernel.src}/classes">
+			<fileset dir="${kernel.src}/resources">
+				<include name="*.properties" />
+				<include name="*.xml" />
+			</fileset>
+		</copy>
+		<copy todir="${kernel.src}/classes/com/capinfo/uuservice/bo">
+			<fileset dir="${kernel.src}/java/com/capinfo/uuservice/bo">
+				<include name="*.properties" />
+				<include name="*.xml" />
+			</fileset>
+		</copy>
+
+
+		<jar jarfile="${lib.root}/${kernel.name}">
+			<fileset dir="${kernel.src}/classes">
+			</fileset>
+		</jar>
+		<copy todir="${src}/lib">
+			<fileset dir="${lib.root}">
+				<include name="${kernel.name}" />
+			</fileset>
+		</copy>
+
+	</target>
+	<!-- make adminconsole -->
+	<target depends="kernel" name="adminconsole" description="Compile adminconsole src file">
+
+
+		<delete dir="${adminconsole}/webapp/WEB-INF/classes" />
+
+		<delete dir="${adminconsole.target}" />
+		<mkdir dir="${deploy.root}/adminconsole.war" />
+
+		<mkdir dir="${adminconsole}/webapp/WEB-INF/classes" />
+
+		<javac srcdir="${adminconsole.src}" destdir="${adminconsole}/webapp/WEB-INF/classes" debug="on">
+			<classpath refid="all-libs" />
+		</javac>
+
+		<copy todir="${adminconsole}/webapp/WEB-INF/classes">
+			<fileset dir="${adminconsole}/resources">
+				<include name="*.properties" />
+			</fileset>
+		</copy>
+
+		<copy todir="${adminconsole.target}">
+			<fileset dir="${adminconsole}/webapp" />
+		</copy>
+
+		<delete>
+			<fileset dir="${adminconsole.target}/WEB-INF/lib">
+				<include name="*.jar" />
+			</fileset>
+		</delete>
+
+	</target>
+
+	<!-- make userviewmgr -->
+	<target depends="kernel" name="userviewmgr" description="Compile userviewmgr src file">
+
+		<delete dir="${userviewmgr}/webapp/WEB-INF/classes" />
+
+		<delete dir="${userviewmgr.target}" />
+		
+		<mkdir dir="${deploy.root}/userviewmgr.war" />
+
+		<mkdir dir="${userviewmgr}/webapp/WEB-INF/classes" />
+
+		<javac srcdir="${userviewmgr.src}" destdir="${userviewmgr}/webapp/WEB-INF/classes" debug="on">
+			<classpath refid="all-libs" />
+		</javac>
+
+		<copy todir="${userviewmgr}/webapp/WEB-INF/classes">
+			<fileset dir="${userviewmgr}/resources">
+				<include name="*.properties" />
+			</fileset>
+		</copy>
+
+		<copy todir="${userviewmgr.target}">
+			<fileset dir="${userviewmgr}/webapp" />
+		</copy>
+
+		<delete>
+			<fileset dir="${userviewmgr.target}/WEB-INF/lib">
+				<include name="*.jar" />
+			</fileset>
+		</delete>
+
+	</target>
+	<!-- make cas server-->
+	<target depends="kernel" name="cas" description="compile and deploy cas server">
+
+		<mkdir dir="${deploy.root}/cas.war" />
+
+		<delete dir="${cas.home}/cas/WEB-INF/classes" />
+
+		<delete dir="${cas.target}" />
+
+		<mkdir dir="${cas.home}/cas/WEB-INF/classes" />
+
+		<javac srcdir="${cas.home}/src" destdir="${cas.home}/cas/WEB-INF/classes" debug="on">
+			<classpath refid="all-libs" />
+		</javac>
+
+		<copy todir="${cas.home}/cas/WEB-INF/classes">
+			<fileset dir="${cas.home}/src">
+				<include name="*.properties" />
+				<include name="*.xml" />
+			</fileset>
+		</copy>
+
+		<copy todir="${cas.target}">
+			<fileset dir="${cas.home}/cas" />
+		</copy>
+
+	</target>
+	<target depends="kernel" name="ejb" description="Compile ejb">
+
+		<delete>
+			<fileset dir="${target}/deploy">
+				<include name="${adapter.ejb.name}" />
+			</fileset>
+		</delete>
+
+		<mkdir dir="${adapter.ejb.dir}/UUServiceEJB" />
+		<mkdir dir="${adapter.ejb.dir}/UUServiceEJB/META-INF" />
+		<javac srcdir="${adapter.ejb.dir}/src/main/java" destdir="${adapter.ejb.dir}/UUServiceEJB" debug="on">
+			<classpath refid="all-libs" />
+		</javac>
+
+
+		<jar jarfile="${lib.client.dir}/${client.ejb.name}">
+			<fileset dir="${adapter.ejb.dir}/UUServiceEJB">
+			</fileset>
+		</jar>
+
+		<copy todir="${src}/lib">
+			<fileset dir="${lib.root}">
+				<include name="${client.ejb.name}" />
+			</fileset>
+		</copy>
+
+		<delete dir="${adapter.ejb.dir}/UUServiceEJB/com/capinfo/uuservice/remote/ejb/client" />
+		<copy todir="${adapter.ejb.dir}/UUServiceEJB/META-INF">
+			<fileset dir="${adapter.ejb.dir}/src/main/java/META-INF">
+				<include name="*.xml" />
+			</fileset>
+		</copy>
+		<jar jarfile="${target}/deploy/${adapter.ejb.name}">
+			<fileset dir="${adapter.ejb.dir}/UUServiceEJB">
+				<exclude name="*.xml" />
+				<exclude name="*.properties" />
+			</fileset>
+		</jar>
+		<copy todir="${deploy.root}">
+			<fileset dir="${target}/deploy">
+				<include name="${adapter.ejb.name}" />
+			</fileset>
+		</copy>
+		<delete dir="${adapter.ejb.dir}/UUServiceEJB" />
+	</target>
+	<!-- make ws_adapter -->
+	<target depends="kernel" name="wsadapter" description="Compile wsadapter src file">
+
+		<mkdir dir="${deploy.root}/ws_adapter.war" />
+
+		<delete dir="${wsadapter}/webapp/WEB-INF/classes" />
+
+		<delete dir="${wsadapter.target}" />
+
+		<mkdir dir="${wsadapter}/webapp/WEB-INF/classes" />
+
+		<javac srcdir="${wsadapter}/java" destdir="${wsadapter}/webapp/WEB-INF/classes" debug="on">
+			<classpath refid="all-libs" />
+		</javac>
+
+		<copy todir="${wsadapter}/webapp/WEB-INF/classes">
+			<fileset dir="${wsadapter}/resources">
+				<include name="*.properties" />
+				<include name="*.xml" />
+			</fileset>
+		</copy>
+
+		<jar jarfile="${lib.client.dir}/${wsadapter.name}">
+			<fileset dir="${wsadapter}/webapp/WEB-INF/classes">
+			</fileset>
+		</jar>
+
+		<copy todir="${src}/lib">
+			<fileset dir="${lib.root}">
+				<include name="${wsadapter.name}" />
+			</fileset>
+		</copy>
+
+		<copy todir="${wsadapter.target}">
+			<fileset dir="${wsadapter}/webapp" />
+		</copy>
+
+		<delete>
+			<fileset dir="${wsadapter.target}/WEB-INF/lib">
+				<include name="*.jar" />
+			</fileset>
+		</delete>
+	</target>
+
+
+	<!-- ================================= 
+	          target: client              
+	         ================================= -->
+	<target name="client" depends="wsadapter,ejb" description="--> description">
+		<delete dir="${client.src}/classes" />
+		<mkdir dir="${client.src}/classes" />
+
+		<javac srcdir="${client.src}/java" destdir="${client.src}/classes" debug="on">
+			<classpath refid="all-client-libs" />
+		</javac>
+		<copy todir="${client.src}/classes">
+			<fileset dir="${src}/server">
+				<include name="client-resources.xml" />
+			</fileset>
+		</copy>
+		<copy todir="${client.src}/classes">
+			<fileset dir="${client.src}/java">
+				<include name="*.xml" />
+				<include name="*.properties" />
+			</fileset>
+		</copy>
+		<!-- 打client包的时候，需要将kernel里面的bean一并打出来-->
+
+		<copy todir="${client.src}/classes">
+			<fileset dir="${kernel.src}/classes">
+				<include name="**/bo/*.*" />
+				<include name="**/service/*.class" />
+				<include name="**/exception/*.class" />
+				<include name="**/util/*.class" />
+			</fileset>
+		</copy>
+
+		<jar jarfile="${lib.client.dir}/${client.name}">
+			<fileset dir="${client.src}/classes">
+			</fileset>
+		</jar>
+
+	</target>
+
+	<!-- ================================= 
+	          target: synchronizer server side jar              
+	         ================================= -->
+	<target name="synchronizer" depends="client" description="--> description">
+		<delete dir="${synchronizer.src}/classes" />
+		<mkdir dir="${synchronizer.src}/classes" />
+
+		<javac srcdir="${synchronizer.src}/main/java" destdir="${synchronizer.src}/classes" debug="on">
+			<classpath refid="all-client-libs" />
+		</javac>
+		<copy todir="${synchronizer.src}/classes">
+			<fileset dir="${src}/server">
+				<include name="synchronizer-resources.xml" />
+			</fileset>
+		</copy>
+		<copy todir="${synchronizer.src}/classes">
+			<fileset dir="${synchronizer.src}/main/resources">
+				<include name="*.xml" />
+				<include name="*.properties" />
+			</fileset>
+		</copy>
+		<copy todir="${synchronizer.src}/classes">
+			<fileset dir="${synchronizer.src}/usersys/java">
+				<include name="*.xml" />
+			</fileset>
+		</copy>
+
+		<jar jarfile="${lib.dir}/${synchronizer.name}">
+			<fileset dir="${synchronizer.src}/classes">
+			</fileset>
+		</jar>
+
+	</target>
+
+
+	<!-- copy lib -->
+	<target name="copylib" description="Copy the required lib">
+
+		<copy todir="${lib.root}">
+			<fileset dir="${lib.dir}">
+				<include name="*.jar" />
+			</fileset>
+		</copy>
+	</target>
+	<!-- deploy datasource-->
+	<target name="datasource" description="Deploy datasource">
+		<copy todir="${deploy.root}">
+			<fileset dir="${src}/server">
+				<include name="oracle-ds.xml" />
+			</fileset>
+		</copy>
+	</target>
+	<target name="all" depends="adminconsole,userviewmgr,cas,wsadapter,ejb,copylib,datasource,client,synchronizer" description="perform all targets" />
+
+	<!--Clear all the deployed components-->
+	<target name="clean" description="Clear all the deployed components">
+
+		<delete file="${lib.root}/${kernel.name}" />
+		<delete file="${lib.root}/${synchronizer.name}" />
+		<delete file="${lib.root}/${wsadapter.name}" />
+		<delete dir="${wsadapter.target}" />
+		<delete dir="${adminconsole.target}" />
+		<delete dir="${userviewmgr.target}" />
+		<delete dir="${cas.target}" />
+		<delete file="${adapter.ejb.target}/${adapter.ejb.name}" />
+		<delete dir="${lib.client.dir}" />
+		<mkdir dir="${lib.client.dir}" />
+	</target>
+
+
+		
+	
+</project>
