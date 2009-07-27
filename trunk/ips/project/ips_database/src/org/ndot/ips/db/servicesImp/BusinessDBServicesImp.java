@@ -1493,8 +1493,7 @@ public class BusinessDBServicesImp implements BusinessDBServices {
 	}
 
 	public IpsSysParam findIpsSysParamById(String id) {
-		// TODO Auto-generated method stub
-		return null;
+		return this.ipsSysParamDAO.findById(id);
 	}
 
 	public List<IpsSysParam> findIpsSysParamByParamdesc(Object paramdesc) {
