@@ -133,13 +133,19 @@ public class IPSReport {
 
 		StringBuffer xmlHeader = new StringBuffer();
 		xmlHeader.append("<header>");
-		Set<String> keys = header.keySet();
 		IPSHeaderField tem;
-		for (String key : keys) {
-			tem = header.get(key);
-			xmlHeader.append("<" + tem.getName() + ">" + tem.getValue() + "</"
-					+ tem.getName() + ">");
+		for (int i = 1; i <= 10; i++) {
+			tem = header.get(String.valueOf(i));
+			if (null != tem) {
+				xmlHeader.append("<" + tem.getName() + ">" + tem.getValue()
+						+ "</" + tem.getName() + ">");
+			} else {
+				String fieldName = "HF" + i;
+				xmlHeader.append("<" + fieldName + ">" + " " + "</" + fieldName
+						+ ">");
+			}
 		}
+
 		xmlHeader.append("</header>");
 		return xmlHeader.toString();
 
