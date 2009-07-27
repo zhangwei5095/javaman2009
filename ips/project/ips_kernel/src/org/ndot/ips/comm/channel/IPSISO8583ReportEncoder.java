@@ -89,20 +89,20 @@ public class IPSISO8583ReportEncoder extends IPSReportEncoder {
 						msgLen1Field, 4);
 			}
 
-			for (int i = 0; i < 10; i++) {
-
-				String fieldName = "HF" + (i + 1);
-				if (headerXML.indexOf(fieldName) == -1) {
-
-					StringBuilder sb = new StringBuilder();
-					sb.append(headerXML.substring(0, 8));
-					sb.append("<" + fieldName + ">" + " " + "</" + fieldName
-							+ ">");
-					sb.append(headerXML.substring(8));
-					headerXML = sb.toString();
-				}
-
-			}
+//			for (int i = 0; i < 10; i++) {
+//
+//				String fieldName = "HF" + (i + 1);
+//				if (headerXML.indexOf(fieldName) == -1) {
+//
+//					StringBuilder sb = new StringBuilder();
+//					sb.append(headerXML.substring(0, 8));
+//					sb.append("<" + fieldName + ">" + " " + "</" + fieldName
+//							+ ">");
+//					sb.append(headerXML.substring(8));
+//					headerXML = sb.toString();
+//				}
+//
+//			}
 
 			if (header != null) {
 				byte[] h = new byte[0];
