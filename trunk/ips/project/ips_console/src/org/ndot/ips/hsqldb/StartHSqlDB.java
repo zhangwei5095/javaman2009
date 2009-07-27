@@ -9,8 +9,9 @@ public class StartHSqlDB {
 	 */
 	public static void main(String[] args) {
 		Runtime run = Runtime.getRuntime(); 
-		String dburl = "D:/NDotIPS/hsqldb/ipsdb/ipsdb";
-//		String dburl=""c:\\MyTools\\NDot\\hsqldb\\ipsdb\\ipsdb"";
+		String dburl="D:/OPEN_javaman2009/svn/trunk/ips/project/hsqldb/ipsdb/ipsdb";
+//		 dburl = "D:/NDotIPS/hsqldb/ipsdb/ipsdb";
+//		 dburl=""c:\\MyTools\\NDot\\hsqldb\\ipsdb\\ipsdb"";
 		try {	
 			Server curServer = new Server();
 			curServer.setAddress("localhost");
