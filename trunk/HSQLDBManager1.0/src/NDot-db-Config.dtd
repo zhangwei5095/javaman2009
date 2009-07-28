@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+<!DOCTYPE ndotdb-configuration PUBLIC
+	"-//SE/NDot-db-Config Configuration DTD 1.0//EN"
+	"NDot-db-Config.dtd">
+-->
+<!ELEMENT NDot-db-Config (db*)>
+<!ELEMENT db (host,dbpath,dbname)>
+
+
+<!ATTLIST db port CDATA "9001" >
+<!ATTLIST db silent (true|false) "true">
+<!ATTLIST db trac (true|false) "false">
+<!ATTLIST db tls (true|false) "false">
+<!ATTLIST db no_system_exit (true|false) "false">
+<!ATTLIST db id ID #REQUIRED>
+
+<!ELEMENT host (#PCDATA)>
+<!ELEMENT dbpath (#PCDATA)>
+<!ELEMENT dbname (#PCDATA)>
+
+
