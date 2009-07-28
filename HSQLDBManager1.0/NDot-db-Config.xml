@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="gb2312"?>
+<!DOCTYPE NDot-db-Config SYSTEM "src/NDot-db-Config.dtd">
+
+<NDot-db-Config>
+  <db id="001" no_system_exit="false" port="9001" silent="true" tls="false" trac="false">
+    <host>localhost</host>
+    <dbpath>D:\\hsqldb\\mydb\\ndotdb</dbpath>
+    <dbname>ndotdb</dbname>
+  </db>
+  <db id="002" port="9001" silent="true" tls="false" trac="false">
+    <host>www.baidu.com</host>
+    <dbpath>D://dnotdb/test</dbpath>
+    <dbname>test</dbname>
+  </db>
+  <db id="001" no_system_exit="false" port="9001" silent="true" tls="false" trac="false">
+    <host>localhost</host>
+    <dbpath>D:\\hsqldb\\mydb\\ndotdb</dbpath>
+    <dbname>ndotdb</dbname>
+  </db>
+</NDot-db-Config>
+
