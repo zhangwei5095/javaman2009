@@ -1,0 +1,143 @@
+Spring , Struts整合方法2008-03-16 13:25关于Spring , Struts结合学习。
+一、前言
+刚刚接触了日本一个项目，用的框架名称是Northland Framework，主要用到以下部分
+Struts、Spring、iBATIS、Velocity。Struts、Spring如何结合在一起？
+二、Spring提供了三种整合Struts的方法：
+使用 Spring 的 ActionSupport 类整合 Structs
+使用 Spring 的 DelegatingRequestProcessor 覆盖 Struts 的 RequestProcessor
+将 Struts Action 管理委托给 Spring 框架
+(参见Get a better handle on Struts actions, with Spring
+http://www-128.ibm.com/developerworks/java/library/j-sr2.html?ca=drs-tp4105
+对应还有译文：
+http://gocom.primeton.com/modules/techresource/article504.htm?utm_campaign=searchengine&utm_source=baidu&utm_medium=jjpm&utm_term=Spring+Struts)
+三、我只关心第三种整合方法：
+这种方法通过Spring提供的两个和Struts相关类来实现：org.springframework.web.struts. DelegatingActionProxy，org.springframework.web.struts. ContextLoaderPlugIn。
+ContextLoaderPlugIn实现Struts的PlugIn接口，只要在struts-config.xml中有如下配置：
+<action    path="/searchSubmit">
+type="ca.nexcel.books.actions.DelegatingActionProxy"
+             input="/searchEntry.do"
+               validate="true"
+               name="searchForm">
+              <forward name="success" path="/WEB-INF/pages/detail.jsp"/>
+              <forward name="failure" path="/WEB-INF/pages/search.jsp"/>
+</action>
+<plug-in className="org.springframework.web.struts.ContextLoaderPlugIn">
+    <set-property property="contextConfigLocation" value="/WEB-INF/beans.xml"/>
+</plug-in> 
+ActionServlet装载的时候就可以顺便装载和Spring相关的beans.xml，和beans.xml中相关的一个东西叫做WebApplicationContext , (在Spring里关键就是取得WebApplicationContext，取得这个也就可以用Spring管理业务)，在ContextLoaderPlugIn中是这样保存WebApplicationContext：
+String attrName = getServletContextAttributeName();
+getServletContext().setAttribute(attrName, wac);
+再看DelegatingActionProxy，它继承于Struts的Action，以后struts-config.xml中所有的
+Action-mapping都要指向它，只是每个Action-mapping的path不同，将来也是用这个path来区分究竟需要执行beans.xml中的那个类。如下代码：
+public ActionForward execute(){
+Action delegateAction = getDelegateAction(mapping);
+                return delegateAction.execute(mapping, form, request, response);
+        }
+
+这里的delegateAction就是beans.xml中一个相关的类(beans.xml也要求类继承于Struts的Action) 去看看怎么得到delegateAction：
+protected Action getDelegateAction(ActionMapping mapping) throws BeansException {
+WebApplicationContext wac = getWebApplicationContext(getServlet(),
+    mapping.getModuleConfig());
+String beanName = determineActionBeanName(mapping);
+return (Action) wac.getBean(beanName, Action.class);
+}
+
+
+是如何取得WebApplicationContext呢：
+wac=(WebApplicationContext)actionServlet.getServletContext().getAttribute(        ContextLoaderPlugIn.SERVLET_CONTEXT_PREFIX); 
+
+
+SERVLET_CONTEXT_PREFIX 正是 前边提到的ContextLoaderPlugIn中的attrName。
+现在这个原理一目了然，ContextLoaderPlugIn在actionServlet初始化过程中保存
+起来留到后面供DelegatingActionProxy用。
+
+四、在另一篇文章中提到在上面的方法中OpenSessionInView Filter不能用
+(参照http://wyyhzc.itpub.net/)，这个东西我也不熟悉，是不是有不少Spring的东西在这种方式中都不能用呢？这就说到另一种取得Spring WebApplicationContext的方法：
+在web.xml中配置ContextLoaderListener：
+<context-param>
+    <param-name>contextConfigLocation</param-name>
+    <param-value>
+      /WEB-INF/beans.xml
+    </param-value>
+</context-param>
+<listener>
+<listener-class>org.springframework.web.util.Log4jConfigListener</listener-class>
+</listener>
+<listener>
+<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+</listener>
+
+对应的beans.xml和前边那个一样，Log4jConfigListener先不用管，去查看相关文档。
+Web服务启动的时候，我们去看看ContextLoaderListener作了什么：
+WebApplicationContext = createWebApplicationContext(servletContext, parent);
+servletContext.setAttribute
+
+(WebApplicationContext.ROOT_WEB_APPLICATION_CONTEXT_ATTRIBUTE, this.context);
+
+同样是保存WebApplicationContext，但是key是ROOT_WEB_APPLICATION_CONTEXT_ATTRIBUTE
+
+怎么才能不用ContextLoaderPlugIn而只用ContextLoaderListener？下面我修改
+org.springframework.web.struts. DelegatingActionProxy 把它修改成
+ca.nexcel.books.actions. DelegatingActionProxy并且修改一下代码：
+修改getWebApplicationContext方法
+Return DelegatingActionUtils.findRequiredWebApplicationContext(actionServlet,
+moduleConfig); 换成下边方法   
+ServletContext sc = actionServlet.getServletContext();
+WebApplicationContext wac = null;
+wac = WebApplicationContextUtils.getWebApplicationContext(sc);
+return wac;
+
+并且在struts-config.xml中将action的type指向自己的
+ca.nexcel.books.actions. DelegatingActionProxy，PlugIn删除web.xml加上刚才提到的Listener，启动tomcat运行一切正常。
+
+五、我把northland的配置文件贴出来。
+Struts-config.xml：
+<action-mappings>
+    <action
+path="/list"
+        input="/list.jsp"
+        name="_list"
+        scope="request"
+        type="jp.co.nec.hnes.northland.web.struts.FlowAction"
+        >
+      <display-name>一覧画面</display-name>
+    </action>
+    <action
+        path="/register"
+        input="/register.jsp"
+        name="_register"
+        scope="request"
+        type="jp.co.nec.hnes.northland.web.struts.FlowAction"
+        >
+      <display-name>登録画面</display-name>
+    </action>  
+Web.xml:
+<context-param>
+    <param-name>contextConfigLocation</param-name>
+    <param-value>
+      classpath:flowConfig.xml,
+      classpath:viewConfig.xml,
+      classpath:applicationContext.xml,
+classpath:applicationContext-extra.xml
+    </param-value>
+</context-param>　
+<listener>
+<listener-class>org.springframework.web.util.Log4jConfigListener</listener-class>
+</listener>
+<listener>
+<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+</listener>
+<servlet>
+    <servlet-name>ActionServlet</servlet-name>
+<servlet-class>org.apache.struts.action.ActionServlet</servlet-class>
+    <init-param>
+      <param-name>config</param-name>
+      <param-value>/WEB-INF/struts-config.xml</param-value>
+    </init-param>
+</servlet>
+
+
+从中可以看到
+其中的jp.co.nec.hnes.northland.web.struts.FlowAction和
+ca.nexcel.books.actions. DelegatingActionProxy的功能差不多。
+ 
