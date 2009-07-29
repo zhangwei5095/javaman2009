@@ -10,6 +10,7 @@
 			<forward name="success"
 				path="/WEB-INF/pages/ServiceControler.jsp" />
 		</action>
+		<action path="/channelControl" />
 	</action-mappings>
 	<!-- 使用DelegatingRequestProcessor f使用 spring 的 RequestProcessor 替换 struts 原有的 RequestProcessor -->
 	<controller
