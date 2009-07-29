@@ -4,12 +4,20 @@
  */
 package org.ndot.struts.action;
 
+import java.util.HashMap;
+import java.util.Iterator;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
 import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.ndot.ips.comm.IPSReportChannel;
+import org.springframework.web.context.WebApplicationContext;
+import org.springframework.web.struts.ContextLoaderPlugIn;
 
 /** 
  * MyEclipse Struts
@@ -34,7 +42,22 @@ public class ServiceControlerAction extends Action {
 	 */
 	public ActionForward execute(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		WebApplicationContext wctx =(WebApplicationContext)this.getServlet().getServletContext().getAttribute(ContextLoaderPlugIn.SERVLET_CONTEXT_PREFIX); 
+
+//		AbstractRefreshableApplicationContext wctx=(AbstractRefreshableApplicationContext)request.getSession().getServletContext().getAttribute(WebApplicationContext.ContextLoaderPlugIn.SERVLET_CONTEXT_PREFIX);
+//		 wctx.refresh();
+		HttpSession session = request.getSession();
+//		WebApplicationContext wctx=(WebApplicationContext)request.getSession().getServletContext().getAttribute(WebApplicationContext.ROOT_WEB_APPLICATION_CONTEXT_ATTRIBUTE);
+		HashMap<String,IPSReportChannel> ipsChannels = (HashMap<String,IPSReportChannel>)wctx.getBeansOfType(IPSReportChannel.class);
+		for (Iterator iterator = ipsChannels.keySet().iterator(); iterator.hasNext();) {
+			String name = (String) iterator.next();
+			System.out.println("渠道代码："+name);
+			IPSReportChannel c = ipsChannels.get(name);
+			System.out.println("渠道名称："+ c.getName());
+			System.out.println("监听端口号："+ c.getPort());
+		}
+		session.setAttribute("ipsChannels", ipsChannels);
+		return mapping.findForward("success");
 	}
 }
