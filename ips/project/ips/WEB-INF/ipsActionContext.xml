@@ -8,4 +8,6 @@
 	<context:annotation-config />
 	<bean name="/serviceControler"
 		class="org.ndot.struts.action.ServiceControlerAction" />
+		<bean name="/channelControl"
+		class="org.ndot.struts.action.ChannelControl" />
 </beans>
