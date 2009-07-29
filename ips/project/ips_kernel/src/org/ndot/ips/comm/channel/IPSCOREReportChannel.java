@@ -33,9 +33,6 @@ public class IPSCOREReportChannel extends IPSReportChannel {
 
 	public IPSCOREReportChannel() {
 		setLog(Logger.getLogger(IPSCOREReportChannel.class));
-		if (!isStop()) {
-			runServer();
-		}
 	}
 
 	@SuppressWarnings("unchecked")
