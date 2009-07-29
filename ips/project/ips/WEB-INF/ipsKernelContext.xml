@@ -1,0 +1,125 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+           http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+           http://www.springframework.org/schema/context
+           http://www.springframework.org/schema/context/spring-context-2.5.xsd">
+	<context:annotation-config />
+	<!-- 临时清空一下数据库流水 -->
+	<bean id="clear" class="org.ndot.ips.hsqldb.ClearJNL"
+		init-method="init" />
+	<!-- 临时清空一下数据库流水 -->
+	<!--start 引入数据库服务配置 start-->
+	<import resource="ipsDBServiceContext.xml" />
+	<!--end 引入数据库服务配置 end-->
+	<!--start  综合前置流水号发生器 start -->
+	<bean id="genJNL" class="org.ndot.ips.util.GenJNL">
+		<property name="seq">
+			<value type="int">20000000</value>
+		</property>
+	</bean>
+	<!--end  综合前置流水号发生器 end -->
+
+	<!--start 综合前置日志控制 start-->
+	<bean id="isoMsgRenderer" class="com.nasoft.log4j.ISOMsgRenderer"
+		scope="prototype" />
+	<bean id="logOpen" class="java.lang.Boolean">
+		<constructor-arg value="true" />
+	</bean>
+
+	<!--end 综合前置日志控制 end-->
+	<!--start ISO8583报文解码器 start-->
+	<bean id="absIPSReportDecoder"
+		class="org.ndot.ips.comm.IPSReportDecoder" abstract="true">
+		<property name="open" ref="logOpen" />
+		<property name="mr" ref="isoMsgRenderer" />
+		<property name="ipsReportConfigFactory">
+			<ref bean="ipsReportConfigFactory" />
+		</property>
+	</bean>
+	<bean id="ipsReportDecoder"
+		class="org.ndot.ips.comm.channel.IPSISO8583ReportDecoder"
+		parent="absIPSReportDecoder" scope="prototype" />
+	<!--end ISO8583报文解码器 end-->
+
+	<!--start ISO8583报文编码器 start-->
+	<bean id="absIPSReportEncoder"
+		class="org.ndot.ips.comm.IPSReportEncoder" abstract="true">
+		<property name="open" ref="logOpen" />
+		<property name="mr" ref="isoMsgRenderer" />
+		<property name="ipsReportConfigFactory">
+			<ref bean="ipsReportConfigFactory" />
+		</property>
+	</bean>
+	<bean id="ipsReportEncoder"
+		class="org.ndot.ips.comm.channel.IPSISO8583ReportEncoder"
+		parent="absIPSReportEncoder" scope="prototype" />
+
+	<!-- 综合前置抽象交易处理器 -->
+	<bean id="absIPSReportProcesser" abstract="true"
+		class="org.ndot.ips.comm.IPSReportProcesser">
+		<property name="open" ref="logOpen" />
+		<property name="mr" ref="isoMsgRenderer" />
+		<property name="businessDBServices">
+			<ref bean="businessDBServices" />
+		</property>
+		<property name="dbJdbcTool">
+			<ref bean="dbjdbctool" />
+		</property>
+		<property name="ipsConstantConfig">
+			<ref bean="ipsConstantConfig" />
+		</property>
+		<property name="securityDBService">
+			<ref bean="securityDBService" />
+		</property>
+		<property name="seq" ref="genJNL" />
+	</bean>
+	<!-- 报文通道多路复用器 -->
+	<bean id="ipsSelector" class="java.nio.channels.Selector"
+		factory-method="open" />
+
+	<!-- 服务通道ServerSocketChannel -->
+	<bean id="IPSServiceSocketChannel"
+		class="java.nio.channels.ServerSocketChannel" factory-method="open" />
+
+	<!-- ATM交易处理器 -->
+	<bean id="ipsATMReportProcesser"
+		class="org.ndot.ips.comm.channel.IPSATMReportProcesser"
+		parent="absIPSReportProcesser" scope="prototype" />
+
+	<!-- 抽象报文通道 -->
+	<bean id="absIPSReportChannel"
+		class="org.ndot.ips.comm.IPSReportChannel" abstract="true">
+		<property name="name" value="综合前置抽象报文通道" />
+		<property name="open" ref="logOpen" />
+		<property name="mr" ref="isoMsgRenderer" />
+		<property name="ipsReportDecoder" ref="ipsReportDecoder" />
+		<property name="ipsReportEncoder" ref="ipsReportEncoder" />
+		<property name="selector" ref="ipsSelector" />
+		<property name="ipsServerSocketChannel"
+			ref="IPSServiceSocketChannel" />
+	</bean>
+	<!-- ATM报文通道 -->
+	<bean id="C003"
+		class="org.ndot.ips.comm.channel.IPSATMReportChannel"
+		parent="absIPSReportChannel" init-method="runServer">
+		<property name="channelId" value="C003" />
+		<property name="name" value="ATM报文通道" />
+		<property name="reportLen" value="2" />
+		<property name="port" value="20098" />
+		<lookup-method name="getIpsReportProcesserInstance"
+			bean="ipsATMReportProcesser" />
+	</bean>
+	<!-- CORE 报文通道 -->
+	<bean id="C002"
+		class="org.ndot.ips.comm.channel.IPSCOREReportChannel"
+		parent="absIPSReportChannel" init-method="runServer">
+		<property name="channelId" value="C002" />
+		<property name="name" value="CORE报文通道" />
+		<property name="reportLen" value="4" />
+		<property name="port" value="9002" />
+		<property name="clientHost" value="127.0.0.1" />
+		<property name="clientPort" value="7008" />
+	</bean>
+</beans>
