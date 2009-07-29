@@ -1,15 +1,5 @@
 package org.ndot.ips.junit;
 
-import java.util.List;
-
-import org.junit.BeforeClass;
-import org.junit.Test;
-import org.ndot.ips.comm.IPSReportChannel;
-import org.ndot.ips.comm.channel.IPSATMReportChannel;
-import org.ndot.ips.db.DBJdbcTool;
-import org.ndot.ips.db.pojo.IpsInTransflow;
-import org.ndot.ips.db.pojo.IpsTranscodeMap;
-import org.ndot.ips.db.services.BusinessDBServices;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.FileSystemXmlApplicationContext;
 
@@ -34,7 +24,7 @@ public class TestMain {
 
 	public static void main(String[] args) {
 		try {
-			String path = "D:/NDotIPS/ips_console/ips_console/WEB-INF/";
+			String path = "ips/WEB-INF/";
 			String config1 = path + "ipsApplicationContext.xml";
 			ApplicationContext context = new FileSystemXmlApplicationContext(
 					new String[] { config1 });
