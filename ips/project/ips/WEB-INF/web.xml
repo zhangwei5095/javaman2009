@@ -4,7 +4,9 @@
 	xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee   http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
 	<context-param>
 		<param-name>hsql.dbPath</param-name>
-		<param-value>D:/MyTools/tomcat6.0.18/webapps/ips/WEB-INF/hsqldb/ipsdb</param-value>
+		<param-value>
+			c:/MyTools/tomcat6.0.18/webapps/ips/WEB-INF/hsqldb/ipsdb
+		</param-value>
 	</context-param>
 
 	<context-param>
@@ -27,7 +29,7 @@
 		</listener-class>
 	</listener>
 
-	<!-- spring提供的编码过滤器-->
+	<!-- spring提供的编码过滤器
 	<filter>
 		<filter-name>encodingFilter</filter-name>
 		<filter-class>
@@ -43,21 +45,22 @@
 		<filter-name>encodingFilter</filter-name>
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
+	-->
 	<!-- 
 		Open Session In View
 		加一个Spring带的Filter是最简单通用的方法
-	
-	<filter>
+		
+		<filter>
 		<filter-name>hibernateFilter</filter-name>
 		<filter-class>
-			org.springframework.orm.hibernate3.support.OpenSessionInViewFilter
+		org.springframework.orm.hibernate3.support.OpenSessionInViewFilter
 		</filter-class>
-	</filter>
-
-	<filter-mapping>
+		</filter>
+		
+		<filter-mapping>
 		<filter-name>hibernateFilter</filter-name>
 		<url-pattern>*.do</url-pattern>
-	</filter-mapping>
+		</filter-mapping>
 	-->
 
 
@@ -85,22 +88,22 @@
 		<url-pattern>*.do</url-pattern>
 	</servlet-mapping>
 	<welcome-file-list>
-		<welcome-file>serviceControler.do</welcome-file>
+		<welcome-file>index.jsp</welcome-file>
 	</welcome-file-list>
-	<jsp-config> 
-  <taglib> 
-   <taglib-uri>/WEB-INF/struts-html.tld</taglib-uri> 
-   <taglib-location>/WEB-INF/struts-html.tld</taglib-location> 
-  </taglib> 
-  <taglib> 
-   <taglib-uri>/WEB-INF/struts-bean.tld</taglib-uri> 
-   <taglib-location>/WEB-INF/struts-bean.tld</taglib-location> 
-  </taglib> 
-  <taglib> 
-   <taglib-uri>/WEB-INF/struts-logic.tld</taglib-uri> 
-   <taglib-location>/WEB-INF/struts-logic.tld</taglib-location> 
-  </taglib> 
-</jsp-config> 
-	
+	<jsp-config>
+		<taglib>
+			<taglib-uri>/WEB-INF/struts-html.tld</taglib-uri>
+			<taglib-location>/WEB-INF/struts-html.tld</taglib-location>
+		</taglib>
+		<taglib>
+			<taglib-uri>/WEB-INF/struts-bean.tld</taglib-uri>
+			<taglib-location>/WEB-INF/struts-bean.tld</taglib-location>
+		</taglib>
+		<taglib>
+			<taglib-uri>/WEB-INF/struts-logic.tld</taglib-uri>
+			<taglib-location>/WEB-INF/struts-logic.tld</taglib-location>
+		</taglib>
+	</jsp-config>
+
 </web-app>
 
