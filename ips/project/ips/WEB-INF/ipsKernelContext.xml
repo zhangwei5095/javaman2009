@@ -27,8 +27,8 @@
 	<bean id="logOpen" class="java.lang.Boolean">
 		<constructor-arg value="true" />
 	</bean>
-
 	<!--end 综合前置日志控制 end-->
+	<!--end 渠道服务启动标志 end-->
 	<!--start ISO8583报文解码器 start-->
 	<bean id="absIPSReportDecoder"
 		class="org.ndot.ips.comm.IPSReportDecoder" abstract="true">
@@ -103,7 +103,7 @@
 	<!-- ATM报文通道 -->
 	<bean id="C003"
 		class="org.ndot.ips.comm.channel.IPSATMReportChannel"
-		parent="absIPSReportChannel" >
+		parent="absIPSReportChannel">
 		<property name="channelId" value="C003" />
 		<property name="name" value="ATM报文通道" />
 		<property name="reportLen" value="2" />
@@ -114,7 +114,7 @@
 	<!-- CORE 报文通道 -->
 	<bean id="C002"
 		class="org.ndot.ips.comm.channel.IPSCOREReportChannel"
-		parent="absIPSReportChannel" >
+		parent="absIPSReportChannel">
 		<property name="channelId" value="C002" />
 		<property name="name" value="CORE报文通道" />
 		<property name="reportLen" value="4" />
