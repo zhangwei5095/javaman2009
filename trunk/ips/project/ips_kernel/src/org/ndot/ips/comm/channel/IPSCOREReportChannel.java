@@ -33,6 +33,9 @@ public class IPSCOREReportChannel extends IPSReportChannel {
 
 	public IPSCOREReportChannel() {
 		setLog(Logger.getLogger(IPSCOREReportChannel.class));
+		if (!isStop()) {
+			runServer();
+		}
 	}
 
 	@SuppressWarnings("unchecked")
@@ -137,7 +140,7 @@ public class IPSCOREReportChannel extends IPSReportChannel {
 	}
 
 	@Override
-	public void runServer() throws Exception {
+	public void runServer()  {
 		writeLog(IPSLogLevel.INFO, "¿ªÆð " + this.getName() + " ¼àÌý£¬¼àÌý¶Ë¿Ú£º "
 				+ this.getPort());
 	}
