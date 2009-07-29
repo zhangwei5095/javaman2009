@@ -9,7 +9,7 @@ public class StartHSqlDB {
 	 */
 	public static void main(String[] args) {
 		Runtime run = Runtime.getRuntime(); 
-		String dburl="hsqldb/ipsdb/ipsdb";
+		String dburl="/WEB-INF/hsqldb/ipsdb/ipsdb";
 //		 dburl = "D:/NDotIPS/hsqldb/ipsdb/ipsdb";
 //		 dburl=""c:\\MyTools\\NDot\\hsqldb\\ipsdb\\ipsdb"";
 		try {	
