@@ -4,8 +4,10 @@
  */
 package org.ndot.struts.action;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -50,14 +52,16 @@ public class ServiceControlerAction extends Action {
 		HttpSession session = request.getSession();
 //		WebApplicationContext wctx=(WebApplicationContext)request.getSession().getServletContext().getAttribute(WebApplicationContext.ROOT_WEB_APPLICATION_CONTEXT_ATTRIBUTE);
 		HashMap<String,IPSReportChannel> ipsChannels = (HashMap<String,IPSReportChannel>)wctx.getBeansOfType(IPSReportChannel.class);
+		List<IPSReportChannel> channels = new ArrayList<IPSReportChannel>();
 		for (Iterator iterator = ipsChannels.keySet().iterator(); iterator.hasNext();) {
 			String name = (String) iterator.next();
 			System.out.println("ÇþµÀ´úÂë£º"+name);
-			IPSReportChannel c = ipsChannels.get(name);
-			System.out.println("ÇþµÀÃû³Æ£º"+ c.getName());
-			System.out.println("¼àÌý¶Ë¿ÚºÅ£º"+ c.getPort());
+			IPSReportChannel channel = ipsChannels.get(name);
+			System.out.println("ÇþµÀÃû³Æ£º"+ channel.getName());
+			System.out.println("¼àÌý¶Ë¿ÚºÅ£º"+ channel.getPort());
+			channels.add(channel);
 		}
-		session.setAttribute("ipsChannels", ipsChannels);
+		session.setAttribute("ipsChannels", channels);
 		return mapping.findForward("success");
 	}
 }
