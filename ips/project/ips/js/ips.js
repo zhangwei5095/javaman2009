@@ -36,11 +36,11 @@ function createXMLHttpRequest(){
             var operate = document.getElementById(id+'operate');
             var type;
             alert(state.innerHTML);
-             var tem  = 'Í£Ö¹';
+             var tem  = 'Æô¶¯';
             if(tem.indexOf(state.innerHTML) >=0){
-                type = 'start';
-            }else{
                 type = 'stop';
+            }else{
+                type = 'start';
             }
             var url=path+"/channelControl.do?rand=" + Math.random() + "&id="+id+"&type="+type;    
             alert(url);
