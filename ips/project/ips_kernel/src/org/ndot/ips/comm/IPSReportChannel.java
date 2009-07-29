@@ -44,7 +44,6 @@ public abstract class IPSReportChannel extends IPSLogger {
 
 	/** 报文通道监听的端口号 */
 	int port = 8080;
-	
 
 	/** 用于定义存放报文长度的字节数，如ATM上送的报文长度用2个字节表示 */
 	int reportLen = 0;
@@ -65,6 +64,7 @@ public abstract class IPSReportChannel extends IPSLogger {
 	ApplicationContext ctx;
 
 	public IPSReportChannel() {
+		
 	}
 
 	/**
