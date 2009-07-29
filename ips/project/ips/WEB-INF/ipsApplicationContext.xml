@@ -4,5 +4,6 @@
            http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
 	<!--start 引入综合前置Spring所有配置 start-->
 	<import resource="ipsKernelContext.xml" />
+	<import resource="ipsActionContext.xml"/>
 	<!--end 引入综合前置Spring所有配置 end-->
 </beans>
