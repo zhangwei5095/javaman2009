@@ -103,7 +103,7 @@
 	<!-- ATM报文通道 -->
 	<bean id="C003"
 		class="org.ndot.ips.comm.channel.IPSATMReportChannel"
-		parent="absIPSReportChannel" init-method="runServer">
+		parent="absIPSReportChannel" >
 		<property name="channelId" value="C003" />
 		<property name="name" value="ATM报文通道" />
 		<property name="reportLen" value="2" />
@@ -114,7 +114,7 @@
 	<!-- CORE 报文通道 -->
 	<bean id="C002"
 		class="org.ndot.ips.comm.channel.IPSCOREReportChannel"
-		parent="absIPSReportChannel" init-method="runServer">
+		parent="absIPSReportChannel" >
 		<property name="channelId" value="C002" />
 		<property name="name" value="CORE报文通道" />
 		<property name="reportLen" value="4" />
