@@ -1,5 +1,6 @@
 package org.ndot.ips.comm;
 
+
 public class ChannelContral  implements Runnable{
 		IPSReportChannel channel;
 
