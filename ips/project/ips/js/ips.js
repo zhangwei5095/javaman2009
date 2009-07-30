@@ -47,10 +47,10 @@ function ajaxSubmit(path, id) {
 				state.innerHTML = xmlHttpReq.responseText;
 				if ('停止' == xmlHttpReq.responseText) {
 					operate.value = '启动';
-					alert("服务监听 停止 成功：）");
+					Ext.MessageBox.alert("IPS-综合前置渠道服务控制平台", "服务监听 停止 成功：）");
 				} else {
 					operate.value = '停止';
-					alert("服务监听 成功 启动：）");
+				Ext.MessageBox.alert("IPS-综合前置渠道服务控制平台", "服务监听 成功 启动：）");
 				}
 			}
 		}
@@ -112,3 +112,7 @@ function init() {
 		textAnima_color2(id, i);
 	}
 }
+
+Ext.onReady(function(){       
+     Ext.MessageBox.alert('IPS-综合前置渠道服务控制平台', '欢迎您进入【综合前置渠道服务控制平台】! ');    
+});
