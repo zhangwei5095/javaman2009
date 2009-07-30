@@ -35,7 +35,7 @@ public class IPSATMReportChannel extends IPSReportChannel {
 		setLog(Logger.getLogger(IPSATMReportChannel.class));
 	}
 
-	@SuppressWarnings({ "unused", "static-access" })
+	@SuppressWarnings( { "unused", "static-access" })
 	@Override
 	public void runServer() {
 		try {
@@ -43,10 +43,11 @@ public class IPSATMReportChannel extends IPSReportChannel {
 			getIpsServerSocketChannel().socket().bind(
 					new InetSocketAddress(this.getPort()));
 			getIpsServerSocketChannel().configureBlocking(false);
-			
+
 			getIpsServerSocketChannel().register(getSelector(),
 					SelectionKey.OP_ACCEPT);
-			writeLog(IPSLogLevel.INFO, "开起 " + this.getName() + " 监听，监听端口： "
+			writeLog(IPSLogLevel.INFO, "IPS-Action  启动 【" + this.getName()
+					+ "-" + this.getChannelId() + "】" + " 服务监听成功，监听端口： "
 					+ this.getPort());
 			_DOWHILE: while (!this.isStop()) {
 				try {
@@ -159,10 +160,15 @@ public class IPSATMReportChannel extends IPSReportChannel {
 				}
 
 			}
-			this.close();
 		} catch (Exception e) {
 			writeLog(IPSLogLevel.INFO, "ATM 监听服务启动错误，系統智能从新启动......");
-			this.runServer();
+			try {
+				this.clear();
+				this.clone();
+				this.runServer();
+			} catch (CloneNotSupportedException e1) {
+				e1.printStackTrace();
+			}
 		}
 
 	}

@@ -39,7 +39,6 @@ public class IPSLogger {
 		return open;
 	}
 
-
 	public void writeLog(int level, String message) {
 		// levels: debug, info, warn, error, fatal
 		if (isOpen().booleanValue()) {
@@ -68,11 +67,16 @@ public class IPSLogger {
 	}
 
 	public void writeLog(int level, Object obj) {
-		writeLog(level, mr.doRender(obj));
+		if (isOpen().booleanValue()) {
+			writeLog(level, mr.doRender(obj));
+		}
 	}
 
 	public void writeLog(int level, String baseMess, Object obj) {
-		writeLog(level, baseMess + mr.doRender(obj));
+		if (isOpen().booleanValue()) {
+			writeLog(level, baseMess + mr.doRender(obj));
+		}
+
 	}
 
 	public ISOMsgRenderer getMr() {

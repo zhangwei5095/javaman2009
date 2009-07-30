@@ -6,6 +6,7 @@ import java.nio.channels.Selector;
 import java.nio.channels.ServerSocketChannel;
 import java.util.Set;
 
+import org.ndot.ips.log.IPSLogLevel;
 import org.ndot.ips.log.IPSLogger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
@@ -66,14 +67,16 @@ public abstract class IPSReportChannel extends IPSLogger {
 	public IPSReportChannel() {
 		init();
 	}
-    void init(){
-    	try {
-    		this.ipsServerSocketChannel=ServerSocketChannel.open();
-    		this.selector = Selector.open();
+
+	void init() {
+		try {
+			this.ipsServerSocketChannel = ServerSocketChannel.open();
+			this.selector = Selector.open();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-    }
+	}
+
 	/**
 	 * 报文传输通道启动器
 	 */
@@ -101,11 +104,11 @@ public abstract class IPSReportChannel extends IPSLogger {
 	}
 
 	public Selector getSelector() {
-		if(!selector.isOpen()){
-			try{
-				selector=null;
+		if (!selector.isOpen()) {
+			try {
+				selector = null;
 				selector = Selector.open();
-			}catch(Exception e){
+			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}
@@ -119,8 +122,8 @@ public abstract class IPSReportChannel extends IPSLogger {
 	public ServerSocketChannel getIpsServerSocketChannel() {
 		if (!ipsServerSocketChannel.isOpen()) {
 			try {
-				ipsServerSocketChannel=null;
-				ipsServerSocketChannel=ServerSocketChannel.open();
+				ipsServerSocketChannel = null;
+				ipsServerSocketChannel = ServerSocketChannel.open();
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -206,7 +209,7 @@ public abstract class IPSReportChannel extends IPSLogger {
 				key.cancel();
 			}
 		} catch (IOException e) {
-			e.printStackTrace();
+			writeLog(IPSLogLevel.DEBUG, e.getMessage());
 		}
 
 	}
@@ -216,8 +219,12 @@ public abstract class IPSReportChannel extends IPSLogger {
 			this.selector.close();
 			this.ipsServerSocketChannel.socket().close();
 			this.ipsServerSocketChannel.close();
+			writeLog(IPSLogLevel.INFO, "IPS-Action 【" + this.getName() +"-"+this.getChannelId()+ "】"
+					+ " 服务监听停止成功！");
 		} catch (Exception e) {
-			e.printStackTrace();
+			writeLog(IPSLogLevel.INFO, "IPS-Action 【" + this.getName()+"-"+this.getChannelId() + "】"
+					+ " 服务监听停止失败！");
+			writeLog(IPSLogLevel.DEBUG, e.getMessage());
 		}
 	}
 
