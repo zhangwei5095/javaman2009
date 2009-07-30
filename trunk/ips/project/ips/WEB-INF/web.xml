@@ -5,7 +5,7 @@
 	<context-param>
 		<param-name>hsql.dbPath</param-name>
 		<param-value>
-			c:/MyTools/tomcat6.0.18/webapps/ips/WEB-INF/hsqldb/ipsdb
+			d:/MyTools/tomcat6.0.18/webapps/ips/WEB-INF/hsqldb/ipsdb
 		</param-value>
 	</context-param>
 

@@ -75,13 +75,6 @@
 		</property>
 		<property name="seq" ref="genJNL" />
 	</bean>
-	<!-- 报文通道多路复用器 -->
-	<bean id="ipsSelector" class="java.nio.channels.Selector"
-		factory-method="open" />
-
-	<!-- 服务通道ServerSocketChannel -->
-	<bean id="IPSServiceSocketChannel"
-		class="java.nio.channels.ServerSocketChannel" factory-method="open" />
 
 	<!-- ATM交易处理器 -->
 	<bean id="ipsATMReportProcesser"
@@ -96,9 +89,6 @@
 		<property name="mr" ref="isoMsgRenderer" />
 		<property name="ipsReportDecoder" ref="ipsReportDecoder" />
 		<property name="ipsReportEncoder" ref="ipsReportEncoder" />
-		<property name="selector" ref="ipsSelector" />
-		<property name="ipsServerSocketChannel"
-			ref="IPSServiceSocketChannel" />
 	</bean>
 	<!-- ATM报文通道 -->
 	<bean id="C003"
