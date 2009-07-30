@@ -33,10 +33,8 @@ import com.nasoft.iso.ISOUtil;
 public class IPSCOREReportChannel extends IPSReportChannel {
 
 	public IPSCOREReportChannel() {
+		super();
 		setLog(Logger.getLogger(IPSCOREReportChannel.class));
-		if (!this.isStop()) {
-			new Thread(new ChannelContral(this)).start();
-		}
 	}
 
 	@SuppressWarnings("unchecked")

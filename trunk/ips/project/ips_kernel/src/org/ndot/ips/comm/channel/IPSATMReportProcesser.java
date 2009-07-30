@@ -66,6 +66,7 @@ public class IPSATMReportProcesser extends IPSReportProcesser {
 	String devIP = "";
 
 	public IPSATMReportProcesser() {
+		super();
 		setLog(Logger.getLogger(IPSATMReportProcesser.class));
 	}
 
