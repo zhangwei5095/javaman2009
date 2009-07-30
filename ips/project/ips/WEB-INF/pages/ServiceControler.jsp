@@ -18,9 +18,18 @@
 		<base href="<%=basePath%>">
 		<title>综合前置渠道服务控制平台</title>
 		<link rel="stylesheet" type="text/css"
-			href="<%=request.getContextPath()%>/css/styles.css">
+			href="<%=request.getContextPath()%>/ext/resources/css/ext-all.css">
+		<script type="text/javascript"
+			src="<%=request.getContextPath()%>/ext/adapter/ext/ext-base.js"></script>
+		<script type="text/javascript"
+			src="<%=request.getContextPath()%>/ext/ext-all.js"></script>
+		<script type="text/javascript"
+			src="<%=request.getContextPath()%>/test/js/test.js"></script>
+
 		<script type="text/javascript"
 			src="<%=request.getContextPath()%>/js/ips.js"></script>
+		<link rel="stylesheet" type="text/css"
+			href="<%=request.getContextPath()%>/css/styles.css">
 	</head>
 	<body onload="init()">
 		<table cellspacing="4" width="100%" border="0">
@@ -109,32 +118,16 @@
 						<td align="center" bgcolor="#C3F3C3" class="row-center">
 							<bean:write name="ipsChannel" property="port" />
 						</td>
-						<logic:equal name="ipsChannel" property="stop" value="true">
-							<td
-								id="<bean:write name="ipsChannel" property="channelId"/>state"
-								align="center" bgcolor="#C3F3C3" class="row-center">
-								停止
-							</td>
-							<td align="center" bgcolor="#C3F3C3" class="row-center">
-								<input
-									id="<bean:write name="ipsChannel" property="channelId"/>operate"
-									type="button" value="启动"
-									onclick="ajaxSubmit('<%=request.getContextPath()%>','<bean:write name="ipsChannel" property="channelId"/>')">
-							</td>
-						</logic:equal>
-						<logic:notEqual name="ipsChannel" property="stop" value="true">
-							<td
-								id="<bean:write name="ipsChannel" property="channelId"/>state"
-								align="center" bgcolor="#C3F3C3" class="row-center">
-								启动
-							</td>
-							<td align="center" bgcolor="#C3F3C3" class="row-center">
-								<input
-									id="<bean:write name="ipsChannel" property="channelId"/>operate"
-									type="button" value="停止"
-									onclick="ajaxSubmit('<%=request.getContextPath()%>','<bean:write name="ipsChannel" property="channelId"/>')">
-							</td>
-						</logic:notEqual>
+						<td id="<bean:write name="ipsChannel" property="channelId"/>state"
+							align="center" bgcolor="#C3F3C3" class="row-center">
+							停止
+						</td>
+						<td align="center" bgcolor="#C3F3C3" class="row-center">
+							<input
+								id="<bean:write name="ipsChannel" property="channelId"/>operate"
+								type="button" value="启动"
+								onclick="ajaxSubmit('<%=request.getContextPath()%>','<bean:write name="ipsChannel" property="channelId"/>')">
+						</td>
 					</tr>
 				</logic:equal>
 				<logic:notEqual name="row" value="0">
@@ -148,32 +141,18 @@
 						<td align="center" class="row-center">
 							<bean:write name="ipsChannel" property="port" />
 						</td>
-						<logic:equal name="ipsChannel" property="stop" value="true">
-							<td
-								id="<bean:write name="ipsChannel" property="channelId"/>state"
-								align="center"  class="row-center">
-								停止
-							</td>
-							<td align="center"  class="row-center">
-								<input
-									id="<bean:write name="ipsChannel" property="channelId"/>operate"
-									type="button" value="启动"
-									onclick="ajaxSubmit('<%=request.getContextPath()%>','<bean:write name="ipsChannel" property="channelId"/>')">
-							</td>
-						</logic:equal>
-						<logic:notEqual name="ipsChannel" property="stop" value="true">
-							<td
-								id="<bean:write name="ipsChannel" property="channelId"/>state"
-								align="center"  class="row-center">
-								启动
-							</td>
-							<td align="center" class="row-center">
-								<input
-									id="<bean:write name="ipsChannel" property="channelId"/>operate"
-									type="button" value="停止"
-									onclick="ajaxSubmit('<%=request.getContextPath()%>','<bean:write name="ipsChannel" property="channelId"/>')">
-							</td>
-						</logic:notEqual>
+
+						<td id="<bean:write name="ipsChannel" property="channelId"/>state"
+							align="center" class="row-center">
+							停止
+						</td>
+						<td align="center" class="row-center">
+							<input
+								id="<bean:write name="ipsChannel" property="channelId"/>operate"
+								type="button" value="启动"
+								onclick="ajaxSubmit('<%=request.getContextPath()%>','<bean:write name="ipsChannel" property="channelId"/>')">
+						</td>
+
 					</tr>
 				</logic:notEqual>
 				<%
