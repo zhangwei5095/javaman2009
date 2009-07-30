@@ -28,6 +28,10 @@
 		<constructor-arg value="true" />
 	</bean>
 	<!--end 综合前置日志控制 end-->
+	<!--start渠道服务启动标 start-->
+	<bean id="isStop" class="java.lang.Boolean">
+		<constructor-arg value="true" />
+	</bean>
 	<!--end 渠道服务启动标志 end-->
 	<!--start ISO8583报文解码器 start-->
 	<bean id="absIPSReportDecoder"
@@ -111,5 +115,6 @@
 		<property name="port" value="9002" />
 		<property name="clientHost" value="127.0.0.1" />
 		<property name="clientPort" value="7008" />
+		<property name="stop" ref="isStop" />
 	</bean>
 </beans>
