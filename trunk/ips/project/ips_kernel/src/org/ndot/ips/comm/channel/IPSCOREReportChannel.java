@@ -8,6 +8,7 @@ import java.nio.channels.SocketChannel;
 import java.util.Iterator;
 
 import org.apache.log4j.Logger;
+import org.ndot.ips.comm.ChannelContral;
 import org.ndot.ips.comm.IPSReportChannel;
 import org.ndot.ips.log.IPSLogLevel;
 
@@ -33,6 +34,9 @@ public class IPSCOREReportChannel extends IPSReportChannel {
 
 	public IPSCOREReportChannel() {
 		setLog(Logger.getLogger(IPSCOREReportChannel.class));
+		if (!this.isStop()) {
+			new Thread(new ChannelContral(this)).start();
+		}
 	}
 
 	@SuppressWarnings("unchecked")
@@ -137,7 +141,7 @@ public class IPSCOREReportChannel extends IPSReportChannel {
 	}
 
 	@Override
-	public void runServer()  {
+	public void runServer() {
 		writeLog(IPSLogLevel.INFO, "¿ªÆð " + this.getName() + " ¼àÌý£¬¼àÌý¶Ë¿Ú£º "
 				+ this.getPort());
 	}

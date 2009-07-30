@@ -8,6 +8,7 @@ import java.nio.channels.SocketChannel;
 import java.util.Set;
 
 import org.apache.log4j.Logger;
+import org.ndot.ips.comm.ChannelContral;
 import org.ndot.ips.comm.IPSReportChannel;
 import org.ndot.ips.comm.IPSReportProcesser;
 import org.ndot.ips.log.IPSLogLevel;
@@ -33,6 +34,9 @@ import com.nasoft.iso.ISOUtil;
 public class IPSATMReportChannel extends IPSReportChannel {
 	public IPSATMReportChannel() {
 		setLog(Logger.getLogger(IPSATMReportChannel.class));
+		if (!this.isStop()) {
+			new Thread(new ChannelContral(this)).start();
+		}
 	}
 
 	@SuppressWarnings( { "unused", "static-access" })
