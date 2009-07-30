@@ -1,0 +1,52 @@
+/* 定义 <a href></a> 的样式，目前没有用*/
+<!--
+*{font-size:12px;}
+a.button:link {       
+       padding:3px;
+       border:2px outset;
+       cursor:pointer;
+       background-color: #d4d0c8;
+       text-align:center;
+       height:13px;
+       text-decoration: none;
+       color: #000000;
+       display:inline-block;
+       clear:both;       
+}
+a.button:visited {       
+       padding:3px;
+       border:2px outset;
+       cursor:pointer;
+       background-color: #d4d0c8;
+       text-align:center;
+       height:13px;
+       text-decoration: none;
+       color: #000000;
+       display:inline-block;
+       clear:both;       
+}
+a.button:hover {       
+       padding:3px;
+       border:2px outset;
+       cursor:pointer;
+       background-color: #d4d0c8;
+       text-align:center;
+       height:13px;
+       text-decoration: none;
+       color: #0000FF;
+       display:inline-block;
+       clear:both;       
+}
+a.button:active {       
+       padding:3px;
+       border:2px inset;
+       cursor:pointer;
+       background-color: #d4d0c8;
+       text-align:center;
+       height:13px;
+       text-decoration: none;
+       color: #999999;
+       display:inline-block;
+       clear:both;       
+}
+-->

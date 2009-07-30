@@ -1,4 +1,13 @@
-H1 {font-family:Tahoma,Arial,sans-serif;color:white;background-color:#525D76;font-size:22px;} H2 {font-family:Tahoma,Arial,sans-serif;color:white;background-color:#525D76;font-size:16px;} H3 {font-family:Tahoma,Arial,sans-serif;color:white;background-color:#525D76;font-size:14px;} BODY {font-family:Tahoma,Arial,sans-serif;color:black;background-color:white;} B {font-family:Tahoma,Arial,sans-serif;color:white;background-color:#525D76;} P {font-family:Tahoma,Arial,sans-serif;background:white;color:black;font-size:12px;}A {color : black;}A.name {color : black;}HR {color : #525D76;}  table {
+H1 {font-family:Tahoma,Arial,sans-serif;color:white;background-color:#525D76;font-size:22px;}
+H2 {font-family:Tahoma,Arial,sans-serif;color:white;background-color:#525D76;font-size:16px;}
+H3 {font-family:Tahoma,Arial,sans-serif;color:white;background-color:#525D76;font-size:14px;}
+BODY {font-family:Tahoma,Arial,sans-serif;color:black;background-color:white;}
+B {font-family:Tahoma,Arial,sans-serif;color:white;background-color:#525D76;}
+P {font-family:Tahoma,Arial,sans-serif;background:white;color:black;font-size:12px;}
+A {color : blue;}
+A.name {color : black;}
+HR {color : #525D76;}
+table {
     width: 100%;
   }
   td.page-title {
@@ -11,6 +20,14 @@ H1 {font-family:Tahoma,Arial,sans-serif;color:white;background-color:#525D76;fon
   }
   td.title {
     text-align: left;
+    vertical-align: top;
+    font-family:sans-serif,Tahoma,Arial;
+    font-style:italic;
+    font-weight: bold;
+    background: #D2A41C;
+  }
+   td.title-right {
+    text-align: right;
     vertical-align: top;
     font-family:sans-serif,Tahoma,Arial;
     font-style:italic;
@@ -37,6 +54,13 @@ H1 {font-family:Tahoma,Arial,sans-serif;color:white;background-color:#525D76;fon
     font-family:sans-serif,Tahoma,Arial;
     font-weight: bold;
     background: #FFDC75;
+  }
+  td.row{
+    text-align: left;
+    vertical-align: middle;
+    font-family:sans-serif,Tahoma,Arial;
+    font-weight: bold;
+    color: black;
   }
   td.row-left {
     text-align: left;
@@ -69,3 +93,6 @@ H1 {font-family:Tahoma,Arial,sans-serif;color:white;background-color:#525D76;fon
     font-family:sans-serif,Tahoma,Arial;
     color: black;
   }
+  
+  
+  
