@@ -34,11 +34,8 @@ import com.nasoft.iso.ISOUtil;
 public class IPSATMReportChannel extends IPSReportChannel {
 	public IPSATMReportChannel() {
 		setLog(Logger.getLogger(IPSATMReportChannel.class));
-		if (!this.isStop()) {
-			new Thread(new ChannelContral(this)).start();
-		}
+		
 	}
-
 	@SuppressWarnings( { "unused", "static-access" })
 	@Override
 	public void runServer() {
