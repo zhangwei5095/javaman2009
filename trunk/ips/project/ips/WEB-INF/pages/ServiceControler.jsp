@@ -22,9 +22,9 @@
 		<meta http-equiv="expires" content="0">
 		<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 		<meta http-equiv="description" content="This is my page">
-		<!--
-	<link rel="stylesheet" type="text/css" href="styles.css">
-	-->
+
+		<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/styles.css">
+
 		<script type="text/javascript"
 			src="<%=request.getContextPath()%>/js/ips.js"></script>
 	</head>
@@ -49,6 +49,14 @@
 		</table>
 
 		<table width="700" align="center" border="1">
+			<tr align="center" bgcolor="">
+				<td align="left" colspan="2" class="title">
+					所有渠道服务：
+				</td>
+				<td align="right" colspan="3" class="title">
+					<a herf="<%=request.getContextPath()%>/serviceControler.do" >重新加载配置</a>
+				</td>
+			</tr>
 			<tr align="center">
 				<td align="center">
 					渠道编码
@@ -67,7 +75,7 @@
 				</td>
 			</tr>
 			<logic:iterate id="ipsChannel" name="ipsChannels">
-				<tr>
+				<tr class="header">
 					<td align="center">
 						<bean:write name="ipsChannel" property="channelId" />
 					</td>
@@ -82,10 +90,12 @@
 						停止
 					</td>
 					<td align="center">
-						<input id="<bean:write name="ipsChannel" property="channelId"/>operate" type="button" value="启动"
+						<input
+							id="<bean:write name="ipsChannel" property="channelId"/>operate"
+							type="button" value="启动"
 							onclick="ajaxSubmit('<%=request.getContextPath()%>','<bean:write name="ipsChannel" property="channelId"/>')">
 					</td>
-					
+
 				</tr>
 			</logic:iterate>
 		</table>
