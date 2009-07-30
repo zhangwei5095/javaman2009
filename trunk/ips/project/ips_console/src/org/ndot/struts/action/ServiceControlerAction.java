@@ -17,25 +17,29 @@ import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.ndot.ips.comm.ChannelContral;
 import org.ndot.ips.comm.IPSReportChannel;
+import org.springframework.context.support.AbstractRefreshableApplicationContext;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.struts.ContextLoaderPlugIn;
 
-/** 
- * MyEclipse Struts
- * Creation date: 07-24-2009
+/**
+ * MyEclipse Struts Creation date: 07-24-2009
  * 
  * XDoclet definition:
+ * 
  * @struts.action validate="true"
- * @struts.action-forward name="success" path="/WEB-INF/pages/ServiceControler.jsp"
+ * @struts.action-forward name="success"
+ *                        path="/WEB-INF/pages/ServiceControler.jsp"
  */
 public class ServiceControlerAction extends Action {
 	/*
 	 * Generated Methods
 	 */
 
-	/** 
+	/**
 	 * Method execute
+	 * 
 	 * @param mapping
 	 * @param form
 	 * @param request
@@ -44,24 +48,44 @@ public class ServiceControlerAction extends Action {
 	 */
 	public ActionForward execute(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response) {
-		
-		WebApplicationContext wctx =(WebApplicationContext)this.getServlet().getServletContext().getAttribute(ContextLoaderPlugIn.SERVLET_CONTEXT_PREFIX); 
 
-//		AbstractRefreshableApplicationContext wctx=(AbstractRefreshableApplicationContext)request.getSession().getServletContext().getAttribute(WebApplicationContext.ContextLoaderPlugIn.SERVLET_CONTEXT_PREFIX);
-//		 wctx.refresh();
+		WebApplicationContext wctx = (WebApplicationContext) this.getServlet()
+				.getServletContext().getAttribute(
+						ContextLoaderPlugIn.SERVLET_CONTEXT_PREFIX);
 		HttpSession session = request.getSession();
-//		WebApplicationContext wctx=(WebApplicationContext)request.getSession().getServletContext().getAttribute(WebApplicationContext.ROOT_WEB_APPLICATION_CONTEXT_ATTRIBUTE);
-		HashMap<String,IPSReportChannel> ipsChannels = (HashMap<String,IPSReportChannel>)wctx.getBeansOfType(IPSReportChannel.class);
+		HashMap<String, IPSReportChannel> ipsChannels = (HashMap<String, IPSReportChannel>) wctx
+				.getBeansOfType(IPSReportChannel.class);
 		List<IPSReportChannel> channels = new ArrayList<IPSReportChannel>();
-		for (Iterator iterator = ipsChannels.keySet().iterator(); iterator.hasNext();) {
-			String name = (String) iterator.next();
-			System.out.println("渠道代码："+name);
-			IPSReportChannel channel = ipsChannels.get(name);
-			System.out.println("渠道名称："+ channel.getName());
-			System.out.println("监听端口号："+ channel.getPort());
-			channels.add(channel);
+
+		String reLoad = request.getParameter("reLoad");
+		if (null != reLoad && !"".equals(reLoad)) {
+			// 获得综合前置配置的所有渠道服务,并停止
+			show(ipsChannels, channels, true);
+			((AbstractRefreshableApplicationContext) wctx).refresh();
+			// 重新获取渠道服务配置
+			ipsChannels = (HashMap<String, IPSReportChannel>) wctx
+					.getBeansOfType(IPSReportChannel.class);
 		}
+		show(ipsChannels, channels, false);
 		session.setAttribute("ipsChannels", channels);
 		return mapping.findForward("success");
+	}
+
+	private void show(HashMap<String, IPSReportChannel> ipsChannels,
+			List<IPSReportChannel> channels, boolean reload) {
+		for (Iterator iterator = ipsChannels.keySet().iterator(); iterator
+				.hasNext();) {
+			String name = (String) iterator.next();
+			System.out.println("渠道代码：" + name);
+			IPSReportChannel channel = ipsChannels.get(name);
+			if (reload) {
+				channel.setStop(true);
+				new Thread(new ChannelContral(channel));
+			} else {
+				System.out.println("渠道名称：" + channel.getName());
+				System.out.println("监听端口号：" + channel.getPort());
+				channels.add(channel);
+			}
+		}
 	}
 }

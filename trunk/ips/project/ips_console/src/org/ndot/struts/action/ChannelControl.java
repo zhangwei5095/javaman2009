@@ -5,12 +5,12 @@ import java.io.PrintWriter;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.ndot.ips.comm.ChannelContral;
 import org.ndot.ips.comm.IPSReportChannel;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.struts.ContextLoaderPlugIn;
@@ -47,7 +47,7 @@ public class ChannelControl extends Action {
 				channel.setStop(true);
 				message = "ֹͣ";
 			}
-			new Thread(new StartChannel(channel)).start();
+			new Thread(new ChannelContral(channel)).start();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -67,25 +67,5 @@ public class ChannelControl extends Action {
 
 	}
 
-	class StartChannel implements Runnable {
-		IPSReportChannel channel;
-
-		StartChannel(IPSReportChannel channel) {
-			this.channel = channel;
-		}
-
-		public void run() {
-			try {
-				if (channel.isStop()) {
-					channel.close();
-				}else{
-					channel.runServer();
-				}
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-
-		}
-
-	}
+	
 }
