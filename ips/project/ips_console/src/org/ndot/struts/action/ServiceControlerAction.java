@@ -13,12 +13,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.log4j.Logger;
 import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.ndot.ips.comm.ChannelContral;
 import org.ndot.ips.comm.IPSReportChannel;
+import org.ndot.ips.log.IPSLogLevel;
 import org.springframework.context.support.AbstractRefreshableApplicationContext;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.struts.ContextLoaderPlugIn;
@@ -32,10 +34,15 @@ import org.springframework.web.struts.ContextLoaderPlugIn;
  * @struts.action-forward name="success"
  *                        path="/WEB-INF/pages/ServiceControler.jsp"
  */
-public class ServiceControlerAction extends Action {
+public class ServiceControlerAction extends IPSAction {
 	/*
 	 * Generated Methods
 	 */
+
+	public ServiceControlerAction() {
+		super();
+		log.setLog(Logger.getLogger(ServiceControlerAction.class));
+	}
 
 	/**
 	 * Method execute
@@ -60,8 +67,12 @@ public class ServiceControlerAction extends Action {
 		String reLoad = request.getParameter("reLoad");
 		if (null != reLoad && !"".equals(reLoad)) {
 			// 获得综合前置配置的所有渠道服务,并停止
+			log.writeLog(IPSLogLevel.INFO, "IPS-Action  开始重新加载所有配置和服务信息......");
+			log.writeLog(IPSLogLevel.INFO, "IPS-Action  进行停止已经配置的服务监听......");
 			show(ipsChannels, channels, true);
+			log.writeLog(IPSLogLevel.INFO, "IPS-Action  所有配置的服务监听停止完毕！");
 			((AbstractRefreshableApplicationContext) wctx).refresh();
+			log.writeLog(IPSLogLevel.INFO, "IPS-Action 所有配置和服务信息重新加载完毕！");
 			// 重新获取渠道服务配置
 			ipsChannels = (HashMap<String, IPSReportChannel>) wctx
 					.getBeansOfType(IPSReportChannel.class);
@@ -71,21 +82,22 @@ public class ServiceControlerAction extends Action {
 		return mapping.findForward("success");
 	}
 
+	@SuppressWarnings("unchecked")
 	private void show(HashMap<String, IPSReportChannel> ipsChannels,
 			List<IPSReportChannel> channels, boolean reload) {
 		for (Iterator iterator = ipsChannels.keySet().iterator(); iterator
 				.hasNext();) {
 			String name = (String) iterator.next();
-			System.out.println("渠道代码：" + name);
 			IPSReportChannel channel = ipsChannels.get(name);
 			if (reload) {
+				log.writeLog(IPSLogLevel.INFO, "IPS-Action 停止 【"
+						+ channel.getName() + "】" + " 服务监听......");
 				channel.setStop(true);
-				new Thread(new ChannelContral(channel));
+				new Thread(new ChannelContral(channel)).start();
 			} else {
-				System.out.println("渠道名称：" + channel.getName());
-				System.out.println("监听端口号：" + channel.getPort());
 				channels.add(channel);
 			}
 		}
+
 	}
 }
