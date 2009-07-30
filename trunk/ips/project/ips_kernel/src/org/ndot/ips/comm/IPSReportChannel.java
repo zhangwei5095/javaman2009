@@ -64,9 +64,16 @@ public abstract class IPSReportChannel extends IPSLogger {
 	ApplicationContext ctx;
 
 	public IPSReportChannel() {
-		
+		init();
 	}
-
+    void init(){
+    	try {
+    		this.ipsServerSocketChannel=ServerSocketChannel.open();
+    		this.selector = Selector.open();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+    }
 	/**
 	 * 报文传输通道启动器
 	 */
@@ -94,6 +101,14 @@ public abstract class IPSReportChannel extends IPSLogger {
 	}
 
 	public Selector getSelector() {
+		if(!selector.isOpen()){
+			try{
+				selector=null;
+				selector = Selector.open();
+			}catch(Exception e){
+				e.printStackTrace();
+			}
+		}
 		return selector;
 	}
 
@@ -102,6 +117,14 @@ public abstract class IPSReportChannel extends IPSLogger {
 	}
 
 	public ServerSocketChannel getIpsServerSocketChannel() {
+		if (!ipsServerSocketChannel.isOpen()) {
+			try {
+				ipsServerSocketChannel=null;
+				ipsServerSocketChannel=ServerSocketChannel.open();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
 		return ipsServerSocketChannel;
 	}
 

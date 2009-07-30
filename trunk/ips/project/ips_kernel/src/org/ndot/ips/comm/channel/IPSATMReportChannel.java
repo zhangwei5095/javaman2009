@@ -35,7 +35,7 @@ public class IPSATMReportChannel extends IPSReportChannel {
 		setLog(Logger.getLogger(IPSATMReportChannel.class));
 	}
 
-	@SuppressWarnings("unused")
+	@SuppressWarnings({ "unused", "static-access" })
 	@Override
 	public void runServer() {
 		try {
@@ -43,6 +43,7 @@ public class IPSATMReportChannel extends IPSReportChannel {
 			getIpsServerSocketChannel().socket().bind(
 					new InetSocketAddress(this.getPort()));
 			getIpsServerSocketChannel().configureBlocking(false);
+			
 			getIpsServerSocketChannel().register(getSelector(),
 					SelectionKey.OP_ACCEPT);
 			writeLog(IPSLogLevel.INFO, "¿ªÆð " + this.getName() + " ¼àÌý£¬¼àÌý¶Ë¿Ú£º "
