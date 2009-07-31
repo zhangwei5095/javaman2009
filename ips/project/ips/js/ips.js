@@ -70,13 +70,15 @@ function ajaxSubmit(path, id) {
 }
 
 function commonConfirm(message){
-     if( Ext.MessageBox.confirm('IPS-综合前置渠道服务控制平台',"您确认要进行 【"+message +"】 操作吗?")=='yes'){
+ if(window.confirm("您确认要进行 【"+message +"】 操作吗?")){
      	return true;
-     }
-     else{
+     }else{
         return false;
      }
+	//Ext.MessageBox.confirm('IPS-综合前置渠道服务控制平台',"您确认要进行 【"+message +"】 操作吗?",function(fbn){myreturn(fbn)});
+    
 }
+
 
 function textAnima_color2(id, n) {
 	el = document.all.item(id, n);
@@ -113,6 +115,6 @@ function init() {
 	}
 }
 
-Ext.onReady(function(){  
-     Ext.MessageBox.alert('IPS-综合前置渠道服务控制平台', '欢迎您进入【综合前置渠道服务控制平台】! ','Modal:false');    
+Ext.onReady(function(){ 	 
+     Ext.MessageBox.alert('IPS-综合前置渠道服务控制平台', '欢迎您进入【综合前置渠道服务控制平台】! ');    
 });

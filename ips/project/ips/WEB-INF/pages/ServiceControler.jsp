@@ -23,10 +23,7 @@
 			src="<%=request.getContextPath()%>/ext/adapter/ext/ext-base.js"></script>
 		<script type="text/javascript"
 			src="<%=request.getContextPath()%>/ext/ext-all.js"></script>
-		<script type="text/javascript"
-			src="<%=request.getContextPath()%>/test/js/test.js"></script>
-
-		<script type="text/javascript"
+			<script type="text/javascript"
 			src="<%=request.getContextPath()%>/js/ips.js"></script>
 		<link rel="stylesheet" type="text/css"
 			href="<%=request.getContextPath()%>/css/styles.css">
