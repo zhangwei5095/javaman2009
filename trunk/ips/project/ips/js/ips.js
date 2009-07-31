@@ -113,6 +113,6 @@ function init() {
 	}
 }
 
-Ext.onReady(function(){       
-     Ext.MessageBox.alert('IPS-综合前置渠道服务控制平台', '欢迎您进入【综合前置渠道服务控制平台】! ');    
+Ext.onReady(function(){  
+     Ext.MessageBox.alert('IPS-综合前置渠道服务控制平台', '欢迎您进入【综合前置渠道服务控制平台】! ','Modal:false');    
 });
