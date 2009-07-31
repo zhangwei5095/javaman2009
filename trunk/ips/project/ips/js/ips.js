@@ -70,8 +70,7 @@ function ajaxSubmit(path, id) {
 }
 
 function commonConfirm(message){
-	
-     if( Ext.MessageBox.confirm('IPS-综合前置渠道服务控制平台',"您确认要进行 【"+message +"】 操作吗?")){
+     if( Ext.MessageBox.confirm('IPS-综合前置渠道服务控制平台',"您确认要进行 【"+message +"】 操作吗?")=='yes'){
      	return true;
      }
      else{
