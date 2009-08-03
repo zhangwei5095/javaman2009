@@ -25,7 +25,7 @@ import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
  * @see org.ndot.ips.db.pojo.IpsTranscodeMap
  * @author MyEclipse Persistence Tools
  */
-
+@SuppressWarnings("unchecked")
 public class IpsTranscodeMapDAO extends HibernateDaoSupport {
 	private static final Log log = LogFactory.getLog(IpsTranscodeMapDAO.class);
 	// property constants
