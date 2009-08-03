@@ -197,7 +197,7 @@ public class IPSReportFactory {
 			toAtmRspReport.setHeaderFieldValue(5, devReqReport
 					.getHeaderFieldValue(5));
 			// 设置报文体
-			toAtmRspReport.setFieldValue(1, "0830");
+			toAtmRspReport.setFieldValue(0, "0830");
 			copyFields(devReqReport, 3, toAtmRspReport, 3);
 			copyFields(devReqReport, 7, toAtmRspReport, 7);
 			copyFields(devReqReport, 11, toAtmRspReport, 11);

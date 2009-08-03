@@ -60,6 +60,7 @@ import java.util.Iterator;
  * @author Alejandro P. Revilla
  * @version $Id: Profiler.java,v 1.2 2003/05/16 04:11:04 alwyns Exp $
  */
+@SuppressWarnings("unchecked")
 public class Profiler implements Loggeable
 {
   long       start, parcial;

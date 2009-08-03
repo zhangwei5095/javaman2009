@@ -34,7 +34,7 @@ public class IPSReport {
 
 	public IPSReport() {
 		super();
-		body = new ISOMsg(0);
+		body = new ISOMsg();
 		header = new HashMap<String, IPSHeaderField>();
 	}
 
