@@ -1,0 +1,281 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="jbpm.jboss.install">
+
+	<!-- DEVELOPER SPECIFIC CONFIGURATIONS -->
+	<property file="${user.home}/.jbpm4/build.properties" />
+
+	<!-- DEFAULT PROPERTY VALUES -->
+	<property name="database" value="hsqldb" />
+	<property name="identity.component" value="jbpm-built-in" />
+	<property name="jbpm.version" value="4.0" />
+	<property name="jbpm.parent.dir" value="C:/MyTools" />
+	<property name="jbpm.home" value="${jbpm.parent.dir}/jbpm-${jbpm.version}" />
+	<!-- jbpm.home should not be configured. change jbpm.parent.dir instead -->
+	<property name="jboss.version" value="5.0.0.GA" />
+	<property name="jboss.distro.dir" value="${jbpm.home}/downloads" />
+	<property name="jboss.distro.filename" value="jboss-${jboss.version}.zip" />
+	<property name="jboss.distro.url" value="http://downloads.sourceforge.net/jboss/${jboss.distro.filename}" />
+	<property name="jboss.parent.dir" value="${jbpm.home}" />
+	<property name="jboss.filename" value="jboss-${jboss.version}.zip" />
+	<property name="jboss.home" value="${jboss.parent.dir}/jboss-${jboss.version}" />
+	<property name="jboss.distro.path" value="${jboss.distro.dir}/${jboss.filename}" />
+	<property name="jboss.server.configuration" value="default" />
+	<property name="jboss.server.config.dir" value="${jboss.home}/server/${jboss.server.configuration}" />
+	<property name="jboss.server.data.dir" value="${jboss.home}/server/${jboss.server.configuration}/data" />
+	<property name="jbossidm.version" value="1.0.0.Beta1" />
+	<property name="jbossidm.home" value="${jbpm.parent.dir}/jbossidm-${jbossidm.version}" />
+	<echo>"NDot----:----${jbossidm.home}"</echo>
+	<!-- for SNAPSHOT temporarily -->
+	<property name="jbossidm.distro.url" value="http://repository.jboss.com/maven2/org/jboss/identity/idm/jbossidm/${jbossidm.version}/jbossidm-${jbossidm.version}.zip" />
+	<property name="jbossidm.distro.path" value="${jbpm.parent.dir}/jbossidm-${jbossidm.version}.zip" />
+
+	<!-- JDBC PROPERTIES -->
+	<property file="${user.home}/.jbpm4/jdbc/${database}.properties" />
+	<property file="${jbpm.home}/db/jdbc/${database}.properties" />
+
+	<!-- ### LOG PROPERTIES ################################################# -->
+	<target name="log.properties">
+		<echo message="database.................... ${database}" />
+		<echo message="identity.component.......... ${identity.component}" />
+		<echo message="jbpm.home................... ${jbpm.home}" />
+		<echo message="jboss.version............... ${jboss.version}" />
+		<echo message="jboss.filename.............. ${jboss.filename}" />
+		<echo message="jboss.distro.path........... ${jboss.distro.path}" />
+		<echo message="jboss.home.................. ${jboss.home}" />
+		<echo message="jboss.server.configuration.. ${jboss.server.configuration}" />
+		<echo message="jboss.server.config.dir..... ${jboss.server.config.dir}" />
+	</target>
+
+	<!-- CONDITIONS -->
+	<condition property="jboss.version.5">
+		<or>
+			<equals arg1="${jboss.version}" arg2="5.0.0.GA" />
+			<equals arg1="${jboss.version}" arg2="5.0.1.GA" />
+			<equals arg1="${jboss.version}" arg2="5.1.0.GA" />
+			<equals arg1="${jboss.version}" arg2="5.1.0.CR1" />
+		</or>
+	</condition>
+
+	<condition property="jbpm.identity.idm">
+		<equals arg1="${identity.component}" arg2="jboss.idm" />
+	</condition>
+
+	<!-- ### DEMO SETUP ##################################################### -->
+	<target name="demo.setup" depends="install.jbpm.into.jboss" description="installs jbpm into jboss, starts jboss, creates the jBPM DB schema, deploys examples, loads example identities, installs and starts eclipse">
+		<ant antfile="${jbpm.home}/db/build.xml" target="create.jbpm.schema" />
+		<ant antfile="${jbpm.home}/examples/build.xml" target="deploy.examples" />
+		<ant antfile="${jbpm.home}/db/build.xml" target="load.example.identities" />
+	</target>
+
+	<target name="demo.teardown" description="drops the jbpm db schema and stops jboss">
+		<ant antfile="${jbpm.home}/db/build.xml" target="drop.jbpm.schema" />
+		<antcall target="stop.jboss" />
+	</target>
+
+	<!-- ### REINSTALL JBOSS ################################################ -->
+	<target name="reinstall.jboss" depends="log.properties, delete.jboss.installation, install.jboss" description="deletes the previous jboss installation and re-installs jboss" />
+
+	<!-- ### DELETE JBOSS ################################################### -->
+	<target name="delete.jboss.installation" depends="log.properties" description="deletes jboss installation">
+		<delete dir="${jboss.home}" />
+	</target>
+
+	<!-- ### INSTALL JBOSS ################################################## -->
+	<target name="install.jboss" depends="log.properties, get.jboss" description="unzips jboss, downloads jboss to $jboss.distro.dir} if its not available">
+		<unzip src="${jboss.distro.path}" dest="${jboss.home}/.." />
+		<chmod perm="a+x" file="${jboss.home}/bin/run.sh" os="Linux, Mac OS X" />
+		<chmod perm="a+x" file="${jboss.home}/bin/shutdown.sh" os="Linux, Mac OS X" />
+	</target>
+
+	<!-- ### GET JBOSS ###################################################### -->
+	<condition property="is.jboss.distro.available">
+		<available file="${jboss.distro.path}" />
+	</condition>
+	<target name="get.jboss" unless="is.jboss.distro.available" description="downloads jboss into ${jboss.distro.dir}">
+		<mkdir dir="${jboss.distro.dir}" />
+		<get src="${jboss.distro.url}" dest="${jboss.distro.path}" />
+	</target>
+
+	<!-- ### GET JBOSS IDM ###################################################### -->
+	<condition property="is.jbossidm.distro.available">
+		<available file="${jbossidm.distro.path}" />
+	</condition>
+	<target name="get.jbossidm" unless="is.jbossidm.distro.available" description="downloads jboss idm into ${jbossidm.distro.path}">
+		<mkdir dir="${jboss.distro.dir}" />
+		<get src="${jbossidm.distro.url}" dest="${jbossidm.distro.path}" />
+	</target>
+
+	<!-- #### INSTALL JBOSS IDM ################################################ -->
+	<target name="install.jbossidm" if="jbpm.identity.idm">
+		<antcall target="get.jbossidm" />
+		<unzip src="${jbossidm.distro.path}" dest="${jbossidm.home}/.." />
+	</target>
+
+	<!-- #### DELETE JBOSS IDM ################################################ -->
+	<target name="delete.jbossidm" depends="log.properties" if="jbpm.identity.idm" description="deletes jbossidm">
+		<delete dir="${jbossidm.home}" />
+	</target>
+
+	<!-- ### REINSTALL JBOSS IDM ################################################ -->
+	<target name="reinstall.jbossidm" if="jbpm.identity.idm" description="deletes the previous jboss idm and re-installs jbossidm">
+		<antcall target="delete.jbossidm" />
+		<antcall target="install.jbossidm" />
+	</target>
+
+	<!-- ### MAIN TARGET TO INSTALL JBPM INTO JBOSS ######################### -->
+	<target name="install.jbpm.into.jboss" depends="log.properties" description="installs jbpm into jboss">
+		<antcall target="internal.install.jbpm.into.jboss.common" />
+		<antcall target="internal.install.jbpm.into.jboss.500specifics" />
+		<antcall target="internal.install.idm.into.jboss" />
+		<antcall target="internal.install.jbpm.into.jboss.identity" />
+		<antcall target="internal.install.jbpm.into.jboss.db.${database}" />
+	</target>
+
+	<!-- ### THE JBOSS GENERIC PART ######################################### -->
+	<target name="internal.install.jbpm.into.jboss.common">
+		<!-- copy static configuration files -->
+		<copy todir="${jboss.server.config.dir}" overwrite="true">
+			<fileset dir="${jbpm.home}/jboss/config.common" />
+		</copy>
+
+		<!-- copy the right hibernate configuration file -->
+		<copy file="${jbpm.home}/jboss/hibernate.cfg/${database}.hibernate.cfg.xml" tofile="${jboss.server.config.dir}/deploy/jbpm/jbpm-service.sar/jbpm.hibernate.cfg.xml" overwrite="true" />
+
+		<!-- copy the right datasource configuration file and replace the jdbc properties with 
+         the values in the jdbc/${database}.properties file -->
+		<copy todir="${jboss.server.config.dir}/deploy/jbpm" overwrite="true">
+			<filterset filtersfile="${jbpm.home}/db/jdbc/${database}.properties" />
+			<fileset dir="${jbpm.home}/jboss/datasources">
+				<include name="jbpm-${database}-ds.xml" />
+			</fileset>
+		</copy>
+
+		<copy todir="${jboss.server.config.dir}/lib" overwrite="true">
+			<fileset dir="${jbpm.home}">
+				<include name="jbpm.jar" />
+			</fileset>
+			<fileset dir="${jbpm.home}/lib">
+				<include name="gwt-console-server-integration.jar" />
+				<include name="gwt-console-rpc.jar" />
+			</fileset>
+		</copy>
+
+		<copy todir="${jboss.server.config.dir}/deploy/jbpm" overwrite="true">
+			<fileset dir="${jbpm.home}/lib">
+				<include name="gwt-console.war" />
+				<include name="gwt-console-server.war" />
+			</fileset>
+		</copy>
+
+		<copy todir="${jboss.server.config.dir}/deploy/jbpm/jbpm-service.sar" overwrite="true">
+			<fileset dir="${jbpm.home}/lib">
+				<include name="jbpm-console-integration.jar" />
+				<include name="jbpm-console-form-plugin.jar" />
+				<include name="jbpm-console-graphView-plugin.jar" />
+				<include name="freemarker.jar" />
+				<include name="livetribe-jsr223.jar" />
+				<include name="juel*.jar" />
+			</fileset>
+		</copy>
+
+		<copy todir="${jboss.server.config.dir}/deployers/jbpm.deployer" overwrite="true">
+			<fileset dir="${jbpm.home}/lib">
+				<include name="jbpm-spi.jar" />
+			</fileset>
+		</copy>
+
+		<mkdir dir="${jboss.home}/docs/examples/jbpm" />
+		<copy todir="${jboss.home}/docs/examples/jbpm" overwrite="true">
+			<fileset dir="${jbpm.home}/jboss/datasources" />
+		</copy>
+
+		<!-- reporting -->
+		<property name="birt.dir" value="${jboss.server.data.dir}/birt" />
+		<mkdir dir="${birt.dir}" />
+		<unzip src="${jbpm.home}/lib/report-engine.zip" dest="${birt.dir}" />
+		<unzip src="${jbpm.home}/lib/jbpm-console-reports.jar" dest="${birt.dir}" />
+	</target>
+
+	<!-- ### THE JBOSS 5 SPECIFIC PART ############################### -->
+	<target name="internal.install.jbpm.into.jboss.500specifics" if="jboss.version.5">
+		<!-- copy static configuration files -->
+		<copy todir="${jboss.server.config.dir}" overwrite="true">
+			<fileset dir="${jbpm.home}/jboss/config.jboss5" />
+		</copy>
+
+		<copy todir="${jboss.server.config.dir}/deploy/jbpm/jbpm-service.sar" overwrite="true">
+			<fileset dir="${jbpm.home}/lib">
+				<include name="jbpm-spi.jar" />
+			</fileset>
+		</copy>
+
+		<copy todir="${jboss.server.config.dir}/deployers/jbpm.deployer" overwrite="true">
+			<fileset dir="${jbpm.home}/lib">
+				<include name="jbpm-jboss5.jar" />
+			</fileset>
+		</copy>
+	</target>
+
+	<target name="internal.install.idm.into.jboss" if="jbpm.identity.idm">
+		<ant antfile="${jbossidm.home}/jboss/build.xml" target="install.jbossidm.into.jboss">
+			<property name="jboss.home" value="${jboss.home}" />
+			<property name="jboss.server.configuration" value="${jboss.server.configuration}" />
+			<property name="database" value="${database}" />
+			<property name="jbossidm.home" value="${jbossidm.home}" />
+		</ant>
+	</target>
+
+	<target name="internal.install.jbpm.into.jboss.identity" if="jbpm.identity.idm">
+		<copy file="${jbpm.home}/jboss/jbpm.cfg.idm/jbpm.cfg.xml" tofile="${jboss.server.config.dir}/deploy/jbpm/jbpm-service.sar/jbpm.cfg.xml" overwrite="true" />
+	</target>
+
+	<!-- ### THE HSQLDB SPECIFIC PART ####################################### -->
+	<target name="internal.install.jbpm.into.jboss.db.hsqldb">
+		<echo>"NDot -- HSQLDB -----"</echo>
+	</target>
+
+	<!-- ### THE MYSQL SPECIFIC PART ####################################### -->
+	<target name="internal.install.jbpm.into.jboss.db.mysql">
+		<copy todir="${jboss.server.config.dir}/deploy/jbpm/jbpm-service.sar" overwrite="true">
+			<fileset dir="${jbpm.home}/lib">
+				<include name="mysql-connector-java.jar" />
+			</fileset>
+		</copy>
+	</target>
+
+	<!-- ### THE ORACLE SPECIFIC PART ####################################### -->
+	<target name="internal.install.jbpm.into.jboss.db.oracle">
+		<available file="${jbpm.home}/lib/ojdbc14.jar" property="oracle.driver.jar.available" />
+		<fail message="please download the oracle driver jar ojdbc14.jar from oracle and put it in the ${jbpm.home}/lib directory" unless="oracle.driver.jar.available" />
+		<copy file="${jbpm.home}/lib/ojdbc14.jar" todir="${jboss.server.config.dir}/deploy/jbpm/jbpm-service.sar" />
+	</target>
+
+	<!-- ### THE POSTGRESQL SPECIFIC PART ################################### -->
+	<target name="internal.install.jbpm.into.jboss.db.postgresql">
+		<copy file="${jbpm.home}/lib/postgresql.jar" todir="${jboss.server.config.dir}/deploy/jbpm/jbpm-service.sar" />
+	</target>
+
+	<!-- ### START JBOSS ################################################### -->
+	<target name="start.jboss" depends="log.properties" description="starts jboss and waits till jboss is booted, then lets jboss run in the background">
+		<taskdef name="start-jboss" classname="org.jbpm.pvm.internal.ant.StartJBossTask">
+			<classpath>
+				<fileset dir="${jbpm.home}">
+					<include name="jbpm.jar" />
+				</fileset>
+			</classpath>
+		</taskdef>
+		<start-jboss jbosshome="${jboss.home}" />
+	</target>
+
+	<!-- ### STOP JBOSS ################################################### -->
+	<target name="stop.jboss" depends="log.properties" description="signals jboss to stop, but doesn't wait till its finished">
+		<exec executable="${jboss.home}/bin/shutdown.bat" os="Windows Vista, Windows XP,Windows 2000,Windows 98">
+			<arg line="-S" />
+		</exec>
+		<exec executable="${jboss.home}/bin/shutdown.sh" os="Linux, Unix, Mac">
+			<arg line="-S" />
+		</exec>
+	</target>
+
+</project>
