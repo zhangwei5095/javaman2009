@@ -1,0 +1,49 @@
+google svn 服务器使用：
+
+    1. http://code.google.com/ 用gmail登入。>后点击>Project Hosting
+    2. 进入>> http://code.google.com/hosting/  >后点击>Create a new project
+    3. 填入必要的项目名，描述等确定。就可以了
+    4. 确定成功后 ->Source
+    5. 到eclipse的打开新建一个project->team->share Project->svn
+    6. 后面根据 google source 上的svn提示，这我就不多说了。一般的svn http url 
+
+1. 进入http://code.google.com/ 用Google帐户登录（推荐使用gmail邮箱）。然后点击>Project Hosting
+
+2. 进入>> http://code.google.com/hosting/  然后点击>Create a new project
+
+3. 填入信息：
+
+     写入项目名，描述，两个选择项，写入标签，点击确定。就可以了
+
+4. 提交成功后，选择菜单的Source（其中有https上传协议路径需要拷贝一份，还有一个上传密码）。
+
+5. 打开MyEclipse，打开需要上传的项目，点鼠标右键->team->share Project->svn，写入https路径，下一步，输入Google账号和上传密码，起个名，finish。
+
+6.如果一切顺利，会自动生成一个项目目录，可以查看所有项目文件。然后进入搭建项目界面，点鼠标右键->team->commit。然后开始上传项目。
+
+7，搭建完成。
+
+8.如果想查看自己的项目，可以用浏览器登陆https的路径，输入Google账号和上传密码，如果成功就可以看到含有项目名称的目录。
+
+9. 到eclipse的打开新建一个project->team->share Project->svn
+10. 后面根据 google source 上的svn提示，这我就不多说了。一般的svn http url 
+
+
+目前新创建了项目：javaman2009
+
+If you plan to make changes, use this command to check out the code as yourself using HTTPS:
+
+
+# Project members authenticate over HTTPS to allow committing changes.
+svn checkout 
+
+https://javaman2009.googlecode.com/svn/ javaman2009 --username ipsman2009
+
+When prompted, enter your generated googlecode.com password ---  bq7QA8UA7pY3 
+
+Use this command to anonymously check out the latest project source code:
+
+
+# Non-members may check out a read-only working copy anonymously over HTTP.
+svn checkout http://javaman2009.googlecode.com/svn/ javaman2009-read-only 
+
