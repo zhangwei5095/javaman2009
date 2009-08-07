@@ -1,0 +1,8 @@
+<eventlisteners>
+  <eventlistener binding="org.jbpm.jpdl.internal.activity.EventListenerBinding" />
+  <eventlistener binding="org.jbpm.jpdl.internal.activity.JavaBinding" />
+  <eventlistener binding="org.jbpm.jpdl.internal.activity.HqlBinding" />
+  <eventlistener binding="org.jbpm.jpdl.internal.activity.SqlBinding" />
+  <eventlistener binding="org.jbpm.jpdl.internal.activity.ScriptBinding" />
+  <eventlistener binding="org.jbpm.jpdl.internal.activity.MailBinding" />
+</eventlisteners>

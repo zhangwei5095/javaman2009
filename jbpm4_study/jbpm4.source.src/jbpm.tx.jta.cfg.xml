@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<jbpm-configuration>
+
+  <process-engine-context>
+    <command-service>
+      <environment-interceptor />
+      <retry-interceptor type="jta" />
+      <jta-transaction-interceptor />
+    </command-service>
+  </process-engine-context>
+
+  <transaction-context>
+    <transaction type="jta" />
+    <hibernate-session current="true" />
+  </transaction-context>
+
+</jbpm-configuration>

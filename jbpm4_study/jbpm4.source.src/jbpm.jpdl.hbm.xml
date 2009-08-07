@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping default-access="field">
+
+  <subclass name="org.jbpm.jpdl.internal.model.JpdlExecution" 
+            extends="org.jbpm.pvm.internal.model.ExecutionImpl"
+            discriminator-value="jpdl">
+
+    <map name="swimlanes"
+         cascade="all-delete-orphan">
+      <key foreign-key="FK_SWIMLANE_EXEC">
+         <column name="EXECUTION_" index="IDX_SWIMLANE_EXEC"/>
+      </key>
+      <map-key type="string" column="NAME_" />
+      <one-to-many class="org.jbpm.pvm.internal.task.SwimlaneImpl" />
+    </map>
+  </subclass>
+
+</hibernate-mapping>
