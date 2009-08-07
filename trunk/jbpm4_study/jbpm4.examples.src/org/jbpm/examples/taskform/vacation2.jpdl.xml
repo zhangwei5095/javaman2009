@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<process name="VacationRequest" xmlns="http://jbpm.org/4.0/jpdl">
+   <start g="274,13,48,48" name="start1">
+      <transition g="-109,-18" name="to number_of_days" to="request_vacation"/>
+   </start>
+   <end g="185,364,48,48" name="vacation_rejected"/>
+   <task candidate-users="peter,mary" g="237,97,126,52" name="request_vacation">
+      <transition g="-99,-18" name="to grant_vacation" to="verify_request"/>
+   </task>
+   <task candidate-users="mike" g="247,193,101,52" name="verify_request">
+      <transition g="-84,-1" name="reject" to="reject_message"/>
+      <transition g="32,-4" name="accept" to="accept_message"/>
+   </task>
+   <task candidate-groups="sales" g="148,273,118,52" name="reject_message">
+      <transition g="-51,-9" name="done_rejected" to="vacation_rejected"/>
+   </task>
+   <task candidate-groups="sales" g="371,274,108,52" name="accept_message">
+      <transition g="-46,-18" name="done_accepted" to="vacation_accepted"/>
+   </task>
+   <end g="408,359,48,48" name="vacation_accepted"/>
+</process>
