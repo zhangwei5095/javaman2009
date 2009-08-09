@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<process description="²âÊÔ" key="first" name="firsttset" xmlns="http://jbpm.org/4.0/jpdl">
+<process description="" key="first" name="firsttset" xmlns="http://jbpm.org/4.0/jpdl">
 	<start g="192,42,48,48" name="start1">
 		<transition g="-53,-17" name="to java1" to="java1"/>
 	</start>
