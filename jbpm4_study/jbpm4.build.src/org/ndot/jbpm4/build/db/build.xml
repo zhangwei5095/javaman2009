@@ -2,29 +2,26 @@
 
 <project name="jbpmBuild" default="create.jbpm.schema">
 
-	<!-- DEVELOPER SPECIFIC CONFIGURATIONS -->
-	<property file="${user.home}/.jbpm4/build.properties" />
 	<!-- DEFAULT PROPERTY VALUES -->
 	<property name="database" value="hsqldb" />
-
-
-	<property name="jbpm.parent.dir" value="C:/MyTools" />
-	<property name="jbpm.version" value="4.0" />
-	<property name="jbpm.home" value="${jbpm.parent.dir}/jbpm-${jbpm.version}" />
+	<property name="jbpm.workspace" value="C:/MyTools/E7Workplace/" />
+	<property name="jbpm.lib" value="${jbpm.workspace}/jbpm4_study/jbpm4_study/WEB-INF/lib/jbpm4" />
+	<property name="jbpm.db.lib" value="${jbpm.workspace}/jbpm4_study/jbpm4_study/WEB-INF/lib/hqldb" />
 
 	<!-- JDBC PROPERTIES -->
-	<property file="${jbpm.home}/db/jdbc/${database}.properties" />
+	<property file="hsqldb.properties" />
 	<echo message="${database}" />
 	<echo message="${jdbc.driver}" />
 	<echo message="${jdbc.url}" />
 	<echo message="${jdbc.username}" />
-	<echo message="${jbpm.home}" />
-	<echo message="${jbpm.home}/db/jdbc/${database}.properties" />
 	<!-- ### CREATE JBPM SCHEMA ############################################# -->
-	<target name="create.jbpm.schema"  description="creates the jbpm tables in the database">
-		<sql driver="${jdbc.driver}" url="${jdbc.url}" userid="${jdbc.username}" password="" onerror="continue" src="${jbpm.home}/db/schema.scripts/jbpm.${database}.create.sql">
+	<target name="create.jbpm.schema" description="creates the jbpm tables in the database">
+		<sql driver="${jdbc.driver}" url="${jdbc.url}" userid="${jdbc.username}" password="" onerror="continue" src="jbpm.${database}.create.sql">
 			<classpath>
-				<fileset dir="${jbpm.home}/lib">
+				<fileset dir="${jbpm.lib}">
+					<include name="*.jar" />
+				</fileset>
+				<fileset dir="${jbpm.db.lib}">
 					<include name="*.jar" />
 				</fileset>
 			</classpath>
@@ -32,55 +29,45 @@
 	</target>
 
 	<!-- ### DROP JBPM SCHEMA ############################################### -->
-	<target name="drop.jbpm.schema"  description="drops the jbpm tables from the database">
-		<sql driver="${jdbc.driver}" url="${jdbc.url}" userid="${jdbc.username}" password="${jdbc.password}" onerror="continue" src="${jbpm.home}/db/schema.scripts/jbpm.${database}.drop.sql">
+	<target name="drop.jbpm.schema" description="drops the jbpm tables from the database">
+		<sql driver="${jdbc.driver}" url="${jdbc.url}" userid="${jdbc.username}" password="${jdbc.password}" onerror="continue" src="jbpm.${database}.drop.sql">
 			<classpath>
-				<fileset dir="${jbpm.home}/lib">
+				<fileset dir="${jbpm.lib}">
+					<include name="*.jar" />
+				</fileset>
+				<fileset dir="${jbpm.db.lib}">
 					<include name="*.jar" />
 				</fileset>
 			</classpath>
 		</sql>
 	</target>
 
-	<!-- ### LOAD EXAMPLE IDENTITIES ######################################## -->
-	<target name="load.example.identities" description="loads the example users and groups into the database">
-		<sql driver="${jdbc.driver}" url="${jdbc.url}" userid="${jdbc.username}" password="${jdbc.password}" onerror="continue">
-			<transaction src="${jbpm.home}/db/example.identities.sql" />
-			<classpath>
-				<fileset dir="${jbpm.home}/lib">
-					<include name="*.jar" />
-				</fileset>
-			</classpath>
-		</sql>
-	</target>
 	<target name="hsqldb.start" description="start the hsqldb database">
-		<java classname="org.ndot.jbpm.db.HQLDBStart" fork="true">
+		<java classname="org.ndot.jbpm4.db.HQLDBStart" fork="true">
 			<classpath>
-				<fileset dir="${jbpm.home}/lib">
-					<include name="hsqldb.jar" />
-					<include name="ndot_hqldb.jar" />
+				<fileset dir="${jbpm.db.lib}">
+					<include name="h*.jar" />
 				</fileset>
 			</classpath>
 		</java>
 	</target>
-	
+
 	<target name="hsqldb.stop" description="start the hsqldb database">
-			<java classname="org.ndot.jbpm.db.StopHSqlDB" fork="true">
-				<classpath>
-					<fileset dir="${jbpm.home}/lib">
-						<include name="hsqldb.jar" />
-						<include name="ndot_hqldb.jar" />
-					</fileset>
-				</classpath>
-			</java>
-		</target>
+		<java classname="org.ndot.jbpm4.db.StopHSqlDB" fork="true">
+			<classpath>
+				<fileset dir="${jbpm.db.lib}">
+					<include name="*.jar" />
+				</fileset>
+			</classpath>
+		</java>
+	</target>
 
 	<!-- ### START HSQLDB DATABASE MGR ##################################### -->
 	<target name="hsqldb.databasemanager" description="start the hsqldb database manager">
 		<java classname="org.hsqldb.util.DatabaseManagerSwing" fork="true">
 			<arg line="-url jdbc:hsqldb:hsql://localhost:5998/jbpm4DB" />
 			<classpath>
-				<fileset dir="${jbpm.home}/lib">
+				<fileset dir="${jbpm.db.lib}">
 					<include name="hsqldb.jar" />
 				</fileset>
 			</classpath>
