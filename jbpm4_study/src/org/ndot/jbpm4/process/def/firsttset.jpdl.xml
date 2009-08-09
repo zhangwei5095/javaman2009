@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<process description="²âÊÔ" key="first" name="firsttset" xmlns="http://jbpm.org/4.0/jpdl">
+	<start g="192,42,48,48" name="start1">
+		<transition g="-53,-17" name="to java1" to="java1"/>
+	</start>
+	<java class="org.ndot.jbpm4.process.java.Test" g="191,153,92,52" method="sayHello" name="java1">
+		<transition g="-47,-17" name="to end1" to="end1"/>
+	</java>
+	<end g="214,293,48,48" name="end1"/>
+</process>
