@@ -13,18 +13,16 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 	<head>
-		<base href="<%=basePath);%>">
+		<base href="<%=basePath%>">
 		<title>工作流管理控制平台</title>
-		<link rel="stylesheet" type="text/css"
-			href="<%=request.getContextPath()%>/ext/resources/css/ext-all.css">
-		<script type="text/javascript"
-			src="<%=request.getContextPath()%>/ext/adapter/ext/ext-base.js"></script>
-		<script type="text/javascript"
-			src="<%=request.getContextPath()%>/ext/ext-all.js"></script>
-		<script type="text/javascript"
-			src="<%=request.getContextPath()%>/js/jbpm4.js"></script>
-		<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/styles.css">
 	</head>
+	<link rel="stylesheet" type="text/css"
+		href="<%=path%>/ext/resources/css/ext-all.css">
+	<script type="text/javascript" src="<%=path%>/ext/adapter/ext/ext-base.js"></script>
+	<script type="text/javascript" src="<%=path%>/ext/ext-all.js"></script>
+	<script type="text/javascript" src="<%=path%>/js/jbpm4.js"></script>
+	<link rel="stylesheet" type="text/css" href="<%=path%>/css/styles.css">
+
 	<body onload="init()">
 		<table cellspacing="4" width="100%" border="0">
 			<tr>
