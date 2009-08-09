@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
+	<!--start 日志开关  start-->
+	<bean id="logOpen" class="java.lang.Boolean">
+		<constructor-arg value="true" />
+	</bean>
+	<!--end 日志开关  end-->
+	<!--start 引入Action配置信息  start-->
+	<import resource="actionApplicationContext.xml" />
+	<!--end 引入Action配置信息  end-->
+	<!--start jbpm4 初始化 start-->
+	<bean id="jbpmConfiguration" class="org.jbpm.pvm.internal.cfg.JbpmConfiguration">
+		<property name="resource" value="jbpm.cfg.xml" />
+	</bean>
+	<bean id="jbmpController" class="org.ndot.jbpm4.Jbpm4Controller">
+		<property name="jbpmConfiguration" ref="jbpmConfiguration" />
+		<property name="open" ref="logOpen" />
+	</bean>
+	<!--end jbpm4 初始化 end-->
+
+</beans>
