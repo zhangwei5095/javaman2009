@@ -2,10 +2,24 @@
 <!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.3//EN" "http://struts.apache.org/dtds/struts-config_1_3.dtd">
 
 <struts-config>
-  <form-beans />
-  <global-exceptions />
-  <global-forwards />
-  <action-mappings />
-  <message-resources parameter="ApplicationResources" />
+	<form-beans />
+	<global-exceptions />
+	<global-forwards />
+	<action-mappings>
+		<action parameter="operate" path="/processManager" cancellable="true" />
+
+	</action-mappings>
+
+	<!--
+		使用DelegatingRequestProcessor f使用 spring 的 RequestProcessor 替换 struts
+		原有的 RequestProcessor
+	-->
+	<controller processorClass="org.springframework.web.struts.DelegatingRequestProcessor" />
+	<message-resources parameter="ApplicationResources" />
+	<!-- 装载 Spring配置文件，随应用启动创建ApplicationContext实例 -->
+	<plug-in className="org.springframework.web.struts.ContextLoaderPlugIn">
+		<set-property property="contextConfigLocation" value="applicationContext.xml" />
+	</plug-in>
+
 </struts-config>
 
