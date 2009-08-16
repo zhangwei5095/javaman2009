@@ -6,7 +6,7 @@
     <transition to="send rectify note" />
   </start>
 
-  <mail name="send rectify note" language="juel" g="99,25,115,45">
+  <mail name="send rectify note" g="99,25,115,45">
     <to addresses="winston@minitrue" />
     <cc users="bb" groups="innerparty" />
     <bcc groups="thinkpol" />
