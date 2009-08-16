@@ -1,3 +1,5 @@
 1.É¾³ý asm2.27.jar
 2.É¾³ý jsp-api.jar
 3.É¾³ýel-api.jar
+4.É¾³ýcommons-attributes-compiler.jar
+5.É¾³ýcommons-attributes-api.jar
