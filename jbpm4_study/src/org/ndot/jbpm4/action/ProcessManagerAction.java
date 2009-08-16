@@ -4,28 +4,51 @@
  */
 package org.ndot.jbpm4.action;
 
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.zip.ZipInputStream;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.fileupload.DiskFileUpload;
+import org.apache.commons.fileupload.FileItem;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.jbpm.api.Execution;
+import org.jbpm.api.ProcessDefinition;
+import org.jbpm.api.ProcessDefinitionQuery;
+import org.jbpm.api.ProcessInstance;
+import org.jbpm.api.task.Task;
+import org.ndot.jbpm4.form.LoginForm;
 
-/** 
- * MyEclipse Struts
- * Creation date: 08-09-2009
+/**
+ * MyEclipse Struts Creation date: 08-09-2009
  * 
  * XDoclet definition:
+ * 
  * @struts.action parameter="operate" validate="true"
  */
 public class ProcessManagerAction extends Jbpm4DispatchActionAction {
-	
+	private Task task = null;
+	private Execution execution = null;
+	private String url = null;
+	private List list = null;
+	private List<Task> taskList = null;
+	private ProcessInstance processInstance = null;
+
 	/*
 	 * Generated Methods
 	 */
 
-	/** 
+	/**
 	 * Method execute
+	 * 
 	 * @param mapping
 	 * @param form
 	 * @param request
@@ -36,5 +59,169 @@ public class ProcessManagerAction extends Jbpm4DispatchActionAction {
 			HttpServletRequest request, HttpServletResponse response) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Deprecated
+	protected ActionForward deploy(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response) {
+		try {
+
+			String temp = request.getSession().getServletContext().getRealPath(
+					"/temp");
+			DiskFileUpload diskFileUpload = new DiskFileUpload();
+			diskFileUpload.setSizeMax(1 * 1024 * 1024);
+			diskFileUpload.setSizeThreshold(4096);
+			diskFileUpload.setRepositoryPath(temp);
+
+			List fileItems = diskFileUpload.parseRequest(request);
+			Iterator iter = fileItems.iterator();
+
+			if (iter.hasNext()) {
+				System.out.println("aaaa");
+				FileItem item = (FileItem) iter.next();
+
+				if (!item.isFormField()) {
+					String name = item.getName();
+					long size = item.getSize();
+					System.out.println("name: " + name);
+					if (name != null && !name.equals("") && size > 0) {
+						this.getController().getRepositoryService()
+								.createDeployment()
+								.addResourcesFromZipInputStream(
+										new ZipInputStream(item
+												.getInputStream())).deploy();
+					}
+				}
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			return mapping.findForward("fail");
+		}
+		return mapping.findForward("success");
+	}
+
+	protected ActionForward leave(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response) {
+		processInstance = this.getController().getExecutionService()
+				.startProcessInstanceByKey("leave");
+		return mapping.findForward("apply");
+	}
+
+	protected ActionForward apply(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response) {
+		Map<String, Object> variables = new HashMap<String, Object>();
+		try {
+
+			String name = request.getParameter("applyName");
+			String time = request.getParameter("applyTime");
+			String leaveDay = request.getParameter("leaveDay");
+			String content = request.getParameter("content");
+			String position = request.getParameter("position");
+
+			variables.put("name", name);
+			variables.put("time", time);
+			variables.put("leaveDay", leaveDay);
+			variables.put("content", content);
+			variables.put("position", position);
+			if (position.trim().equals("经理")) {
+				variables.put("isMnager", "是");
+			} else {
+				variables.put("isMnager", "否");
+			}
+			taskList = this.getController().getTaskService().findPersonalTasks(
+					"Kayzhan");
+			System.out.println("Kayzhan taskList: " + taskList);
+			task = taskList.get(0);
+			this.getController().getTaskService().setVariables(task.getId(),
+					variables);
+			this.getController().getTaskService().completeTask(task.getId());
+			execution = this.getController().getExecutionService()
+					.findExecutionById(task.getExecutionId());
+			System.out.println("isActive:  "
+					+ execution.getProcessInstance().isActive("老板审批"));
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return mapping.findForward("success");
+	}
+
+	/**
+	 * 
+	 * @param mapping
+	 * @param form
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	protected ActionForward getTask(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response) {
+		LoginForm loginform = (LoginForm) form;
+		String name = loginform.getUserName();
+		taskList = this.getController().getTaskService()
+				.findPersonalTasks(name);
+		return mapping.findForward("success");
+	}
+
+	protected ActionForward view(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response) {
+		String taskId = request.getParameter("id");
+		Set<String> set = this.getController().getTaskService()
+				.getVariableNames(taskId);
+		Map<String, Object> map = this.getController().getTaskService()
+				.getVariables(taskId, set);
+
+		return mapping.findForward("view");
+	}
+
+	protected ActionForward confirm(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response) {
+		String taskId = request.getParameter("id");
+		task = this.getController().getTaskService().getTask(taskId);
+		execution = this.getController().getExecutionService()
+				.findExecutionById(task.getExecutionId());
+		if (execution.getProcessInstance().isActive("老板审批")) {
+			this.getController().getTaskService().completeTask(taskId, "老板批准");
+		} else if (execution.getProcessInstance().isActive("经理审批")) {
+			String variable = (String) this.getController().getTaskService()
+					.getVariable(taskId, "leaveDay");
+			if (Integer.valueOf(variable) > 3) {
+				this.getController().getTaskService().completeTask(taskId,
+						"请假天数>3");
+			} else {
+				this.getController().getTaskService().completeTask(taskId,
+						"经理审批");
+			}
+		}
+		return mapping.findForward("success");
+	}
+
+	protected ActionForward getLatestProcessDefinition(ActionMapping mapping,
+			ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) {
+		List<ProcessDefinition> processDefinitions = this.getController()
+				.getRepositoryService().createProcessDefinitionQuery()
+				.orderAsc(ProcessDefinitionQuery.PROPERTY_NAME).list();
+		Map<String, ProcessDefinition> map = new LinkedHashMap<String, ProcessDefinition>();
+		for (ProcessDefinition pd : processDefinitions) {
+			String key = pd.getKey();
+			ProcessDefinition definition = map.get(key);
+			if ((definition == null)
+					|| (definition.getVersion() < pd.getVersion())) {
+				map.put(key, pd);
+			}
+		}
+		return mapping.findForward("success");
+	}
+
+	protected ActionForward getProcessInstanceById(ActionMapping mapping,
+			ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) {
+		String pdId = request.getParameter("id");
+		this.getController().getExecutionService().createProcessInstanceQuery()
+				.processDefinitionId(pdId).list();
+		return mapping.findForward("success");
 	}
 }
