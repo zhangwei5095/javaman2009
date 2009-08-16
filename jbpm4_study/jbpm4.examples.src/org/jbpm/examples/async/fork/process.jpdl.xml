@@ -7,7 +7,7 @@
 	</start>
 
 	<fork g="99,68,80,40" name="fork">
-	  <on event="end" continue="exclusive" />
+	  <on event="end"  />
     <transition g="122,41:" to="ship goods"/>
     <transition g="123,142:" to="send bill"/>
 	</fork>
