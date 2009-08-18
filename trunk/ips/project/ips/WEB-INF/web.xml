@@ -5,7 +5,7 @@
 	<context-param>
 		<param-name>hsql.dbPath</param-name>
 		<param-value>
-			d:/tomcat6.0.18/webapps/ips/WEB-INF/hsqldb/ipsdb
+			c:/tomcat6.0.18/webapps/ips/WEB-INF/hsqldb/ipsdb
 		</param-value>
 	</context-param>
 
@@ -22,13 +22,13 @@
 	<listener>
 		<listener-class>org.ndot.ips.db.HSqlDBListener</listener-class>
 	</listener>
-	<!-- spring提供的监听器，避免Struts，Quartz的内存泄露导致ClassLoader不能加载 -->
+	<!-- spring提供的监听器，避免Struts，Quartz的内存泄露导致ClassLoader不能加载 
 	<listener>
 		<listener-class>
 			org.springframework.web.util.IntrospectorCleanupListener
 		</listener-class>
 	</listener>
-
+-->
 	<!-- spring提供的编码过滤器
 	<filter>
 		<filter-name>encodingFilter</filter-name>
