@@ -345,7 +345,7 @@ public class IPSATMReportProcesser extends IPSReportProcesser {
 				return do0003(reqReportObj, ipsInTransflow);
 			}
 			if (IPSTransTypes.IPSTRAN0004.equalsIgnoreCase(intranscode)) {
-				// 初始CDK
+				// 初始PINMAC
 				return do0004(reqReportObj, ipsInTransflow);
 			}
 			return null;
@@ -404,7 +404,7 @@ public class IPSATMReportProcesser extends IPSReportProcesser {
 					devinfo, ipsInTransflow, this.inTransCodeMap,
 					this.memReports);
 			try {
-				String macbuff = this.getMacbuf(rspReport);
+				String macbuff = rspReport.getMacbuf();
 				IPSConstantConfig sc = getIpsConstantConfig();
 				String mk = sc.getMainKey();
 				IpsKeyMng mmk = getIpsKeyMng(IPSInnerChannelID.ATM,
@@ -413,18 +413,9 @@ public class IPSATMReportProcesser extends IPSReportProcesser {
 				IpsKeyMng mackey = getIpsKeyMng(IPSInnerChannelID.ATM,
 						IPSChannelId.ATM, reqReportObj.getFieldValue(41),
 						IPSKeyType.MACKEY);
-				String hexStr = "";
-				if (IPSInnerErrorCode.IPS000.equalsIgnoreCase(errorCode)) {
-					// 带密钥
-					hexStr = CrypTool.genMacReturn8Bytes(macbuff, mk, "DES",
-							mmk.getKeyvalue(), mmk.getEncmethod(), keyValue,
-							mackey.getEncmethod(), "ASC");
-				} else {
-					hexStr = CrypTool.getMacReturn8Bytes(macbuff, mk, keyValue,
-							"ASC", "DES", mackey.getEncmethod());
-				}
-				hexStr = CrypTool.getMacReturn8Bytes(macbuff, mk, keyValue,
-						"ASC", "DES", mackey.getEncmethod());
+				String hexStr = CrypTool.genMacReturn8Bytes(macbuff, mk, "DES",
+						mmk.getKeyvalue(), mmk.getEncmethod(), keyValue, mackey
+								.getEncmethod(), "ASC");
 				byte[] BF128 = ISOUtil.hex2byte(hexStr);
 				rspReport.setFieldValue(128, BF128,
 						IPSReportFieldType.IPS_BINARY);
@@ -745,7 +736,7 @@ public class IPSATMReportProcesser extends IPSReportProcesser {
 		if ("1".equals(curentIpsInTransflow.getChkmacflag())) {
 			// 进行mac校验
 			try {
-				String macBuf = getMacbuf(reqReportObj);
+				String macBuf = reqReportObj.getMacbuf();
 				IPSConstantConfig sc = getIpsConstantConfig();
 				String mk = sc.getMainKey();
 				IpsKeyMng ipskey = getIpsKeyMng(IPSInnerChannelID.ATM,
@@ -799,22 +790,6 @@ public class IPSATMReportProcesser extends IPSReportProcesser {
 		IpsKeyMng ipskey = getSecurityDBService()
 				.findIpsKeyMngById(ipsKeyMngId);
 		return ipskey;
-	}
-
-	private String getMacbuf(IPSReport reqReportObj) throws ISOException {
-		String BF1 = reqReportObj.getFieldValue(1);
-		String BF2 = reqReportObj.getFieldValue(2);
-		String BF3 = reqReportObj.getFieldValue(3);
-		String BF4 = reqReportObj.getFieldValue(4);
-		String BF11 = reqReportObj.getFieldValue(11);
-		String BF12 = reqReportObj.getFieldValue(12);
-		String BF13 = reqReportObj.getFieldValue(13);
-		String BF39 = reqReportObj.getFieldValue(39);
-		String BF102 = reqReportObj.getFieldValue(102);
-		String BF103 = reqReportObj.getFieldValue(103);
-		String macBuf = FormatStrings.genMacBuffer(BF1, BF2, BF3, BF4, BF11,
-				BF12, BF13, BF39, BF102, BF103);
-		return macBuf;
 	}
 
 	private IpsInTransflow getProcessInfo(List<IpsInTransflow> ipsInTransflows,

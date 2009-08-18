@@ -79,7 +79,7 @@ public class IPSReportFactory {
 		}
 		if (IPSReportFactory.T0_C003_RSP_REPORT_0004
 				.equalsIgnoreCase(reportType)) {
-			// 初始CDK成功应答报文
+			// PIN/MACKEY
 			return IPSReportFactory.createT0_C003_RSP_REPORT_0004(rspCode,
 					keyValue, sysParamSet, devinfo, ipsTranscodeMap, reports);
 		}
@@ -115,7 +115,7 @@ public class IPSReportFactory {
 			toAtmRspReport.setHeaderFieldValue(5, devReqReport
 					.getHeaderFieldValue(5));
 			// 设置报文体
-			toAtmRspReport.setFieldValue(1, "0830");
+			toAtmRspReport.setFieldValue(0, "0830");
 			copyFields(devReqReport, 3, toAtmRspReport, 3);
 			copyFields(devReqReport, 7, toAtmRspReport, 7);
 			copyFields(devReqReport, 11, toAtmRspReport, 11);
@@ -155,7 +155,7 @@ public class IPSReportFactory {
 			toAtmRspReport.setHeaderFieldValue(5, devReqReport
 					.getHeaderFieldValue(5));
 			// 设置报文体
-			toAtmRspReport.setFieldValue(1, "0830");
+			toAtmRspReport.setFieldValue(0, "0830");
 			copyFields(devReqReport, 3, toAtmRspReport, 3);
 			copyFields(devReqReport, 7, toAtmRspReport, 7);
 			copyFields(devReqReport, 11, toAtmRspReport, 11);
@@ -310,7 +310,7 @@ public class IPSReportFactory {
 			toAtmRspReport.setHeaderFieldValue(5, devReqReport
 					.getHeaderFieldValue(5));
 			// 设置报文体
-			toAtmRspReport.setFieldValue(1, "0210");
+			toAtmRspReport.setFieldValue(0, "0210");
 			copyFields(devReqReport, 2, toAtmRspReport, 2);
 			copyFields(devReqReport, 3, toAtmRspReport, 3);
 			copyFields(devReqReport, 7, toAtmRspReport, 7);
