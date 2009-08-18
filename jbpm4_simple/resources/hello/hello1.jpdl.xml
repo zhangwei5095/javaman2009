@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<process name="hello1" xmlns="http://jbpm.org/4.0/jpdl">
+   <task name="task1" g="147,77,92,52" assignee="eeee"/>
+</process>
