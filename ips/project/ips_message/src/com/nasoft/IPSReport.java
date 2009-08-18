@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
+import org.ndot.ips.util.FormatStrings;
+
 import com.nasoft.iso.ISOException;
 import com.nasoft.iso.ISOMsg;
 import com.nasoft.iso.ISOUtil;
@@ -149,5 +151,26 @@ public class IPSReport {
 		xmlHeader.append("</header>");
 		return xmlHeader.toString();
 
+	}
+
+	/**
+	 * 
+	 * @return macbuffer
+	 * @throws ISOException
+	 */
+	public String getMacbuf() throws ISOException {
+		String BF1 = this.getFieldValue(0);
+		String BF2 = this.getFieldValue(2);
+		String BF3 = this.getFieldValue(3);
+		String BF4 = this.getFieldValue(4);
+		String BF11 = this.getFieldValue(11);
+		String BF12 = this.getFieldValue(12);
+		String BF13 = this.getFieldValue(13);
+		String BF39 = this.getFieldValue(39);
+		String BF102 = this.getFieldValue(102);
+		String BF103 = this.getFieldValue(103);
+		String macBuf = FormatStrings.genMacBuffer(BF1, BF2, BF3, BF4, BF11,
+				BF12, BF13, BF39, BF102, BF103);
+		return macBuf;
 	}
 }
