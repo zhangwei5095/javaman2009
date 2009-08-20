@@ -1329,8 +1329,7 @@ public class BusinessDBServicesImp implements BusinessDBServices {
 	}
 
 	public IpsDevStat findIpsDevStatById(String id) {
-		// TODO Auto-generated method stub
-		return null;
+		return this.ipsDevStatDAO.findById(id);
 	}
 
 	public List<IpsDevStat> findIpsDevStatByProperty(String propertyName,
@@ -1589,7 +1588,7 @@ public class BusinessDBServicesImp implements BusinessDBServices {
 	}
 
 	public void updeateIpsDevStat(IpsDevStat transientInstance) {
-		// TODO Auto-generated method stub
+		this.ipsDevStatDAO.update(transientInstance);
 		
 	}
 
