@@ -1,5 +1,6 @@
 package org.ndot.ips.comm.channel;
 
+import java.io.Serializable;
 import java.net.InetSocketAddress;
 import java.nio.ByteBuffer;
 import java.nio.channels.SelectionKey;
@@ -32,10 +33,17 @@ import com.nasoft.iso.ISOUtil;
  * 
  */
 public class IPSATMReportChannel extends IPSReportChannel {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	public IPSATMReportChannel() {
 		setLog(Logger.getLogger(IPSATMReportChannel.class));
-		
+
 	}
+
 	@SuppressWarnings( { "unused", "static-access" })
 	@Override
 	public void runServer() {

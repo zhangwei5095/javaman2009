@@ -348,12 +348,59 @@ public class IPSATMReportProcesser extends IPSReportProcesser {
 				// 初始PINMAC
 				return do0004(reqReportObj, ipsInTransflow);
 			}
+			if (IPSTransTypes.IPSTRAN0006.equalsIgnoreCase(intranscode)) {
+				// 状态上送
+				return do0006(reqReportObj, ipsInTransflow);
+			}
 			return null;
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
 		}
 
+	}
+
+	private IPSReport do0006(IPSReport reqReportObj,
+			IpsInTransflow ipsInTransflow) {
+		// 状态上送
+		String errorCode = IPSInnerErrorCode.IPS000;
+		try {
+			IpsDevStat devstat = getBusinessDBServices().findIpsDevStatById(
+					devinfo.getDevid());
+			devstat.setUpddatetime(reqReportObj.getFieldValue(13)
+					+ reqReportObj.getFieldValue(12));
+			devstat.setDevstat(reqReportObj.getFieldValue(24));
+			devstat.setDeverrinf(reqReportObj.getFieldValue(122));
+			getBusinessDBServices().updeateIpsDevStat(devstat);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			errorCode = IPSInnerErrorCode.IPS330;
+		}
+		Map<String, String> sysParamSet = new HashMap<String, String>();
+		// 核心清算日期
+		sysParamSet.put(IPSSysParamCode.IPS0001, getBusinessDBServices()
+				.findIpsSysParamById(IPSSysParamCode.IPS0001).getParamvalue());
+		String reqRspCode = "";
+		if (IPSInnerErrorCode.IPS000.equalsIgnoreCase(errorCode)) {
+			String rsprspcode = "02";// 退成功
+			sysParamSet.put(IPSSysParamCode.IPS0002, getBusinessDBServices()
+					.findIpsSysParamById(IPSSysParamCode.IPS0002)
+					.getParamvalue());
+			// 控制参数版本号
+			sysParamSet.put(IPSSysParamCode.IPS0003, getBusinessDBServices()
+					.findIpsSysParamById(IPSSysParamCode.IPS0003)
+					.getParamvalue());
+			rsprspcode = "05";// 状态通知成功
+			reqRspCode = getReqRspcode(rsprspcode);
+		} else {
+			// 终端状态通知交易失败
+			reqRspCode = geReqRspErrorCode(errorCode);
+		}
+		return IPSReportFactory.getReport(
+				IPSReportFactory.T0_C003_RSP_REPORT_0006, jnlno, null,
+				sysParamSet, reqRspCode, devinfo, ipsInTransflow,
+				this.inTransCodeMap, this.memReports);
 	}
 
 	private IPSReport do0004(IPSReport reqReportObj,
@@ -490,7 +537,7 @@ public class IPSATMReportProcesser extends IPSReportProcesser {
 	}
 
 	private IPSReport do0001_0002(IpsInTransflow ipsInTransflow, String signStat) {
-		// 签到交易
+		// 签到签退交易
 		String errorCode = IPSInnerErrorCode.IPS000;
 		try {
 			IpsDevStat devstat = getBusinessDBServices().findIpsDevStatById(
