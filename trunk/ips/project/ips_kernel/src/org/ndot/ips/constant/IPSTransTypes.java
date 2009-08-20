@@ -23,6 +23,10 @@ public class IPSTransTypes {
 	public static String IPSTRAN0003 = "0003";
 	// 更新PINKey/MACKey
 	public static String IPSTRAN0004 = "0004";
+	// 用户例外
+	public static String IPSTRAN0005 = "0005";
+	// 状态上送
+	public static String IPSTRAN0006 = "0006";
 	// 余额查询
 	public static String IPSTRAN1001 = "1001";
 }
