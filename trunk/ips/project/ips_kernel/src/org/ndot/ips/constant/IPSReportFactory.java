@@ -39,6 +39,7 @@ public class IPSReportFactory {
 	public static String T0_C003_RSP_REPORT_0001 = "T0_C003_RSP_REPORT_0001";
 	public static String T0_C003_RSP_REPORT_0003 = "T0_C003_RSP_REPORT_0003";
 	public static String T0_C003_RSP_REPORT_0004 = "T0_C003_RSP_REPORT_0004";
+	public static String T0_C003_RSP_REPORT_0006 = "T0_C003_RSP_REPORT_0006";
 
 	public static IPSReport getErrorRspToC003(String errorCode,
 			Map<String, IPSReport> reports) {
@@ -83,6 +84,12 @@ public class IPSReportFactory {
 			return IPSReportFactory.createT0_C003_RSP_REPORT_0004(rspCode,
 					keyValue, sysParamSet, devinfo, ipsTranscodeMap, reports);
 		}
+		if (IPSReportFactory.T0_C003_RSP_REPORT_0006
+				.equalsIgnoreCase(reportType)) {
+			// PIN/MACKEY
+			return IPSReportFactory.createT0_C003_RSP_REPORT_0006(rspCode,
+					keyValue, sysParamSet, devinfo, ipsTranscodeMap, reports);
+		}
 		if (IPSReportFactory.C003_TO_C002_REQ_REPORT.equals(reportType)) {
 			// ATM到核心的请求报文
 			return createC003_TO_C002_REQ_REPORT(jnlno, devinfo,
@@ -94,6 +101,55 @@ public class IPSReportFactory {
 		}
 
 		return null;
+
+	}
+
+	private static IPSReport createT0_C003_RSP_REPORT_0006(String rspCode,
+			byte[] keyValue, Map<String, String> sysParamSet,
+			IpsDevInf devinfo, IpsTranscodeMap ipsTranscodeMap,
+			Map<String, IPSReport> reports) {
+
+		try {
+			IPSReport devReqReport = reports
+					.get(IPSReportFactory.FROM_C003_REQ_REPORT);
+			IPSReport toAtmRspReport = new IPSReport();
+
+			// 设置报文头
+			toAtmRspReport.setHeaderFieldValue(2, devReqReport
+					.getHeaderFieldValue(2));
+			toAtmRspReport.setHeaderFieldValue(3, devReqReport
+					.getHeaderFieldValue(3));
+			toAtmRspReport.setHeaderFieldValue(4, devReqReport
+					.getHeaderFieldValue(4));
+			toAtmRspReport.setHeaderFieldValue(5, devReqReport
+					.getHeaderFieldValue(5));
+			// 设置报文体
+			toAtmRspReport.setFieldValue(0, "0830");
+			copyFields(devReqReport, 3, toAtmRspReport, 3);
+			copyFields(devReqReport, 7, toAtmRspReport, 7);
+			copyFields(devReqReport, 11, toAtmRspReport, 11);
+			copyFields(devReqReport, 12, toAtmRspReport, 12);
+			copyFields(devReqReport, 13, toAtmRspReport, 13);
+			toAtmRspReport.setFieldValue(15, sysParamSet
+					.get(IPSSysParamCode.IPS0001));
+			toAtmRspReport.setFieldValue(39, rspCode);
+			copyFields(devReqReport, 41, toAtmRspReport, 41);
+			copyFields(devReqReport, 51, toAtmRspReport, 51);
+			toAtmRspReport.setFieldValue(93, "00");
+			if (sysParamSet.size() != 1) {
+				// 签到 應答報文的附加信息
+				String BF120Str = sysParamSet.get(IPSSysParamCode.IPS0002)
+						+ sysParamSet.get(IPSSysParamCode.IPS0003)
+						+ "00000000"+GenDateTime.getDateTime();
+				toAtmRspReport.setFieldValue(120, BF120Str.getBytes(),
+						IPSReportFieldType.IPS_BINARY);
+			}
+			return toAtmRspReport;
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
 
 	}
 
