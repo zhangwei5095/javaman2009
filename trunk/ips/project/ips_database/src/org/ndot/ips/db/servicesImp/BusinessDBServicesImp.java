@@ -1062,8 +1062,6 @@ public class BusinessDBServicesImp implements BusinessDBServices {
 				propertyValues);
 	}
 
-	
-
 	public IpsDevStatDAO getIpsDevStatDAO() {
 		return ipsDevStatDAO;
 	}
@@ -1114,97 +1112,100 @@ public class BusinessDBServicesImp implements BusinessDBServices {
 
 	public void attachIpsCardbinClean(IpsCardbin instance) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	public void attachIpsCardbinDirty(IpsCardbin instance) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	public void attachIpsDevStatClean(IpsDevStat instance) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	public void attachIpsDevStatDirty(IpsDevStat instance) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	public void attachIpsDevTranslimitClean(IpsDevTranslimit instance) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	public void attachIpsDevTranslimitDirty(IpsDevTranslimit instance) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	public void attachIpsEvilCardClean(IpsEvilCard instance) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	public void attachIpsEvilCardDirty(IpsEvilCard instance) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	public void attachIpsSafClean(IpsSaf instance) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	public void attachIpsSafDirty(IpsSaf instance) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	public void attachIpsSysParamClean(IpsSysParam instance) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	public void attachIpsSysParamDirty(IpsSysParam instance) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	public void deleteIpsCardbin(IpsCardbin persistentInstance) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	public void deleteIpsDevStat(IpsDevStat persistentInstance) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	public void deleteIpsDevTranslimit(IpsDevTranslimit persistentInstance) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	public void deleteIpsEvilCard(IpsEvilCard persistentInstance) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	public void deleteIpsSaf(IpsSaf persistentInstance) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	public void deleteIpsSysParam(IpsSysParam persistentInstance) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	public List<IpsCardbin> findIpsCardbinAll() {
-		// TODO Auto-generated method stub
-		return null;
+		List<IpsCardbin> result = new ArrayList<IpsCardbin>();
+		for (Object obj : ipsCardbinDAO.findAll()) {
+			result.add((IpsCardbin) obj);
+		}
+		return result;
 	}
 
 	public List<IpsCardbin> findIpsCardbinByBankid(Object bankid) {
@@ -1554,42 +1555,42 @@ public class BusinessDBServicesImp implements BusinessDBServices {
 
 	public void saveIpsCardbin(IpsCardbin transientInstance) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	public void saveIpsDevStat(IpsDevStat transientInstance) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	public void saveIpsDevTranslimit(IpsDevTranslimit transientInstance) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	public void saveIpsEvilCard(IpsEvilCard transientInstance) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	public void saveIpsSaf(IpsSaf transientInstance) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	public void saveIpsSysParam(IpsSysParam transientInstance) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	public void saveOrUpdeateIpsDevStat(IpsDevStat transientInstance) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	public void updeateIpsDevStat(IpsDevStat transientInstance) {
 		this.ipsDevStatDAO.update(transientInstance);
-		
+
 	}
 
 }
