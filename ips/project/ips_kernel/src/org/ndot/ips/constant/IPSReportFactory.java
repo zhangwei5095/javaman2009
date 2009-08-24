@@ -139,8 +139,8 @@ public class IPSReportFactory {
 			if (sysParamSet.size() != 1) {
 				// 签到 應答報文的附加信息
 				String BF120Str = sysParamSet.get(IPSSysParamCode.IPS0002)
-						+ sysParamSet.get(IPSSysParamCode.IPS0003)
-						+ "00000000"+GenDateTime.getDateTime();
+						+ sysParamSet.get(IPSSysParamCode.IPS0003) + "00000000"
+						+ GenDateTime.getDateTime();
 				toAtmRspReport.setFieldValue(120, BF120Str.getBytes(),
 						IPSReportFieldType.IPS_BINARY);
 			}
@@ -319,18 +319,6 @@ public class IPSReportFactory {
 			// 42
 			toCoreReqReport.setFieldValue(42, devinfo.getInstcode());
 			copyFields(reqReportObj, 51, toCoreReqReport, 51);
-			// 52
-			String pinstr = "";
-
-			// IPSTODO 进行pin转换,
-			/*
-			 * pinstr = CrypTool.pinTransfer(reqReportObj.getFieldValue(52),
-			 * accountNo, oriMk, oriPink, oriAcctFlag, oriPinArith, oriMArith,
-			 * destMkey, destPinKey, destAcctFlag, destPinArith, destMArith, ip,
-			 * port, timeout, oriEncFlag, destEncFlag);binary
-			 */
-			toCoreReqReport.setFieldValue(52, "1EC6D6086EE024FC");
-
 			copyFields(reqReportObj, 53, toCoreReqReport, 53);
 			// 99
 			toCoreReqReport.setFieldValue(42, devinfo.getUunioncode());
