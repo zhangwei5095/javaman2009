@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
+	<!-- Start 构造函数注入Start-->
+	<bean id="beanb" class="org.ndot.spring25.inject.BeanB" />
+	<!-- 按参数类型注入 -->
+	<bean id="beanA1" class="org.ndot.spring25.inject.BeanA">
+		<constructor-arg type="java.lang.String" value="NDot" />
+		<constructor-arg type="int" value="26" />
+		<constructor-arg ref="beanb" />
+	</bean>
+	<!-- 按参数索引型注入 -->
+	<bean id="beanA2" class="org.ndot.spring25.inject.BeanA">
+		<constructor-arg index="1" value="26" />
+		<constructor-arg index="0" value="NDot" />
+		<constructor-arg index="2" ref="beanb" />
+	</bean>
+	<!-- end Bean 构造函数注入   end-->
+
+	<!-- Start setter方法实注入 Start-->
+	<bean id="beanA3" class="org.ndot.spring25.inject.BeanA">
+		<property name="intp" value="26" />
+		<property name="stringp" value="NDot" />
+		<property name="beanp" ref="beanb" />
+	</bean>
+	<!-- end setter方法实注入   end-->
+
+	<!-- Start 混合注入 Start-->
+	<bean id="beanA4" class="org.ndot.spring25.inject.BeanA">
+		<constructor-arg index="1" value="26" />
+		<constructor-arg index="0" value="NDot" />
+		<property name="beanp" ref="beanb" />
+	</bean>
+	<!-- end 混合注入   end-->
+	<!-- Start 内部定义bean注入 Start-->
+	<bean id="beanA5" class="org.ndot.spring25.inject.BeanA">
+		<constructor-arg index="1" value="26" />
+		<constructor-arg index="0" value="NDot" />
+		<property name="beanp">
+			<bean class="org.ndot.spring25.inject.BeanB" />
+		</property>
+	</bean>
+	<!-- end 内部定义bean注入   end-->
+	<!-- Start 注入集合类型 Start-->
+	<bean id="temp" class="java.lang.String">
+		<constructor-arg value="NDot" />
+	</bean>
+	<bean id="BeanBInject1" class="org.ndot.spring25.inject.BeanB">
+		<property name="listp">
+			<list>
+				<value>list1</value>
+				<value>list2</value>
+				<value>list3</value>
+			</list>
+		</property>
+		<property name="mapp">
+			<map>
+				<entry>
+					<key>
+						<value>1</value>
+					</key>
+					<value>
+						bbbb
+					</value>
+				</entry>
+				<entry key="2" value="cccc" />
+				<entry key="3" value-ref="temp" />
+				<entry key-ref="temp" value-ref="temp" />
+			</map>
+		</property>
+		<property name="propp">
+			<props>
+				<prop key="aa">
+					aaaaa
+		         </prop>
+				<prop key="bb">
+					bbbbb
+		         </prop>
+				<prop key="cc">
+					cccc
+		         </prop>
+			</props>
+		</property>
+		<property name="setp">
+			<set>
+				<value>aaaa</value>
+				<value>bbbb</value>
+				<value>cccc</value>
+			</set>
+		</property>
+	</bean>
+	<!-- 集合的合并 -->
+	<bean id="BeanBInject2" class="org.ndot.spring25.inject.BeanB"
+		parent="BeanBInject1">
+		<property name="listp">
+			<!-- marge=false 时候不会合并，而是覆盖 -->
+			<list merge="true">
+				<value>list4</value>
+			</list>
+		</property>
+	</bean>
+	<!-- end  注入集合类型   end-->
+	<!--start 强制类型转换 start -->
+	<bean id="BeanBInject3" class="org.ndot.spring25.inject.BeanB"
+		parent="BeanBInject1">
+		<property name="mapp">
+			<map>
+				<entry key="aaa" value="9.99" />
+				<entry key="bbb" value="8.88" />
+			</map>
+		</property>
+		<property name="floatMap">
+			<map>
+				<entry key="aaa" value="9.99" />
+				<entry key="bbb" value="8.88" />
+			</map>
+		</property>
+	</bean>
+	<!--end 强制类型转换  end -->
+	<!-- start Spring 对 null 的配置start -->
+	<!-- <null/>用于处理null值。Spring会把属性的空参数当作空字符串处理。 -->
+	<bean id="nullbean" class="org.ndot.spring25.inject.NullBean">
+		<property name="nullValue">
+			<null />
+		</property>
+		<property name="emptyStr">
+			<value />
+		</property>
+	</bean>
+	<!-- end Spring 对 null 的配置 end -->
+
+	<!--start  Lookup 方法注入  start -->
+	<!-- 要加入 cglib jar包 -->
+	<bean id="tem2" class="org.ndot.spring25.inject.BeanB" scope="prototype" />
+	<bean id="beana" class="org.ndot.spring25.inject.BeanA">
+		<lookup-method bean="tem2" name="injectBeanBInstance" />
+	</bean>
+	<!--end  Lookup 方法注入 end -->
+</beans>
