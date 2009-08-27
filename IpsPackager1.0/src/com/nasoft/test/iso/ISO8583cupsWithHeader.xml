@@ -1,0 +1,42 @@
+<root>
+	<key>072118165800121699990001</key>
+	<header>
+		<HeaderLength type="int">46</HeaderLength>
+		<Version type="hex">01</Version>
+		<TotalLength>0482</TotalLength>
+		<DestID>00010000   </DestID>
+		<SourceID>01020000   </SourceID>
+		<Reserved>000</Reserved>
+		<BatchNumber type="int">48</BatchNumber>
+		<TransInfo>00000000</TransInfo>
+		<UserInfo type="hex">30</UserInfo>
+		<RejectCode>00000</RejectCode>
+	</header>
+	<isomsg>
+		<field id="0" value="0200"/>
+		<field id="2" value="9558990000000000001"/>
+		<field id="3" value="010000"/>
+		<field id="4" value="000000010000"/>
+		<field id="7" value="0721181658"/>
+		<field id="11" value="001216"/>
+		<field id="12" value="181658"/>
+		<field id="13" value="0721"/>
+		<field id="18" value="6011"/>
+		<field id="22" value="021"/>
+		<field id="25" value="02"/>
+		<field id="26" value="06"/>
+		<field id="32" value="99992900"/>
+		<field id="33" value="99990000"/>
+		<field id="35" value="9558990000000000001=05122011559459102"/>
+		<field id="36" value="994386160000080034=1561560000000000000003976999236000002070000000000000000000000=000000000000=0000000345"/>
+		<field id="37" value="999900001143"/>
+		<field id="41" value="12345678"/>
+		<field id="42" value="123456789012345"/>
+		<field id="43" value="CHN29000CUEmc Simulator"/>
+		<field id="49" value="156"/>
+		<field id="52" value="A935832EF8704115" type="binary"/>
+		<field id="53" value="2000000000000000"/>
+		<field id="60" value="00000200010000"/>
+		<field id="128" value="3834334346313944" type="binary"/>
+	</isomsg>
+</root>
