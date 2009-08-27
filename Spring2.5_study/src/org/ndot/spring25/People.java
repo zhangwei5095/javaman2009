@@ -27,10 +27,24 @@ package org.ndot.spring25;
  * 
  */
 public class People {
-	private String name;
-	private int age;
-	private String sex;
-	private Address address;
+	public People() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	String name;
+	int age;
+	String sex;
+	Address address;
+	String msg = "无 - 参构造函数,实例化bean";
+
+	public String getMsg() {
+		return msg;
+	}
+
+	public void setMsg(String msg) {
+		this.msg = msg;
+	}
 
 	public String getName() {
 		return name;
@@ -62,5 +76,9 @@ public class People {
 
 	public void setAddress(Address address) {
 		this.address = address;
+	}
+
+	public void say() {
+		System.out.println(msg);
 	}
 }
