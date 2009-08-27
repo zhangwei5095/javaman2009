@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
+	<!-- Start 构造函数实例化 Start-->
+
+	<bean id="canada" class="org.ndot.spring25.instance.Canada" />
+	<bean id="chinise" class="org.ndot.spring25.instance.Chinise">
+		<constructor-arg>
+			<value>有 - 参构造函数,实例化bean</value>
+		</constructor-arg>
+	</bean>
+
+	<!-- end Bean 构造函数实例化   end-->
+
+	<!-- Start 工厂方法实例化 Start-->
+	<bean id="beanFactory" class="org.ndot.spring25.instance.BeanInstanceFactory" />
+	<bean id="fcanada" factory-bean="beanFactory" factory-method="createPeople">
+		<constructor-arg index="0" value="canada" />
+		<constructor-arg index="1" value="工厂实例化bean" />
+	</bean>
+	<!-- end Bean 工厂方法实例化   end-->
+
+	<!-- Start 静态工厂方法实例化 Start-->
+	<bean id="sfchinise" class="org.ndot.spring25.instance.StaticBeanInstanceFactory"
+		factory-method="createPeople">
+		<constructor-arg>
+			<value>chinise</value>
+		</constructor-arg>
+	</bean>
+	<!-- end Bean 静态工厂方法实例化   end-->
+</beans>
