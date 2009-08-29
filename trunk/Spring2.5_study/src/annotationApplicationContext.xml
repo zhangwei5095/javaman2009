@@ -23,9 +23,16 @@
 		<constructor-arg value="Test's Family" />
 	</bean>
 
-	<bean id="address" class="org.ndot.spring25.annotation.Address">
+	<bean id="familyAddress" class="org.ndot.spring25.annotation.Address">
 		<property name="city" value="北京" />
 		<property name="country" value="中国" />
+	</bean>
+	<bean id="address" class="org.ndot.spring25.annotation.Address">
+		<property name="city" value="伦敦" />
+		<property name="country" value="英国" />
+		<qualifier>
+			<attribute key="value" value="injectAddress" />
+		</qualifier>
 	</bean>
 
 	<bean id="father" class="org.ndot.spring25.annotation.Member">
