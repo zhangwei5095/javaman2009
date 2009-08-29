@@ -1,7 +1,51 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="
+	http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd">
+	<!-- 打开对注解的支持 -->
+	<context:annotation-config />
+	<!--start 用于注入的 基本Bean 定义 start-->
+	<bean id="familyName" class="java.lang.String">
+		<constructor-arg value="NDot's Family" />
+		<qualifier type="Qualifier" value="familyName" />
+	</bean>
 
+	<bean id="familyName2" class="java.lang.String">
+		<constructor-arg value="Test's Family" />
+		<qualifier type="org.springframework.beans.factory.annotation.Qualifier"
+			value="test" />
+	</bean>
+
+
+	<bean id="familyName3" class="java.lang.String">
+		<constructor-arg value="Test's Family" />
+	</bean>
+
+	<bean id="address" class="org.ndot.spring25.annotation.Address">
+		<property name="city" value="北京" />
+		<property name="country" value="中国" />
+	</bean>
+
+	<bean id="father" class="org.ndot.spring25.annotation.Member">
+		<property name="mrole" value="father" />
+		<property name="msex" value="man" />
+	</bean>
+
+	<bean id="mather" class="org.ndot.spring25.annotation.Member">
+		<property name="mrole" value="mather" />
+		<property name="msex" value="weman" />
+	</bean>
+
+	<bean id="son" class="org.ndot.spring25.annotation.Member">
+		<property name="mrole" value="son" />
+		<property name="msex" value="man" />
+	</bean>
+
+	<!--end 用于注入的 基本Bean 定义 end-->
+	<!--start 注解注入的bean start-->
+	<bean id="family" class="org.ndot.spring25.annotation.Family" />
+	<!--start 注解注入的bean start-->
 
 </beans>
