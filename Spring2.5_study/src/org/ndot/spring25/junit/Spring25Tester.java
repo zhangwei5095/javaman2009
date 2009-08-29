@@ -2,6 +2,7 @@ package org.ndot.spring25.junit;
 
 import org.junit.Test;
 import org.ndot.spring25.People;
+import org.ndot.spring25.autowire.AutowireMainBean;
 import org.ndot.spring25.container.NDotSimpleXMLApplicationContext;
 import org.ndot.spring25.inject.BeanA;
 import org.ndot.spring25.inject.BeanB;
@@ -10,6 +11,7 @@ import org.ndot.spring25.inject.dependson.Chicken;
 import org.ndot.spring25.instance.Canada;
 import org.ndot.spring25.instance.Chinise;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.AbstractApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 /**
@@ -189,7 +191,6 @@ public class Spring25Tester {
 				System.out.println(((BeanA) ctx.getBean("beana"))
 						.injectBeanBInstance().hashCode());
 
-
 			}
 			System.out.println("====恭喜您，全部测试成功啦：)=====");
 		} catch (Exception e) {
@@ -218,5 +219,91 @@ public class Spring25Tester {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+
+	/**
+	 * 
+	 * 功 能：自动装配测试
+	 * 
+	 *<P>
+	 */
+	@Test
+	public void autowireTest() {
+		try {
+			ApplicationContext ctx = new ClassPathXmlApplicationContext(
+					new String[] { "autowireApplicationContext.xml" });
+			{
+				// byName Autowire
+				try {
+					AutowireMainBean byNameAutowire = (AutowireMainBean) ctx
+							.getBean("byNameAutowire");
+					byNameAutowire.getAutowireBeanA().say(
+							"I'am Autowired byName！");
+				} catch (Exception e) {
+					System.err
+							.println("==============================================");
+					System.err
+							.println("【byName：AutowireMainBean 没有进行 依赖注入检查，AutowireMainBean注入失败......】");
+					System.err
+							.println("==============================================");
+				}
+			}
+
+			{
+				// byType AutowirebyConstructorAutowire
+				try {
+					AutowireMainBean byTypeAutowire = (AutowireMainBean) ctx
+							.getBean("byTypeAutowire");
+					byTypeAutowire.getAutowireBeanA().say(
+							"I'am Autowired byType！");
+				} catch (Exception e) {
+					System.err
+							.println("==============================================");
+					System.err
+							.println("【byType:AutowireMainBean 没有进行 依赖注入检查，AutowireMainBean注入失败......】");
+					System.err
+							.println("==============================================");
+				}
+			}
+
+			{
+				// byConstructorAutowire Autowire
+				try {
+					AutowireMainBean byConstructorAutowire = (AutowireMainBean) ctx
+							.getBean("byConstructorAutowire");
+					byConstructorAutowire.getAutowireBeanA().say(
+							"I'am Autowired byConstructorAutowire！");
+				} catch (Exception e) {
+					System.err
+							.println("==============================================");
+					System.err
+							.println("【byConstructorAutowire: AutowireMainBean 没有进行 依赖注入检查，AutowireMainBean注入失败......】");
+					System.err
+							.println("==============================================");
+				}
+			}
+
+			{
+				// byAutodetectAutowire Autowire
+				try {
+					AutowireMainBean byAutodetectAutowire = (AutowireMainBean) ctx
+							.getBean("byAutodetectAutowire");
+					byAutodetectAutowire.getAutowireBeanA().say(
+							"I'am Autowired byAutodetectAutowire！");
+				} catch (Exception e) {
+					System.err
+							.println("==============================================");
+					System.err
+							.println("【byAutodetectAutowire: AutowireMainBean 没有进行 依赖注入检查，AutowireMainBean注入失败......】");
+					System.err
+							.println("==============================================");
+				}
+			}
+			// 关闭ctx
+			((AbstractApplicationContext) ctx).registerShutdownHook();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
 	}
 }
