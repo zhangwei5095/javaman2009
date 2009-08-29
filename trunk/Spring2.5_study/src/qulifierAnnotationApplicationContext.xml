@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="
+	http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd">
+	<!-- 打开对注解的支持 -->
+	<context:annotation-config />
+	<!-- 避免对@Qualifier的依赖，用CustomAutowireConfigurer声明所有自定义Qualifier -->
+	<!--
+		<bean id="customAutowireConfigurer"
+		class="org.springframework.beans.factory.annotation.CustomAutowireConfigurer">
+		<property name="customQualifierTypes"> <set> <value>
+		org.ndot.spring25.annotation.qualifier.MyQualifier </value> </set>
+		</property> </bean>
+	-->
+
+	<!--start 用于注入的 基本Bean 定义 start-->
+	<bean class="org.ndot.spring25.annotation.qualifier.MyBean">
+		<property name="msg" value="我25岁的壮劳力,嘿嘿：）" />
+		<qualifier type="MyQualifier">
+			<attribute key="sex" value="fbean" />
+			<attribute key="age" value="25" />
+		</qualifier>
+	</bean>
+	<bean class="org.ndot.spring25.annotation.qualifier.MyBean">
+		<property name="msg" value="我10岁的小女孩,不好意思：）" />
+		<qualifier type="MyQualifier">
+			<attribute key="sex" value="mbean" />
+			<attribute key="age" value="10" />
+		</qualifier>
+	</bean>
+	<!--end 用于注入的 基本Bean 定义 end-->
+
+	<!--start 注解注入的bean start-->
+	<bean id="useMyQualifier " class="org.ndot.spring25.annotation.qualifier.UseMyQualifier" />
+	<!--start 注解注入的bean start-->
+
+</beans>
