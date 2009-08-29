@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd"
+	default-autowire-candidates="autowire*">
+
+	<!--start 自动装载 start -->
+	<bean id="simpleP" class="java.lang.String">
+		<constructor-arg value="NDot" />
+	</bean>
+	<!-- 作为自动装配的首选 -->
+	<bean id="autowireBeanA" class="org.ndot.spring25.autowire.AutowireBeanA"
+		primary="true" />
+	<!--autowireBeanA2不作为自动装配的候选者 autowire-candidate="false"  -->
+	<bean id="autowireBeanA2" class="org.ndot.spring25.autowire.AutowireBeanA"
+		autowire-candidate="false" />
+	<bean id="autowireBeanAe" class="org.ndot.spring25.autowire.AutowireBeanA" />
+	<bean id="beanA" class="org.ndot.spring25.autowire.AutowireBeanA" />
+	<bean id="autowireBeanB" class="org.ndot.spring25.autowire.AutowireBeanB" />
+	<!--end 自动装载 end -->
+
+	<!--start  ByName start-->
+	<bean id="byNameAutowire" class="org.ndot.spring25.autowire.AutowireMainBean"
+		autowire="byName" dependency-check="objects" />
+	<!--end  ByName end-->
+
+	<!--start  ByType start-->
+	<bean id="byTypeAutowire" class="org.ndot.spring25.autowire.AutowireMainBean"
+		autowire="byType" dependency-check="objects" autowire-candidate="true" />
+	<!--end  ByType end-->
+	<!--start  ByAutodetect start-->
+	<bean id="byAutodetectAutowire" class="org.ndot.spring25.autowire.AutowireMainBean"
+		autowire="autodetect" dependency-check="all">
+		<property name="simpleP" ref="simpleP" />
+	</bean>
+	<!--end  ByAutodetect end-->
+	<!--start  ByConstructor start-->
+	<bean id="byConstructorAutowire" class="org.ndot.spring25.autowire.AutowireMainBean"
+		autowire="constructor">
+		<property name="simpleP" ref="simpleP" />
+	</bean>
+	<!--end  ByConstructor end-->
+
+</beans>
