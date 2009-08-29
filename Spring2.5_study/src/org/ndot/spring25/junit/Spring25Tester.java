@@ -1,7 +1,14 @@
 package org.ndot.spring25.junit;
 
+import java.util.Iterator;
+import java.util.Map;
+
 import org.junit.Test;
 import org.ndot.spring25.People;
+import org.ndot.spring25.annotation.Family;
+import org.ndot.spring25.annotation.Member;
+import org.ndot.spring25.annotation.qualifier.UseMyQualifier;
+import org.ndot.spring25.annotation.scan.DBServices;
 import org.ndot.spring25.autowire.AutowireMainBean;
 import org.ndot.spring25.container.NDotSimpleXMLApplicationContext;
 import org.ndot.spring25.inject.BeanA;
@@ -305,5 +312,79 @@ public class Spring25Tester {
 			e.printStackTrace();
 		}
 
+	}
+
+	/**
+	 * 
+	 * 功 能：基于注解的注入测试
+	 * 
+	 *<P>
+	 */
+	@Test
+	public void testAnnotationTest() {
+		try {
+			ApplicationContext ctx = new ClassPathXmlApplicationContext(
+					new String[] { "annotationApplicationContext.xml" });
+			{
+				Family f = (Family) ctx.getBean("family");
+
+				System.out.println("=====================");
+				System.out.println("家庭名称：" + f.getFname());
+				System.out.println("=====================");
+				System.out.println("家庭成员：");
+				Map<String, Member> members = f.getMembers();
+				Iterator it = members.keySet().iterator();
+				while (it.hasNext()) {
+					String mrole = (String) it.next();
+					System.out.println("家庭角色: " + mrole);
+					Member m = (Member) members.get(mrole);
+					System.out.println("性别: " + m.getMsex());
+				}
+				System.out.println("=====================");
+				System.out.println("家庭地址：" + f.getAddress().getCountry() + ":"
+						+ f.getAddress().getCity());
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * 
+	 * 功 能：基于注解的【自定义Qualifier】注入测试
+	 * 
+	 *<P>
+	 */
+	@Test
+	public void testQualifierAnnotationTest() {
+		try {
+			ApplicationContext ctx = new ClassPathXmlApplicationContext(
+					new String[] { "qulifierAnnotationApplicationContext.xml" });
+			UseMyQualifier u = (UseMyQualifier) ctx.getBean("useMyQualifier");
+			u.getBean1().say();
+			u.getBean2().say();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * 
+	 * 功 能：基于 注解和自动扫描 注入测试
+	 * 
+	 *<P>
+	 */
+	@Test
+	public void testScanAnnotationTest() {
+		try {
+			ApplicationContext ctx = new ClassPathXmlApplicationContext(
+					new String[] { "scanAnnotationApplicationContext.xml" });
+			DBServices ds = (DBServices) ctx.getBean("dBservices");
+			ds.getAdao().doSave();
+			ds.getBdao().doSave();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 }
