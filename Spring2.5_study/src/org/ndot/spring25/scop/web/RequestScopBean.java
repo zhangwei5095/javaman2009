@@ -1,5 +1,6 @@
 package org.ndot.spring25.scop.web;
 
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
@@ -31,8 +32,9 @@ import org.springframework.stereotype.Repository;
  * 
  */
 
-@Repository(value = "RequestScopBean" )
+@Repository(value = "RequestScopBean")
 @Scope(value = "request")
+@Qualifier(value = "test")
 public class RequestScopBean {
 
 	private String loginName;
