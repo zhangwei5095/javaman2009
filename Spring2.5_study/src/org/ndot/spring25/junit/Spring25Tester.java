@@ -17,6 +17,8 @@ import org.ndot.spring25.inject.NullBean;
 import org.ndot.spring25.inject.dependson.Chicken;
 import org.ndot.spring25.instance.Canada;
 import org.ndot.spring25.instance.Chinise;
+import org.ndot.spring25.scop.UserManager;
+import org.ndot.spring25.scop.xml.UserManagerXML;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.AbstractApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -321,7 +323,7 @@ public class Spring25Tester {
 	 *<P>
 	 */
 	@Test
-	public void testAnnotationTest() {
+	public void annotationTest() {
 		try {
 			ApplicationContext ctx = new ClassPathXmlApplicationContext(
 					new String[] { "annotationApplicationContext.xml" });
@@ -357,7 +359,7 @@ public class Spring25Tester {
 	 *<P>
 	 */
 	@Test
-	public void testQualifierAnnotationTest() {
+	public void qualifierAnnotationTest() {
 		try {
 			ApplicationContext ctx = new ClassPathXmlApplicationContext(
 					new String[] { "qulifierAnnotationApplicationContext.xml" });
@@ -376,13 +378,165 @@ public class Spring25Tester {
 	 *<P>
 	 */
 	@Test
-	public void testScanAnnotationTest() {
+	public void scanAnnotationTest() {
 		try {
 			ApplicationContext ctx = new ClassPathXmlApplicationContext(
 					new String[] { "scanAnnotationApplicationContext.xml" });
 			DBServices ds = (DBServices) ctx.getBean("dBservices");
 			ds.getAdao().doSave();
 			ds.getBdao().doSave();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * 
+	 * 功 能：基于 Bean 作用域 xml配置方式 测试
+	 * 
+	 *<P>
+	 */
+	@Test
+	public void scopXmlTest() {
+		try {
+			ApplicationContext ctx = new ClassPathXmlApplicationContext(
+					new String[] { "scopXmlApplicationContext.xml" });
+			{
+				// seter 注入 prototype类型bean:
+				System.out.println("seter 注入 prototype类型bean: ");
+				UserManagerXML um = (UserManagerXML) ctx.getBean("userManager");
+				int u1hashcode = um.getUserInfo().hashCode();
+				System.out.println("u1hashcode=" + u1hashcode);
+				UserManagerXML um2 = (UserManagerXML) ctx
+						.getBean("userManager");
+				int u2hashcode = um2.getUserInfo().hashCode();
+				System.out.println("u2hashcode=" + u2hashcode);
+				System.out.println("u1hashcode==u2hashcode) = "
+						+ (u1hashcode == u2hashcode));
+				if (u1hashcode == u2hashcode) {
+					System.out
+							.println("两个UserInfo的hashcode 相同，说明注入的同一个userInfo实例，与期望不同，没有解决");
+					System.out.println("Singleton beans和prototype-bean的依赖需求");
+				} else {
+					System.out
+							.println("两个UserInfo的hashcode 不同，说明注入了不同的userInfo实例，与期望相符，解决了");
+					System.out.println("Singleton beans和prototype-bean的依赖需求");
+
+				}
+				System.out.println("==================================");
+				System.out.println("um.hashCode()==um2.hashCode()="
+						+ (um.hashCode() == um2.hashCode()));
+				System.out
+						.println("UserManagerXML 是Singleton beans，UserInfoXML 是prototype-bean");
+			}
+			{
+				// LookUp 方法注入 prototype类型bean:
+				System.out.println("=====================================");
+				System.out.println("LookUp 方法注入 prototype类型bean:");
+				UserManagerXML um = (UserManagerXML) ctx
+						.getBean("userManagerLookup");
+				um.setUserInfo(um.getNewUserInfo());
+				int u1hashcode = um.getUserInfo().hashCode();
+				System.out.println("u1hashcode=" + u1hashcode);
+				UserManagerXML um2 = (UserManagerXML) ctx
+						.getBean("userManagerLookup");
+				um2.setUserInfo(um2.getNewUserInfo());
+				int u2hashcode = um2.getUserInfo().hashCode();
+				System.out.println("u2hashcode=" + u2hashcode);
+				System.out.println("u1hashcode==u2hashcode) = "
+						+ (u1hashcode == u2hashcode));
+				if (u1hashcode == u2hashcode) {
+					System.out
+							.println("两个UserInfo的hashcode 相同，说明注入的同一个userInfo实例，与期望不同，没有解决");
+					System.out.println("Singleton beans和prototype-bean的依赖需求");
+				} else {
+					System.out
+							.println("两个UserInfo的hashcode 不同，说明注入了不同的userInfo实例，与期望相符，解决了");
+					System.out.println("Singleton beans和prototype-bean的依赖需求");
+
+				}
+				System.out.println("==================================");
+				System.out.println("um.hashCode()==um2.hashCode()="
+						+ (um.hashCode() == um2.hashCode()));
+				System.out
+						.println("UserManagerXML 是Singleton beans，UserInfoXML 是prototype-bean");
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * 
+	 * 功 能：基于 Bean 作用域 注释方式 测试
+	 * 
+	 *<P>
+	 */
+	@Test
+	public void scopTest() {
+		try {
+			ApplicationContext ctx = new ClassPathXmlApplicationContext(
+					new String[] { "scopApplicationContext.xml" });
+			{
+				// seter 注入 prototype类型bean:
+				System.out.println("seter 注入 prototype类型bean: ");
+				UserManager um = (UserManager) ctx.getBean("userManager");
+				int u1hashcode = um.getUserInfo().hashCode();
+				System.out.println("u1hashcode=" + u1hashcode);
+				UserManager um2 = (UserManager) ctx.getBean("userManager");
+				int u2hashcode = um2.getUserInfo().hashCode();
+				System.out.println("u2hashcode=" + u2hashcode);
+				System.out.println("u1hashcode==u2hashcode) = "
+						+ (u1hashcode == u2hashcode));
+				if (u1hashcode == u2hashcode) {
+					System.out
+							.println("两个UserInfo的hashcode 相同，说明注入的同一个userInfo实例，与期望不同，没有解决");
+					System.out.println("Singleton beans和prototype-bean的依赖需求");
+				} else {
+					System.out
+							.println("两个UserInfo的hashcode 不同，说明注入了不同的userInfo实例，与期望相符，解决了");
+					System.out.println("Singleton beans和prototype-bean的依赖需求");
+
+				}
+				System.out.println("==================================");
+				System.out.println("um.hashCode()==um2.hashCode()="
+						+ (um.hashCode() == um2.hashCode()));
+				System.out.println("UserManager 是Singleton beans");
+			}
+
+			{
+
+				// LookUp 方法注入 prototype类型bean:
+				System.out.println("=====================================");
+				System.out.println("LookUp 方法注入 prototype类型bean:");
+				UserManager um = (UserManager) ctx.getBean("userManager");
+				um.setUserInfo(um.getNewUserInfo());
+				int u1hashcode = um.getUserInfo().hashCode();
+				System.out.println("u1hashcode=" + u1hashcode);
+				UserManager um2 = (UserManager) ctx.getBean("userManager");
+				um2.setUserInfo(um2.getNewUserInfo());
+				int u2hashcode = um2.getUserInfo().hashCode();
+				System.out.println("u2hashcode=" + u2hashcode);
+				System.out.println("u1hashcode==u2hashcode) = "
+						+ (u1hashcode == u2hashcode));
+				if (u1hashcode == u2hashcode) {
+					System.out
+							.println("两个UserInfo的hashcode 相同，说明注入的同一个userInfo实例，与期望不同，没有解决");
+					System.out.println("Singleton beans和prototype-bean的依赖需求");
+				} else {
+					System.out
+							.println("两个UserInfo的hashcode 不同，说明注入了不同的userInfo实例，与期望相符，解决了");
+					System.out.println("Singleton beans和prototype-bean的依赖需求");
+
+				}
+				System.out.println("==================================");
+				System.out.println("um.hashCode()==um2.hashCode()="
+						+ (um.hashCode() == um2.hashCode()));
+				System.out
+						.println("UserManager 是Singleton beans，UserInfo 是prototype-bean");
+			}
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
