@@ -1,6 +1,9 @@
 package org.ndot.spring25.scop.web;
 
+import javax.annotation.Resource;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 /**
@@ -31,7 +34,7 @@ import org.springframework.stereotype.Service;
  */
 @Service(value = "InjectWebScopBean")
 public class InjectWebScopBean {
-	@Autowired
+	@Resource
 	private RequestScopBean reqBean;
 
 	public RequestScopBean getReqBean() {
