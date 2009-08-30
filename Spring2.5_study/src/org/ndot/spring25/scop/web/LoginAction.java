@@ -64,6 +64,12 @@ public class LoginAction extends HttpServlet {
 		globalSessionInfo.setLoginRole("globalSession-admin");
 		req.setAttribute("globalSessionInfo", globalSessionInfo);
 		
+		// 测试 普通bean 对 webScop的注入
+		InjectWebScopBean ib = (InjectWebScopBean) ctx
+				.getBean("InjectWebScopBean");
+		System.out.println(ib.getReqBean().getLoginName() + ":"
+				+ ib.getReqBean().getLoginRole());
+		
 		req.getRequestDispatcher("/pages/showInfo.jsp").forward(req, resp);
 	}
 
