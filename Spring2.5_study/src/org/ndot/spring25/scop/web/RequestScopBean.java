@@ -1,6 +1,7 @@
 package org.ndot.spring25.scop.web;
 
 import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -29,7 +30,8 @@ import org.springframework.stereotype.Repository;
  * 创建时间: 2009-8-30
  * 
  */
-@Repository(value = "RequestScopBean")
+
+@Repository(value = "RequestScopBean" )
 @Scope(value = "request")
 public class RequestScopBean {
 
