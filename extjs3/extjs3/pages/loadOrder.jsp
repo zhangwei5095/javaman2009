@@ -12,6 +12,9 @@
 	-->
 		<script type="text/javascript">
 	var loadMsg = "";
+	function showMsg(){
+           alert(loadMsg);
+		}
 </script>
 		<script type="text/javascript"
 			src="<%=request.getContextPath()%>/js/loadOrder/js1.js"></script>
@@ -21,11 +24,9 @@
 			src="<%=request.getContextPath()%>/js/loadOrder/js3.js"></script>
 		<script type="text/javascript"
 			src="<%=request.getContextPath()%>/js/loadOrder/js4.js"></script>
-		<script type="text/javascript"
-			src="<%=request.getContextPath()%>/js/loadOrder/js5.js"></script>
 	</head>
 
 	<body>
-     <input type="button" value="showLoadMsg" onclick="showMsg()">
+		<input type="button" value="showLoadMsg" onclick="showMsg()">
 	</body>
 </html>
