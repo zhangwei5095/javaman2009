@@ -10,8 +10,7 @@
 		<!--
 	<link rel="stylesheet" type="text/css" href="styles.css">
 	-->
-		<script type="text/javascript"
-			src="<%=request.getContextPath()%>/js/my.js"></script>
+
 	</head>
 
 	<body>
@@ -19,37 +18,55 @@
 		<br />
 		<br />
 
-		<table align="left" border="1" >
+		<table align="left" border="1">
+<tr>
+				<td >
+					序号
+				</td>
+				<td >
+					功能说明
+				</td>
+				<td align="right">
+					页面链接
+				</td>
 
-			<tr>
-				<td>
-					1
-				</td>
-				<td align="right">
-					<input type="button" value="链路测试" onclick="doRequest()" />
-				</td>
 			</tr>
 			<tr>
-				<td>
-					2
+				<td >
+					1>>
+				</td>
+				<td >
+					Ajax基本用法测试
 				</td>
 				<td align="right">
-					<input type="button" value="Abort()" onclick="doAbort()" />
+					<a href="<%=request.getContextPath()%>/pages/myAjax.jsp">myAjax.jsp</a>
 				</td>
-			</tr>
-			<tr>
-				<td>
-					3
-				</td>
-				<td align="right">
-					<input type="button" value="setInterval()"
-						onclick="doSetInterval()" />
-					||
-					<input type="button" value="clearInterval()"
-						onclick="doClearInterval()" />
-				</td>
-			</tr>
 
+			</tr>
+			<tr>
+			<td >
+					2>>
+				</td>
+				<td >
+					Html 对 js 加载顺序
+				</td>
+				<td align="right">
+					<a href="<%=request.getContextPath()%>/pages/loadOrder.jsp">loadOrder.jsp</a>
+				</td>
+
+			</tr>
+			<tr>
+			<td >
+					3>>
+				</td>
+				<td >
+					js 错误处理机制
+				</td>
+				<td align="right">
+					<a href="<%=request.getContextPath()%>/pages/onerror.jsp">onerror.jsp</a>
+				</td>
+
+			</tr>
 		</table>
 	</body>
 </html>
