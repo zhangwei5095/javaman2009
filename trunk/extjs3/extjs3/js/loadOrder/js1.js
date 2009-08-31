@@ -1,4 +1,4 @@
-loadMsg=loadMsg+"js1111,begin";
+loadMsg=loadMsg+">>js1111,begin-";
 function showTime0(){
 	alert(new Date());
 }
@@ -32,4 +32,4 @@ function showTime9(){
 }
 
 
-loadMsg=loadMsg+"js1111,end";
+loadMsg=loadMsg+"js1111,end ||  ";
