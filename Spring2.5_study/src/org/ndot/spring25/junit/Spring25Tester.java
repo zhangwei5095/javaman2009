@@ -541,4 +541,22 @@ public class Spring25Tester {
 			e.printStackTrace();
 		}
 	}
+
+	/**
+	 * 
+	 * 功 能：对Spring集成Quartz测试
+	 * 
+	 *<P>
+	 */
+	@Test
+	public void quartzTest() {
+		try {
+			ApplicationContext ctx = new ClassPathXmlApplicationContext(
+					new String[] { "applicationContext-quartz.xml" });
+			Thread.sleep(60000);
+			System.out.println("end");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 }
