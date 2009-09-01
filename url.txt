@@ -1,3 +1,5 @@
 1. http://blog.csdn.net/surpaimb/archive/2008/04/08/2264171.aspx
    Flex Builder 3.0 For Eclipse 3.3 安装方法
 2.http://bbs.actionscript3.cn
+3.http://www.xker.com/page/e2009/0522/72182.html
+  Flex 与 J2EE
