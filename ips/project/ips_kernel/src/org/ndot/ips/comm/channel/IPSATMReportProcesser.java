@@ -227,8 +227,8 @@ public class IPSATMReportProcesser extends IPSReportProcesser {
 					// 失败报文
 					String reqRspCode = geReqRspErrorCode(result);
 					return IPSReportFactory.getReport(
-							IPSReportFactory.C002_TO_C003_RSP_REPORT, jnlno,
-							null, null, reqRspCode, devinfo, null, null,
+							IPSReportFactory.C002_TO_C003_ERR_RSP_REPORT,
+							jnlno, null, null, reqRspCode, devinfo, null, null,
 							memReports);
 				}
 				// 公共检查成功
@@ -240,42 +240,38 @@ public class IPSATMReportProcesser extends IPSReportProcesser {
 				String destChannelId = curentIpsInTransflow.getDestnodeid();
 				if (IPSChannelId.CORE.equals(destChannelId)) {// 到核心的请求报文
 					// 组织到核心的请求报文
-					IPSReport toCoreRsqReport = IPSReportFactory.getReport(
-							IPSReportFactory.C003_TO_C002_REQ_REPORT, jnlno,
-							null, null, "", devinfo, curentIpsInTransflow,
-							inTransCodeMap, this.memReports);
-					try {
-						IPSReport temReqReportObj = memReports
-								.get(IPSReportFactory.FROM_C003_REQ_REPORT);
-						// 主密钥
-						String mk = getIpsConstantConfig().getMainKey();
-						IpsKeyMng oriPinkey = getIpsKeyMng(
-								IPSInnerChannelID.ATM, IPSChannelId.ATM,
-								reqReportObj.getFieldValue(41),
-								IPSKeyType.PINKEY);
-						IpsKeyMng pinkey = getIpsKeyMng(IPSInnerChannelID.ATM,
-								IPSChannelId.CORE, "0000000000", IPSKeyType.PINKEY);
-						// 进行pin转换
-						String hexStr = CrypTool.pinTransfer(temReqReportObj
-								.getFieldValue(52), temReqReportObj
-								.getFieldValue(2), mk, oriPinkey.getKeyvalue(),
-								oriPinkey.getPinmode(), oriPinkey
-										.getEncmethod(), "DES", mk, pinkey
-										.getKeyvalue(), pinkey.getPinmode(),
-								pinkey.getPinmode(), "DES", "", "", "",
-								IPSKeyType.PINKEY, IPSKeyType.PINKEY);
-						// byte[] BF152 = ISOUtil.hex2byte(hexStr);
-						toCoreRsqReport.setFieldValue(52, hexStr);
-
-					} catch (Exception e) {
-						e.printStackTrace();
+					IPSReport toCoreRsqReport = null;
+					if (IPSTransTypes.IPSTRAN1001.equals(inTransCodeMap
+							.getIntranscode())) {
+						// 余额查询
+						toCoreRsqReport = IPSReportFactory.getReport(
+								IPSReportFactory.C003_TO_C002_REQ_REPORT_1001,
+								jnlno, null, null, "", devinfo,
+								curentIpsInTransflow, inTransCodeMap,
+								this.memReports);
+						atmToCorePin(reqReportObj, toCoreRsqReport);
+						memReports.put(
+								IPSReportFactory.C003_TO_C002_REQ_REPORT_1001,
+								toCoreRsqReport);
 					}
 
+					if (IPSTransTypes.IPSTRAN1004.equals(inTransCodeMap
+							.getIntranscode())) {
+						// 取款
+						toCoreRsqReport = IPSReportFactory.getReport(
+								IPSReportFactory.C003_TO_C002_REQ_REPORT_1004,
+								jnlno, null, null, "", devinfo,
+								curentIpsInTransflow, inTransCodeMap,
+								this.memReports);
+						atmToCorePin(reqReportObj, toCoreRsqReport);
+						memReports.put(
+								IPSReportFactory.C003_TO_C002_REQ_REPORT_1004,
+								toCoreRsqReport);
+					}
 					writeLog(IPSLogLevel.INFO, "IPS组织 至 核心-C002 请求 报文(XML)： \n"
 							+ toCoreRsqReport.formatToXml() + " \n",
 							toCoreRsqReport.getBody());
-					memReports.put(IPSReportFactory.C003_TO_C002_REQ_REPORT,
-							toCoreRsqReport);
+
 					// 向核心发送请求报文，并接受核心的应答报文
 					IPSReport coreRspReport = ((IPSReportChannel) channel
 							.getCtx().getBean(destChannelId))
@@ -294,10 +290,7 @@ public class IPSATMReportProcesser extends IPSReportProcesser {
 						ProcessOverTime(memReports);
 						// 失败报文
 						String reqRspCode = geReqRspErrorCode(IPSInnerErrorCode.IPS313);
-						return IPSReportFactory.getReport(
-								IPSReportFactory.C002_TO_C003_RSP_REPORT,
-								jnlno, null, null, reqRspCode, devinfo, null,
-								null, memReports);
+						return null;
 					}
 				} else if (IPSChannelId.CUPS.equals(destChannelId)) {// 到银联的请求报文
 					IPSReport cupsRspReport = ((IPSReportChannel) channel
@@ -329,10 +322,26 @@ public class IPSATMReportProcesser extends IPSReportProcesser {
 									.getBusinessDBServices()
 									.findIpsRspCodeById(id);
 							rspCodeToC003 = rspCodeInfo.getReqrspcode();
-							rspToATM = IPSReportFactory.getReport(
-									IPSReportFactory.C002_TO_C003_RSP_REPORT,
-									jnlno, null, null, rspCodeToC003, devinfo,
-									null, null, memReports);
+							if (IPSTransTypes.IPSTRAN1001.equals(inTransCodeMap
+									.getIntranscode())) {
+								// 余额查询
+								rspToATM = IPSReportFactory
+										.getReport(
+												IPSReportFactory.C002_TO_C003_RSP_REPORT_1001,
+												jnlno, null, null,
+												rspCodeToC003, devinfo, null,
+												null, memReports);
+							}
+							if (IPSTransTypes.IPSTRAN1004.equals(inTransCodeMap
+									.getIntranscode())) {
+								// 取款
+								rspToATM = IPSReportFactory
+										.getReport(
+												IPSReportFactory.C002_TO_C003_RSP_REPORT_1004,
+												jnlno, null, null,
+												rspCodeToC003, devinfo, null,
+												null, memReports);
+							}
 						}
 
 						// 更新核心清算日期
@@ -352,6 +361,30 @@ public class IPSATMReportProcesser extends IPSReportProcesser {
 			e.printStackTrace();
 		}
 		return rspToATM;
+	}
+
+	private void atmToCorePin(IPSReport reqReportObj, IPSReport toCoreRsqReport) {
+		try {
+			IPSReport temReqReportObj = memReports
+					.get(IPSReportFactory.FROM_C003_REQ_REPORT);
+			// 主密钥
+			String mk = getIpsConstantConfig().getMainKey();
+			IpsKeyMng oriPinkey = getIpsKeyMng(IPSInnerChannelID.ATM,
+					IPSChannelId.ATM, reqReportObj.getFieldValue(41),
+					IPSKeyType.PINKEY);
+			IpsKeyMng pinkey = getIpsKeyMng(IPSInnerChannelID.ATM,
+					IPSChannelId.CORE, "0000000000", IPSKeyType.PINKEY);
+			// 进行pin转换
+			String hexStr = CrypTool.pinTransfer(temReqReportObj
+					.getFieldValue(52), temReqReportObj.getFieldValue(2), mk,
+					oriPinkey.getKeyvalue(), "1", oriPinkey.getEncmethod(),
+					"DES", mk, pinkey.getKeyvalue(), "1", pinkey.getPinmode(),
+					"DES", "", "", "", "0", "0");
+			toCoreRsqReport.setFieldValue(52, hexStr);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	private IPSReport doManagerBusiness(IpsInTransflow ipsInTransflow,
