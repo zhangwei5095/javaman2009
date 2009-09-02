@@ -30,11 +30,19 @@ public class IPSReportFactory {
 	// ATM-C003发送的请求报文
 	public static String FROM_C003_REQ_REPORT = "FROM_C003_REQ_REPORT";
 	// 前置经 FROM_C003_REQ_REPORT 组织到CORE-C002的请求报文
-	public static String C003_TO_C002_REQ_REPORT = "C003_TO_C002_REQ_REPORT";
+	// 余额查询
+	public static String C003_TO_C002_REQ_REPORT_1001 = "C003_TO_C002_REQ_REPORT_1001";
+	// 取款
+	public static String C003_TO_C002_REQ_REPORT_1004 = "C003_TO_C002_REQ_REPORT_1004";
 	// 核心给ATM的应答报文
 	public static String FROM_C002_RSP_REPORT = "FROM_C002_RSP_REPORT";
 	// 前置经FROM_C002_RSP_REPORT 组织到ATM-C003的应答报文
-	public static String C002_TO_C003_RSP_REPORT = "C002_TO_C003_RSP_REPORT";
+	// 错误应答
+	public static String C002_TO_C003_ERR_RSP_REPORT = "C002_TO_C003_ERR_RSP_REPORT";
+	// 余额查询
+	public static String C002_TO_C003_RSP_REPORT_1001 = "C002_TO_C003_RSP_REPORT_1001";
+	// 取款
+	public static String C002_TO_C003_RSP_REPORT_1004 = "C002_TO_C003_RSP_REPORT_1004";
 	// 前置经由 FROM_C003_REQ_REPORT 组织到ATM-C003的报文
 	public static String T0_C003_RSP_REPORT_0001 = "T0_C003_RSP_REPORT_0001";
 	public static String T0_C003_RSP_REPORT_0003 = "T0_C003_RSP_REPORT_0003";
@@ -90,17 +98,272 @@ public class IPSReportFactory {
 			return IPSReportFactory.createT0_C003_RSP_REPORT_0006(rspCode,
 					keyValue, sysParamSet, devinfo, ipsTranscodeMap, reports);
 		}
-		if (IPSReportFactory.C003_TO_C002_REQ_REPORT.equals(reportType)) {
-			// ATM到核心的请求报文
-			return createC003_TO_C002_REQ_REPORT(jnlno, devinfo,
+		if (IPSReportFactory.C003_TO_C002_REQ_REPORT_1001.equals(reportType)) {
+			// ATM到核心的余额查询请求报文
+			return createC003_TO_C002_REQ_REPORT_1001(jnlno, devinfo,
 					ipsTranscodeMap, reports);
 		}
-		if (IPSReportFactory.C002_TO_C003_RSP_REPORT.equals(reportType)) {
-			return IPSReportFactory.createC002_TO_C003_RSP_REPORT(rspCode,
+
+		if (IPSReportFactory.C003_TO_C002_REQ_REPORT_1004.equals(reportType)) {
+			// ATM到核心的余额查询请求报文
+			return createC003_TO_C002_REQ_REPORT_1004(jnlno, devinfo,
+					ipsTranscodeMap, reports);
+		}
+		if (IPSReportFactory.C002_TO_C003_ERR_RSP_REPORT.equals(reportType)) {
+			return IPSReportFactory.C002_TO_C003_ERR_RSP_REPORT(rspCode,
+					reports);
+		}
+		if (IPSReportFactory.C002_TO_C003_RSP_REPORT_1001.equals(reportType)) {
+			return IPSReportFactory.createC002_TO_C003_RSP_REPORT_1001(rspCode,
+					reports);
+		}
+
+		if (IPSReportFactory.C002_TO_C003_RSP_REPORT_1004.equals(reportType)) {
+			return IPSReportFactory.createC002_TO_C003_RSP_REPORT_1004(rspCode,
 					reports);
 		}
 
 		return null;
+
+	}
+
+	private static IPSReport C002_TO_C003_ERR_RSP_REPORT(String rspCode,
+			Map<String, IPSReport> reports) {
+
+		try {
+			IPSReport devReqReport = reports
+					.get(IPSReportFactory.FROM_C003_REQ_REPORT);
+			IPSReport coreRspReport = reports
+					.get(IPSReportFactory.FROM_C002_RSP_REPORT);
+
+			IPSReport toAtmRspReport = new IPSReport();
+
+			// 设置报文头
+			toAtmRspReport.setHeaderFieldValue(2, devReqReport
+					.getHeaderFieldValue(2));
+			toAtmRspReport.setHeaderFieldValue(3, devReqReport
+					.getHeaderFieldValue(3));
+			toAtmRspReport.setHeaderFieldValue(4, devReqReport
+					.getHeaderFieldValue(4));
+			toAtmRspReport.setHeaderFieldValue(5, devReqReport
+					.getHeaderFieldValue(5));
+			// 设置报文体
+			toAtmRspReport.setFieldValue(0, "0210");
+			copyFields(devReqReport, 2, toAtmRspReport, 2);
+			copyFields(devReqReport, 3, toAtmRspReport, 3);
+			copyFields(devReqReport, 7, toAtmRspReport, 7);
+			copyFields(devReqReport, 11, toAtmRspReport, 11);
+			copyFields(devReqReport, 12, toAtmRspReport, 12);
+			copyFields(devReqReport, 13, toAtmRspReport, 13);
+			if (null != coreRspReport) {
+				copyFields(coreRspReport, 10, toAtmRspReport, 14);
+				copyFields(coreRspReport, 14, toAtmRspReport, 15);
+				copyFields(coreRspReport, 29, toAtmRspReport, 28);
+				copyFields(coreRspReport, 37, toAtmRspReport, 37);
+			} else {
+				toAtmRspReport.setFieldValue(14, "0");
+				toAtmRspReport.setFieldValue(15, "0");
+				toAtmRspReport.setFieldValue(28, "0");
+				toAtmRspReport.setFieldValue(37, "0");
+			}
+			copyFields(devReqReport, 18, toAtmRspReport, 18);
+			copyFields(devReqReport, 22, toAtmRspReport, 22);
+			copyFields(devReqReport, 25, toAtmRspReport, 25);
+
+			toAtmRspReport.setFieldValue(39, rspCode);
+			copyFields(coreRspReport, 40, toAtmRspReport, 40);
+			copyFields(devReqReport, 41, toAtmRspReport, 41);
+			copyFields(devReqReport, 42, toAtmRspReport, 42);
+			copyFields(devReqReport, 49, toAtmRspReport, 49);
+			copyFields(devReqReport, 51, toAtmRspReport, 51);
+			copyFields(devReqReport, 53, toAtmRspReport, 53);
+			if (null != coreRspReport
+					&& coreRspReport.getFieldValue(54).length() > 0) {
+				/*
+				 * concat(substring($Start/group/FromCoreMsgRsp/root/BF54, 1,
+				 * 13), substring($Start/group/FromCoreMsgRsp/root/BF54, 1, 1),
+				 * substring($Start/group/FromCoreMsgRsp/root/BF54, 14, 12),
+				 * substring($Start/group/FromCoreMsgRsp/root/BF54, 1, 1),
+				 * substring($Start/group/FromCoreMsgRsp/root/BF54, 26,12))
+				 */
+				String bf54 = coreRspReport.getFieldValue(54).trim();
+				String bf54_1_1 = bf54.substring(1, 2);
+				String bf54_1_13 = bf54.substring(1, 14);
+				String bf54_14_12 = bf54.substring(14, 26);
+				String bf54_26_12 = bf54.substring(26, 38);
+				String value = bf54_1_13 + bf54_1_1 + bf54_14_12 + bf54_1_1
+						+ bf54_26_12;
+				toAtmRspReport.setFieldValue(54, value);
+
+				String bf61 = coreRspReport.getFieldValue(61);
+				String bf61hexStr = ISOUtil.byte2HexNoSpaceStr(bf61.getBytes(),
+						bf61.getBytes().length);
+				String value61 = bf61hexStr + coreRspReport.getFieldValue(44);
+				if (!"".equals(value61))
+					toAtmRspReport.setFieldValue(61, value);
+			} else {
+				toAtmRspReport.setFieldValue(54, "");
+			}
+
+			copyFields(devReqReport, 72, toAtmRspReport, 72);
+			toAtmRspReport.setFieldValue(93, rspCode);
+			return toAtmRspReport;
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+
+	}
+
+	private static IPSReport createC002_TO_C003_RSP_REPORT_1004(String rspCode,
+			Map<String, IPSReport> reports) {
+
+		try {
+			IPSReport devReqReport = reports
+					.get(IPSReportFactory.FROM_C003_REQ_REPORT);
+			IPSReport coreRspReport = reports
+					.get(IPSReportFactory.FROM_C002_RSP_REPORT);
+
+			IPSReport toAtmRspReport = new IPSReport();
+
+			// 设置报文头
+			toAtmRspReport.setHeaderFieldValue(2, devReqReport
+					.getHeaderFieldValue(2));
+			toAtmRspReport.setHeaderFieldValue(3, devReqReport
+					.getHeaderFieldValue(3));
+			toAtmRspReport.setHeaderFieldValue(4, devReqReport
+					.getHeaderFieldValue(4));
+			toAtmRspReport.setHeaderFieldValue(5, devReqReport
+					.getHeaderFieldValue(5));
+			// 设置报文体
+			toAtmRspReport.setFieldValue(0, "0210");
+			copyFields(devReqReport, 2, toAtmRspReport, 2);
+			copyFields(devReqReport, 3, toAtmRspReport, 3);
+			copyFields(devReqReport, 4, toAtmRspReport, 4);
+			copyFields(devReqReport, 7, toAtmRspReport, 7);
+			copyFields(devReqReport, 11, toAtmRspReport, 11);
+			copyFields(devReqReport, 12, toAtmRspReport, 12);
+			copyFields(devReqReport, 13, toAtmRspReport, 13);
+			if (null != coreRspReport) {
+				copyFields(coreRspReport, 10, toAtmRspReport, 14);
+				copyFields(coreRspReport, 14, toAtmRspReport, 15);
+				toAtmRspReport.setFieldValue(28, "0");
+				toAtmRspReport.setFieldValue(29, "0");
+				copyFields(coreRspReport, 37, toAtmRspReport, 37);
+			} else {
+				toAtmRspReport.setFieldValue(14, "0");
+				toAtmRspReport.setFieldValue(15, "0");
+				toAtmRspReport.setFieldValue(28, "0");
+				toAtmRspReport.setFieldValue(29, "0");
+				toAtmRspReport.setFieldValue(37, "0");
+			}
+
+			copyFields(devReqReport, 22, toAtmRspReport, 22);
+			copyFields(devReqReport, 25, toAtmRspReport, 25);
+
+			toAtmRspReport.setFieldValue(39, rspCode);
+			copyFields(coreRspReport, 40, toAtmRspReport, 40);
+			copyFields(devReqReport, 41, toAtmRspReport, 41);
+
+			copyFields(devReqReport, 49, toAtmRspReport, 49);
+			copyFields(devReqReport, 51, toAtmRspReport, 51);
+			copyFields(devReqReport, 53, toAtmRspReport, 53);
+			if (null != coreRspReport
+					&& coreRspReport.getFieldValue(54).length() > 0) {
+				/*
+				 * concat(substring($Start/group/FromCoreMsgRsp/root/BF54, 1,
+				 * 13), substring($Start/group/FromCoreMsgRsp/root/BF54, 1, 1),
+				 * substring($Start/group/FromCoreMsgRsp/root/BF54, 14, 12),
+				 * substring($Start/group/FromCoreMsgRsp/root/BF54, 1, 1),
+				 * substring($Start/group/FromCoreMsgRsp/root/BF54, 26,12))
+				 */
+				String bf54 = coreRspReport.getFieldValue(54).trim();
+				String bf54_1_1 = bf54.substring(1, 2);
+				String bf54_1_13 = bf54.substring(1, 14);
+				String bf54_14_12 = bf54.substring(14, 26);
+				String bf54_26_12 = bf54.substring(26, 38);
+				String value = bf54_1_13 + bf54_1_1 + bf54_14_12 + bf54_1_1
+						+ bf54_26_12;
+				toAtmRspReport.setFieldValue(54, value);
+
+			} else {
+				toAtmRspReport.setFieldValue(54, "");
+			}
+			String bf6 = coreRspReport.getFieldValue(6);
+
+			String value61 = bf6 + coreRspReport.getFieldValue(44);
+			if (!"".equals(value61))
+				toAtmRspReport.setFieldValue(61, value61);
+			copyFields(devReqReport, 72, toAtmRspReport, 72);
+			toAtmRspReport.setFieldValue(93, rspCode);
+			return toAtmRspReport;
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+
+	}
+
+	private static IPSReport createC003_TO_C002_REQ_REPORT_1004(String jnlno,
+			IpsDevInf devinfo, IpsTranscodeMap inTransCodeMap,
+			Map<String, IPSReport> reports) {
+
+		try {
+
+			IPSReport reqReportObj = reports
+					.get(IPSReportFactory.FROM_C003_REQ_REPORT);
+			IPSReport toCoreReqReport = new IPSReport();
+
+			// 设置报文头
+			toCoreReqReport.setHeaderFieldValue(2, inTransCodeMap
+					.getCoremsgcode());
+			toCoreReqReport.setHeaderFieldValue(3, inTransCodeMap
+					.getCoretranscode());
+			toCoreReqReport
+					.setHeaderFieldValue(4, inTransCodeMap.getCorecode());
+			// 设置报文体
+			copyFields(reqReportObj, 2, toCoreReqReport, 2);
+			copyFields(reqReportObj, 4, toCoreReqReport, 4);
+			toCoreReqReport.setFieldValue(11, jnlno);
+			copyFields(reqReportObj, 12, toCoreReqReport, 12);
+			copyFields(reqReportObj, 13, toCoreReqReport, 13);
+			copyFields(reqReportObj, 15, toCoreReqReport, 20);
+			toCoreReqReport.setFieldValue(17, "000000000000");
+			toCoreReqReport.setFieldValue(18, "6011");
+			toCoreReqReport.setFieldValue(20, "000");
+			toCoreReqReport.setFieldValue(21, "AT");
+			copyFields(reqReportObj, 22, toCoreReqReport, 22);
+			copyFields(reqReportObj, 25, toCoreReqReport, 25);
+			toCoreReqReport.setFieldValue(29, "00000000");
+			toCoreReqReport.setFieldValue(30, "00000000");
+			toCoreReqReport.setFieldValue(32, "00000000000");
+			toCoreReqReport.setFieldValue(33, "00000000000");
+			if (reqReportObj.getFieldValue(35).length() > 0) {
+				copyFields(reqReportObj, 35, toCoreReqReport, 35);
+			}
+			if (reqReportObj.getFieldValue(36).length() > 0) {
+				copyFields(reqReportObj, 36, toCoreReqReport, 36);
+			}
+			toCoreReqReport.setFieldValue(37, jnlno);
+			copyFields(reqReportObj, 41, toCoreReqReport, 41);
+
+			// 42
+			toCoreReqReport.setFieldValue(42, devinfo.getInstcode());
+			copyFields(reqReportObj, 49, toCoreReqReport, 49);
+			copyFields(reqReportObj, 51, toCoreReqReport, 51);
+			copyFields(reqReportObj, 53, toCoreReqReport, 53);
+			toCoreReqReport.setFieldValue(67, "0");
+			// 99
+			toCoreReqReport.setFieldValue(99, devinfo.getUunioncode());
+
+			return toCoreReqReport;
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
 
 	}
 
@@ -283,7 +546,7 @@ public class IPSReportFactory {
 	}
 
 	/* 余额查询-C003-C002-req交易 */
-	private static IPSReport createC003_TO_C002_REQ_REPORT(String jnlno,
+	private static IPSReport createC003_TO_C002_REQ_REPORT_1001(String jnlno,
 			IpsDevInf devinfo, IpsTranscodeMap inTransCodeMap,
 			Map<String, IPSReport> reports) {
 		try {
@@ -334,7 +597,8 @@ public class IPSReportFactory {
 	}
 
 	/* 余额查询-C002-C003-rsp交易 */
-	private static IPSReport createC002_TO_C003_RSP_REPORT(String rspCode,
+	/* 余额查询 */
+	private static IPSReport createC002_TO_C003_RSP_REPORT_1001(String rspCode,
 			Map<String, IPSReport> reports) {
 		try {
 			IPSReport devReqReport = reports
@@ -400,17 +664,13 @@ public class IPSReportFactory {
 				String value = bf54_1_13 + bf54_1_1 + bf54_14_12 + bf54_1_1
 						+ bf54_26_12;
 				toAtmRspReport.setFieldValue(54, value);
-
-				String bf61 = coreRspReport.getFieldValue(61);
-				String bf61hexStr = ISOUtil.byte2HexNoSpaceStr(bf61.getBytes(),
-						bf61.getBytes().length);
-				String value61 = bf61hexStr + coreRspReport.getFieldValue(44);
-				if (!"".equals(value61))
-					toAtmRspReport.setFieldValue(61, value);
 			} else {
 				toAtmRspReport.setFieldValue(54, "");
 			}
-
+			String bf6 = coreRspReport.getFieldValue(6);
+			String value61 = bf6 + coreRspReport.getFieldValue(44);
+			if (!"".equals(value61))
+				toAtmRspReport.setFieldValue(61, value61);
 			copyFields(devReqReport, 72, toAtmRspReport, 72);
 			toAtmRspReport.setFieldValue(93, rspCode);
 			return toAtmRspReport;

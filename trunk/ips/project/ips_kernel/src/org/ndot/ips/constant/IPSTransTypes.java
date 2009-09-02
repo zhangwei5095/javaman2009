@@ -29,4 +29,6 @@ public class IPSTransTypes {
 	public static String IPSTRAN0006 = "0006";
 	// 余额查询
 	public static String IPSTRAN1001 = "1001";
+	// 行内取款
+	public static String IPSTRAN1004 = "1004";
 }

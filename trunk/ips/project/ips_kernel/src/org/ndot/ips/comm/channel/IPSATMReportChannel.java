@@ -117,7 +117,7 @@ public class IPSATMReportChannel extends IPSReportChannel {
 								IPSReportProcesser ipsReportProcesser = getIpsReportProcesserInstance();
 								String ip = channel.socket().getInetAddress()
 										.getHostAddress();
-								System.out.print("");
+							
 								IPSReport rspReportContentObj = ipsReportProcesser
 										.processer(this, reqReportContentObj,
 												ip);
