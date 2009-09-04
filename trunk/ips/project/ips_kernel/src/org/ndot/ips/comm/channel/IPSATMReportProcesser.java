@@ -855,8 +855,15 @@ public class IPSATMReportProcesser extends IPSReportProcesser {
 
 				String macCode = CrypTool.getMacReturn8Bytes(macBuf, mk,
 						mackey, flag, keyArith, macArith);
+				System.out.println(macBuf);
+				System.out.println(mk);
+				System.out.println(mackey);
+				System.out.println(flag);
+				System.out.println(keyArith);
+				System.out.println(macArith);
 				System.out.println("生产的MacStr： " + macCode);
 				String reqMac = reqReportObj.getFieldValue(128);
+				System.out.println("请求报文MacStr： " + reqMac);
 				if (!reqMac.equalsIgnoreCase(macCode)) {
 					// mac效验失败
 					return IPSInnerErrorCode.IPS316;
