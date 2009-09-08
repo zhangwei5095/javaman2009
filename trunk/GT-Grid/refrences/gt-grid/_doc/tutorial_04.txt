@@ -1,0 +1,136 @@
+GT-Grid 1.0 基础教程(四)
+
+[size=large][b]教程说明:[/b][/size]
+这是一个告诉大家如何快速的利用GT-Grid开发列表的基础教程.以后会推出"高级教程".
+查看[color=blue]其他教程[/color],以及最新版本信息,请[url="http://fins.javaeye.com/blog/214290"]点击这里[/url]
+
+
+[size=large][b]第四章: 服务端数据的加载(上)[/b][/size]
+
+关于"服务端数据的加载" 我将分上下两次为大家讲解.
+"上" 中 将只关注 如何从服务端加载数据. 而不关注向服务端提交了什么数据.
+我这么说大家可能有点迷惑, 换个说法:
+"上"中将只介绍如何创建一个"数据从服务端取得,但是分页是在客户端进行"的列表---"远程加载数据,客户端分页的只读列表".
+(注: 本文中 "远程" 和 "服务端"往往是指一个东西.)
+
+还是那句话: 
+在开始之前,为了保留我们之前的成果,不至于学习的过程中把前一个成果弄坏, 我们将"mydemo3.html"另存为"mydemo4.html".
+OK,开始.
+
+
+[color=green]=========================================[/color]
+
+
+首先,修改代码, 因为我们是从服务端取数据,那么客户端就没必要定义数据了(数据集还是要保留的),
+所以 删掉关于 "var data1" 的一切. 将数据集定义dsConfig中的 data 属性删除.
+
+然后 为 grid添加两个属性 : 
+1 是  loadURL : '.....'  值为一个合法的 可访问到的url,本例中是我写的一个servlet的url
+2 是  remotePaging : true/false 时候使用远程分页. 如果是客户端分页 要设置成 false, 如果是服务的分页 要写成false.
+[code="javascript"]
+var gridConfig={
+	/* ... 略去其他属性设置 ...*/
+	loadURL : 'studentsList.servlet',
+	remotePaging : false 
+
+};
+[/code]
+
+也许有人会问, 上一章将的也是客户端分页, 但是并没有写 "remotePaging : false "啊.
+这是因为, 当loadURL==null(默认为null)时 GT-Grid 会强制把分页模式设置成"客户端分页",即remotePaging=false.
+
+关于页面的改动 就到此为止了, 下一步该是服务端的写发了.
+
+
+[color=green]=========================================[/color]
+
+
+GT-Grid本身是对服务端使用的技术没有任何限制的, 可以使用java php .net ror ....
+在这里我只举java的例子.
+虽然对服务端技术没有限制, 但是GT-Grid对数据的传输格式是有要求的. 
+1 首先 服务端返回的必须是一个合法的 json对象序列化字符串.(以后简称json串)
+2 这个字符串的格式如下:
+[code="javascript"]
+
+	{
+		data : [
+			/* 以下为具体传输的数据 */
+		   { no : 1 , name :'aaa', age : 12, gender : 'M' , english : 76.5 , math :92 },
+		   { no : 2 , name :'bbb', age : 11, gender : 'F' , english : 89   , math :87 },
+		   { no : 3 , name :'ccc', age : 13, gender : 'F' , english : 53   , math :62 }
+		]
+	}
+
+
+[/code]
+这个应该还是很好理解的, 有一个data节点, data下就是数据.
+与我们在客户端时写的数据差不多.
+当然 返回的数据中还可以有其他的可选信息. 例如 pageInfo , exception 还有其他你自定义的节点.
+更多知识以后再说.
+现在只要记住 ,返回的json串中, 必须要有data节点,节点存放的就是列表要显示的数据.
+
+明确以上信息之后, 我们还是来"造假" ,在服务端用手动拼装一个这个字符串.
+在这个示例中, 我写了一个 叫StudentsList的servlet, 它对应的url为"studentsList.servlet".
+它的doPost方法(GT-Grid默认的提交方法是post) 参考代码如下:
+
+[code="java"]
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		StringBuffer outData = new StringBuffer();
+		outData.append("{");
+		outData.append("data : [");
+		outData.append("	{ no : 1 , name :'aaa', age : 12, gender : 'M' , english : 76.5 , math :92 },");
+		outData.append("	{ no : 2 , name :'bbb', age : 11, gender : 'F' , english : 89   , math :87 },");
+		outData.append("	{ no : 3 , name :'ccc', age : 13, gender : 'F' , english : 53   , math :62 } ");
+		outData.append("]");
+		outData.append("}");
+		PrintWriter out = response.getWriter();
+		out.print(outData.toString());
+		out.flush();
+		out.close();
+	}  
+[/code]
+
+现在 把这个servlet和之前的mydemo.html 放到包含GT-Grid必要资源的 j2ee web应用中, 你就可以看到结果了.
+(这个就不详细介绍了, 我相信大家还是知道的)
+
+如果使用的是PHP ,那么可以将loadURL指向某个php文件,而那个文件只要可以 echo 出这个json串就可以了.
+
+
+在实际系统中, 开发人员要做的就是把数据库里(当然你可以从其他地方取)的查询结果 (一个 map-list 或者 pojo-list )
+转换成一个类似上例的 json串. 然后发送到客户端.
+
+转换成json串的工作可以通过 各种第三方的json库来实现.
+你可以到[url="http://www.json.org"]http://www.json.org[/url] 上去寻找更多的帮助.
+
+
+
+注意,为了减低入门门槛, 我在这个示例中没有引入任何其他的问题.
+在正常系统中, 文件编码, 文件路径等问题总是会困扰一些新手.
+如果你是新手, 那么这些问题你可以参考我提供的"与后台结合的示例"中的完整代码 或者是找google帮忙.
+我在这里就不多说了.
+
+
+
+[color=green]=========================================[/color]
+
+采用服务端读取数据, 客户端分页的一个特点是, 在初次访问页面时将数据全部载入,之后就不会再次载入数据了, 除非刷新整个页面.
+那么如何能够不刷新整个页面, 而实现刷新数据(重新从服务端取得数据) 呢? 答案就是给工具栏中加入 刷新按钮 .
+此按钮与浏览器的刷新按钮功能完全不同, 此按钮将会重新执行查询数据的请求,再次从服务端取回数据.
+添加方法如下:
+
+[code="javascript"]
+var gridConfig={
+	/* ... 略去其他属性设置 ...*/
+	toolbarContent : 'nav | goto | pagesize | reload | state' ,
+}
+[/code]
+
+
+
+[color=green]=========================================[/color]
+
+
+这章就先讲到这里 , 最后成果的截图就不奉上了 因为看起来和 第三章的一样.
+下一章,将讲解 "远程加载数据,远程分页的只读列表" 的实现. 
+
+

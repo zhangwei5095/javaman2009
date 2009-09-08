@@ -1,0 +1,144 @@
+GT-Grid 1.0 基础教程(九)
+
+[size=large][b]教程说明:[/b][/size]
+这是一个告诉大家如何快速的利用GT-Grid开发列表的基础教程.以后会推出"高级教程".
+查看[color=blue]其他教程[/color],以及最新版本信息,请[url="http://fins.javaeye.com/blog/214290"]点击这里[/url]
+
+
+[size=large][b]第九章: 排序[/b][/size]
+
+第一章中的示例 就已经具备排序功能了, 但是只是简单的客户端排序.
+客户端排序处理的数据并不一定时"当前页的数据",
+而是"所有在客户端的数据",也就是说,当你将数据全部加载到客户端,在客户端进行分页时,客户端排序实际上排列的就是所有数据.
+
+本章将讲解 自定义排序函数 以及如何进行 服务端排序.
+
+将上一章编写的"mydemo8.html"另存为"mydemo9.html".
+
+
+
+[color=green]=========================================[/color]
+
+
+
+先来说一个 很重要 但是很简单的属性:columns定义中的 "sortable" 属性, 
+顾名思义,当不希望某一列可排序时,就把那一列的该属性设置为 false, 本例中不希望对"详细信息"列进行排序,那么可如下定义:
+
+[code="javascript"]
+var  colsConfig ={
+
+	/* ... 略去其他属性设置 ...*/
+
+	{ id : 'detail'   , header : "详细信息" , width : 120, sortable : false,
+		renderer : function(value ,record,columnObj,grid,colNo,rowNo){
+			return '&#160;<a href=".?no='+record['no']+'" style="margin-left:3px;" >&#160;'+ record['name'] +' 的详细信息&#160;</a>';
+		}
+	}
+];
+
+[/code]
+
+
+
+[color=green]=========================================[/color]
+
+
+
+下面说一说自定义排序函数. GT-Grid 自身只提供了两种数据排序方式 : 按数字数据排序 和 按字符串数据排序.
+这两种排序显然无法应对多样的需求, 所以GT-Grid 提供了一个 接口函数,columns定义中的 : getSortValue(  value, recrod )
+开发人员重写该接口,就可以实现自定义的更加复杂的排序方式.
+例如有这样一个需求 : 按照姓名的字符串长度排序. 那么我们可以这么定义 姓名 列:
+
+[code="javascript"]
+var  colsConfig ={
+
+	/* ... 略去其他属性设置 ...*/
+
+	{ id : 'name'    , header : "姓名" , width : 100 ,  editable:false ,  editor: { type :'text' ,validRule : 'R' }	,
+		getSortValue : function(value , record){
+			return value?value.length:0;
+		}		
+	},
+];
+
+[/code]
+
+getSortValue函数的两个参数分别为:
+  value :当前记录中，该列对应的数据
+  record : 排序时的 当前记录.
+
+在上例中, 排序时,取响应数值时就不再是 取记录的"name"值,而为变为了取name的字符串长度,从而实现了按姓名字符长度排序的功能.
+在这里就暂时先不列举更复杂的例子了.
+
+
+
+还有另一种方式的自定义排序, 通过给排序的列指定 排序方法来实现, 该方法类似 传统js数组排序的sort方法
+不同的是传入的供比较的值为 record  而不是列对应的具体值,而且在函数内部要根据最后一个参数来自行决定升降序的算法.
+
+[code="javascript"]
+var colsConfig = [
+		/* ... 略去其他属性设置 ...*/
+		{id: 'name' , header: "姓名" , width :100 ,
+			sortFn :function(r1,r2 ,sortOrder){
+				var r=String(r1['name']).localeCompare(r2['name']);
+				return  sortOrder=='asc'?r:0-r;
+			}
+		}
+]
+[/code]
+上例中, 对name字段排序时,将通过 localeCompare 方式来进行比较排序.
+
+该方法的更多用处将在高级教程里进行说明.
+
+[color=green]=========================================[/color]
+
+
+
+
+下面该说一说 服务端排序了. 要使用服务端排序,需要 将 grid的 remoteSort 属性设置为 true.
+[code="javascript"]
+var gridConfig={
+	/* ... 略去其他属性设置 ...*/
+	remoteSort :  true
+}
+[/code]
+
+下一步要知道 排序信息 传递到后台的格式, 以及后台如何处理这些信息了.
+
+排序信息 是和 load信息 一起提交到后台的 其格式如下(注意看 sortInfo 部分:
+
+[code="javascript"]
+{
+	action	 : 'load',	
+	pageInfo : {
+		/* ... 略去pageInfo信息 ...*/
+	},
+
+	sortInfo : [
+			{ 
+				columnId : "排序的列id" , 
+				fieldName : "排序的列对应的dataset中的field字段名" ,
+				sortOrder : "asc"  // 排序的顺序状态 : 升序"asc"  降序"desc"  默认"defaultsort"
+			}
+		]
+}
+[/code]
+
+大家可能注意到了, sortInfo信息对应的是一个数组, 这是为了将来做多重排序而准备的. 在目前版本(1.1之前),该数组最多只会有一组排序信息.
+ 
+后台得到这个信息之后, 可以把 sortInfo 转换为一个 List对象. 
+而这个list的第一个元素 就是排序的信息了, 然后开发人员就可以根据这些排序信息来实现服务端的排序了.
+(与服务端结合的完整示例 会有与此相关的参考实现)
+看一下示例中的  GridServerHandler 类下的 initSortInfo方法 和 getSingleSort 方法 大家应该可以更好的理解读取sortInfo信息的原理.
+
+
+
+[color=green]=========================================[/color]
+
+
+
+关于服务端的排序 就先讲到这里, 下一章将讲解的是过滤功能(客户端和服务端)的实现.
+
+.
+
+

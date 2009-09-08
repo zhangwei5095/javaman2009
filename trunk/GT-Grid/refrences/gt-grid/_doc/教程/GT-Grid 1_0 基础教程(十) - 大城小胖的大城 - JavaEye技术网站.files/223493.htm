@@ -1,0 +1,586 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-CN" dir="ltr">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>GT-Grid 1.0 基础教程(十) - 大城小胖的大城 - JavaEye技术网站</title>
+    <meta name="description" content="GT-Grid 1.0 基础教程(十) 教程说明: 这是一个告诉大家如何快速的利用GT-Grid开发列表的基础教程.以后会推出&quot;高级教程&quot;. 查看其他教程,以及最新版本信息,请点击这里 第十章: 事件 这一章将讲解一下 GT-Grid中的一些关键的 常用的事件机制. 本章对应示例文件: &quot;mydemo10.html&quot;. 为grid加入事件,只需要在 gird的 ..." />
+    <meta name="keywords" content="ajax, grid AJAX GT-Grid 1.0 基础教程(十)" />
+    <link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon" />
+    <link href="/rss" rel="alternate" title="大城小胖的大城" type="application/rss+xml" />
+    <link href="http://www.javaeye.com/stylesheets/blog.css?1252293748" media="screen" rel="stylesheet" type="text/css" />
+<link href="http://www.javaeye.com/stylesheets/themes/blog/blue.css?1235723792" media="screen" rel="stylesheet" type="text/css" />
+    <script src="http://www.javaeye.com/javascripts/application.js?1248170042" type="text/javascript"></script>
+      <link href="http://www.javaeye.com/javascripts/syntaxhighlighter/SyntaxHighlighter.css?1201588027" media="screen" rel="stylesheet" type="text/css" />
+  <script src="http://www.javaeye.com/javascripts/syntaxhighlighter/shCoreCommon.js?1238329845" type="text/javascript"></script>
+<script src="http://www.javaeye.com/javascripts/hotkey.js?1238403289" type="text/javascript"></script>
+  <style>
+    div#main {background-color: transparent; border: 0; padding: 0px; width: 740px;}
+  </style>
+  </head>
+  <body>
+    <div id="header">
+      <div id="blog_site_nav">
+  <a href="http://www.javaeye.com/" class="homepage">首页</a>
+  <a href="http://www.javaeye.com/news">新闻</a>
+  <a href="http://www.javaeye.com/forums">论坛</a>
+  <a href="http://www.javaeye.com/blogs">博客</a>
+  <a href="http://www.javaeye.com/job">招聘</a>
+  <a href="#" onclick="return false;" id="msna"><u>更多</u> <small>▼</small></a>
+  <div class="quick_menu" style="display:none;">
+    <a href="http://www.javaeye.com/ask">问答</a>
+    <a href="http://www.javaeye.com/wiki">知识库</a>
+    <a href="http://www.javaeye.com/groups">圈子</a>
+    <a href="http://www.javaeye.com/search">搜索</a>
+  </div>
+</div>
+      <div id="user_nav">
+      <a href="http://ndot.javaeye.com" title="查看我的博客首页" class="welcome">欢迎NDot</a>
+    
+      <a href="http://app.javaeye.com/messages" title="你有新的站内短信"><img alt="Newpm" src="http://www.javaeye.com/images/newpm.gif?1193643365" />收件箱(2)</a>
+    
+    
+      <a href="http://app.javaeye.com" title="我的应用首页">我的应用</a>
+    
+    <div class="quick_menu" style="display:none;">
+      <a href="http://app.javaeye.com/feed" title="我订阅的好友动态消息">我的订阅</a>
+      <a href="http://app.javaeye.com/feed/my" title="我参与的话题更新的消息">我的参与</a>
+      <a href="http://app.javaeye.com/chat" title="用闲聊发表简短的话题">我的闲聊</a>
+      <a href="http://app.javaeye.com/mygroup" title="我加入的圈子最新话题">我的圈子</a>
+      <a href="http://app.javaeye.com/links" title="我收藏的网络资源链接">我的收藏</a>
+      <a href="http://app.javaeye.com/myresume" title="我的个人简历">我的简历</a>
+    </div>
+        <a href="http://ndot.javaeye.com/admin" title="管理我的博客">我的博客</a>
+    <a href="http://app.javaeye.com/profile" title="修改我的个人设置">设置</a>
+    <a href="/logout" class="nobg" onclick="var f = document.createElement('form'); f.style.display = 'none'; this.parentNode.appendChild(f); f.method = 'POST'; f.action = this.href;var m = document.createElement('input'); m.setAttribute('type', 'hidden'); m.setAttribute('name', '_method'); m.setAttribute('value', 'put'); f.appendChild(m);f.submit();return false;">退出</a>
+  </div>
+    </div>
+
+    <div id="page">
+      <div id="branding" class="clearfix">
+        <div id="blog_name"><h1><a href="/">大城小胖的大城</a></h1></div>
+        <div id="blog_preview"></div>
+        <div id="blog_domain">永久域名 <a href="/">http://fins.javaeye.com</a></div>
+      </div>
+      
+      
+      <div id="content" class="clearfix">
+        <div id="main">
+          
+
+
+          
+
+
+<div class="blog_main"> 
+  <div id="blog_nav">
+    
+    <div id="pre_next">
+      <a href="/blog/223694" class="next" title="GT-Grid 1.0 基础教程(十一)">GT-Grid 1.0 基础教程(十一)</a>
+      |
+      <a href="/blog/221263" class="pre" title="[音乐分享]有没有一点希望让我去&lt;闯&gt;">[音乐分享]有没有一点希望让我去&lt;闯&gt;</a>
+    </div>
+  </div>
+  <div class="blog_title">
+    <div class="date"><span class='year'>2008</span><span class='sep_year'>-</span><span class='month'>08</span><span class='sep_month'>-</span><span class='day'>03</span></div>
+    <h3 class='type_original' title='原创'><a href="/blog/223493">GT-Grid 1.0 基础教程(十)</a></h3>
+                <strong>关键字: ajax, grid</strong>
+  </div>
+
+  <div class="blog_content">
+    GT-Grid 1.0 基础教程(十)<br /><br /><span style="font-size: large"><strong>教程说明:</strong></span><br />这是一个告诉大家如何快速的利用GT-Grid开发列表的基础教程.以后会推出"高级教程".<br />查看<span style="color: blue">其他教程</span>,以及最新版本信息,请<a href="http://fins.javaeye.com/blog/214290" target="_blank">点击这里</a><br /><br /><span style="font-size: large"><strong>第十章: 事件</strong></span><br /><br />这一章将讲解一下 GT-Grid中的一些关键的 常用的事件机制.<br />本章对应示例文件: "mydemo10.html".<br /><br /><br />为grid加入事件,只需要在 gird的定义中写入GT-Grid所支持的事件即可.<br />如 : <br /><br /><pre name="code" class="javascript">
+var gridConfig={
+	/* ... 略去其他属性设置 ...*/
+	
+	afterSelectRow :  function(record ,row, rowNo,grid){
+		// ... ...
+	}
+}
+</pre><br /><br />GT-Grid本身支持很多事件, 但是其中并不是所有事件都是常用或者重要的. 本章将结合示例,挑选几个常用的事件进行讲解.<br />更多的事件,请查阅"参考指南".<br /><br /><br />在正式讲解"事件"之前,先让我们来了解一下 GT-Grid创建并显示一个列表的大致步骤:<br /><br />1 根据定义,创建列表的外观(外框,布局)<br />2 创建列表的各个部件(表头,工具栏等等)<br /><br />3 第2步完成后, 去异步的加载数据<br />4 第3步完成后, 创建列表数据区,并显示<br /><br /><br />在列表创建之后, 再对列表执行 刷新 翻页 等数据操作时, 实际上执行的只是第3 4步.<br /><br /><br />在明白上面的几个步骤之后,我们来看看今天要讲解的事件:<br />注意:<br />下列所有名为beforeXXXX的事件,都是在发生XXXX动作之前被调用, 如果该事件函数的返回值为false, 那么就可以阻止XXXX动作的发生.<br /><br /><br /><pre name="code" class="javascript">
+onComplete : function(grid) 
+该事件在第4步完成之后调用,唯一参数就是 grid对象本身.
+
+
+beforeRefresh : function(grid) 
+该事件在第3步完成之后, 第4步之前调用,唯一参数就是 grid对象本身.
+
+
+beforeLoad : function(reqParam,grid)  
+该事件在第3步完成之前(从服务端加载数据之前)
+参数reqParam为Gt-Grid准备传递给服务端的json对象, 大家可以根据需求来改动里面的指. 最后一个参数是 grid对象本身.
+
+
+beforeSave : function(reqParam,grid)  
+该事件在点击保存按钮之后, 数据提交到服务端之前被执行.
+参数reqParam为Gt-Grid准备传递给服务端的json对象, 大家可以根据需求来改动里面的指. 最后一个参数是 grid对象本身.
+
+
+beforeSelectRow : function(record ,row, rowNo,grid)  
+该事件在选中某一行的之前触发(点击某一行,但是GT-Grid还没有把该行标记为选中行)
+record 为欲选中的行对应的记录, row为欲选中的行(tr)对象, rowNo为行号, 最后一个参数是 grid对象本身.
+
+afterSelectRow : function(record ,row, rowNo,grid)  
+该事件在选中某一行的之后触发(点击某一行,且GT-Grid已经把该行标记为选中行)
+record 为刚刚选中的行对应的记录, row为刚刚选中的行(tr)对象, rowNo为行号, 最后一个参数是 grid对象本身.
+
+
+onClickCell : function(value,record,cell,row,rowNo,columnObj,grid,event) 
+该事件在点击列表区的单元格时触发
+点击的单元格对应的记录值, 点击的单元格所在行对应的记录, 点击的单元格(td)对象, 点击的单元格所在的行(tr)对象, 点击的单元格对应的列定义,  
+grid对象本身, 点击动作对应的浏览器事件对象
+
+
+onDblClickCell : function(value,record,cell,row,rowNo,columnObj,grid,event) 
+该事件在双击击列表区的单元格时触发
+双击的单元格对应的记录值, 双击的单元格所在行对应的记录, 双击的单元格(td)对象, 双击的单元格所在的行(tr)对象, 点击的单元格对应的列定义,  
+grid对象本身, 双击动作对应的浏览器事件对象
+
+
+beforeEdit : function(value,record,columnObj,grid) 
+该事件在编辑单元格之前触发.(点击某个可编辑单元格,进入编辑状态之前)
+value 为欲编辑的值 , record 为欲编辑的值所在的记录, columnObj为欲编辑的列对应的列定义, 最后一个参数是 grid对象本身.
+
+
+beforeDelete : function(record,row,grid) 
+该事件在删除记录之前触发.
+record 为欲删除的记录,row为删除的记录所在的行, 最后一个参数是 grid对象本身.
+
+
+</pre><br /><br /><br />对于上面提到的事件, 仅仅有这些简短的文字说明,也许大家无法完全理解, <br />建议大家可以动手试一试, 为grid指定上述事件, 然后在事件里进行 alert ,好好体会一下这些事件触发的时机.<br /><br /><br /><br /><span style="color: green">=========================================</span><br /><br /><br /><br /><br />下面将结合一个示例,来为大家演示如何利用事件来强化列表.<br />我们假设这样一个场景: 选中列表中的某一行,然后将这一行对应的记录添加到列表下方的一个表单内.<br /><br />首先我们在列表的下方加入一个极其简单的form:<br /><pre name="code" class="html">
+&lt;form&gt;
+学 号 : &lt;input type="text" id="no" name="no" /&gt; &lt;br/&gt;
+姓 名 : &lt;input type="text" id="name" name="name" /&gt; &lt;br/&gt;
+年 龄 : &lt;input type="text" id="age" name="age" /&gt; &lt;br/&gt;
+性 别 : &lt;input type="text" id="gender" name="gender" /&gt; &lt;br/&gt;
+英 语 : &lt;input type="text" id="english" name="english" /&gt; &lt;br/&gt;
+数 学 : &lt;input type="text" id="math" name="math" /&gt; &lt;br/&gt;
+总成绩 : &lt;input type="text" id="total" name="total" /&gt;
+&lt;/form&gt;
+</pre><br /><br />然后为列表指定 afterSelectRow事件.<br /><br /><pre name="code" class="javascript">
+var gridConfig={
+	/* ... 略去其他属性设置 ...*/
+	
+	afterSelectRow : function(record ,row, rowNo,grid){
+		for (var k in record) {
+			var field=GT.$(k);
+			if (field) {
+				field.value=record[k];
+			}
+		}
+	}
+}
+</pre><br /><br />运行一下就可以看到效果了. afterSelectRow 对应函数内的具体代码大家不必关注.<br />大家要在意的是 这个事件触发的时机 ---- 选中某行之后.<br />以及 事件的参数 : record ---- 选中行对应的记录.<br /><br />合理的使用该函数,可以比较轻松的实现主从表 列表与其他组件联动等效果.<br /><br /><br /><br /><span style="color: green">=========================================</span><br /><br /><br /><br /><br />下面我们再举一个例子. 假设这样一个场景: 在编辑数据时,对于性别未知的同学,我们不允许编辑其数据.<br />那么我们可以利用 beforeXXXX 类事件的拦截机制来实现.<br /><br /><br /><pre name="code" class="javascript">
+var gridConfig={
+	/* ... 略去其他属性设置 ...*/
+	
+	beforeEdit : function(value,record,columnObj,grid){
+		if ('U'==record['gender']){
+			return false;
+		}
+	},
+	beforeDelete : function(record,row,grid){
+		if ('U'==record['gender']){
+			return false;
+		}
+	}
+}
+</pre><br /><br />现在运行一下示例, 在点击 性别为"未知"的学生时, 我们无法进入编辑状态,也无法删除之.<br /><br /><br /><br /><img src="http://fins.javaeye.com/blog/223493" /><br /><span style="color: green">=========================================</span><br /><br /><br /><br />在诸多事件中, beforeLoad 和 beforeSave.这两个事件需要特别说一下.<br />之所以要特别提一下它们,是因为这两个事件处在 客户端与服务端通讯的关键路径上.<br />它们的第一个参数就是 GT-Grid要发送给服务端的数据.<br />开发人员可以在这两个事件中, 对提交的数据进行个性化处理(改变/增加/删除提交的数据)<br />同时也可以利用return false 来阻止load/save操作, <br />甚至也可以在这两个事件里alert出提交的数据内容,来帮助自己调试程序.<br /><br />在这里只举一个简单的例子,<br /><br /><pre name="code" class="javascript">
+var gridConfig={
+	/* ... 略去其他属性设置 ...*/
+	beforeSave : function(reqParam,grid){
+		return confirm("您确定要提交如下数据到 "+grid.saveURL + " 吗?\n "+GT.toJSONString(reqParam,true)+"\n");
+	}
+}
+</pre><br />这个示例中, 用户在点击"save"按钮时,将会弹出提示信息,询问用户确实要提交数据吗,<br />点击确定 将会提交, 点击取消 将什么都不做.<br /><br />代码 :　GT.toJSONString(reqParam,true)<br />用来生成　提交参数的JSON串(第二个参数为是否是格式化输出), 可用来实现对提交数据的监控.<br /><br /><br /><br /><span style="color: green">=========================================</span><br /><br /><br /><br /><br />关于GT-Grid的事件就先讲到这里, 事件其实是个很灵活的机制, 只要合理的利用,并且发挥自己的想象力, 可以扩展出很多GT-Grid本身不具备的功能.<br />好了 本章就暂时说这些吧. 下一章见.<br /><br /><br />
+  </div>
+
+  
+
+  <div>
+      <script type="text/javascript">
+      alimama_pid="mm_11847803_1454875_3591335"; 
+      alimama_titlecolor="0000FF"; 
+      alimama_descolor ="000000"; 
+      alimama_bgcolor="FFFFFF"; 
+      alimama_bordercolor="E6E6E6"; 
+      alimama_linkcolor="008000"; 
+      alimama_bottomcolor="FFFFFF"; 
+      alimama_anglesize="0"; 
+      alimama_bgpic="0"; 
+      alimama_icon="0"; 
+      alimama_sizecode="14"; 
+      alimama_width=468; 
+      alimama_height=60; 
+      alimama_type=2; 
+      </script>
+      <script src="http://a.alimama.cn/inf.js" type=text/javascript>
+      </script>  
+    </div>
+
+  
+  
+
+  <div class="blog_bottom">
+    <ul>
+      <li>00:52</li>
+      <li>浏览 (5239)</li>
+      <li><a href="http://www.javaeye.com/topic/223493" title="在论坛被浏览了1608 次">论坛浏览 (1608)</a></li>       <li><a href="#comments">评论</a> (5)</li>
+      <li>分类: <a href="/category/7343">GT-Grid</a></li>
+      <li>发布在 <a href="http://ecside.group.javaeye.com">GT-Grid</a> 圈子
+      
+        <li><a href='http://app.javaeye.com/links?user_favorite%5Btitle%5D=GT-Grid+1.0+%E5%9F%BA%E7%A1%80%E6%95%99%E7%A8%8B%28%E5%8D%81%29&amp;user_favorite%5Burl%5D=http%3A%2F%2Ffins.javaeye.com%2Fblog%2F223493' target='_blank' class='favorite'>收藏</a></li>
+        
+      
+      
+      <li class='last'><a href="http://www.javaeye.com/wiki/topic/223493" target="_blank" class="more">相关推荐</a></li>
+    </ul>
+  </div>
+
+  <div class="blog_comment">
+    <h5>评论</h5>
+    <a id="comments" name="comments"></a>
+    <div id="bc950487">
+  <div class="comment_title">
+    5 楼
+    <a href='http://fins.javaeye.com' target='_blank'>fins</a>
+    2009-04-02&nbsp;&nbsp;
+    <a href="#" onclick="quote_comment(950487);return false;">引用</a>
+    
+  </div>
+  <div class="comment_content"><div class="quote_title">starnc 写道</div><div class="quote_div"><br />我想给用户一个提示，删除并非真正删除，必须要保持后才能生效。我的想法是用户第一次按删除按钮后跳alert，以后都不跳，请问应该怎么实现<br /></div><br /><br />这个不难吧 做个页面级的变量<br />然后在alert之前判断一下</div>
+</div>
+<div id="bc948229">
+  <div class="comment_title">
+    4 楼
+    <a href='http://starnc.javaeye.com' target='_blank'>starnc</a>
+    2009-03-31&nbsp;&nbsp;
+    <a href="#" onclick="quote_comment(948229);return false;">引用</a>
+    
+  </div>
+  <div class="comment_content">我想给用户一个提示，删除并非真正删除，必须要保持后才能生效。我的想法是用户第一次按删除按钮后跳alert，以后都不跳，请问应该怎么实现</div>
+</div>
+<div id="bc876394">
+  <div class="comment_title">
+    3 楼
+    <a href='http://zcs-84.javaeye.com' target='_blank'>zcs_84</a>
+    2009-02-13&nbsp;&nbsp;
+    <a href="#" onclick="quote_comment(876394);return false;">引用</a>
+    
+  </div>
+  <div class="comment_content">能不能做个gt-Grid与JavaScript交互的例子呀。<br />最好搞个gt-Grid与ajax、jquery的交互</div>
+</div>
+<div id="bc876389">
+  <div class="comment_title">
+    2 楼
+    <a href='http://zcs-84.javaeye.com' target='_blank'>zcs_84</a>
+    2009-02-13&nbsp;&nbsp;
+    <a href="#" onclick="quote_comment(876389);return false;">引用</a>
+    
+  </div>
+  <div class="comment_content">能不详细说明这个时间<br />	onClickCell : function(value,record,cell,row,rowNo,columnObj,grid,event) {<br />						<br />					} 这些参数下面有那些属性呀<br /><br />参数： row 指 单元格(td)对象，那么document.all.row.offsetHeight该是支持的吧！<br />但是却达不到要求呀！<br /></div>
+</div>
+<div id="bc876384">
+  <div class="comment_title">
+    1 楼
+    <a href='http://zcs-84.javaeye.com' target='_blank'>zcs_84</a>
+    2009-02-13&nbsp;&nbsp;
+    <a href="#" onclick="quote_comment(876384);return false;">引用</a>
+    
+  </div>
+  <div class="comment_content">请问 我要单击某个单元格 得到这个单元的td的Id属性 然后设置用jquery的$("#tdId").html("&lt;font color ="red"&gt;1111&lt;/font&gt;");<br />怎么实现呀<br /><br />也就是GT—Grid 通过Td的Id 来操作table <br />请问怎么实现呀！</div>
+</div>
+
+    
+    
+  </div>
+
+  <div class="blog_comment">
+    <h5>发表评论</h5>
+    
+      <p style='font-weight: bold; margin: 5px 0;'>该博客是同时发布到<a href="http://www.javaeye.com/topic/223493">论坛</a>的，无法评论在论坛已被锁定的帖子</p>
+      </div>
+</div>
+
+
+<script type="text/javascript">
+  dp.SyntaxHighlighter.HighlightAll('code', true, true);
+
+  fix_image_size($$('div.blog_content img'), 700);
+  function quote_comment(id) {
+    new Ajax.Request('/editor/quote', {
+      parameters: {'id':id, 'type':'Post'},
+      onSuccess:function(response){editor.bbcode_editor.textarea.insertAfterSelection(response.responseText);}
+    });
+  }
+</script>
+
+
+        </div>
+
+        <div id="local">
+          <div class="local_top"></div>
+          <div id="blog_owner">
+            <div id="blog_owner_logo"><a href='http://fins.javaeye.com'><img alt="fins的博客" class="logo" src="http://www.javaeye.com/upload/logo/user/140680/8b5d1675-cdba-3cb7-8682-1c9ba0174e40.jpg?1251274936" title="fins的博客: 大城小胖的大城" /></a></div>
+            <div id="blog_owner_name">fins</div>
+          </div>
+          
+            <div id="twitter_decorate">&nbsp;</div>
+            <div id="twitter" class="twitter clearfix">
+              
+用js操作数据库的感觉真是爽
+<br/><em><a href="http://fins.javaeye.com/blog/chat/42565">2009-09-03</a>
+ 通过网页
+ 
+</em>
+       <a href="http://app.javaeye.com/chat?twitter%5Bbody%5D=%40fins+&amp;twitter%5Breply_to_id%5D=42565" title="回复这个闲聊"><img alt="Reply_twitter" src="http://www.javaeye.com/images/app/reply_twitter.gif?1232617931" /></a>
+              <div class="right"><a href="/blog/chat">&gt;&gt;更多闲聊</a></div>
+            </div>
+          
+          <div id="blog_actions">
+            <ul>
+              <li>浏览: 1143907 次</li>
+              <li>性别: <img alt="Icon_minigender_1" src="http://www.javaeye.com/images/icon_minigender_1.gif?1192779195" title="男" /></li>
+              <li>来自: 小胖儿的大城</li>
+              <li><img src='/images/status/offline.gif'/></li>
+              <li>
+                <a href="/blog/profile" class="profile">详细资料</a>
+                <a href="/blog/guest_book" class="guest_book">留言簿</a>
+              </li>
+              
+                <li>
+                  <a href="http://app.javaeye.com/messages/new?message%5Breceiver_name%5D=fins" class="message" title="发送站内短信">发短消息</a>
+                  
+                    <a href="http://app.javaeye.com/feed?subscription%5Bsubscribed_user_name%5D=fins" class="subscription" onclick="var f = document.createElement('form'); f.style.display = 'none'; this.parentNode.appendChild(f); f.method = 'POST'; f.action = this.href;f.submit();return false;">订阅</a>
+                  
+                </li>
+              
+            </ul>
+            <h5>搜索本博客</h5>
+            <form action="/blog/search" method="get">              <input class="text" id="query" name="query" style="margin-left: 10px;width: 110px;" type="text" />
+              <input class="submit" type="submit" value="搜索" />
+            </form>          </div>
+          
+            <div id="user_visits" class="clearfix">
+              <h5>最近访客 <span style='font-weight:normal;font-size:12px;padding-left:30px;'><a href="/blog/user_visits">&gt;&gt;更多访客</a></span></h5>
+              
+                <div class="user_visit">
+                  <div class="logo"><a href='http://ndot.javaeye.com' target='_blank'><img alt="NDot的博客" class="logo" src="http://www.javaeye.com/images/user-logo-thumb.gif?1194185304" title="NDot的博客: NDot" /></a></div>
+                  <div class="left"><a href='http://ndot.javaeye.com' target='_blank'>NDot</a></div>
+                </div>
+              
+                <div class="user_visit">
+                  <div class="logo"><a href='http://liqiotto.javaeye.com' target='_blank'><img alt="liqiotto的博客" class="logo" src="http://www.javaeye.com/images/user-logo-thumb.gif?1194185304" title="liqiotto的博客: liqiotto" /></a></div>
+                  <div class="left"><a href='http://liqiotto.javaeye.com' target='_blank'>liqiotto</a></div>
+                </div>
+              
+                <div class="user_visit">
+                  <div class="logo"><a href='http://lycvip.javaeye.com' target='_blank'><img alt="lycvip的博客" class="logo" src="http://www.javaeye.com/images/user-logo-thumb.gif?1194185304" title="lycvip的博客: lycvip" /></a></div>
+                  <div class="left"><a href='http://lycvip.javaeye.com' target='_blank'>lycvip</a></div>
+                </div>
+              
+                <div class="user_visit">
+                  <div class="logo"><a href='http://wlsever.javaeye.com' target='_blank'><img alt="wlsever的博客" class="logo" src="http://www.javaeye.com/images/user-logo-thumb.gif?1194185304" title="wlsever的博客: " /></a></div>
+                  <div class="left"><a href='http://wlsever.javaeye.com' target='_blank'>wlsever</a></div>
+                </div>
+              
+            </div>
+          
+                      <div id="blog_menu">
+              <h5>博客分类</h5>
+              <ul>
+                <li><a href="/">全部博客 (368)</a></li>
+                
+                  <li><a href="/category/7343">GT-Grid (109)</a></li>
+                
+                  <li><a href="/category/7344">java &amp; ee (29)</a></li>
+                
+                  <li><a href="/category/7347">js &amp; ajax (51)</a></li>
+                
+                  <li><a href="/category/46131">AIR &amp; Flex &amp; AS (8)</a></li>
+                
+                  <li><a href="/category/7365">oracle &amp;&amp; pl/sql (1)</a></li>
+                
+                  <li><a href="/category/7345">game develope (4)</a></li>
+                
+                  <li><a href="/category/28369">五月天 (28)</a></li>
+                
+                  <li><a href="/category/36821">音乐分享 (10)</a></li>
+                
+                  <li><a href="/category/7348">胡言乱语 (117)</a></li>
+                
+                  <li><a href="/category/32227">写着玩儿 (0)</a></li>
+                
+              </ul>
+            </div>
+            
+              <div id="blog_album">
+                <h5>我的相册</h5>
+                <div class="picture_thumb" style="float: none">
+                  <div><span class='thumb_box'><a href='/album'><img src='http://dl.javaeye.com/upload/picture/pic/36385/3b5867a9-7cd3-30a9-a0d9-b075f25d271b-thumb.jpg' /></a></span></div>
+                  <span>renzhetu<br/> <a href="/album">共 151 张</a></span>
+                </div>
+              </div>
+            
+            
+              <div id="guest_books">
+                <h5>我的留言簿 <span style='font-weight:normal;font-size:12px;padding-left:20px;'><a href="/blog/guest_book">&gt;&gt;更多留言</a></span></h5>
+                <ul>
+                  
+                    <li>
+                      请问下我通过传值的方式修改了表格的值如何显示在表格上<br/>
+                      -- by <a href="/blog/guest_book#10278">200322176</a>
+                    </li>
+                  
+                    <li>
+                      看了你的这篇文章 主题：[求助]高并发的大数据量查询导致系统频繁宕机,咋办啊 我 ...<br/>
+                      -- by <a href="/blog/guest_book#8460">lzg3267373</a>
+                    </li>
+                  
+                    <li>
+                      fins，这次五月天来上海的演唱会去看了吗？没看你写他们的文章了。。。<br/>
+                      -- by <a href="/blog/guest_book#7954">smalldeer</a>
+                    </li>
+                  
+                </ul>
+              </div>
+            
+            <div id="blog_others">
+              <h5>其他分类</h5>
+              <ul>
+                <li><a href="/blog/favorite">我的收藏</a> (23)</li>
+                                                <li><a href="/blog/forum">我的论坛帖子</a> (3041)</li>
+                <li><a href="/blog/article">我的精华良好贴</a> (13)</li>
+                
+                  <li><a href="/blog/solution">我解决的问题</a> (1) </li>
+                              </ul>
+            </div>
+            
+            <div id="recent_groups">
+              <h5>最近加入圈子</h5>
+              <ul>
+                
+                  <li><a href="http://mars.group.javaeye.com">火星常驻JE办事处</a></li>
+                
+                  <li><a href="http://pcdiy.group.javaeye.com">电脑DIY</a></li>
+                
+                  <li><a href="http://EclipseRCPForum.group.javaeye.com">Eclipse PlugIns&RCP&OSGI</a></li>
+                
+                  <li><a href="http://javaeye-admin.group.javaeye.com">JavaEye站务讨论</a></li>
+                
+                  <li><a href="http://javaeye-water.group.javaeye.com">JavaEye水源</a></li>
+                
+              </ul>
+            </div>
+            
+              <div id="user_links">
+                <h5>链接</h5>
+                <ul>
+                  
+                    <li><a href="http://blog.sina.com.cn/musiq" target="_blank">阿信最爱★後青春期的詩</a></li>
+                  
+                    <li><a href="http://aprilnew.blogcn.com/index.shtml" target="_blank">失散多年的牛牛姐姐</a></li>
+                  
+                    <li><a href="http://extjs2.javaeye.com" target="_blank">extJS</a></li>
+                  
+                </ul>
+              </div>
+            
+            
+                          <div id="month_blogs">
+                <h5>存档</h5>
+                <ul>
+                  
+                    <li><a href="/blog/monthblog/2009-05">2009-05</a> (1)</li>
+                  
+                    <li><a href="/blog/monthblog/2009-04">2009-04</a> (8)</li>
+                  
+                    <li><a href="/blog/monthblog/2009-03">2009-03</a> (9)</li>
+                  
+                  <li><a href="/blog/monthblog_more">更多存档...</a></li>
+                </ul>
+              </div>
+                        <div id="recent_comments">
+              <h5>最新评论</h5>
+              <ul>
+                
+                  <li>
+                    <a href="/blog/214336#comments" title="我有一个梦">我有一个梦</a><br/>
+                    我们大家正在努力，真的在努力！<br/>
+                    -- by <a href='http://aylishuai626.javaeye.com' target='_blank'>aylishuai626</a>
+                  </li>
+                
+                  <li>
+                    <a href="/blog/346392#comments" title="回答一下&quot;为什么最近GT-Grid 不更新了?&quot;">回答一下&quot;为什么最近GT-G ...</a><br/>
+                    我们的项目现在正在用。用的是1.0的版本。用起来很好，但是也发现了很多问题。最 ...<br/>
+                    -- by <a href='http://seanman.javaeye.com' target='_blank'>Seanman</a>
+                  </li>
+                
+                  <li>
+                    <a href="/blog/48723#comments" title="ECSide 综合讨论 :) ">ECSide 综合讨论 :) </a><br/>
+                    兄弟,能不能给一个页面有多个&lt;ec:table/&gt;的例子,我做的那个怎 ...<br/>
+                    -- by <a href='http://haray.javaeye.com' target='_blank'>haray</a>
+                  </li>
+                
+                  <li>
+                    <a href="/blog/265276#comments" title="GT-Grid 近期将会发布一个bug修正版本,然后将会进行较大的重构">GT-Grid 近期将会发布一个 ...</a><br/>
+                    与- Sigma Grid 2.2 有很大相似？<br/>
+                    -- by <a href='http://wangchunfei.javaeye.com' target='_blank'>wangchunfei</a>
+                  </li>
+                
+                  <li>
+                    <a href="/blog/218435#comments" title="★汇总★GT-Grid &quot;缺陷,、bug、计划&quot;汇总.(2009-02-17更新)">★汇总★GT-Grid &quot;缺陷, ...</a><br/>
+                    关于过滤的startwith，endwith与&gt;=,&lt;=功能上是否有重 ...<br/>
+                    -- by <a href='http://qin686-163-com.javaeye.com' target='_blank'>唯快不破</a>
+                  </li>
+                
+              </ul>
+            </div>
+            <div id="comments_top">
+              <h5>评论排行榜</h5>
+              <ul>
+                
+                  <li><a href="/blog/255954" title="[发布]GT-Grid 1.25 版 ★&amp; &quot;前后台结合示例&quot; ★2008-10-21 更新">[发布]GT-Grid 1.25 版 ★&amp; &quot;前后台结合 ...</a></li>
+                
+                  <li><a href="/blog/271137" title="关于 &lt;李刚 和 他的技术书籍们&gt; ">关于 &lt;李刚 和 他的技术书籍们&gt; </a></li>
+                
+                  <li><a href="/blog/275846" title="[问]sun如果真的被IBM收购了,那么JavaFX的明天会更好?还是将没有明天了?">[问]sun如果真的被IBM收购了,那么JavaFX ...</a></li>
+                
+                  <li><a href="/blog/240555" title="[部分转载+简单评论]&lt;IE 到底要怎么样才能得到那部分人的认可？&gt;">[部分转载+简单评论]&lt;IE 到底要怎么样才 ...</a></li>
+                
+                  <li><a href="/blog/246412" title="说说自己喜欢的漫画吧">说说自己喜欢的漫画吧</a></li>
+                
+              </ul>
+            </div>
+            <div id="rss">
+              <ul>
+                <li><a href="/rss" target="_blank"><img alt="Rss" src="http://www.javaeye.com/images/rss.png?1195448807" /></a></li>
+                <li><a href="http://fusion.google.com/add?feedurl=http://fins.javaeye.com/rss" target="_blank"><img alt="Rss_google" src="http://www.javaeye.com/images/rss_google.gif?1197872161" /></a></li>
+                <li><a href="http://www.zhuaxia.com/add_channel.php?url=http://fins.javaeye.com/rss" target="_blank"><img alt="Rss_zhuaxia" src="http://www.javaeye.com/images/rss_zhuaxia.gif?1197872161" /></a></li>
+                <li><a href="http://www.xianguo.com/subscribe.php?url=http://fins.javaeye.com/rss" target="_blank"><img alt="Rss_xianguo" src="http://www.javaeye.com/images/rss_xianguo.jpg?1206446465" /></a></li>
+                <li><a href="http://www.google.com/search?hl=zh-CN&q=RSS">[什么是RSS?]</a></li>
+              </ul>
+            </div>
+            <div class="local_bottom"></div>
+          
+        </div>
+      </div>
+
+      <div id="footer" class="clearfix">
+        <div id="copyright">
+          <hr/>
+          声明：JavaEye文章版权属于作者，受法律保护。没有作者书面许可不得转载。若作者同意转载，必须以超链接形式标明文章原始出处和作者。<br />
+          &copy; 2003-2009 JavaEye.com.   All rights reserved. 上海炯耐计算机软件有限公司 [ 沪ICP备05023328号 ]
+        </div>
+      </div>
+    </div>
+    
+  <div id="chat_input" style="display:none;">
+    <iframe id="chat_iframe" frameborder="0" scrolling="no" marginwidth="0" marginheight="0" allowTransparency="true"></iframe>
+  </div>
+  <div id="chat_button"><a href="#" style="text-decoration:none;color:black" onclick="$('chat_input').show();$('chat_iframe').src='/chat/widget';return false;">说点啥吧 <img alt="Chat" src="http://www.javaeye.com/images/app/chat.gif?1236064059" /></a></div>
+
+<script type="text/javascript">
+  document.write("<img src='http://stat.javaeye.com/?url="+ encodeURIComponent(document.location.href) + "&referrer=" + encodeURIComponent(document.referrer) + "&logged_in=yes" + "' width='0' height='0' />");
+</script>
+    
+  </body>
+</html>

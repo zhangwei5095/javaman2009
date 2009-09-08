@@ -1,0 +1,574 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3c.org/TR/1999/REC-html401-19991224/loose.dtd">
+<!-- saved from url=(0035)http://fins.javaeye.com/blog/214290 -->
+<HTML dir=ltr xml:lang="zh-CN" 
+xmlns="http://www.w3.org/1999/xhtml"><HEAD><TITLE>★列表组件 GT-Grid 最新版本 & 基础教程. (09年01月15日 2:40 AM 更新) - 大城小胖的大城 - JavaEye技术网站</TITLE>
+<META http-equiv=Content-Type content="text/html; charset=UTF-8">
+<META 
+content='============================= [发布]GT-Grid 1.42 版 ★&amp; "前后台结合示例"★2009-01-15更新  ============================= 欢迎大家参与 : GT-Grid用户问卷调查(一)  欢迎大家去这里报告bug : ★汇总★GT-Grid "缺陷,、bug、计划"汇总 欲查 ...' 
+name=description>
+<META 
+content="ajax, grid, datatable, datalist, table, list, 列表, 组件, 控件 AJAX ★列表组件 GT-Grid 最新版本 &amp; 基础教程. (09年01月15日 2:40 AM 更新)" 
+name=keywords><LINK href="/images/favicon.ico" type=image/x-icon 
+rel="shortcut icon"><LINK title=大城小胖的大城 href="/rss" type=application/rss+xml 
+rel=alternate><LINK media=screen 
+href="★列表组件 GT-Grid 最新版本 &amp; 基础教程_ (09年01月15日 240 AM 更新) - 大城小胖的大城 - JavaEye技术网站.files/blog.css" 
+type=text/css rel=stylesheet><LINK media=screen 
+href="★列表组件 GT-Grid 最新版本 &amp; 基础教程_ (09年01月15日 240 AM 更新) - 大城小胖的大城 - JavaEye技术网站.files/blue.css" 
+type=text/css rel=stylesheet>
+<SCRIPT 
+src="★列表组件 GT-Grid 最新版本 &amp; 基础教程_ (09年01月15日 240 AM 更新) - 大城小胖的大城 - JavaEye技术网站.files/application.js" 
+type=text/javascript></SCRIPT>
+<LINK media=screen 
+href="★列表组件 GT-Grid 最新版本 &amp; 基础教程_ (09年01月15日 240 AM 更新) - 大城小胖的大城 - JavaEye技术网站.files/SyntaxHighlighter.css" 
+type=text/css rel=stylesheet>
+<SCRIPT 
+src="★列表组件 GT-Grid 最新版本 &amp; 基础教程_ (09年01月15日 240 AM 更新) - 大城小胖的大城 - JavaEye技术网站.files/shCoreCommon.js" 
+type=text/javascript></SCRIPT>
+
+<SCRIPT 
+src="★列表组件 GT-Grid 最新版本 &amp; 基础教程_ (09年01月15日 240 AM 更新) - 大城小胖的大城 - JavaEye技术网站.files/hotkey.js" 
+type=text/javascript></SCRIPT>
+
+<STYLE>DIV#main {
+	BORDER-TOP-WIDTH: 0px; PADDING-RIGHT: 0px; PADDING-LEFT: 0px; BORDER-LEFT-WIDTH: 0px; BORDER-BOTTOM-WIDTH: 0px; PADDING-BOTTOM: 0px; WIDTH: 740px; PADDING-TOP: 0px; BACKGROUND-COLOR: transparent; BORDER-RIGHT-WIDTH: 0px
+}
+</STYLE>
+
+<META content="MSHTML 6.00.2900.3603" name=GENERATOR></HEAD>
+<BODY>
+<DIV id=header>
+<DIV id=blog_site_nav><A class=homepage href="http://www.javaeye.com/">首页</A> <A 
+href="http://www.javaeye.com/news">新闻</A> <A 
+href="http://www.javaeye.com/forums">论坛</A> <A 
+href="http://www.javaeye.com/blogs">博客</A> <A 
+href="http://www.javaeye.com/job">招聘</A> <A id=msna onclick="return false;" 
+href="http://fins.javaeye.com/blog/214290#"><U>更多</U> <SMALL>▼</SMALL></A> 
+<DIV class=quick_menu style="DISPLAY: none"><A 
+href="http://www.javaeye.com/ask">问答</A> <A 
+href="http://www.javaeye.com/wiki">知识库</A> <A 
+href="http://www.javaeye.com/groups">圈子</A> <A 
+href="http://www.javaeye.com/search">搜索</A> </DIV></DIV>
+<DIV id=user_nav><A class=welcome title=查看我的博客首页 
+href="http://ndot.javaeye.com/">欢迎NDot</A> <A title=你有新的站内短信 
+href="http://app.javaeye.com/messages"><IMG alt=Newpm 
+src="★列表组件 GT-Grid 最新版本 &amp; 基础教程_ (09年01月15日 240 AM 更新) - 大城小胖的大城 - JavaEye技术网站.files/newpm.gif">收件箱(2)</A> 
+<A title=我的应用首页 href="http://app.javaeye.com/">我的应用</A> 
+<DIV class=quick_menu style="DISPLAY: none"><A title=我订阅的好友动态消息 
+href="http://app.javaeye.com/feed">我的订阅</A> <A title=我参与的话题更新的消息 
+href="http://app.javaeye.com/feed/my">我的参与</A> <A title=用闲聊发表简短的话题 
+href="http://app.javaeye.com/chat">我的闲聊</A> <A title=我加入的圈子最新话题 
+href="http://app.javaeye.com/mygroup">我的圈子</A> <A title=我收藏的网络资源链接 
+href="http://app.javaeye.com/links">我的收藏</A> <A title=我的个人简历 
+href="http://app.javaeye.com/myresume">我的简历</A> </DIV><A title=管理我的博客 
+href="http://ndot.javaeye.com/admin">我的博客</A> <A title=修改我的个人设置 
+href="http://app.javaeye.com/profile">设置</A> <A class=nobg 
+onclick="var f = document.createElement('form'); f.style.display = 'none'; this.parentNode.appendChild(f); f.method = 'POST'; f.action = this.href;var m = document.createElement('input'); m.setAttribute('type', 'hidden'); m.setAttribute('name', '_method'); m.setAttribute('value', 'put'); f.appendChild(m);f.submit();return false;" 
+href="http://fins.javaeye.com/logout">退出</A> </DIV></DIV>
+<DIV id=page>
+<DIV class=clearfix id=branding>
+<DIV id=blog_name>
+<H1><A href="http://fins.javaeye.com/">大城小胖的大城</A></H1></DIV>
+<DIV id=blog_preview></DIV>
+<DIV id=blog_domain>永久域名 <A 
+href="http://fins.javaeye.com/">http://fins.javaeye.com/</A></DIV></DIV>
+<DIV class=clearfix id=content>
+<DIV id=main>
+<DIV class=blog_main>
+<DIV id=blog_nav>
+<DIV id=pre_next><A class=next title="GT-Grid 1.0 基础教程(三)" 
+href="http://fins.javaeye.com/blog/214321">GT-Grid 1.0 基础教程(三)</A> | <A 
+class=pre title="GT-Grid 1.0 基础教程(二)" 
+href="http://fins.javaeye.com/blog/214289">GT-Grid 1.0 基础教程(二)</A> </DIV></DIV>
+<DIV class=blog_title>
+<DIV class=date><SPAN class=year>2008</SPAN><SPAN class=sep_year>-</SPAN><SPAN 
+class=month>07</SPAN><SPAN class=sep_month>-</SPAN><SPAN 
+class=day>13</SPAN></DIV>
+<H3 class=type_original title=原创><A 
+href="http://fins.javaeye.com/blog/214290">★列表组件 GT-Grid 最新版本 &amp; 基础教程. 
+(09年01月15日 2:40 AM 更新)</A></H3><STRONG>关键字: ajax, grid, datatable, datalist, 
+table, list, 列表, 组件, 控件</STRONG> </DIV>
+<DIV class=blog_content>============================= <BR><SPAN 
+style="FONT-SIZE: medium"><A href="http://fins.javaeye.com/blog/316548" 
+target=_blank>[发布]GT-Grid 1.42 版 ★&amp; "前后台结合示例"★2009-01-15更新</A> 
+<BR></SPAN><BR>============================= <BR><BR><SPAN 
+style="COLOR: red">欢迎大家参与 : <A href="http://fins.javaeye.com/blog/218507" 
+target=_blank>GT-Grid用户问卷调查(一) </A></SPAN><BR><BR><SPAN 
+style="COLOR: red">欢迎大家去这里报告bug : <A href="http://fins.javaeye.com/blog/218435" 
+target=_blank>★汇总★GT-Grid "缺陷,、bug、计划"汇总</A></SPAN> <BR><BR>欲查看<SPAN 
+style="COLOR: red">GT-Grid的截图</SPAN>,请<A 
+href="http://fins.javaeye.com/blog/album_by_tag?tag=gt-grid" 
+target=_blank>猛击这里</A> <BR><BR>============================= <BR><SPAN 
+style="FONT-SIZE: large"><STRONG>GT-Grid基础教程</STRONG></SPAN> 系列: 
+(欢迎大家能够对教程提出宝贵建议和意见&nbsp; 谢谢) <BR><BR>已完成章节 : <BR><BR><A 
+href="http://fins.javaeye.com/blog/214239" target=_blank>GT-Grid 1.0 基础教程(一)</A> 
+第一章: 从"纯客户端只读列表"开始 <BR><BR><A href="http://fins.javaeye.com/blog/214289" 
+target=_blank>GT-Grid 1.0 基础教程(二)</A> 第二章: 让"纯客户端只读列表"变得更强大一些吧 <BR><BR><A 
+href="http://fins.javaeye.com/blog/214321" target=_blank>GT-Grid 1.0 基础教程(三)</A> 
+第三章 没有分页怎么行 <BR><BR><A href="http://fins.javaeye.com/blog/214680" 
+target=_blank>GT-Grid 1.0 基础教程(四)</A> 第四章 服务端数据的加载(上) <BR><BR><A 
+href="http://fins.javaeye.com/blog/215063" target=_blank>GT-Grid 1.0 基础教程(五)</A> 
+第五章 服务端数据的加载(下) <BR><BR><A href="http://fins.javaeye.com/blog/216773" 
+target=_blank>GT-Grid 1.0 基础教程(六)</A> 第六章: 可编辑列表 之 编辑器的使用 <BR><BR><A 
+href="http://fins.javaeye.com/blog/218427" target=_blank>GT-Grid 1.0 基础教程(七)</A> 
+第七章: 可编辑列表 之 删除记录 以及 数据提交 <BR><BR><A href="http://fins.javaeye.com/blog/220013" 
+target=_blank>GT-Grid 1.0 基础教程(八)</A> 第八章: 可编辑列表 之可编辑列表 之 添加记录 <BR><BR><A 
+href="http://fins.javaeye.com/blog/220244" target=_blank>GT-Grid 1.0 基础教程(九)</A> 
+第九章: 排序 <BR><BR><A href="http://fins.javaeye.com/blog/223493" 
+target=_blank>GT-Grid 1.0 基础教程(十)</A> 第十章: 事件 <BR><BR><A 
+href="http://fins.javaeye.com/blog/223694" target=_blank>GT-Grid 1.0 
+基础教程(十一)</A> 第十一章: 工具栏与列表菜单 <BR><BR><A 
+href="http://fins.javaeye.com/blog/224080" target=_blank>GT-Grid 1.0 
+基础教程(十二)</A> 第十二章: 自定义表头 <BR><BR>(其他章节撰写ING...) <BR><BR><BR><BR><SPAN 
+style="COLOR: red">=============================</SPAN> <BR>关于 后台示例 <BR><BR>这个例子 
+主要演示了 gt-grid与后台结合的方法. <BR>请大家重点看action 里是如何从客户端取数据 以及如何向客户端送数据的 <BR><BR>而其他地方 
+例如action如何实现的 , dao层是如何实现的 等等不是大家要看的重点. <BR><BR>dao层只要能返回一个 数据集合 
+并且这个集合能够转换成json字符串 <BR>那么dao层怎么实现 完全按你自己的意愿来. <BR><BR>这个示例中提供了一个 
+GridServerHandler的工具类, 建议看看这个类的实现方法 <BR>这样能更好的理解 gt-grid和后台交互的方式以及原理. 
+<BR><BR>整个示例的后台代码 我没有使用任何第三方框架 所以难免粗糙 还请大家海涵. <BR><BR><BR><SPAN 
+style="COLOR: red">=============================</SPAN> <BR>关于 java 和json 的互相转换. 
+<BR><BR>很多朋友 问我 复杂的java对象与json之间如何转换. <BR>目前 gt在服务端提供的辅助代码功能还有限 所以对于这个需求 暂时帮不上忙 
+<BR>但是大家可以 自行参照示例 来实现, 不难的 ,利用 json-lib之类的 更强大的json工具包可以轻松实现. <BR><BR>其实 
+目前提供导出xls 和 java&amp;json互转 这两个功能&nbsp; 大家可以看作是一个参考实现. <BR>大家没必要完全依赖它们. 
+看一看它们是怎么和gt-grid的前端交互的, <BR>知道原理之后 自己实现 无论从功能还是 性能上 应该都会好很多. <BR><BR><BR><SPAN 
+style="COLOR: red">=============================</SPAN> <BR><BR><SPAN 
+style="FONT-SIZE: x-large"><SPAN 
+style="COLOR: red">希望</SPAN>关注GT-Grid的朋友,可以抽空去看一下我下面这篇blog : <BR><A 
+href="http://fins.javaeye.com/blog/214336" target=_blank>&nbsp;&nbsp; 
+我有一个梦&nbsp;&nbsp; </A><BR></SPAN><BR><BR>我需要你们的支持 来让我把梦做下去. <BR>也欢迎泼冷水, 
+让我更加清晰的调整自己的思路. <BR><BR>谢谢 <BR><BR><BR></DIV>
+<DIV class=attachments></DIV>
+<DIV>
+<SCRIPT type=text/javascript>
+      alimama_pid="mm_11847803_1454875_3591335"; 
+      alimama_titlecolor="0000FF"; 
+      alimama_descolor ="000000"; 
+      alimama_bgcolor="FFFFFF"; 
+      alimama_bordercolor="E6E6E6"; 
+      alimama_linkcolor="008000"; 
+      alimama_bottomcolor="FFFFFF"; 
+      alimama_anglesize="0"; 
+      alimama_bgpic="0"; 
+      alimama_icon="0"; 
+      alimama_sizecode="14"; 
+      alimama_width=468; 
+      alimama_height=60; 
+      alimama_type=2; 
+      </SCRIPT>
+
+<SCRIPT 
+src="★列表组件 GT-Grid 最新版本 &amp; 基础教程_ (09年01月15日 240 AM 更新) - 大城小胖的大城 - JavaEye技术网站.files/inf.js" 
+type=text/javascript>
+      </SCRIPT>
+</DIV>
+<DIV class=blog_bottom>
+<UL>
+  <LI>02:13 </LI>
+  <LI>浏览 (26389) </LI>
+  <LI><A title="在论坛被浏览了21438 次" href="http://www.javaeye.com/topic/214290">论坛浏览 
+  (21438)</A> </LI>
+  <LI><A href="http://fins.javaeye.com/blog/214290#comments">评论</A> (171) </LI>
+  <LI>分类: <A href="http://fins.javaeye.com/category/7343">GT-Grid</A> </LI>
+  <LI>发布在 <A href="http://ecside.group.javaeye.com/">GT-Grid</A> 圈子 </LI>
+  <LI><A class=favorite 
+  href="http://app.javaeye.com/links?user_favorite%5Btitle%5D=%E2%98%85%E5%88%97%E8%A1%A8%E7%BB%84%E4%BB%B6+GT-Grid+%E6%9C%80%E6%96%B0%E7%89%88%E6%9C%AC+%26+%E5%9F%BA%E7%A1%80%E6%95%99%E7%A8%8B.+%2809%E5%B9%B401%E6%9C%8815%E6%97%A5+2%3A40+AM+%E6%9B%B4%E6%96%B0%29&amp;user_favorite%5Burl%5D=http%3A%2F%2Ffins.javaeye.com%2Fblog%2F214290" 
+  target=_blank>收藏</A> </LI>
+  <LI class=last><A class=more href="http://www.javaeye.com/wiki/topic/214290" 
+  target=_blank>相关推荐</A> </LI></UL></DIV>
+<DIV class=blog_comment>
+<H5>评论</H5><A id=comments name=comments></A>
+<DIV id=bc1054726>
+<DIV class=comment_title>171 楼 <A href="http://sdd031215.javaeye.com/" 
+target=_blank>sdd031215</A> 2009-06-15&nbsp;&nbsp; <A 
+onclick="quote_comment(1054726);return false;" 
+href="http://fins.javaeye.com/blog/214290#">引用</A> </DIV>
+<DIV class=comment_content>楼主的代码没怎么注释啊，不好</DIV></DIV>
+<DIV id=bc1050391>
+<DIV class=comment_title>170 楼 <A href="http://sdd031215.javaeye.com/" 
+target=_blank>sdd031215</A> 2009-06-11&nbsp;&nbsp; <A 
+onclick="quote_comment(1050391);return false;" 
+href="http://fins.javaeye.com/blog/214290#">引用</A> </DIV>
+<DIV class=comment_content>选来选去，就选这个控件啦</DIV></DIV>
+<DIV id=bc985402>
+<DIV class=comment_title>169 楼 <A href="http://supercrsky.javaeye.com/" 
+target=_blank>supercrsky</A> 2009-04-28&nbsp;&nbsp; <A 
+onclick="quote_comment(985402);return false;" 
+href="http://fins.javaeye.com/blog/214290#">引用</A> </DIV>
+<DIV class=comment_content>能不能详细说下query()到底怎么用啊？ <BR>这个query()能查询后台的数据吗？在哪设置？ 
+<BR><BR>谢谢了 <BR></DIV></DIV>
+<DIV id=bc933417>
+<DIV class=comment_title>168 楼 <A href="http://cmysunny.javaeye.com/" 
+target=_blank>cmysunny</A> 2009-03-19&nbsp;&nbsp; <A 
+onclick="quote_comment(933417);return false;" 
+href="http://fins.javaeye.com/blog/214290#">引用</A> </DIV>
+<DIV class=comment_content>现在有个问题，可编辑列表中有某一列比如：{ id: 'auditStatus'&nbsp; , 
+header : "审核状态" , width : 90 ,editor:{ type:'select',options: {'-1': '未知', '0': 
+'未审核' , '1':'审核未通过', '2':'审核已通过'}},renderer : GT.Grid.mappingRenderer(&nbsp; 
+{'0': '未审核' , '1':'审核未通过', '2':'审核已通过'} , '未知' 
+)},需求是：如果值为'0':'未审核',状态可以编辑，若为'1':'审核未通过', 
+'2':'审核已通过'则不让编辑修改，请问如何实现？谢谢！</DIV></DIV>
+<DIV id=bc927986>
+<DIV class=comment_title>167 楼 <A href="http://stevenmo.javaeye.com/" 
+target=_blank>stevenmo</A> 2009-03-16&nbsp;&nbsp; <A 
+onclick="quote_comment(927986);return false;" 
+href="http://fins.javaeye.com/blog/214290#">引用</A> </DIV>
+<DIV class=comment_content>query查询函数 
+可否加上对应的model,在后台就可以直接通过model得到所有的查询条件了&nbsp;&nbsp; 如果这样 应该怎么写params&nbsp; 
+<BR>var param={ <BR>&nbsp;&nbsp;&nbsp;&nbsp; model:{ 
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; name :'vallue', 
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; fullname :'value' <BR>&nbsp; } <BR>} 
+<BR>这样后台怎样得到这些参数</DIV></DIV>
+<DIV id=bc927503>
+<DIV class=comment_title>166 楼 <A href="http://kanghao126.javaeye.com/" 
+target=_blank>王牌海盗</A> 2009-03-16&nbsp;&nbsp; <A 
+onclick="quote_comment(927503);return false;" 
+href="http://fins.javaeye.com/blog/214290#">引用</A> </DIV>
+<DIV 
+class=comment_content>老大，问个问题。<BR>GT的下拉列表有onchange事件吗？想实现一个两列之间联动的下拉列表。<BR><BR></DIV></DIV>
+<DIV id=bc924757>
+<DIV class=comment_title>165 楼 <A href="http://hnchwb.javaeye.com/" 
+target=_blank>hnchwb</A> 2009-03-13&nbsp;&nbsp; <A 
+onclick="quote_comment(924757);return false;" 
+href="http://fins.javaeye.com/blog/214290#">引用</A> </DIV>
+<DIV class=comment_content>我怎么没看到下载的地方啊。</DIV></DIV>
+<DIV id=bc916759>
+<DIV class=comment_title>164 楼 <A href="http://zhouky4665.javaeye.com/" 
+target=_blank>zhouky4665</A> 2009-03-09&nbsp;&nbsp; <A 
+onclick="quote_comment(916759);return false;" 
+href="http://fins.javaeye.com/blog/214290#">引用</A> </DIV>
+<DIV 
+class=comment_content>我要动态设置grid的行当只读属性怎么写？<BR>比如：单数行可编辑，偶数行不可编辑。怎么做？</DIV></DIV>
+<DIV id=bc916610>
+<DIV class=comment_title>163 楼 <A href="http://darkingpb.javaeye.com/" 
+target=_blank>darkingPB</A> 2009-03-09&nbsp;&nbsp; <A 
+onclick="quote_comment(916610);return false;" 
+href="http://fins.javaeye.com/blog/214290#">引用</A> </DIV>
+<DIV class=comment_content>哎，继续问，GTGRID打印，咋去除页眉页脚？有办法自定义吗？</DIV></DIV>
+<DIV id=bc908321>
+<DIV class=comment_title>162 楼 <A href="http://rocbond.javaeye.com/" 
+target=_blank>rocbond</A> 2009-03-03&nbsp;&nbsp; <A 
+onclick="quote_comment(908321);return false;" 
+href="http://fins.javaeye.com/blog/214290#">引用</A> </DIV>
+<DIV class=comment_content>GT&nbsp; 什么时候支持百分比啊&nbsp; 
+把高度和宽度设死了，没法应对现在各种种样的宽屏显示器的出现哦</DIV></DIV>
+<DIV id=bc901534>
+<DIV class=comment_title>161 楼 <A href="http://darkingpb.javaeye.com/" 
+target=_blank>darkingPB</A> 2009-02-27&nbsp;&nbsp; <A 
+onclick="quote_comment(901534);return false;" 
+href="http://fins.javaeye.com/blog/214290#">引用</A> </DIV>
+<DIV class=comment_content>楼主，我想用GT-GRID打印报表，有没有啥办法增加表头？</DIV></DIV>
+<DIV id=bc899716>
+<DIV class=comment_title>160 楼 <A href="http://329368716.javaeye.com/" 
+target=_blank>329368716</A> 2009-02-26&nbsp;&nbsp; <A 
+onclick="quote_comment(899716);return false;" 
+href="http://fins.javaeye.com/blog/214290#">引用</A> </DIV>
+<DIV class=comment_content>怎么没发现GT的导出为xls文件功能呢？</DIV></DIV>
+<DIV id=bc885678>
+<DIV class=comment_title>159 楼 <A href="http://wdnlw2004.javaeye.com/" 
+target=_blank>wdnlw2004</A> 2009-02-17&nbsp;&nbsp; <A 
+onclick="quote_comment(885678);return false;" 
+href="http://fins.javaeye.com/blog/214290#">引用</A> </DIV>
+<DIV 
+class=comment_content>请问fins,假如一个单元格的内容是日期类型的，现在情况是我想让这个单元格是只读的，但是单元格的值可以通过日期控件选中的日期来改变，咱们gt有这样的功能吗？</DIV></DIV>
+<DIV id=bc878899>
+<DIV class=comment_title>158 楼 <A href="http://crystone.javaeye.com/" 
+target=_blank>crystone</A> 2009-02-13&nbsp;&nbsp; <A 
+onclick="quote_comment(878899);return false;" 
+href="http://fins.javaeye.com/blog/214290#">引用</A> </DIV>
+<DIV class=comment_content>我想看你的博客的电子书，但没有发现。。。</DIV></DIV>
+<DIV id=bc873946>
+<DIV class=comment_title>157 楼 <A href="http://fins.javaeye.com/" 
+target=_blank>fins</A> 2009-02-12&nbsp;&nbsp; <A 
+onclick="quote_comment(873946);return false;" 
+href="http://fins.javaeye.com/blog/214290#">引用</A> </DIV>
+<DIV class=comment_content>
+<DIV class=quote_title>itlieying 写道</DIV>
+<DIV 
+class=quote_div><BR>请教fins一个问题，要求是：页面有一个下拉式菜单和一用GTGRID显示的表格，下拉式菜单各菜单项,是统计表名称，通过切换下拉式菜单，动态切换显示GTGRID内显示的内容。 
+想用Ajax和 GTGRID相结合来做，发现当切换菜单函数调用时，调用GT.Utils.onLoad( GT.Grid.render(mygrid) 
+);时数据总显示不出来 <BR></DIV><BR><BR><BR>下拉列表改变的是不是相当于查询条件? <BR>请在列表改变事件中调用 
+<BR><BR>mygrid.setContent 方法 <BR>或者是 mygrid.query方法 试一下 <BR><BR>你的需求最好说的再细致些 
+你提供的这些内容 我也帮不上忙 <BR><BR><BR><BR><PRE class=java name="code">GT.Utils.onLoad( GT.Grid.render(mygrid) ); 
+//在新版本中 这个用法已经去掉了 换成了
+//  GT.Utils.onLoad( function() {mygrid.render()} ); </PRE><BR>它的作用是 在页面加载完成的那一刻 
+生成表格 <BR>而 下拉框改变值时&nbsp; 已经是 页面加载之后 而且表格已经生成了 <BR>所以 自然是不行的了</DIV></DIV>
+<DIV id=bc873650>
+<DIV class=comment_title>156 楼 <A href="http://itlieying.javaeye.com/" 
+target=_blank>itlieying</A> 2009-02-11&nbsp;&nbsp; <A 
+onclick="quote_comment(873650);return false;" 
+href="http://fins.javaeye.com/blog/214290#">引用</A> </DIV>
+<DIV 
+class=comment_content>请教fins一个问题，要求是：页面有一个下拉式菜单和一用GTGRID显示的表格，下拉式菜单各菜单项,是统计表名称，通过切换下拉式菜单，动态切换显示GTGRID内显示的内容。 
+<BR>想用Ajax和 GTGRID相结合来做，发现当切换菜单函数调用时，调用GT.Utils.onLoad( GT.Grid.render(mygrid) 
+);时数据总显示不出来 <BR><BR><BR></DIV></DIV>
+<DIV id=bc872728>
+<DIV class=comment_title>155 楼 <A href="http://alfa.javaeye.com/" 
+target=_blank>alfa</A> 2009-02-11&nbsp;&nbsp; <A 
+onclick="quote_comment(872728);return false;" 
+href="http://fins.javaeye.com/blog/214290#">引用</A> </DIV>
+<DIV class=comment_content>sorry，我想明白了，这是个“蠢”问题！ <BR><BR>hi,你好，我想問下在 <BR>var 
+colsConfig = [ <BR>{ id : 'bytesPercents'&nbsp;&nbsp;&nbsp;&nbsp; , header : 
+'percent', <BR>renderer:function(value,record,columnObj,grid,colNo,rowNo){ 
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return 
+"&lt;comm:widthToColors height='14' totalWidth='95%' 
+coloredWidth='"+value+"'&gt;&lt;/comm:widthToColors&gt;";&nbsp;&nbsp;&nbsp; 
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; } <BR>} <BR>]; 
+<BR>中，renderer是否支持自定义标签，谢谢！</DIV></DIV>
+<DIV id=bc866412>
+<DIV class=comment_title>154 楼 <A href="http://rocbond.javaeye.com/" 
+target=_blank>rocbond</A> 2009-02-06&nbsp;&nbsp; <A 
+onclick="quote_comment(866412);return false;" 
+href="http://fins.javaeye.com/blog/214290#">引用</A> </DIV>
+<DIV class=comment_content>还有 checkbox 全选 功能&nbsp; 
+只要重新更新grid数据后就不管用了</DIV></DIV>
+<DIV id=bc866046>
+<DIV class=comment_title>153 楼 <A href="http://fins.javaeye.com/" 
+target=_blank>fins</A> 2009-02-06&nbsp;&nbsp; <A 
+onclick="quote_comment(866046);return false;" 
+href="http://fins.javaeye.com/blog/214290#">引用</A> </DIV>
+<DIV class=comment_content>大家在这里报告的bug 我都看到了 <BR>虽然没有一一回复 <BR><BR>但是 下一个版本 
+中会尽量修正这些bug的 <BR><BR>下周的某个时间会发布新版本 </DIV></DIV>
+<DIV id=bc865864>
+<DIV class=comment_title>152 楼 <A href="http://rocbond.javaeye.com/" 
+target=_blank>rocbond</A> 2009-02-06&nbsp;&nbsp; <A 
+onclick="quote_comment(865864);return false;" 
+href="http://fins.javaeye.com/blog/214290#">引用</A> </DIV>
+<DIV class=comment_content>我下了1.42最新版 <BR><BR>关掉网页后就会报一个角本错误 
+<BR><STRONG><BR>'rows'为空或不是对象</STRONG> 
+<BR><BR>fins这是怎么回事啊，，之前用1.36的时候没问题，，现在换成l.42就报这个错了，，直接关掉有grid的页面就会报上面这个角本错误</DIV></DIV>
+<DIV class=pagination><SPAN class="disabled prev_page">« 上一页</SPAN> <SPAN 
+class=current>1</SPAN> <A 
+href="http://fins.javaeye.com/blog/214290?page=2#comments" rel=next>2</A> <A 
+href="http://fins.javaeye.com/blog/214290?page=3#comments">3</A> <SPAN 
+class=gap>…</SPAN> <A 
+href="http://fins.javaeye.com/blog/214290?page=8#comments">8</A> <A 
+href="http://fins.javaeye.com/blog/214290?page=9#comments">9</A> <A 
+class=next_page href="http://fins.javaeye.com/blog/214290?page=2#comments" 
+rel=next>下一页 »</A></DIV></DIV>
+<DIV class=blog_comment>
+<H5>发表评论</H5>
+<P style="FONT-WEIGHT: bold; MARGIN: 5px 0px">该博客是同时发布到<A 
+href="http://www.javaeye.com/topic/214290">论坛</A>的，无法评论在论坛已被锁定的帖子</P></DIV></DIV>
+<SCRIPT type=text/javascript>
+  dp.SyntaxHighlighter.HighlightAll('code', true, true);
+
+  fix_image_size($$('div.blog_content img'), 700);
+  function quote_comment(id) {
+    new Ajax.Request('/editor/quote', {
+      parameters: {'id':id, 'type':'Post'},
+      onSuccess:function(response){editor.bbcode_editor.textarea.insertAfterSelection(response.responseText);}
+    });
+  }
+</SCRIPT>
+</DIV>
+<DIV id=local>
+<DIV class=local_top></DIV>
+<DIV id=blog_owner>
+<DIV id=blog_owner_logo><A href="http://fins.javaeye.com/"><IMG class=logo 
+title="fins的博客: 大城小胖的大城" alt=fins的博客 
+src="★列表组件 GT-Grid 最新版本 &amp; 基础教程_ (09年01月15日 240 AM 更新) - 大城小胖的大城 - JavaEye技术网站.files/8b5d1675-cdba-3cb7-8682-1c9ba0174e40.jpg"></A></DIV>
+<DIV id=blog_owner_name>fins</DIV></DIV>
+<DIV id=twitter_decorate>&nbsp;</DIV>
+<DIV class="twitter clearfix" id=twitter>用js操作数据库的感觉真是爽 <BR><EM><A 
+href="http://fins.javaeye.com/blog/chat/42565">2009-09-03</A> 通过网页 </EM><A 
+title=回复这个闲聊 
+href="http://app.javaeye.com/chat?twitter%5Bbody%5D=%40fins+&amp;twitter%5Breply_to_id%5D=42565"><IMG 
+alt=Reply_twitter 
+src="★列表组件 GT-Grid 最新版本 &amp; 基础教程_ (09年01月15日 240 AM 更新) - 大城小胖的大城 - JavaEye技术网站.files/reply_twitter.gif"></A> 
+
+<DIV class=right><A 
+href="http://fins.javaeye.com/blog/chat">&gt;&gt;更多闲聊</A></DIV></DIV>
+<DIV id=blog_actions>
+<UL>
+  <LI>浏览: 1143886 次 
+  <LI>性别: <IMG title=男 alt=Icon_minigender_1 
+  src="★列表组件 GT-Grid 最新版本 &amp; 基础教程_ (09年01月15日 240 AM 更新) - 大城小胖的大城 - JavaEye技术网站.files/icon_minigender_1.gif"> 
+
+  <LI>来自: 小胖儿的大城 
+  <LI><IMG 
+  src="★列表组件 GT-Grid 最新版本 &amp; 基础教程_ (09年01月15日 240 AM 更新) - 大城小胖的大城 - JavaEye技术网站.files/offline.gif"> 
+
+  <LI><A class=profile href="http://fins.javaeye.com/blog/profile">详细资料</A> <A 
+  class=guest_book href="http://fins.javaeye.com/blog/guest_book">留言簿</A> 
+  <LI><A class=message title=发送站内短信 
+  href="http://app.javaeye.com/messages/new?message%5Breceiver_name%5D=fins">发短消息</A> 
+  <A class=subscription 
+  onclick="var f = document.createElement('form'); f.style.display = 'none'; this.parentNode.appendChild(f); f.method = 'POST'; f.action = this.href;f.submit();return false;" 
+  href="http://app.javaeye.com/feed?subscription%5Bsubscribed_user_name%5D=fins">订阅</A> 
+  </LI></UL>
+<H5>搜索本博客</H5>
+<FORM action=/blog/search method=get><INPUT class=text id=query 
+style="MARGIN-LEFT: 10px; WIDTH: 110px" name=query> <INPUT class=submit type=submit value=搜索> </FORM></DIV>
+<DIV class=clearfix id=user_visits>
+<H5>最近访客 <SPAN 
+style="PADDING-LEFT: 30px; FONT-WEIGHT: normal; FONT-SIZE: 12px"><A 
+href="http://fins.javaeye.com/blog/user_visits">&gt;&gt;更多访客</A></SPAN></H5>
+<DIV class=user_visit>
+<DIV class=logo><A href="http://ndot.javaeye.com/" target=_blank><IMG class=logo 
+title="NDot的博客: NDot" alt=NDot的博客 
+src="★列表组件 GT-Grid 最新版本 &amp; 基础教程_ (09年01月15日 240 AM 更新) - 大城小胖的大城 - JavaEye技术网站.files/user-logo-thumb.gif"></A></DIV>
+<DIV class=left><A href="http://ndot.javaeye.com/" 
+target=_blank>NDot</A></DIV></DIV>
+<DIV class=user_visit>
+<DIV class=logo><A href="http://lycvip.javaeye.com/" target=_blank><IMG 
+class=logo title="lycvip的博客: lycvip" alt=lycvip的博客 
+src="★列表组件 GT-Grid 最新版本 &amp; 基础教程_ (09年01月15日 240 AM 更新) - 大城小胖的大城 - JavaEye技术网站.files/user-logo-thumb.gif"></A></DIV>
+<DIV class=left><A href="http://lycvip.javaeye.com/" 
+target=_blank>lycvip</A></DIV></DIV>
+<DIV class=user_visit>
+<DIV class=logo><A href="http://wlsever.javaeye.com/" target=_blank><IMG 
+class=logo title="wlsever的博客: " alt=wlsever的博客 
+src="★列表组件 GT-Grid 最新版本 &amp; 基础教程_ (09年01月15日 240 AM 更新) - 大城小胖的大城 - JavaEye技术网站.files/user-logo-thumb.gif"></A></DIV>
+<DIV class=left><A href="http://wlsever.javaeye.com/" 
+target=_blank>wlsever</A></DIV></DIV>
+<DIV class=user_visit>
+<DIV class=logo><A href="http://liufenghiee.javaeye.com/" target=_blank><IMG 
+class=logo title="liufenghiee的博客: liufenghiee" alt=liufenghiee的博客 
+src="★列表组件 GT-Grid 最新版本 &amp; 基础教程_ (09年01月15日 240 AM 更新) - 大城小胖的大城 - JavaEye技术网站.files/user-logo-thumb.gif"></A></DIV>
+<DIV class=left><A href="http://liufenghiee.javaeye.com/" 
+target=_blank>liufenghiee</A></DIV></DIV></DIV>
+<DIV id=blog_menu>
+<H5>博客分类</H5>
+<UL>
+  <LI><A href="http://fins.javaeye.com/">全部博客 (368)</A> 
+  <LI><A href="http://fins.javaeye.com/category/7343">GT-Grid (109)</A> 
+  <LI><A href="http://fins.javaeye.com/category/7344">java &amp; ee (29)</A> 
+  <LI><A href="http://fins.javaeye.com/category/7347">js &amp; ajax (51)</A> 
+  <LI><A href="http://fins.javaeye.com/category/46131">AIR &amp; Flex &amp; AS 
+  (8)</A> 
+  <LI><A href="http://fins.javaeye.com/category/7365">oracle &amp;&amp; pl/sql 
+  (1)</A> 
+  <LI><A href="http://fins.javaeye.com/category/7345">game develope (4)</A> 
+  <LI><A href="http://fins.javaeye.com/category/28369">五月天 (28)</A> 
+  <LI><A href="http://fins.javaeye.com/category/36821">音乐分享 (10)</A> 
+  <LI><A href="http://fins.javaeye.com/category/7348">胡言乱语 (117)</A> 
+  <LI><A href="http://fins.javaeye.com/category/32227">写着玩儿 (0)</A> 
+</LI></UL></DIV>
+<DIV id=blog_album>
+<H5>我的相册</H5>
+<DIV class=picture_thumb style="FLOAT: none">
+<DIV><SPAN class=thumb_box><A href="http://fins.javaeye.com/album"><IMG 
+src="★列表组件 GT-Grid 最新版本 &amp; 基础教程_ (09年01月15日 240 AM 更新) - 大城小胖的大城 - JavaEye技术网站.files/3b5867a9-7cd3-30a9-a0d9-b075f25d271b-thumb.jpg"></A></SPAN></DIV><SPAN>renzhetu<BR><A 
+href="http://fins.javaeye.com/album">共 151 张</A></SPAN> </DIV></DIV>
+<DIV id=guest_books>
+<H5>我的留言簿 <SPAN 
+style="PADDING-LEFT: 20px; FONT-WEIGHT: normal; FONT-SIZE: 12px"><A 
+href="http://fins.javaeye.com/blog/guest_book">&gt;&gt;更多留言</A></SPAN></H5>
+<UL>
+  <LI>请问下我通过传值的方式修改了表格的值如何显示在表格上<BR>-- by <A 
+  href="http://fins.javaeye.com/blog/guest_book#10278">200322176</A> 
+  <LI>看了你的这篇文章 主题：[求助]高并发的大数据量查询导致系统频繁宕机,咋办啊 我 ...<BR>-- by <A 
+  href="http://fins.javaeye.com/blog/guest_book#8460">lzg3267373</A> 
+  <LI>fins，这次五月天来上海的演唱会去看了吗？没看你写他们的文章了。。。<BR>-- by <A 
+  href="http://fins.javaeye.com/blog/guest_book#7954">smalldeer</A> 
+</LI></UL></DIV>
+<DIV id=blog_others>
+<H5>其他分类</H5>
+<UL>
+  <LI><A href="http://fins.javaeye.com/blog/favorite">我的收藏</A> (23) 
+  <LI><A href="http://fins.javaeye.com/blog/forum">我的论坛帖子</A> (3041) 
+  <LI><A href="http://fins.javaeye.com/blog/article">我的精华良好贴</A> (13) 
+  <LI><A href="http://fins.javaeye.com/blog/solution">我解决的问题</A> (1) 
+</LI></UL></DIV>
+<DIV id=recent_groups>
+<H5>最近加入圈子</H5>
+<UL>
+  <LI><A href="http://mars.group.javaeye.com/">火星常驻JE办事处</A> 
+  <LI><A href="http://pcdiy.group.javaeye.com/">电脑DIY</A> 
+  <LI><A href="http://eclipsercpforum.group.javaeye.com/">Eclipse 
+  PlugIns&amp;RCP&amp;OSGI</A> 
+  <LI><A href="http://javaeye-admin.group.javaeye.com/">JavaEye站务讨论</A> 
+  <LI><A href="http://javaeye-water.group.javaeye.com/">JavaEye水源</A> 
+</LI></UL></DIV>
+<DIV id=user_links>
+<H5>链接</H5>
+<UL>
+  <LI><A href="http://blog.sina.com.cn/musiq" target=_blank>阿信最爱★後青春期的詩</A> 
+  <LI><A href="http://aprilnew.blogcn.com/index.shtml" 
+  target=_blank>失散多年的牛牛姐姐</A> 
+  <LI><A href="http://extjs2.javaeye.com/" target=_blank>extJS</A> 
+</LI></UL></DIV>
+<DIV id=month_blogs>
+<H5>存档</H5>
+<UL>
+  <LI><A href="http://fins.javaeye.com/blog/monthblog/2009-05">2009-05</A> (1) 
+  <LI><A href="http://fins.javaeye.com/blog/monthblog/2009-04">2009-04</A> (8) 
+  <LI><A href="http://fins.javaeye.com/blog/monthblog/2009-03">2009-03</A> (9) 
+  <LI><A href="http://fins.javaeye.com/blog/monthblog_more">更多存档...</A> 
+</LI></UL></DIV>
+<DIV id=recent_comments>
+<H5>最新评论</H5>
+<UL>
+  <LI><A title=我有一个梦 
+  href="http://fins.javaeye.com/blog/214336#comments">我有一个梦</A><BR>我们大家正在努力，真的在努力！<BR>-- 
+  by <A href="http://aylishuai626.javaeye.com/" target=_blank>aylishuai626</A> 
+  <LI><A title='回答一下"为什么最近GT-Grid 不更新了?"' 
+  href="http://fins.javaeye.com/blog/346392#comments">回答一下"为什么最近GT-G 
+  ...</A><BR>我们的项目现在正在用。用的是1.0的版本。用起来很好，但是也发现了很多问题。最 ...<BR>-- by <A 
+  href="http://seanman.javaeye.com/" target=_blank>Seanman</A> 
+  <LI><A title="ECSide 综合讨论 :) " 
+  href="http://fins.javaeye.com/blog/48723#comments">ECSide 综合讨论 :) 
+  </A><BR>兄弟,能不能给一个页面有多个&lt;ec:table/&gt;的例子,我做的那个怎 ...<BR>-- by <A 
+  href="http://haray.javaeye.com/" target=_blank>haray</A> 
+  <LI><A title="GT-Grid 近期将会发布一个bug修正版本,然后将会进行较大的重构" 
+  href="http://fins.javaeye.com/blog/265276#comments">GT-Grid 近期将会发布一个 
+  ...</A><BR>与- Sigma Grid 2.2 有很大相似？<BR>-- by <A 
+  href="http://wangchunfei.javaeye.com/" target=_blank>wangchunfei</A> 
+  <LI><A title='★汇总★GT-Grid "缺陷,、bug、计划"汇总.(2009-02-17更新)' 
+  href="http://fins.javaeye.com/blog/218435#comments">★汇总★GT-Grid "缺陷, 
+  ...</A><BR>关于过滤的startwith，endwith与&gt;=,&lt;=功能上是否有重 ...<BR>-- by <A 
+  href="http://qin686-163-com.javaeye.com/" target=_blank>唯快不破</A> 
+</LI></UL></DIV>
+<DIV id=comments_top>
+<H5>评论排行榜</H5>
+<UL>
+  <LI><A title='[发布]GT-Grid 1.25 版 ★&amp; "前后台结合示例" ★2008-10-21 更新' 
+  href="http://fins.javaeye.com/blog/255954">[发布]GT-Grid 1.25 版 ★&amp; "前后台结合 
+  ...</A> 
+  <LI><A title="关于 <李刚 和 他的技术书籍们> " 
+  href="http://fins.javaeye.com/blog/271137">关于 &lt;李刚 和 他的技术书籍们&gt; </A>
+  <LI><A title=[问]sun如果真的被IBM收购了,那么JavaFX的明天会更好?还是将没有明天了? 
+  href="http://fins.javaeye.com/blog/275846">[问]sun如果真的被IBM收购了,那么JavaFX ...</A> 
+  <LI><A title="[部分转载+简单评论]<IE 到底要怎么样才能得到那部分人的认可？>" 
+  href="http://fins.javaeye.com/blog/240555">[部分转载+简单评论]&lt;IE 到底要怎么样才 ...</A> 
+  <LI><A title=说说自己喜欢的漫画吧 
+  href="http://fins.javaeye.com/blog/246412">说说自己喜欢的漫画吧</A> </LI></UL></DIV>
+<DIV id=rss>
+<UL>
+  <LI><A href="http://fins.javaeye.com/rss" target=_blank><IMG alt=Rss 
+  src="★列表组件 GT-Grid 最新版本 &amp; 基础教程_ (09年01月15日 240 AM 更新) - 大城小胖的大城 - JavaEye技术网站.files/rss.png"></A> 
+
+  <LI><A href="http://fusion.google.com/add?feedurl=http://fins.javaeye.com/rss" 
+  target=_blank><IMG alt=Rss_google 
+  src="★列表组件 GT-Grid 最新版本 &amp; 基础教程_ (09年01月15日 240 AM 更新) - 大城小胖的大城 - JavaEye技术网站.files/rss_google.gif"></A> 
+
+  <LI><A 
+  href="http://www.zhuaxia.com/add_channel.php?url=http://fins.javaeye.com/rss" 
+  target=_blank><IMG alt=Rss_zhuaxia 
+  src="★列表组件 GT-Grid 最新版本 &amp; 基础教程_ (09年01月15日 240 AM 更新) - 大城小胖的大城 - JavaEye技术网站.files/rss_zhuaxia.gif"></A> 
+
+  <LI><A 
+  href="http://www.xianguo.com/subscribe.php?url=http://fins.javaeye.com/rss" 
+  target=_blank><IMG alt=Rss_xianguo 
+  src="★列表组件 GT-Grid 最新版本 &amp; 基础教程_ (09年01月15日 240 AM 更新) - 大城小胖的大城 - JavaEye技术网站.files/rss_xianguo.jpg"></A> 
+
+  <LI><A href="http://www.google.com/search?hl=zh-CN&amp;q=RSS">[什么是RSS?]</A> 
+  </LI></UL></DIV>
+<DIV class=local_bottom></DIV></DIV></DIV>
+<DIV class=clearfix id=footer>
+<DIV id=copyright>
+<HR>
+声明：JavaEye文章版权属于作者，受法律保护。没有作者书面许可不得转载。若作者同意转载，必须以超链接形式标明文章原始出处和作者。<BR>© 
+2003-2009 JavaEye.com. All rights reserved. 上海炯耐计算机软件有限公司 [ 沪ICP备05023328号 ] 
+</DIV></DIV></DIV>
+<DIV id=chat_input style="DISPLAY: none"><IFRAME id=chat_iframe marginWidth=0 
+marginHeight=0 
+src="★列表组件 GT-Grid 最新版本 &amp; 基础教程_ (09年01月15日 240 AM 更新) - 大城小胖的大城 - JavaEye技术网站.files/CAIBWBP2.htm" 
+frameBorder=0 scrolling=no allowTransparency></IFRAME></DIV>
+<DIV id=chat_button><A style="COLOR: black; TEXT-DECORATION: none" 
+onclick="$('chat_input').show();$('chat_iframe').src='/chat/widget';return false;" 
+href="http://fins.javaeye.com/blog/214290#">说点啥吧 <IMG alt=Chat 
+src="★列表组件 GT-Grid 最新版本 &amp; 基础教程_ (09年01月15日 240 AM 更新) - 大城小胖的大城 - JavaEye技术网站.files/chat.gif"></A></DIV>
+<SCRIPT type=text/javascript>
+  document.write("<img src='http://stat.javaeye.com/?url="+ encodeURIComponent(document.location.href) + "&referrer=" + encodeURIComponent(document.referrer) + "&logged_in=yes" + "' width='0' height='0' />");
+</SCRIPT>
+</BODY></HTML>

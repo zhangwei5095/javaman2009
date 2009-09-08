@@ -1,0 +1,636 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3c.org/TR/1999/REC-html401-19991224/loose.dtd">
+<!-- saved from url=(0035)http://fins.javaeye.com/blog/214680 -->
+<HTML dir=ltr xml:lang="zh-CN" 
+xmlns="http://www.w3.org/1999/xhtml"><HEAD><TITLE>GT-Grid 1.0 基础教程(四) - 大城小胖的大城 - JavaEye技术网站</TITLE>
+<META http-equiv=Content-Type content="text/html; charset=UTF-8">
+<META 
+content='GT-Grid 1.0 基础教程(四) 教程说明: 这是一个告诉大家如何快速的利用GT-Grid开发列表的基础教程.以后会推出"高级教程". 查看其他教程,以及最新版本信息,请点击这里 第四章: 服务端数据的加载(上) 关于"服务端数据的加载" 我将分上下两次为大家讲解. "上" 中 将只关注 如何从服务端加载数据. 而不关注向服务端提交了 ...' 
+name=description>
+<META content="ajax, grid AJAX GT-Grid 1.0 基础教程(四)" name=keywords><LINK 
+href="/images/favicon.ico" type=image/x-icon rel="shortcut icon"><LINK 
+title=大城小胖的大城 href="/rss" type=application/rss+xml rel=alternate><LINK 
+media=screen href="GT-Grid 1_0 基础教程(四) - 大城小胖的大城 - JavaEye技术网站.files/blog.css" 
+type=text/css rel=stylesheet><LINK media=screen 
+href="GT-Grid 1_0 基础教程(四) - 大城小胖的大城 - JavaEye技术网站.files/blue.css" type=text/css 
+rel=stylesheet>
+<SCRIPT src="GT-Grid 1_0 基础教程(四) - 大城小胖的大城 - JavaEye技术网站.files/application.js" 
+type=text/javascript></SCRIPT>
+<LINK media=screen 
+href="GT-Grid 1_0 基础教程(四) - 大城小胖的大城 - JavaEye技术网站.files/SyntaxHighlighter.css" 
+type=text/css rel=stylesheet>
+<SCRIPT src="GT-Grid 1_0 基础教程(四) - 大城小胖的大城 - JavaEye技术网站.files/shCoreCommon.js" 
+type=text/javascript></SCRIPT>
+
+<SCRIPT src="GT-Grid 1_0 基础教程(四) - 大城小胖的大城 - JavaEye技术网站.files/hotkey.js" 
+type=text/javascript></SCRIPT>
+
+<STYLE>DIV#main {
+	BORDER-TOP-WIDTH: 0px; PADDING-RIGHT: 0px; PADDING-LEFT: 0px; BORDER-LEFT-WIDTH: 0px; BORDER-BOTTOM-WIDTH: 0px; PADDING-BOTTOM: 0px; WIDTH: 740px; PADDING-TOP: 0px; BACKGROUND-COLOR: transparent; BORDER-RIGHT-WIDTH: 0px
+}
+</STYLE>
+
+<META content="MSHTML 6.00.2900.3603" name=GENERATOR></HEAD>
+<BODY>
+<DIV id=header>
+<DIV id=blog_site_nav><A class=homepage href="http://www.javaeye.com/">首页</A> <A 
+href="http://www.javaeye.com/news">新闻</A> <A 
+href="http://www.javaeye.com/forums">论坛</A> <A 
+href="http://www.javaeye.com/blogs">博客</A> <A 
+href="http://www.javaeye.com/job">招聘</A> <A id=msna onclick="return false;" 
+href="http://fins.javaeye.com/blog/214680#"><U>更多</U> <SMALL>▼</SMALL></A> 
+<DIV class=quick_menu style="DISPLAY: none"><A 
+href="http://www.javaeye.com/ask">问答</A> <A 
+href="http://www.javaeye.com/wiki">知识库</A> <A 
+href="http://www.javaeye.com/groups">圈子</A> <A 
+href="http://www.javaeye.com/search">搜索</A> </DIV></DIV>
+<DIV id=user_nav><A class=welcome title=查看我的博客首页 
+href="http://ndot.javaeye.com/">欢迎NDot</A> <A title=你有新的站内短信 
+href="http://app.javaeye.com/messages"><IMG alt=Newpm 
+src="GT-Grid 1_0 基础教程(四) - 大城小胖的大城 - JavaEye技术网站.files/newpm.gif">收件箱(2)</A> <A 
+title=我的应用首页 href="http://app.javaeye.com/">我的应用</A> 
+<DIV class=quick_menu style="DISPLAY: none"><A title=我订阅的好友动态消息 
+href="http://app.javaeye.com/feed">我的订阅</A> <A title=我参与的话题更新的消息 
+href="http://app.javaeye.com/feed/my">我的参与</A> <A title=用闲聊发表简短的话题 
+href="http://app.javaeye.com/chat">我的闲聊</A> <A title=我加入的圈子最新话题 
+href="http://app.javaeye.com/mygroup">我的圈子</A> <A title=我收藏的网络资源链接 
+href="http://app.javaeye.com/links">我的收藏</A> <A title=我的个人简历 
+href="http://app.javaeye.com/myresume">我的简历</A> </DIV><A title=管理我的博客 
+href="http://ndot.javaeye.com/admin">我的博客</A> <A title=修改我的个人设置 
+href="http://app.javaeye.com/profile">设置</A> <A class=nobg 
+onclick="var f = document.createElement('form'); f.style.display = 'none'; this.parentNode.appendChild(f); f.method = 'POST'; f.action = this.href;var m = document.createElement('input'); m.setAttribute('type', 'hidden'); m.setAttribute('name', '_method'); m.setAttribute('value', 'put'); f.appendChild(m);f.submit();return false;" 
+href="http://fins.javaeye.com/logout">退出</A> </DIV></DIV>
+<DIV id=page>
+<DIV class=clearfix id=branding>
+<DIV id=blog_name>
+<H1><A href="http://fins.javaeye.com/">大城小胖的大城</A></H1></DIV>
+<DIV id=blog_preview></DIV>
+<DIV id=blog_domain>永久域名 <A 
+href="http://fins.javaeye.com/">http://fins.javaeye.com/</A></DIV></DIV>
+<DIV class=clearfix id=content>
+<DIV id=main>
+<DIV class=blog_main>
+<DIV id=blog_nav>
+<DIV id=pre_next><A class=next title="GT-Grid 1.0 基础教程(五)" 
+href="http://fins.javaeye.com/blog/215063">GT-Grid 1.0 基础教程(五)</A> | <A 
+class=pre title=我有一个梦 href="http://fins.javaeye.com/blog/214336">我有一个梦</A> 
+</DIV></DIV>
+<DIV class=blog_title>
+<DIV class=date><SPAN class=year>2008</SPAN><SPAN class=sep_year>-</SPAN><SPAN 
+class=month>07</SPAN><SPAN class=sep_month>-</SPAN><SPAN 
+class=day>14</SPAN></DIV>
+<H3 class=type_original title=原创><A 
+href="http://fins.javaeye.com/blog/214680">GT-Grid 1.0 
+基础教程(四)</A></H3><STRONG>关键字: ajax, grid</STRONG> </DIV>
+<DIV class=blog_content>GT-Grid 1.0 基础教程(四) <BR><BR><SPAN 
+style="FONT-SIZE: large"><STRONG>教程说明:</STRONG></SPAN> 
+<BR>这是一个告诉大家如何快速的利用GT-Grid开发列表的基础教程.以后会推出"高级教程". <BR>查看<SPAN 
+style="COLOR: blue">其他教程</SPAN>,以及最新版本信息,请<A 
+href="http://fins.javaeye.com/blog/214290" target=_blank>点击这里</A> 
+<BR><BR><BR><SPAN style="FONT-SIZE: large"><STRONG>第四章: 
+服务端数据的加载(上)</STRONG></SPAN> <BR><BR>关于"服务端数据的加载" 我将分上下两次为大家讲解. <BR>"上" 中 将只关注 
+如何从服务端加载数据. 而不关注向服务端提交了什么数据. <BR>我这么说大家可能有点迷惑, 换个说法: 
+<BR>"上"中将只介绍如何创建一个"数据从服务端取得,但是分页是在客户端进行"的列表---"远程加载数据,客户端分页的只读列表". <BR>(注: 本文中 
+"远程" 和 "服务端"往往是指一个东西.) <BR><BR>还是那句话: <BR>在开始之前,为了保留我们之前的成果,不至于学习的过程中把前一个成果弄坏, 
+我们将"mydemo3.html"另存为"mydemo4.html". <BR>OK,开始. <BR><BR><BR><SPAN 
+style="COLOR: green">=========================================</SPAN> 
+<BR><BR><BR>首先,修改代码, 因为我们是从服务端取数据,那么客户端就没必要定义数据了(数据集还是要保留的), <BR>所以 删掉关于 "var 
+data1" 的一切. 将数据集定义dsConfig中的 data 属性删除. <BR><BR>然后 为 grid添加两个属性 : <BR>1 是&nbsp; 
+loadURL : '.....'&nbsp; 值为一个合法的 可访问到的url,本例中是我写的一个servlet的url <BR>2 是&nbsp; 
+remotePaging : true/false 时候使用远程分页. 如果是客户端分页 要设置成 false, 如果是服务的分页 要写成false. <BR><PRE class=javascript name="code">var gridConfig={
+	/* ... 略去其他属性设置 ...*/
+	loadURL : 'studentsList.servlet',
+	remotePaging : false 
+
+};
+</PRE><BR><BR>也许有人会问, 上一章将的也是客户端分页, 但是并没有写 "remotePaging : false "啊. <BR>这是因为, 
+当loadURL==null(默认为null)时 GT-Grid 会强制把分页模式设置成"客户端分页",即remotePaging=false. 
+<BR><BR>关于页面的改动 就到此为止了, 下一步该是服务端的写发了. <BR><BR><BR><SPAN 
+style="COLOR: green">=========================================</SPAN> 
+<BR><BR><BR>GT-Grid本身是对服务端使用的技术没有任何限制的, 可以使用java php .net ror .... 
+<BR>在这里我只举java的例子. <BR>虽然对服务端技术没有限制, 但是GT-Grid对数据的传输格式是有要求的. <BR>1 首先 
+服务端返回的必须是一个合法的 json对象序列化字符串.(以后简称json串) <BR>2 这个字符串的格式如下: <BR><PRE class=javascript name="code">
+	{
+		data : [
+			/* 以下为具体传输的数据 */
+		   { no : 1 , name :'aaa', age : 12, gender : 'M' , english : 76.5 , math :92 },
+		   { no : 2 , name :'bbb', age : 11, gender : 'F' , english : 89   , math :87 },
+		   { no : 3 , name :'ccc', age : 13, gender : 'F' , english : 53   , math :62 }
+		]
+	}
+
+
+</PRE><BR>这个应该还是很好理解的, 有一个data节点, data下就是数据. <BR>与我们在客户端时写的数据差不多. <BR>当然 
+返回的数据中还可以有其他的可选信息. 例如 pageInfo , exception 还有其他你自定义的节点. <BR>更多知识以后再说. <BR>现在只要记住 
+,返回的json串中, 必须要有data节点,节点存放的就是列表要显示的数据. <BR><BR>明确以上信息之后, 我们还是来"造假" 
+,在服务端用手动拼装一个这个字符串. <BR>在这个示例中, 我写了一个 叫StudentsList的servlet, 
+它对应的url为"studentsList.servlet". <BR>它的doPost方法(GT-Grid默认的提交方法是post) 参考代码如下: 
+<BR><BR><PRE class=java name="code">	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		StringBuffer outData = new StringBuffer();
+		outData.append("{");
+		outData.append("data : [");
+		outData.append("	{ no : 1 , name :'aaa', age : 12, gender : 'M' , english : 76.5 , math :92 },");
+		outData.append("	{ no : 2 , name :'bbb', age : 11, gender : 'F' , english : 89   , math :87 },");
+		outData.append("	{ no : 3 , name :'ccc', age : 13, gender : 'F' , english : 53   , math :62 } ");
+		outData.append("]");
+		outData.append("}");
+		PrintWriter out = response.getWriter();
+		out.print(outData.toString());
+		out.flush();
+		out.close();
+	}  
+</PRE><BR><BR>现在 把这个servlet和之前的mydemo.html 放到包含GT-Grid必要资源的 j2ee web应用中, 
+你就可以看到结果了. <BR>(这个就不详细介绍了, 我相信大家还是知道的) <BR><BR>如果使用的是PHP 
+,那么可以将loadURL指向某个php文件,而那个文件只要可以 echo 出这个json串就可以了. <BR><BR><BR>在实际系统中, 
+开发人员要做的就是把数据库里(当然你可以从其他地方取)的查询结果 (一个 map-list 或者 pojo-list ) <BR>转换成一个类似上例的 
+json串. 然后发送到客户端. <BR><BR>转换成json串的工作可以通过 各种第三方的json库来实现. <BR>你可以到<A 
+href="http://www.json.org/" target=_blank>http://www.json.org/</A> 上去寻找更多的帮助. 
+<BR><BR><BR><BR>注意,为了减低入门门槛, 我在这个示例中没有引入任何其他的问题. <BR>在正常系统中, 文件编码, 
+文件路径等问题总是会困扰一些新手. <BR>如果你是新手, 那么这些问题你可以参考我提供的"与后台结合的示例"中的完整代码 或者是找google帮忙. 
+<BR>我在这里就不多说了. <BR><BR><BR><BR><SPAN 
+style="COLOR: green">=========================================</SPAN> 
+<BR><BR><BR>这章就先讲到这里 , 最后成果的截图就不奉上了 因为看起来和 第三章的一样. <BR>下一章,将讲解 
+"远程加载数据,远程分页的只读列表" 的实现. </DIV>
+<DIV>
+<SCRIPT type=text/javascript>
+      alimama_pid="mm_11847803_1454875_3591335"; 
+      alimama_titlecolor="0000FF"; 
+      alimama_descolor ="000000"; 
+      alimama_bgcolor="FFFFFF"; 
+      alimama_bordercolor="E6E6E6"; 
+      alimama_linkcolor="008000"; 
+      alimama_bottomcolor="FFFFFF"; 
+      alimama_anglesize="0"; 
+      alimama_bgpic="0"; 
+      alimama_icon="0"; 
+      alimama_sizecode="14"; 
+      alimama_width=468; 
+      alimama_height=60; 
+      alimama_type=2; 
+      </SCRIPT>
+
+<SCRIPT src="GT-Grid 1_0 基础教程(四) - 大城小胖的大城 - JavaEye技术网站.files/inf.js" 
+type=text/javascript>
+      </SCRIPT>
+</DIV>
+<DIV class=blog_bottom>
+<UL>
+  <LI>20:08 </LI>
+  <LI>浏览 (4387) </LI>
+  <LI><A title="在论坛被浏览了4143 次" href="http://www.javaeye.com/topic/214680">论坛浏览 
+  (4143)</A> </LI>
+  <LI><A href="http://fins.javaeye.com/blog/214680#comments">评论</A> (35) </LI>
+  <LI>分类: <A href="http://fins.javaeye.com/category/7343">GT-Grid</A> </LI>
+  <LI>发布在 <A href="http://ecside.group.javaeye.com/">GT-Grid</A> 圈子 </LI>
+  <LI><A class=favorite 
+  href="http://app.javaeye.com/links?user_favorite%5Btitle%5D=GT-Grid+1.0+%E5%9F%BA%E7%A1%80%E6%95%99%E7%A8%8B%28%E5%9B%9B%29&amp;user_favorite%5Burl%5D=http%3A%2F%2Ffins.javaeye.com%2Fblog%2F214680" 
+  target=_blank>收藏</A> </LI>
+  <LI class=last><A class=more href="http://www.javaeye.com/wiki/topic/214680" 
+  target=_blank>相关推荐</A> </LI></UL></DIV>
+<DIV class=blog_comment>
+<H5>评论</H5><A id=comments name=comments></A>
+<DIV id=bc1027989>
+<DIV class=comment_title>35 楼 <A href="http://episode.javaeye.com/" 
+target=_blank>xiuying</A> 2009-05-26&nbsp;&nbsp; <A 
+onclick="quote_comment(1027989);return false;" 
+href="http://fins.javaeye.com/blog/214680#">引用</A> </DIV>
+<DIV class=comment_content>请问：var colsConfig = [ <BR>{ id : 
+'no'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; , header : "学号" , width : 50, isCheckColumn : 
+true}, <BR>{ id : 'name'&nbsp;&nbsp;&nbsp; , header : "姓名" , width : 100}, <BR>{ 
+id : 'age'&nbsp;&nbsp;&nbsp;&nbsp; , header : "年龄" , width : 50}, <BR>{ id : 
+'gender'&nbsp; , header : "性别" , width : 50 , <BR>renderer : 
+GT.Grid.mappingRenderer(&nbsp; {'U': '未知' , 'M':'男', 'F':'女'} , '未知' ) <BR>}, 
+<BR>{ id : 'english' , header : "英语" , width : 60 , align :'right' }, <BR>{ id : 
+'math'&nbsp;&nbsp;&nbsp; , header : "数学" , width : 60 , align :'right' } <BR>]; 
+<BR><BR>这个列头能否动态的写入？</DIV></DIV>
+<DIV id=bc1026838>
+<DIV class=comment_title>34 楼 <A href="http://episode.javaeye.com/" 
+target=_blank>xiuying</A> 2009-05-25&nbsp;&nbsp; <A 
+onclick="quote_comment(1026838);return false;" 
+href="http://fins.javaeye.com/blog/214680#">引用</A> </DIV>
+<DIV class=comment_content>fields :[ <BR>{name : 'no'&nbsp;&nbsp;&nbsp;&nbsp; 
+,&nbsp; type: 'int'&nbsp;&nbsp;&nbsp; }, <BR>{name : 
+'name'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }, <BR>{name : 'age'&nbsp;&nbsp;&nbsp; 
+,&nbsp; type: 'int'&nbsp;&nbsp;&nbsp; }, <BR>{name : 'gender'&nbsp;&nbsp;&nbsp; 
+}, <BR>{name : 'english',&nbsp; type: 'float'&nbsp; }, <BR>{name : 
+'math'&nbsp;&nbsp; ,&nbsp; type: 'float'&nbsp; } <BR>], 
+<BR><BR>还有请教一下能否把类型省略？？？？ <BR></DIV></DIV>
+<DIV id=bc1026741>
+<DIV class=comment_title>33 楼 <A href="http://episode.javaeye.com/" 
+target=_blank>xiuying</A> 2009-05-25&nbsp;&nbsp; <A 
+onclick="quote_comment(1026741);return false;" 
+href="http://fins.javaeye.com/blog/214680#">引用</A> </DIV>
+<DIV class=comment_content>转换成json串的工作可以通过 各种第三方的json库来实现. 
+<BR>你可以到http://www.json.org 上去寻找更多的帮助. <BR>=================================== 
+<BR>我获得json没有用第三方，也没用你提供的那个类。 <BR>报错的时候就是把页面alert出来。 <BR>我的前台调用是： <BR>loadURL : 
+'getJson.htm', <BR>remotePaging : false, <BR><BR>后台： 
+<BR><BR>@RequestMapping("/getJson.htm") <BR>public String 
+getJson(HttpServletRequest request, ModelMap model){ <BR>StringBuffer outData = 
+new StringBuffer();&nbsp;&nbsp; <BR>&nbsp;&nbsp;&nbsp; 
+outData.append("{");&nbsp;&nbsp; <BR>&nbsp;&nbsp;&nbsp; outData.append("data : 
+[");&nbsp;&nbsp; <BR>&nbsp;&nbsp;&nbsp; outData.append("&nbsp;&nbsp;&nbsp; { no 
+: 1 , name :'aaa', age : 12, gender : 'M' , english : 76.5 , math :92 
+},");&nbsp;&nbsp; <BR>&nbsp;&nbsp;&nbsp; outData.append("&nbsp;&nbsp;&nbsp; { no 
+: 2 , name :'bbb', age : 11, gender : 'F' , english : 89&nbsp;&nbsp; , math :87 
+},");&nbsp;&nbsp; <BR>&nbsp;&nbsp;&nbsp; outData.append("&nbsp;&nbsp;&nbsp; { no 
+: 3 , name :'ccc', age : 13, gender : 'F' , english : 53&nbsp;&nbsp; , math :62 
+} ");&nbsp;&nbsp; <BR>&nbsp;&nbsp;&nbsp; outData.append("]");&nbsp;&nbsp; 
+<BR>&nbsp;&nbsp;&nbsp; outData.append("}");&nbsp;&nbsp; <BR>&nbsp;&nbsp;&nbsp; 
+model.addAttribute("json", outData.toString()); <BR>return "index"; <BR>} 
+<BR><BR>总是得不到数据是怎么回事呢? <BR>请问你这个loadURL后的数据是从request中去吗？ <BR></DIV></DIV>
+<DIV id=bc941066>
+<DIV class=comment_title>32 楼 <A href="http://zhao-j-long.javaeye.com/" 
+target=_blank>zhao_j_long</A> 2009-03-25&nbsp;&nbsp; <A 
+onclick="quote_comment(941066);return false;" 
+href="http://fins.javaeye.com/blog/214680#">引用</A> </DIV>
+<DIV class=comment_content>返回错误： <BR>LOAD Failed! <BR>Exception : 
+<BR>XMLHttpRequest Status : 422 <BR><BR>在.html中设置为 <BR>loadURL : 
+'http://localhost:3000/students/list' 
+<BR><BR>从浏览器中访问http://localhost:3000/students/list ，返回值为： <BR>{data : [ { no : 1 
+, name :'aaa', age : 12, gender : 'M' , english : 76.5 , math :92 }, { no : 2 , 
+name :'bbb', age : 11, gender : 'F' , english : 89 , math :87 }, { no : 3 , name 
+:'ccc', age : 13, gender : 'F' , english : 53 , math :62 } ]} 
+<BR>和教程中的一样。不知错误在哪里。注：我用rails2.2做的后台。 <BR></DIV></DIV>
+<DIV id=bc875902>
+<DIV class=comment_title>31 楼 <A href="http://zcs-84.javaeye.com/" 
+target=_blank>zcs_84</A> 2009-02-13&nbsp;&nbsp; <A 
+onclick="quote_comment(875902);return false;" 
+href="http://fins.javaeye.com/blog/214680#">引用</A> </DIV>
+<DIV class=comment_content>问题搞定 谢谢了 </DIV></DIV>
+<DIV id=bc874109>
+<DIV class=comment_title>30 楼 <A href="http://zcs-84.javaeye.com/" 
+target=_blank>zcs_84</A> 2009-02-12&nbsp;&nbsp; <A 
+onclick="quote_comment(874109);return false;" 
+href="http://fins.javaeye.com/blog/214680#">引用</A> </DIV>
+<DIV class=comment_content>
+<DIV class=quote_title>fins 写道</DIV>
+<DIV class=quote_div><BR>是否是 返回的json串格式有错呢?<BR>能否贴一下前台得到的json串 ?<BR>(请从http 
+response中查看)<BR></DIV><BR>我前台json是<BR>
+<DIV class=quote_title>fins 写道</DIV>
+<DIV class=quote_div><BR>是否是 返回的json串格式有错呢?<BR>能否贴一下前台得到的json串 ?<BR>(请从http 
+response中查看)<BR></DIV><BR><BR>我json在后台打印的是这样的一个字符串。<BR>{"data":<BR>&nbsp; 
+[{"age":11,"english":33.0,"gender":"f","math":44.0,"name":"jone","no":1},&nbsp;&nbsp; 
+{"age":11,"english":33.0,"gender":"f","math":44.0,"name":"jone","no":1}]}<BR><BR>我前台的 
+结果和你上面的例子一样的<BR><BR>var dsConfig= {<BR>//data : data1 ,<BR>fields :[<BR>{name : 
+'no'&nbsp;&nbsp;&nbsp;&nbsp; ,&nbsp; type: 'int'&nbsp;&nbsp;&nbsp; },<BR>{name : 
+'name'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; },<BR>{name : 'age'&nbsp;&nbsp;&nbsp; 
+,&nbsp; type: 'int'&nbsp;&nbsp;&nbsp; },<BR>{name : 'gender'&nbsp;&nbsp;&nbsp; 
+},<BR>{name : 'english',&nbsp; type: 'float'&nbsp; },<BR>{name : 
+'math'&nbsp;&nbsp; ,&nbsp; type: 'float'&nbsp; }<BR>]<BR>};<BR><BR>var 
+colsConfig = [<BR>{ id : 'no'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; , header : "学号" 
+},<BR>{ id : 'name'&nbsp;&nbsp;&nbsp; , header : "姓名" },<BR>{ id : 
+'age'&nbsp;&nbsp;&nbsp;&nbsp; , header : "年龄" },<BR>{ id : 'gender'&nbsp; , 
+header : "性别" },<BR>{ id : 'english' , header : "英语" },<BR>{ id : 
+'math'&nbsp;&nbsp;&nbsp; , header : "数学" }<BR>];<BR><BR>var gridConfig={<BR>id : 
+"grid1",<BR>loadURL : '${ctx}/device/reader!getList.action',<BR>remotePaging 
+:false,<BR>width: "700",&nbsp; //"100%", // 700,<BR>height: "330",&nbsp; 
+//"100%", // 330,<BR>dataset : dsConfig ,<BR>columns : colsConfig ,<BR>container 
+: 'grid1_container', <BR>toolbarPosition : 'bottom',<BR>toolbarContent : 
+'state'<BR>};<BR><BR>var mygrid=new GT.Grid( gridConfig 
+);<BR><BR>GT.Utils.onLoad( function(){<BR>mygrid.render();<BR>} 
+);<BR><BR><BR></DIV></DIV>
+<DIV id=bc873947>
+<DIV class=comment_title>29 楼 <A href="http://fins.javaeye.com/" 
+target=_blank>fins</A> 2009-02-12&nbsp;&nbsp; <A 
+onclick="quote_comment(873947);return false;" 
+href="http://fins.javaeye.com/blog/214680#">引用</A> </DIV>
+<DIV class=comment_content>是否是 返回的json串格式有错呢? <BR>能否贴一下前台得到的json串 ? <BR>(请从http 
+response中查看)</DIV></DIV>
+<DIV id=bc873155>
+<DIV class=comment_title>28 楼 <A href="http://zcs-84.javaeye.com/" 
+target=_blank>zcs_84</A> 2009-02-11&nbsp;&nbsp; <A 
+onclick="quote_comment(873155);return false;" 
+href="http://fins.javaeye.com/blog/214680#">引用</A> </DIV>
+<DIV class=comment_content>
+<DIV class=quote_title>zcs_84 写道</DIV>
+<DIV class=quote_div><BR>我是按你文档来做的 1.去掉了数据集定义dsConfig中的 data 属性 ，也删掉了"var 
+data1"的定义2 也添加了loadURL和remotePaging属性3.action中也传到jsp也没一个json字符串但是 在也没实现的时候 
+总是报parentNode为空 当数据为静态的时候是正常的这是为什么呀<BR></DIV><BR><BR><BR>我后台json是可以得到数据的 
+loadURL的路径也是对的 可以到action中去。但是返回jsp页面的时候 就是抛异常<BR></DIV></DIV>
+<DIV id=bc873140>
+<DIV class=comment_title>27 楼 <A href="http://zcs-84.javaeye.com/" 
+target=_blank>zcs_84</A> 2009-02-11&nbsp;&nbsp; <A 
+onclick="quote_comment(873140);return false;" 
+href="http://fins.javaeye.com/blog/214680#">引用</A> </DIV>
+<DIV class=comment_content>我是按你文档来做的 <BR>1.去掉了数据集定义dsConfig中的 data 属性 ，也删掉了"var 
+data1"的定义<BR>2 也添加了loadURL和remotePaging属性<BR>3.action中也传到jsp也没一个json字符串<BR>但是 
+在也没实现的时候 总是报parentNode为空 当数据为静态的时候是正常的<BR>这是为什么呀<BR><BR><BR></DIV></DIV>
+<DIV id=bc791600>
+<DIV class=comment_title>26 楼 <A href="http://shingu.javaeye.com/" 
+target=_blank>ShingU</A> 2008-12-15&nbsp;&nbsp; <A 
+onclick="quote_comment(791600);return false;" 
+href="http://fins.javaeye.com/blog/214680#">引用</A> </DIV>
+<DIV class=comment_content>不是的。 <BR><BR>我后台处理是专门有一个类的。没你那个写的好。 
+<BR><BR>我现在也大致知道我的问题出在哪里了。不过，要解决这个问题，估计要将我的那个类重写一边了。:(</DIV></DIV>
+<DIV id=bc791504>
+<DIV class=comment_title>25 楼 <A href="http://fins.javaeye.com/" 
+target=_blank>fins</A> 2008-12-15&nbsp;&nbsp; <A 
+onclick="quote_comment(791504);return false;" 
+href="http://fins.javaeye.com/blog/214680#">引用</A> </DIV>
+<DIV class=comment_content><BR>你后台使用 我提供的 GridServerHandler 类了吗 
+<BR><BR>能不能说说你的具体做法</DIV></DIV>
+<DIV id=bc791493>
+<DIV class=comment_title>24 楼 <A href="http://shingu.javaeye.com/" 
+target=_blank>ShingU</A> 2008-12-15&nbsp;&nbsp; <A 
+onclick="quote_comment(791493);return false;" 
+href="http://fins.javaeye.com/blog/214680#">引用</A> </DIV>
+<DIV 
+class=comment_content>刚才试了一下，在后台处理中，将异常内容写入exception。不过，当出现异常时，跳出的警告框的内容只有：XMLHttpRequest 
+Status : 500 <BR><BR>没有我想要的那样的异常。</DIV></DIV>
+<DIV id=bc791100>
+<DIV class=comment_title>23 楼 <A href="http://shingu.javaeye.com/" 
+target=_blank>ShingU</A> 2008-12-15&nbsp;&nbsp; <A 
+onclick="quote_comment(791100);return false;" 
+href="http://fins.javaeye.com/blog/214680#">引用</A> </DIV>
+<DIV class=comment_content>嗯，谢谢，明白其中的区别了。</DIV></DIV>
+<DIV id=bc790752>
+<DIV class=comment_title>22 楼 <A href="http://fins.javaeye.com/" 
+target=_blank>fins</A> 2008-12-14&nbsp;&nbsp; <A 
+onclick="quote_comment(790752);return false;" 
+href="http://fins.javaeye.com/blog/214680#">引用</A> </DIV>
+<DIV class=comment_content>
+<DIV class=quote_title>ShingU 写道</DIV>
+<DIV class=quote_div>fins指的是JSON结构中的 <BR>{ <BR>data:{...}, <BR>exception:... 
+<BR>} <BR><BR>吧？ <BR><BR>我在另一个地方看到过exception，就是： <BR>&nbsp;&nbsp;&nbsp; 
+loadFailure : function(respD){&nbsp;&nbsp; 
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; alert(' LOAD Failed! '+'\n 
+Exception : \n'+(respD[this.CONST.exception]||''));&nbsp;&nbsp; 
+<BR>&nbsp;&nbsp;&nbsp; } <BR><BR>不知道两者有什么区别？ 
+<BR><BR>另外，在真正查询之前，我们无法预料会遇到什么错误，怎么写是个问题啊。</DIV><BR><BR>&nbsp;<IMG 
+src="GT-Grid 1_0 基础教程(四) - 大城小胖的大城 - JavaEye技术网站.files/icon_mad.gif">&nbsp; 
+你的意思是 希望GT能够自动识别出 你所不知道的问题???? 这个肯定是做不到了 <BR>你可以捕捉各种异常 然后来决定显示什么错误信息啊 . 
+<BR><BR>loadFailure&nbsp; 是用来显示&nbsp; { <BR>data:{...}, <BR>exception:... <BR>} 
+<BR><BR>中的exception信息的. <BR><BR>也就是说 你后台返回什么异常 前台就会alert什么异常. <BR>如果你不希望alert 
+而是希望采用自己喜欢的方式来做 那么可以重写这个 loadFailure&nbsp; 函数. <BR><BR></DIV></DIV>
+<DIV id=bc790749>
+<DIV class=comment_title>21 楼 <A href="http://shingu.javaeye.com/" 
+target=_blank>ShingU</A> 2008-12-14&nbsp;&nbsp; <A 
+onclick="quote_comment(790749);return false;" 
+href="http://fins.javaeye.com/blog/214680#">引用</A> </DIV>
+<DIV class=comment_content>fins指的是JSON结构中的 <BR>{ <BR>data:{...}, 
+<BR>exception:... <BR>} <BR><BR>吧？ <BR><BR>我在另一个地方看到过exception，就是： 
+<BR>&nbsp;&nbsp;&nbsp; loadFailure : function(respD){&nbsp;&nbsp; 
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; alert(' LOAD Failed! '+'\n 
+Exception : \n'+(respD[this.CONST.exception]||''));&nbsp;&nbsp; 
+<BR>&nbsp;&nbsp;&nbsp; } <BR><BR>不知道两者有什么区别？ 
+<BR><BR>另外，在真正查询之前，我们无法预料会遇到什么错误，怎么写是个问题啊。</DIV></DIV>
+<DIV id=bc790721>
+<DIV class=comment_title>20 楼 <A href="http://fins.javaeye.com/" 
+target=_blank>fins</A> 2008-12-14&nbsp;&nbsp; <A 
+onclick="quote_comment(790721);return false;" 
+href="http://fins.javaeye.com/blog/214680#">引用</A> </DIV>
+<DIV class=comment_content>你只要在返回的 数据结构中 加入 exception信息就可以了 <BR><BR>具体的 文档里有说明 
+你看一下吧 <BR><BR>================= <BR><BR>管理员&nbsp; 重复提交的问题 快解决吧 呵呵 </DIV></DIV>
+<DIV id=bc790720>
+<DIV class=comment_title>19 楼 <A href="http://fins.javaeye.com/" 
+target=_blank>fins</A> 2008-12-14&nbsp;&nbsp; <A 
+onclick="quote_comment(790720);return false;" 
+href="http://fins.javaeye.com/blog/214680#">引用</A> </DIV>
+<DIV class=comment_content>你只要在返回的 数据结构中 加入 exception信息就可以了 <BR><BR>具体的 文档里有说明 
+你看一下吧</DIV></DIV>
+<DIV id=bc790687>
+<DIV class=comment_title>18 楼 <A href="http://shingu.javaeye.com/" 
+target=_blank>ShingU</A> 2008-12-14&nbsp;&nbsp; <A 
+onclick="quote_comment(790687);return false;" 
+href="http://fins.javaeye.com/blog/214680#">引用</A> </DIV>
+<DIV 
+class=comment_content>加载数据时，由于某些原因，比如数据库连接断开，查询不到任何数据，表不存在等，能否作出相应的提示？</DIV></DIV>
+<DIV id=bc787813>
+<DIV class=comment_title>17 楼 <A href="http://shingu.javaeye.com/" 
+target=_blank>ShingU</A> 2008-12-12&nbsp;&nbsp; <A 
+onclick="quote_comment(787813);return false;" 
+href="http://fins.javaeye.com/blog/214680#">引用</A> </DIV>
+<DIV class=comment_content>昨天从服务器获取数据一直不成功。今天终于弄成功了。 
+<BR><BR>问题出在，我查询出来的字段名都是大写的，而我在代码中写的是小写，以致于程序找不到数据了。 <BR><BR></DIV></DIV>
+<DIV id=bc661791>
+<DIV class=comment_title>16 楼 <A href="http://fengshen-xia.javaeye.com/" 
+target=_blank>FengShen_Xia</A> 2008-09-10&nbsp;&nbsp; <A 
+onclick="quote_comment(661791);return false;" 
+href="http://fins.javaeye.com/blog/214680#">引用</A> </DIV>
+<DIV class=comment_content>就是你web.xml里配置的url必须和你页面上loadURL : 
+'studentsList.servlet'要一致</DIV></DIV>
+<DIV class=pagination><SPAN class="disabled prev_page">« 上一页</SPAN> <SPAN 
+class=current>1</SPAN> <A 
+href="http://fins.javaeye.com/blog/214680?page=2#comments" rel=next>2</A> <A 
+class=next_page href="http://fins.javaeye.com/blog/214680?page=2#comments" 
+rel=next>下一页 »</A></DIV></DIV>
+<DIV class=blog_comment>
+<H5>发表评论</H5>
+<P style="FONT-WEIGHT: bold; MARGIN: 5px 0px">该博客是同时发布到<A 
+href="http://www.javaeye.com/topic/214680">论坛</A>的，无法评论在论坛已被锁定的帖子</P></DIV></DIV>
+<SCRIPT type=text/javascript>
+  dp.SyntaxHighlighter.HighlightAll('code', true, true);
+
+  fix_image_size($$('div.blog_content img'), 700);
+  function quote_comment(id) {
+    new Ajax.Request('/editor/quote', {
+      parameters: {'id':id, 'type':'Post'},
+      onSuccess:function(response){editor.bbcode_editor.textarea.insertAfterSelection(response.responseText);}
+    });
+  }
+</SCRIPT>
+</DIV>
+<DIV id=local>
+<DIV class=local_top></DIV>
+<DIV id=blog_owner>
+<DIV id=blog_owner_logo><A href="http://fins.javaeye.com/"><IMG class=logo 
+title="fins的博客: 大城小胖的大城" alt=fins的博客 
+src="GT-Grid 1_0 基础教程(四) - 大城小胖的大城 - JavaEye技术网站.files/8b5d1675-cdba-3cb7-8682-1c9ba0174e40.jpg"></A></DIV>
+<DIV id=blog_owner_name>fins</DIV></DIV>
+<DIV id=twitter_decorate>&nbsp;</DIV>
+<DIV class="twitter clearfix" id=twitter>用js操作数据库的感觉真是爽 <BR><EM><A 
+href="http://fins.javaeye.com/blog/chat/42565">2009-09-03</A> 通过网页 </EM><A 
+title=回复这个闲聊 
+href="http://app.javaeye.com/chat?twitter%5Bbody%5D=%40fins+&amp;twitter%5Breply_to_id%5D=42565"><IMG 
+alt=Reply_twitter 
+src="GT-Grid 1_0 基础教程(四) - 大城小胖的大城 - JavaEye技术网站.files/reply_twitter.gif"></A> 
+<DIV class=right><A 
+href="http://fins.javaeye.com/blog/chat">&gt;&gt;更多闲聊</A></DIV></DIV>
+<DIV id=blog_actions>
+<UL>
+  <LI>浏览: 1143892 次 
+  <LI>性别: <IMG title=男 alt=Icon_minigender_1 
+  src="GT-Grid 1_0 基础教程(四) - 大城小胖的大城 - JavaEye技术网站.files/icon_minigender_1.gif"> 
+
+  <LI>来自: 小胖儿的大城 
+  <LI><IMG src="GT-Grid 1_0 基础教程(四) - 大城小胖的大城 - JavaEye技术网站.files/offline.gif"> 
+  <LI><A class=profile href="http://fins.javaeye.com/blog/profile">详细资料</A> <A 
+  class=guest_book href="http://fins.javaeye.com/blog/guest_book">留言簿</A> 
+  <LI><A class=message title=发送站内短信 
+  href="http://app.javaeye.com/messages/new?message%5Breceiver_name%5D=fins">发短消息</A> 
+  <A class=subscription 
+  onclick="var f = document.createElement('form'); f.style.display = 'none'; this.parentNode.appendChild(f); f.method = 'POST'; f.action = this.href;f.submit();return false;" 
+  href="http://app.javaeye.com/feed?subscription%5Bsubscribed_user_name%5D=fins">订阅</A> 
+  </LI></UL>
+<H5>搜索本博客</H5>
+<FORM action=/blog/search method=get><INPUT class=text id=query 
+style="MARGIN-LEFT: 10px; WIDTH: 110px" name=query> <INPUT class=submit type=submit value=搜索> </FORM></DIV>
+<DIV class=clearfix id=user_visits>
+<H5>最近访客 <SPAN 
+style="PADDING-LEFT: 30px; FONT-WEIGHT: normal; FONT-SIZE: 12px"><A 
+href="http://fins.javaeye.com/blog/user_visits">&gt;&gt;更多访客</A></SPAN></H5>
+<DIV class=user_visit>
+<DIV class=logo><A href="http://ndot.javaeye.com/" target=_blank><IMG class=logo 
+title="NDot的博客: NDot" alt=NDot的博客 
+src="GT-Grid 1_0 基础教程(四) - 大城小胖的大城 - JavaEye技术网站.files/user-logo-thumb.gif"></A></DIV>
+<DIV class=left><A href="http://ndot.javaeye.com/" 
+target=_blank>NDot</A></DIV></DIV>
+<DIV class=user_visit>
+<DIV class=logo><A href="http://liqiotto.javaeye.com/" target=_blank><IMG 
+class=logo title="liqiotto的博客: liqiotto" alt=liqiotto的博客 
+src="GT-Grid 1_0 基础教程(四) - 大城小胖的大城 - JavaEye技术网站.files/user-logo-thumb.gif"></A></DIV>
+<DIV class=left><A href="http://liqiotto.javaeye.com/" 
+target=_blank>liqiotto</A></DIV></DIV>
+<DIV class=user_visit>
+<DIV class=logo><A href="http://lycvip.javaeye.com/" target=_blank><IMG 
+class=logo title="lycvip的博客: lycvip" alt=lycvip的博客 
+src="GT-Grid 1_0 基础教程(四) - 大城小胖的大城 - JavaEye技术网站.files/user-logo-thumb.gif"></A></DIV>
+<DIV class=left><A href="http://lycvip.javaeye.com/" 
+target=_blank>lycvip</A></DIV></DIV>
+<DIV class=user_visit>
+<DIV class=logo><A href="http://wlsever.javaeye.com/" target=_blank><IMG 
+class=logo title="wlsever的博客: " alt=wlsever的博客 
+src="GT-Grid 1_0 基础教程(四) - 大城小胖的大城 - JavaEye技术网站.files/user-logo-thumb.gif"></A></DIV>
+<DIV class=left><A href="http://wlsever.javaeye.com/" 
+target=_blank>wlsever</A></DIV></DIV></DIV>
+<DIV id=blog_menu>
+<H5>博客分类</H5>
+<UL>
+  <LI><A href="http://fins.javaeye.com/">全部博客 (368)</A> 
+  <LI><A href="http://fins.javaeye.com/category/7343">GT-Grid (109)</A> 
+  <LI><A href="http://fins.javaeye.com/category/7344">java &amp; ee (29)</A> 
+  <LI><A href="http://fins.javaeye.com/category/7347">js &amp; ajax (51)</A> 
+  <LI><A href="http://fins.javaeye.com/category/46131">AIR &amp; Flex &amp; AS 
+  (8)</A> 
+  <LI><A href="http://fins.javaeye.com/category/7365">oracle &amp;&amp; pl/sql 
+  (1)</A> 
+  <LI><A href="http://fins.javaeye.com/category/7345">game develope (4)</A> 
+  <LI><A href="http://fins.javaeye.com/category/28369">五月天 (28)</A> 
+  <LI><A href="http://fins.javaeye.com/category/36821">音乐分享 (10)</A> 
+  <LI><A href="http://fins.javaeye.com/category/7348">胡言乱语 (117)</A> 
+  <LI><A href="http://fins.javaeye.com/category/32227">写着玩儿 (0)</A> 
+</LI></UL></DIV>
+<DIV id=blog_album>
+<H5>我的相册</H5>
+<DIV class=picture_thumb style="FLOAT: none">
+<DIV><SPAN class=thumb_box><A href="http://fins.javaeye.com/album"><IMG 
+src="GT-Grid 1_0 基础教程(四) - 大城小胖的大城 - JavaEye技术网站.files/3b5867a9-7cd3-30a9-a0d9-b075f25d271b-thumb.jpg"></A></SPAN></DIV><SPAN>renzhetu<BR><A 
+href="http://fins.javaeye.com/album">共 151 张</A></SPAN> </DIV></DIV>
+<DIV id=guest_books>
+<H5>我的留言簿 <SPAN 
+style="PADDING-LEFT: 20px; FONT-WEIGHT: normal; FONT-SIZE: 12px"><A 
+href="http://fins.javaeye.com/blog/guest_book">&gt;&gt;更多留言</A></SPAN></H5>
+<UL>
+  <LI>请问下我通过传值的方式修改了表格的值如何显示在表格上<BR>-- by <A 
+  href="http://fins.javaeye.com/blog/guest_book#10278">200322176</A> 
+  <LI>看了你的这篇文章 主题：[求助]高并发的大数据量查询导致系统频繁宕机,咋办啊 我 ...<BR>-- by <A 
+  href="http://fins.javaeye.com/blog/guest_book#8460">lzg3267373</A> 
+  <LI>fins，这次五月天来上海的演唱会去看了吗？没看你写他们的文章了。。。<BR>-- by <A 
+  href="http://fins.javaeye.com/blog/guest_book#7954">smalldeer</A> 
+</LI></UL></DIV>
+<DIV id=blog_others>
+<H5>其他分类</H5>
+<UL>
+  <LI><A href="http://fins.javaeye.com/blog/favorite">我的收藏</A> (23) 
+  <LI><A href="http://fins.javaeye.com/blog/forum">我的论坛帖子</A> (3041) 
+  <LI><A href="http://fins.javaeye.com/blog/article">我的精华良好贴</A> (13) 
+  <LI><A href="http://fins.javaeye.com/blog/solution">我解决的问题</A> (1) 
+</LI></UL></DIV>
+<DIV id=recent_groups>
+<H5>最近加入圈子</H5>
+<UL>
+  <LI><A href="http://mars.group.javaeye.com/">火星常驻JE办事处</A> 
+  <LI><A href="http://pcdiy.group.javaeye.com/">电脑DIY</A> 
+  <LI><A href="http://eclipsercpforum.group.javaeye.com/">Eclipse 
+  PlugIns&amp;RCP&amp;OSGI</A> 
+  <LI><A href="http://javaeye-admin.group.javaeye.com/">JavaEye站务讨论</A> 
+  <LI><A href="http://javaeye-water.group.javaeye.com/">JavaEye水源</A> 
+</LI></UL></DIV>
+<DIV id=user_links>
+<H5>链接</H5>
+<UL>
+  <LI><A href="http://blog.sina.com.cn/musiq" target=_blank>阿信最爱★後青春期的詩</A> 
+  <LI><A href="http://aprilnew.blogcn.com/index.shtml" 
+  target=_blank>失散多年的牛牛姐姐</A> 
+  <LI><A href="http://extjs2.javaeye.com/" target=_blank>extJS</A> 
+</LI></UL></DIV>
+<DIV id=month_blogs>
+<H5>存档</H5>
+<UL>
+  <LI><A href="http://fins.javaeye.com/blog/monthblog/2009-05">2009-05</A> (1) 
+  <LI><A href="http://fins.javaeye.com/blog/monthblog/2009-04">2009-04</A> (8) 
+  <LI><A href="http://fins.javaeye.com/blog/monthblog/2009-03">2009-03</A> (9) 
+  <LI><A href="http://fins.javaeye.com/blog/monthblog_more">更多存档...</A> 
+</LI></UL></DIV>
+<DIV id=recent_comments>
+<H5>最新评论</H5>
+<UL>
+  <LI><A title=我有一个梦 
+  href="http://fins.javaeye.com/blog/214336#comments">我有一个梦</A><BR>我们大家正在努力，真的在努力！<BR>-- 
+  by <A href="http://aylishuai626.javaeye.com/" target=_blank>aylishuai626</A> 
+  <LI><A title='回答一下"为什么最近GT-Grid 不更新了?"' 
+  href="http://fins.javaeye.com/blog/346392#comments">回答一下"为什么最近GT-G 
+  ...</A><BR>我们的项目现在正在用。用的是1.0的版本。用起来很好，但是也发现了很多问题。最 ...<BR>-- by <A 
+  href="http://seanman.javaeye.com/" target=_blank>Seanman</A> 
+  <LI><A title="ECSide 综合讨论 :) " 
+  href="http://fins.javaeye.com/blog/48723#comments">ECSide 综合讨论 :) 
+  </A><BR>兄弟,能不能给一个页面有多个&lt;ec:table/&gt;的例子,我做的那个怎 ...<BR>-- by <A 
+  href="http://haray.javaeye.com/" target=_blank>haray</A> 
+  <LI><A title="GT-Grid 近期将会发布一个bug修正版本,然后将会进行较大的重构" 
+  href="http://fins.javaeye.com/blog/265276#comments">GT-Grid 近期将会发布一个 
+  ...</A><BR>与- Sigma Grid 2.2 有很大相似？<BR>-- by <A 
+  href="http://wangchunfei.javaeye.com/" target=_blank>wangchunfei</A> 
+  <LI><A title='★汇总★GT-Grid "缺陷,、bug、计划"汇总.(2009-02-17更新)' 
+  href="http://fins.javaeye.com/blog/218435#comments">★汇总★GT-Grid "缺陷, 
+  ...</A><BR>关于过滤的startwith，endwith与&gt;=,&lt;=功能上是否有重 ...<BR>-- by <A 
+  href="http://qin686-163-com.javaeye.com/" target=_blank>唯快不破</A> 
+</LI></UL></DIV>
+<DIV id=comments_top>
+<H5>评论排行榜</H5>
+<UL>
+  <LI><A title='[发布]GT-Grid 1.25 版 ★&amp; "前后台结合示例" ★2008-10-21 更新' 
+  href="http://fins.javaeye.com/blog/255954">[发布]GT-Grid 1.25 版 ★&amp; "前后台结合 
+  ...</A> 
+  <LI><A title="关于 <李刚 和 他的技术书籍们> " 
+  href="http://fins.javaeye.com/blog/271137">关于 &lt;李刚 和 他的技术书籍们&gt; </A>
+  <LI><A title=[问]sun如果真的被IBM收购了,那么JavaFX的明天会更好?还是将没有明天了? 
+  href="http://fins.javaeye.com/blog/275846">[问]sun如果真的被IBM收购了,那么JavaFX ...</A> 
+  <LI><A title="[部分转载+简单评论]<IE 到底要怎么样才能得到那部分人的认可？>" 
+  href="http://fins.javaeye.com/blog/240555">[部分转载+简单评论]&lt;IE 到底要怎么样才 ...</A> 
+  <LI><A title=说说自己喜欢的漫画吧 
+  href="http://fins.javaeye.com/blog/246412">说说自己喜欢的漫画吧</A> </LI></UL></DIV>
+<DIV id=rss>
+<UL>
+  <LI><A href="http://fins.javaeye.com/rss" target=_blank><IMG alt=Rss 
+  src="GT-Grid 1_0 基础教程(四) - 大城小胖的大城 - JavaEye技术网站.files/rss.png"></A> 
+  <LI><A href="http://fusion.google.com/add?feedurl=http://fins.javaeye.com/rss" 
+  target=_blank><IMG alt=Rss_google 
+  src="GT-Grid 1_0 基础教程(四) - 大城小胖的大城 - JavaEye技术网站.files/rss_google.gif"></A> 
+  <LI><A 
+  href="http://www.zhuaxia.com/add_channel.php?url=http://fins.javaeye.com/rss" 
+  target=_blank><IMG alt=Rss_zhuaxia 
+  src="GT-Grid 1_0 基础教程(四) - 大城小胖的大城 - JavaEye技术网站.files/rss_zhuaxia.gif"></A> 
+  <LI><A 
+  href="http://www.xianguo.com/subscribe.php?url=http://fins.javaeye.com/rss" 
+  target=_blank><IMG alt=Rss_xianguo 
+  src="GT-Grid 1_0 基础教程(四) - 大城小胖的大城 - JavaEye技术网站.files/rss_xianguo.jpg"></A> 
+  <LI><A href="http://www.google.com/search?hl=zh-CN&amp;q=RSS">[什么是RSS?]</A> 
+  </LI></UL></DIV>
+<DIV class=local_bottom></DIV></DIV></DIV>
+<DIV class=clearfix id=footer>
+<DIV id=copyright>
+<HR>
+声明：JavaEye文章版权属于作者，受法律保护。没有作者书面许可不得转载。若作者同意转载，必须以超链接形式标明文章原始出处和作者。<BR>© 
+2003-2009 JavaEye.com. All rights reserved. 上海炯耐计算机软件有限公司 [ 沪ICP备05023328号 ] 
+</DIV></DIV></DIV>
+<DIV id=chat_input style="DISPLAY: none"><IFRAME id=chat_iframe marginWidth=0 
+marginHeight=0 
+src="GT-Grid 1_0 基础教程(四) - 大城小胖的大城 - JavaEye技术网站.files/CAGD2J0T.htm" 
+frameBorder=0 scrolling=no allowTransparency></IFRAME></DIV>
+<DIV id=chat_button><A style="COLOR: black; TEXT-DECORATION: none" 
+onclick="$('chat_input').show();$('chat_iframe').src='/chat/widget';return false;" 
+href="http://fins.javaeye.com/blog/214680#">说点啥吧 <IMG alt=Chat 
+src="GT-Grid 1_0 基础教程(四) - 大城小胖的大城 - JavaEye技术网站.files/chat.gif"></A></DIV>
+<SCRIPT type=text/javascript>
+  document.write("<img src='http://stat.javaeye.com/?url="+ encodeURIComponent(document.location.href) + "&referrer=" + encodeURIComponent(document.referrer) + "&logged_in=yes" + "' width='0' height='0' />");
+</SCRIPT>
+</BODY></HTML>

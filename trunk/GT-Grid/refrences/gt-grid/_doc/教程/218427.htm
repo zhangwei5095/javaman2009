@@ -1,0 +1,570 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3c.org/TR/1999/REC-html401-19991224/loose.dtd">
+<!-- saved from url=(0035)http://fins.javaeye.com/blog/218427 -->
+<HTML dir=ltr xml:lang="zh-CN" 
+xmlns="http://www.w3.org/1999/xhtml"><HEAD><TITLE>GT-Grid 1.0 基础教程(七) - 大城小胖的大城 - JavaEye技术网站</TITLE>
+<META http-equiv=Content-Type content="text/html; charset=UTF-8">
+<META 
+content='GT-Grid 1.0 基础教程(七) 教程说明: 这是一个告诉大家如何快速的利用GT-Grid开发列表的基础教程.以后会推出"高级教程". 查看其他教程,以及最新版本信息,请点击这里 第七章: 可编辑列表 之 删除记录 以及 数据提交 这章将主要讲解,如何删除记录 如何将编辑过的数据提到给服务端, 以及服务端要如何取得这些数据. 首先还是老套路,将"mydemo6.h ...' 
+name=description>
+<META content="ajax, grid AJAX GT-Grid 1.0 基础教程(七)" name=keywords><LINK 
+href="/images/favicon.ico" type=image/x-icon rel="shortcut icon"><LINK 
+title=大城小胖的大城 href="/rss" type=application/rss+xml rel=alternate><LINK 
+media=screen href="218427.files/blog.css" type=text/css rel=stylesheet><LINK 
+media=screen href="218427.files/blue.css" type=text/css rel=stylesheet>
+<SCRIPT src="218427.files/application.js" type=text/javascript></SCRIPT>
+<LINK media=screen href="218427.files/SyntaxHighlighter.css" type=text/css 
+rel=stylesheet>
+<SCRIPT src="218427.files/shCoreCommon.js" type=text/javascript></SCRIPT>
+
+<SCRIPT src="218427.files/hotkey.js" type=text/javascript></SCRIPT>
+
+<STYLE>DIV#main {
+	BORDER-TOP-WIDTH: 0px; PADDING-RIGHT: 0px; PADDING-LEFT: 0px; BORDER-LEFT-WIDTH: 0px; BORDER-BOTTOM-WIDTH: 0px; PADDING-BOTTOM: 0px; WIDTH: 740px; PADDING-TOP: 0px; BACKGROUND-COLOR: transparent; BORDER-RIGHT-WIDTH: 0px
+}
+</STYLE>
+
+<META content="MSHTML 6.00.2900.3603" name=GENERATOR></HEAD>
+<BODY>
+<DIV id=header>
+<DIV id=blog_site_nav><A class=homepage href="http://www.javaeye.com/">首页</A> <A 
+href="http://www.javaeye.com/news">新闻</A> <A 
+href="http://www.javaeye.com/forums">论坛</A> <A 
+href="http://www.javaeye.com/blogs">博客</A> <A 
+href="http://www.javaeye.com/job">招聘</A> <A id=msna onclick="return false;" 
+href="http://fins.javaeye.com/blog/218427#"><U>更多</U> <SMALL>▼</SMALL></A> 
+<DIV class=quick_menu style="DISPLAY: none"><A 
+href="http://www.javaeye.com/ask">问答</A> <A 
+href="http://www.javaeye.com/wiki">知识库</A> <A 
+href="http://www.javaeye.com/groups">圈子</A> <A 
+href="http://www.javaeye.com/search">搜索</A> </DIV></DIV>
+<DIV id=user_nav><A class=welcome title=查看我的博客首页 
+href="http://ndot.javaeye.com/">欢迎NDot</A> <A title=你有新的站内短信 
+href="http://app.javaeye.com/messages"><IMG alt=Newpm 
+src="218427.files/newpm.gif">收件箱(2)</A> <A title=我的应用首页 
+href="http://app.javaeye.com/">我的应用</A> 
+<DIV class=quick_menu style="DISPLAY: none"><A title=我订阅的好友动态消息 
+href="http://app.javaeye.com/feed">我的订阅</A> <A title=我参与的话题更新的消息 
+href="http://app.javaeye.com/feed/my">我的参与</A> <A title=用闲聊发表简短的话题 
+href="http://app.javaeye.com/chat">我的闲聊</A> <A title=我加入的圈子最新话题 
+href="http://app.javaeye.com/mygroup">我的圈子</A> <A title=我收藏的网络资源链接 
+href="http://app.javaeye.com/links">我的收藏</A> <A title=我的个人简历 
+href="http://app.javaeye.com/myresume">我的简历</A> </DIV><A title=管理我的博客 
+href="http://ndot.javaeye.com/admin">我的博客</A> <A title=修改我的个人设置 
+href="http://app.javaeye.com/profile">设置</A> <A class=nobg 
+onclick="var f = document.createElement('form'); f.style.display = 'none'; this.parentNode.appendChild(f); f.method = 'POST'; f.action = this.href;var m = document.createElement('input'); m.setAttribute('type', 'hidden'); m.setAttribute('name', '_method'); m.setAttribute('value', 'put'); f.appendChild(m);f.submit();return false;" 
+href="http://fins.javaeye.com/logout">退出</A> </DIV></DIV>
+<DIV id=page>
+<DIV class=clearfix id=branding>
+<DIV id=blog_name>
+<H1><A href="http://fins.javaeye.com/">大城小胖的大城</A></H1></DIV>
+<DIV id=blog_preview></DIV>
+<DIV id=blog_domain>永久域名 <A 
+href="http://fins.javaeye.com/">http://fins.javaeye.com/</A></DIV></DIV>
+<DIV class=clearfix id=content>
+<DIV id=main>
+<DIV class=blog_main>
+<DIV id=blog_nav>
+<DIV id=pre_next><A class=next title='★汇总★GT-Grid "缺陷,、bug、计划"汇总.(2009-02-17更新)' 
+href="http://fins.javaeye.com/blog/218435">★汇总★GT-Grid "缺陷,、bug、计划"汇 ...</A> | 
+<A class=pre title='利用"事件上提" 来简化事件注册(防止潜在的内存泄露).' 
+href="http://fins.javaeye.com/blog/217512">利用"事件上提" 来简化事件注册(防止潜在 ...</A> 
+</DIV></DIV>
+<DIV class=blog_title>
+<DIV class=date><SPAN class=year>2008</SPAN><SPAN class=sep_year>-</SPAN><SPAN 
+class=month>07</SPAN><SPAN class=sep_month>-</SPAN><SPAN 
+class=day>23</SPAN></DIV>
+<H3 class=type_original title=原创><A 
+href="http://fins.javaeye.com/blog/218427">GT-Grid 1.0 
+基础教程(七)</A></H3><STRONG>关键字: ajax, grid</STRONG> </DIV>
+<DIV class=blog_content>GT-Grid 1.0 基础教程(七) <BR><BR><SPAN 
+style="FONT-SIZE: large"><STRONG>教程说明:</STRONG></SPAN> 
+<BR>这是一个告诉大家如何快速的利用GT-Grid开发列表的基础教程.以后会推出"高级教程". <BR>查看<SPAN 
+style="COLOR: blue">其他教程</SPAN>,以及最新版本信息,请<A 
+href="http://fins.javaeye.com/blog/214290" target=_blank>点击这里</A> <BR><BR><SPAN 
+style="FONT-SIZE: large"><STRONG>第七章: 可编辑列表 之 删除记录 以及 数据提交</STRONG></SPAN> 
+<BR><BR>这章将主要讲解,如何删除记录 如何将编辑过的数据提到给服务端, 以及服务端要如何取得这些数据. 
+<BR>首先还是老套路,将"mydemo6.html"另存为"mydemo7.html". <BR><BR><BR><SPAN 
+style="COLOR: green">=========================================</SPAN> 
+<BR><BR><BR>要将数据提交给服务端 首先要 指定grid提交数据的"目的地", 就是 saveURL, 同时还要在工具栏上添加一个保存按钮. 
+<BR><BR><BR><BR><PRE class=javascript name="code">var gridConfig={
+	/* ... 略去其他属性设置 ...*/
+	saveURL : 'studentsSave.servlet',
+	toolbarContent : 'nav | goto | pagesize | reload | save | state' 
+
+};
+</PRE><BR><BR>toolbarContent中的 save 即标示 保存按钮 <BR>saveURL 指向的是后台对应的服务. 
+<BR><BR>页面的改动只有这两处. <BR>下面需要编写 服务端了, 在编写之前, 首先我们要了解, 客户端提交给服务端的数据格式和内容. 
+<BR><BR>客户端提交的json串如下. <BR><PRE class=javascript name="code">{
+	action	 : 'save',	// 执行的操作.保存数据的操作为 save.
+
+	insertedRecords : [
+		/* ... 新增的记录. 是一个数组,数组的每个元素为一条记录(json-object) 下同... */
+		 { no : 51 , name :'zxcx', age : 12, gender : 'M' , english : 26.5 , math :92 },
+		 ... ...
+	
+	],
+	updatedRecords : [
+		/* ... 修改的记录 ... */
+		{ no : 3 , name :'ccc', age : 12, gender : 'F' , english : 53   , math :62 },
+		 ... ...
+	],
+	deletedRecords : [
+		/* ... 删除的记录 ... */
+		{ no : 2 , name :'bbb', age : 11, gender : 'F' , english : 89   , math :87 },
+		... ...
+
+	]
+}
+</PRE><BR><BR>这些数据同样是以json串的形式一次性传给服务端.参数名依然是"_gt_json" <BR>服务端就可以通过 "_gt_json" 
+来把这些数据从request中取出.( request.getParameter("_gt_json"); ) <BR>然后借助第三方工具来将json串 转换为 
+java对象. <BR>本章可参考第5章,一并阅读. <BR><BR>在本例中, 将只有 action 和 updatedRecords 数据. 
+<BR><BR>服务端得到 updatedRecords 对应的记录后, 就可以在dao里执行相应的操作了. <BR><BR><BR><BR><SPAN 
+style="COLOR: green">=========================================</SPAN> 
+<BR><BR><BR>数据的删除,也是一种很重要的操作. 要实现删除功能, 只需在 toolbarContent 里加入 "del". <BR><BR><PRE class=javascript name="code">var gridConfig={
+	/* ... 略去其他属性设置 ...*/
+	saveURL : 'studentsSave.servlet',
+	toolbarContent : 'nav | goto | pagesize | reload | del | save | state' 
+
+};
+</PRE><BR><BR>这时候预览页面 会看到多了一个"-"按钮, 该按钮即为删除按钮. <BR>选中一行后, 点击删除按钮, 
+该记录将被打上"删除"标记.(灰色+删除线) <BR>如果后悔了,或者是发现删除错了, 那么可以再次选中此行,然后再点删除按钮, 该行将会被回复. 
+<BR>(这个功能只有在 按save(保存)按钮之前才有效. <BR><BR>加入删除功能后, 提交的数据里 deletedRecords 
+下面就会有删除的记录信息. <BR><BR>然后还是 json串---&gt;java对象的转换. 这里就不再累述. <BR><BR><BR><BR><SPAN 
+style="COLOR: green">=========================================</SPAN> 
+<BR><BR><BR>保存时有数据提交,自然也会有数据返回. <BR>返回的数据同样是一个json串, 里面记载了 保存是否成功以及异常信息. 
+json串的格式如下: <BR><BR><PRE class=javascript name="code">{
+	success : true  , /* true/false */
+	exception : "...异常信息..."
+}
+</PRE><BR><BR>success 为false时 代表保存操作失败, 不设置或者是设置为其他值都表示成功. <BR>失败时, 
+前台会弹出提示,提示里会显示 exception 对应的字符串. <BR><BR><BR><BR><SPAN 
+style="COLOR: green">=========================================</SPAN> 
+<BR><BR><BR><BR>这章就先到这里, 内容少了点, 但是关于列表关键的核心最重要的内容, 
+我相信有一定使用纯ajax控件经验的人,应该已经可以独立开发出一个列表了. <BR><BR>第四五六七 
+4章讲解的内容更注重原理,而非实例,所以需要大家更多的动手实践. <BR><BR>欢迎大家就实践中出现的问题和不解与我进行交流. 
+<BR><BR>这4章对应的"与服务端结合的完整示例" 将会在正式版发布时提供给大家. <BR><BR>同时 我也需要大家的帮助来进一步完善教程. 
+<BR><BR>在这里对所有关注和使用GT-Grid的朋友说声 谢谢. <BR><BR><BR></DIV>
+<DIV>
+<SCRIPT type=text/javascript>
+      alimama_pid="mm_11847803_1454875_3591335"; 
+      alimama_titlecolor="0000FF"; 
+      alimama_descolor ="000000"; 
+      alimama_bgcolor="FFFFFF"; 
+      alimama_bordercolor="E6E6E6"; 
+      alimama_linkcolor="008000"; 
+      alimama_bottomcolor="FFFFFF"; 
+      alimama_anglesize="0"; 
+      alimama_bgpic="0"; 
+      alimama_icon="0"; 
+      alimama_sizecode="14"; 
+      alimama_width=468; 
+      alimama_height=60; 
+      alimama_type=2; 
+      </SCRIPT>
+
+<SCRIPT src="218427.files/inf.js" type=text/javascript>
+      </SCRIPT>
+</DIV>
+<DIV class=blog_bottom>
+<UL>
+  <LI>00:22 </LI>
+  <LI>浏览 (2971) </LI>
+  <LI><A title="在论坛被浏览了4346 次" href="http://www.javaeye.com/topic/218427">论坛浏览 
+  (4346)</A> </LI>
+  <LI><A href="http://fins.javaeye.com/blog/218427#comments">评论</A> (44) </LI>
+  <LI>分类: <A href="http://fins.javaeye.com/category/7343">GT-Grid</A> </LI>
+  <LI>发布在 <A href="http://ecside.group.javaeye.com/">GT-Grid</A> 圈子 </LI>
+  <LI><A class=favorite 
+  href="http://app.javaeye.com/links?user_favorite%5Btitle%5D=GT-Grid+1.0+%E5%9F%BA%E7%A1%80%E6%95%99%E7%A8%8B%28%E4%B8%83%29&amp;user_favorite%5Burl%5D=http%3A%2F%2Ffins.javaeye.com%2Fblog%2F218427" 
+  target=_blank>收藏</A> </LI>
+  <LI class=last><A class=more href="http://www.javaeye.com/wiki/topic/218427" 
+  target=_blank>相关推荐</A> </LI></UL></DIV>
+<DIV class=blog_comment>
+<H5>评论</H5><A id=comments name=comments></A>
+<DIV id=bc859398>
+<DIV class=comment_title>44 楼 <A href="http://fzt023342.javaeye.com/" 
+target=_blank>fzt023342</A> 2009-02-01&nbsp;&nbsp; <A 
+onclick="quote_comment(859398);return false;" 
+href="http://fins.javaeye.com/blog/218427#">引用</A> </DIV>
+<DIV 
+class=comment_content>HIHI,请问下，为什么选中了一些删除的记录，翻页后，又回到原来那页，删除状态就不见了，但按保存时，它是存在那些删除记录的。这个怎样解决呀？</DIV></DIV>
+<DIV id=bc643580>
+<DIV class=comment_title>43 楼 <A href="http://itlieying.javaeye.com/" 
+target=_blank>itlieying</A> 2008-08-26&nbsp;&nbsp; <A 
+onclick="quote_comment(643580);return false;" 
+href="http://fins.javaeye.com/blog/218427#">引用</A> </DIV>
+<DIV class=comment_content>当没有修改记录时，如果 直接点保存，会提示“没有记录被修改，无需保存”； 
+<BR>当修改记录出现异常后，点组件里的刷新后，呈现的状态是无修改记录的状态。 
+<BR><BR>之前谈过的问题就在于此时点保存，仍有之前的异常弹出，而没有提示“没有记录被修改，无需保存”</DIV></DIV>
+<DIV id=bc643533>
+<DIV class=comment_title>42 楼 <A href="http://itlieying.javaeye.com/" 
+target=_blank>itlieying</A> 2008-08-26&nbsp;&nbsp; <A 
+onclick="quote_comment(643533);return false;" 
+href="http://fins.javaeye.com/blog/218427#">引用</A> </DIV>
+<DIV class=comment_content>如果保存成功getException() 
+值是空时，此时就不会弹出异常对话框。但是刷新Gt-grid里头的刷 新按钮后再点保存仍然会弹出之前的异常。</DIV></DIV>
+<DIV id=bc643498>
+<DIV class=comment_title>41 楼 <A href="http://fins.javaeye.com/" 
+target=_blank>fins</A> 2008-08-26&nbsp;&nbsp; <A 
+onclick="quote_comment(643498);return false;" 
+href="http://fins.javaeye.com/blog/218427#">引用</A> </DIV>
+<DIV class=comment_content>getException() 怎么写的? 会不会出现总是 不为null的情况??</DIV></DIV>
+<DIV id=bc643485>
+<DIV class=comment_title>40 楼 <A href="http://itlieying.javaeye.com/" 
+target=_blank>itlieying</A> 2008-08-26&nbsp;&nbsp; <A 
+onclick="quote_comment(643485);return false;" 
+href="http://fins.javaeye.com/blog/218427#">引用</A> </DIV>
+<DIV class=comment_content>将保存的异常放入getException当中输出来,在后台servlet程序是这样子的: <BR>.... 
+<BR>if(getException!=null) { <BR>PrintWriter out = response.getWriter(); 
+<BR>out.print("{success : false , exception : '"+ getException() + "'}"); <BR>} 
+<BR>return null;</DIV></DIV>
+<DIV id=bc643269>
+<DIV class=comment_title>39 楼 <A href="http://fins.javaeye.com/" 
+target=_blank>fins</A> 2008-08-26&nbsp;&nbsp; <A 
+onclick="quote_comment(643269);return false;" 
+href="http://fins.javaeye.com/blog/218427#">引用</A> </DIV>
+<DIV class=comment_content>这个问题我这的版本没有重现<IMG src="218427.files/icon_sad.gif"> 
+<BR><BR>其实 我客户端从来没有存放过异常信息 <BR><BR>你能不能看看是不是你那边后台总是送异常信息给前端了?会不会是你那里的错误?? 
+<BR><BR>如果你哪里确定没有问题 能不能把你的jso代码发来看看</DIV></DIV>
+<DIV id=bc643228>
+<DIV class=comment_title>38 楼 <A href="http://itlieying.javaeye.com/" 
+target=_blank>itlieying</A> 2008-08-26&nbsp;&nbsp; <A 
+onclick="quote_comment(643228);return false;" 
+href="http://fins.javaeye.com/blog/218427#">引用</A> </DIV>
+<DIV 
+class=comment_content>本人觉得，如果点toolbarContent下的刷新，如果能把异常的信息清空，那么这个问题就有能解决</DIV></DIV>
+<DIV id=bc642852>
+<DIV class=comment_title>37 楼 <A href="http://fins.javaeye.com/" 
+target=_blank>fins</A> 2008-08-26&nbsp;&nbsp; <A 
+onclick="quote_comment(642852);return false;" 
+href="http://fins.javaeye.com/blog/218427#">引用</A> </DIV>
+<DIV class=comment_content>你说的这个是可能是系统bug <BR><BR>我确认后 会在下一版本修正 谢谢 
+<BR></DIV></DIV>
+<DIV id=bc639949>
+<DIV class=comment_title>36 楼 <A href="http://itlieying.javaeye.com/" 
+target=_blank>itlieying</A> 2008-08-22&nbsp;&nbsp; <A 
+onclick="quote_comment(639949);return false;" 
+href="http://fins.javaeye.com/blog/218427#">引用</A> </DIV>
+<DIV 
+class=comment_content>问题1：修改记录A后，处理A的异常信息设置为E1，保存时有提示异常信息E1。点GT-GRID的刷新按钮后，再点保存，又会有异常信息E1提示，而没有提示“没有记录被修改无需保存” 
+<BR><BR><BR>问题2：修改记录A后，处理A的异常信息设置为E1，保存时有提示异常信息E1. 
+再修改记录B，处理B的异常信息设置为E2，保存时确同时提示了E1和E2的异常信息。 
+<BR><BR>看来GT-GRID是把上次异常的信息保存起来而没有及时的清除,只有刷新页面才能清除gt-grid里头的异常信息， 
+<BR><BR><BR>请问有没有办法不刷新页面，点GT-grid刷新后能清空异常信息？ <BR><BR></DIV></DIV>
+<DIV id=bc624168>
+<DIV class=comment_title>35 楼 <A href="http://fins.javaeye.com/" 
+target=_blank>fins</A> 2008-08-06&nbsp;&nbsp; <A 
+onclick="quote_comment(624168);return false;" 
+href="http://fins.javaeye.com/blog/218427#">引用</A> </DIV>
+<DIV class=comment_content>下一个版本会支持</DIV></DIV>
+<DIV id=bc623934>
+<DIV class=comment_title>34 楼 <A href="http://itlieying.javaeye.com/" 
+target=_blank>itlieying</A> 2008-08-06&nbsp;&nbsp; <A 
+onclick="quote_comment(623934);return false;" 
+href="http://fins.javaeye.com/blog/218427#">引用</A> </DIV>
+<DIV class=comment_content>fins, <BR>exception使用时有没有支持函数回调，如果有，怎么实现？ 
+<BR>希望用户点保存后，把保存处理后有异常的信息显示在页面某&lt;div&gt;里头，而不是以弹出对话框的形式来提示</DIV></DIV>
+<DIV id=bc622544>
+<DIV class=comment_title>33 楼 <A href="http://fins.javaeye.com/" 
+target=_blank>fins</A> 2008-08-05&nbsp;&nbsp; <A 
+onclick="quote_comment(622544);return false;" 
+href="http://fins.javaeye.com/blog/218427#">引用</A> </DIV>
+<DIV class=comment_content>exception支不支持后台传递参数 : <BR>你的意思是不是 exception是否能够从后台得到? 
+<BR>可以的 示例里面有的 文档里也有说明 <BR><BR>场景：... <BR>从你的描述中 我觉得 把数据都传递上去是更合理的做法啊. <BR>我没明白 
+把一条记录都传递上去 对你那边有什么影响?? <BR><BR>我之前说过了 对于update 操作而言 <BR>只改一个字段 和修改多个字段 效果是一样的 
+<BR>记录: <BR>no = 1 , name = abc&nbsp; age = 30 <BR><BR><BR>如果你只修改了 name 
+改为了&nbsp; xyz , 那么后台执行的sql 类似下面的情况 <BR><BR>UPDATE student_info SET name='xyz', 
+age=30&nbsp; WHERE no=1 <BR><BR><BR>如果你只修改了 age 改为了&nbsp; 28, 那么后台执行的sql 类似下面的情况 
+<BR>UPDATE student_info SET name='abc', age=28&nbsp; WHERE no=1 <BR><BR>有什么分别啊? 
+<BR><BR>没必要 修改name 时 执行 <BR>UPDATE student_info SET name='xyz' WHERE no=1 
+<BR>修改age 时 执行 <BR>UPDATE student_info SET age=28&nbsp; WHERE no=1 <BR>吧? 
+<BR><BR>多update 几个字段 并不会有问题的 <BR><BR></DIV></DIV>
+<DIV id=bc622498>
+<DIV class=comment_title>32 楼 <A href="http://itlieying.javaeye.com/" 
+target=_blank>itlieying</A> 2008-08-05&nbsp;&nbsp; <A 
+onclick="quote_comment(622498);return false;" 
+href="http://fins.javaeye.com/blog/218427#">引用</A> </DIV>
+<DIV class=comment_content>对了，exception支不支持后台传递参数？</DIV></DIV>
+<DIV id=bc622469>
+<DIV class=comment_title>31 楼 <A href="http://itlieying.javaeye.com/" 
+target=_blank>itlieying</A> 2008-08-05&nbsp;&nbsp; <A 
+onclick="quote_comment(622469);return false;" 
+href="http://fins.javaeye.com/blog/218427#">引用</A> </DIV>
+<DIV 
+class=comment_content>场景：显示学生基本信息的表格，其中有大字段“家庭地址”，“获奖情况”等，如只改甲同学家庭地址，而其他字段不变；或只改获奖情况，gt-grid如果能以JSON形式传递给后台单元格记录的话，同时记录单元格位置，估计这个就可以搞得定</DIV></DIV>
+<DIV id=bc622142>
+<DIV class=comment_title>30 楼 <A href="http://fins.javaeye.com/" 
+target=_blank>fins</A> 2008-08-05&nbsp;&nbsp; <A 
+onclick="quote_comment(622142);return false;" 
+href="http://fins.javaeye.com/blog/218427#">引用</A> </DIV>
+<DIV class=comment_content>暂时不支持 <BR><BR>目前的做法是以update数据为出发点的 
+<BR><BR>对于一条记录而言,只update修改过字段的 和update所有字段 几乎没有区别 <BR><BR>所以这这个地方我的设计就从简了 
+<BR><BR>想知道一下 你为什么非要只得到修改过的数据 这个需求来源于什么应用场景呢? 
+<BR>我看看是否可以提供一些方法来满足你的场景</DIV></DIV>
+<DIV id=bc622133>
+<DIV class=comment_title>29 楼 <A href="http://itlieying.javaeye.com/" 
+target=_blank>itlieying</A> 2008-08-05&nbsp;&nbsp; <A 
+onclick="quote_comment(622133);return false;" 
+href="http://fins.javaeye.com/blog/218427#">引用</A> </DIV>
+<DIV 
+class=comment_content>当对表格中某单元格内容进行修改后，GT-GRID以Json形式传递给后台，传递的是一整条记录，可是，如果，我只想在保存时只传递我做修改的那个单元格记录，而同行中其它没做修改的单元格记录可以不传给我。。。有什么办法可以实现？</DIV></DIV>
+<DIV id=bc619229>
+<DIV class=comment_title>28 楼 <A href="http://fins.javaeye.com/" 
+target=_blank>fins</A> 2008-08-01&nbsp;&nbsp; <A 
+onclick="quote_comment(619229);return false;" 
+href="http://fins.javaeye.com/blog/218427#">引用</A> </DIV>
+<DIV class=comment_content>谢谢你的建议 已经修正 <BR>选中的删除行 为蓝色背景+删除线 <BR></DIV></DIV>
+<DIV id=bc619133>
+<DIV class=comment_title>27 楼 <A href="http://ernest100.javaeye.com/" 
+target=_blank>ernest100</A> 2008-08-01&nbsp;&nbsp; <A 
+onclick="quote_comment(619133);return false;" 
+href="http://fins.javaeye.com/blog/218427#">引用</A> </DIV>
+<DIV class=comment_content>有一个小建议： 
+<BR>删除选中后效果很棒，但是如果当前有多个连续删除行，我想要选择一个删除状态的行进行反悔操作，这时候删除状态的行的选中没有明显的区别，我无法确认是否选中了删除状态的行。</DIV></DIV>
+<DIV id=bc618074>
+<DIV class=comment_title>26 楼 <A href="http://fins.javaeye.com/" 
+target=_blank>fins</A> 2008-07-31&nbsp;&nbsp; <A 
+onclick="quote_comment(618074);return false;" 
+href="http://fins.javaeye.com/blog/218427#">引用</A> </DIV>
+<DIV class=comment_content>哦 这种"多人共同操作同一数据时 造成的冲突是难以避免的 <BR>也是B/S系统的一大特点 
+<BR><BR>我即使做到"只提交修改的" 也无法避免 "最终的数据,违背了某些人的意愿"这一情况的发生 <BR>所以 我的做法就是"不去考虑" 
+,因为考虑不了那么完全. <BR><BR>不过还是要说那句话, 其实是可以做到的, 因为我记录了所有被修改的值. <BR>我记录的目的其实 是为了做 UNDO 
+(该功能还没有完成) <BR>如果此需求的客户众多, 我会考虑开发相关接口的 <BR>谢谢你的建议<IMG 
+src="218427.files/icon_smile.gif">&nbsp;&nbsp; (你的建议总是很专业 非常感谢 ) 
+<BR><BR><BR>顺便说一下我 对于新功能 新需求的一个态度. <BR><BR>我是否提供一个功能, 通常从以下角度来衡量(排名不分先后): 
+<BR><BR>我是否有能力做出来 <BR>是否有成功的范例 <BR>要编写的代码量, <BR>带来的潜在风险, <BR>带来的测试用例数目, 
+<BR>有此需求的客户数量与"全部客户数量"的比值 <BR>对于有此需求的客户而言,该功能的重要程度(必须有 最好是有, 可有可无...) 
+<BR>该功能是否能够成为显著的亮点(可以拿来炫耀 嘿嘿) <BR>该功能开发出来之后 是否能够有较好的效果(是否适合用js实现...) <BR>该功能的易用性 
+<BR><BR></DIV></DIV>
+<DIV id=bc617958>
+<DIV class=comment_title>25 楼 <A href="http://quake.javaeye.com/" 
+target=_blank>QuakeWang</A> 2008-07-31&nbsp;&nbsp; <A 
+onclick="quote_comment(617958);return false;" 
+href="http://fins.javaeye.com/blog/218427#">引用</A> </DIV>
+<DIV class=comment_content>
+<DIV class=quote_title>fins 写道</DIV>
+<DIV class=quote_div>不能 <BR>我没太明白你的意思 <BR><BR>把修改过的记录全部传上去 后台update的时候 会有什么问题?? 
+<BR></DIV><BR>比如用户A修改了一条记录的姓名属性 <BR>而用户B修改了同一记录的年龄属性 
+<BR><BR>这个时候如果A先提交，B后提交，那么B提交的数据里面有未改动的姓名，就会覆盖掉A之前做的改动 
+<BR><BR>如果有办法只提交改动的数据，就可以避免这个问题了</DIV></DIV>
+<DIV class=pagination><SPAN class="disabled prev_page">« 上一页</SPAN> <SPAN 
+class=current>1</SPAN> <A 
+href="http://fins.javaeye.com/blog/218427?page=2#comments" rel=next>2</A> <A 
+href="http://fins.javaeye.com/blog/218427?page=3#comments">3</A> <A 
+class=next_page href="http://fins.javaeye.com/blog/218427?page=2#comments" 
+rel=next>下一页 »</A></DIV></DIV>
+<DIV class=blog_comment>
+<H5>发表评论</H5>
+<P style="FONT-WEIGHT: bold; MARGIN: 5px 0px">该博客是同时发布到<A 
+href="http://www.javaeye.com/topic/218427">论坛</A>的，无法评论在论坛已被锁定的帖子</P></DIV></DIV>
+<SCRIPT type=text/javascript>
+  dp.SyntaxHighlighter.HighlightAll('code', true, true);
+
+  fix_image_size($$('div.blog_content img'), 700);
+  function quote_comment(id) {
+    new Ajax.Request('/editor/quote', {
+      parameters: {'id':id, 'type':'Post'},
+      onSuccess:function(response){editor.bbcode_editor.textarea.insertAfterSelection(response.responseText);}
+    });
+  }
+</SCRIPT>
+</DIV>
+<DIV id=local>
+<DIV class=local_top></DIV>
+<DIV id=blog_owner>
+<DIV id=blog_owner_logo><A href="http://fins.javaeye.com/"><IMG class=logo 
+title="fins的博客: 大城小胖的大城" alt=fins的博客 
+src="218427.files/8b5d1675-cdba-3cb7-8682-1c9ba0174e40.jpg"></A></DIV>
+<DIV id=blog_owner_name>fins</DIV></DIV>
+<DIV id=twitter_decorate>&nbsp;</DIV>
+<DIV class="twitter clearfix" id=twitter>用js操作数据库的感觉真是爽 <BR><EM><A 
+href="http://fins.javaeye.com/blog/chat/42565">2009-09-03</A> 通过网页 </EM><A 
+title=回复这个闲聊 
+href="http://app.javaeye.com/chat?twitter%5Bbody%5D=%40fins+&amp;twitter%5Breply_to_id%5D=42565"><IMG 
+alt=Reply_twitter src="218427.files/reply_twitter.gif"></A> 
+<DIV class=right><A 
+href="http://fins.javaeye.com/blog/chat">&gt;&gt;更多闲聊</A></DIV></DIV>
+<DIV id=blog_actions>
+<UL>
+  <LI>浏览: 1143898 次 
+  <LI>性别: <IMG title=男 alt=Icon_minigender_1 
+  src="218427.files/icon_minigender_1.gif"> 
+  <LI>来自: 小胖儿的大城 
+  <LI><IMG src="218427.files/offline.gif"> 
+  <LI><A class=profile href="http://fins.javaeye.com/blog/profile">详细资料</A> <A 
+  class=guest_book href="http://fins.javaeye.com/blog/guest_book">留言簿</A> 
+  <LI><A class=message title=发送站内短信 
+  href="http://app.javaeye.com/messages/new?message%5Breceiver_name%5D=fins">发短消息</A> 
+  <A class=subscription 
+  onclick="var f = document.createElement('form'); f.style.display = 'none'; this.parentNode.appendChild(f); f.method = 'POST'; f.action = this.href;f.submit();return false;" 
+  href="http://app.javaeye.com/feed?subscription%5Bsubscribed_user_name%5D=fins">订阅</A> 
+  </LI></UL>
+<H5>搜索本博客</H5>
+<FORM action=/blog/search method=get><INPUT class=text id=query 
+style="MARGIN-LEFT: 10px; WIDTH: 110px" name=query> <INPUT class=submit type=submit value=搜索> </FORM></DIV>
+<DIV class=clearfix id=user_visits>
+<H5>最近访客 <SPAN 
+style="PADDING-LEFT: 30px; FONT-WEIGHT: normal; FONT-SIZE: 12px"><A 
+href="http://fins.javaeye.com/blog/user_visits">&gt;&gt;更多访客</A></SPAN></H5>
+<DIV class=user_visit>
+<DIV class=logo><A href="http://ndot.javaeye.com/" target=_blank><IMG class=logo 
+title="NDot的博客: NDot" alt=NDot的博客 
+src="218427.files/user-logo-thumb.gif"></A></DIV>
+<DIV class=left><A href="http://ndot.javaeye.com/" 
+target=_blank>NDot</A></DIV></DIV>
+<DIV class=user_visit>
+<DIV class=logo><A href="http://liqiotto.javaeye.com/" target=_blank><IMG 
+class=logo title="liqiotto的博客: liqiotto" alt=liqiotto的博客 
+src="218427.files/user-logo-thumb.gif"></A></DIV>
+<DIV class=left><A href="http://liqiotto.javaeye.com/" 
+target=_blank>liqiotto</A></DIV></DIV>
+<DIV class=user_visit>
+<DIV class=logo><A href="http://lycvip.javaeye.com/" target=_blank><IMG 
+class=logo title="lycvip的博客: lycvip" alt=lycvip的博客 
+src="218427.files/user-logo-thumb.gif"></A></DIV>
+<DIV class=left><A href="http://lycvip.javaeye.com/" 
+target=_blank>lycvip</A></DIV></DIV>
+<DIV class=user_visit>
+<DIV class=logo><A href="http://wlsever.javaeye.com/" target=_blank><IMG 
+class=logo title="wlsever的博客: " alt=wlsever的博客 
+src="218427.files/user-logo-thumb.gif"></A></DIV>
+<DIV class=left><A href="http://wlsever.javaeye.com/" 
+target=_blank>wlsever</A></DIV></DIV></DIV>
+<DIV id=blog_menu>
+<H5>博客分类</H5>
+<UL>
+  <LI><A href="http://fins.javaeye.com/">全部博客 (368)</A> 
+  <LI><A href="http://fins.javaeye.com/category/7343">GT-Grid (109)</A> 
+  <LI><A href="http://fins.javaeye.com/category/7344">java &amp; ee (29)</A> 
+  <LI><A href="http://fins.javaeye.com/category/7347">js &amp; ajax (51)</A> 
+  <LI><A href="http://fins.javaeye.com/category/46131">AIR &amp; Flex &amp; AS 
+  (8)</A> 
+  <LI><A href="http://fins.javaeye.com/category/7365">oracle &amp;&amp; pl/sql 
+  (1)</A> 
+  <LI><A href="http://fins.javaeye.com/category/7345">game develope (4)</A> 
+  <LI><A href="http://fins.javaeye.com/category/28369">五月天 (28)</A> 
+  <LI><A href="http://fins.javaeye.com/category/36821">音乐分享 (10)</A> 
+  <LI><A href="http://fins.javaeye.com/category/7348">胡言乱语 (117)</A> 
+  <LI><A href="http://fins.javaeye.com/category/32227">写着玩儿 (0)</A> 
+</LI></UL></DIV>
+<DIV id=blog_album>
+<H5>我的相册</H5>
+<DIV class=picture_thumb style="FLOAT: none">
+<DIV><SPAN class=thumb_box><A href="http://fins.javaeye.com/album"><IMG 
+src="218427.files/3b5867a9-7cd3-30a9-a0d9-b075f25d271b-thumb.jpg"></A></SPAN></DIV><SPAN>renzhetu<BR><A 
+href="http://fins.javaeye.com/album">共 151 张</A></SPAN> </DIV></DIV>
+<DIV id=guest_books>
+<H5>我的留言簿 <SPAN 
+style="PADDING-LEFT: 20px; FONT-WEIGHT: normal; FONT-SIZE: 12px"><A 
+href="http://fins.javaeye.com/blog/guest_book">&gt;&gt;更多留言</A></SPAN></H5>
+<UL>
+  <LI>请问下我通过传值的方式修改了表格的值如何显示在表格上<BR>-- by <A 
+  href="http://fins.javaeye.com/blog/guest_book#10278">200322176</A> 
+  <LI>看了你的这篇文章 主题：[求助]高并发的大数据量查询导致系统频繁宕机,咋办啊 我 ...<BR>-- by <A 
+  href="http://fins.javaeye.com/blog/guest_book#8460">lzg3267373</A> 
+  <LI>fins，这次五月天来上海的演唱会去看了吗？没看你写他们的文章了。。。<BR>-- by <A 
+  href="http://fins.javaeye.com/blog/guest_book#7954">smalldeer</A> 
+</LI></UL></DIV>
+<DIV id=blog_others>
+<H5>其他分类</H5>
+<UL>
+  <LI><A href="http://fins.javaeye.com/blog/favorite">我的收藏</A> (23) 
+  <LI><A href="http://fins.javaeye.com/blog/forum">我的论坛帖子</A> (3041) 
+  <LI><A href="http://fins.javaeye.com/blog/article">我的精华良好贴</A> (13) 
+  <LI><A href="http://fins.javaeye.com/blog/solution">我解决的问题</A> (1) 
+</LI></UL></DIV>
+<DIV id=recent_groups>
+<H5>最近加入圈子</H5>
+<UL>
+  <LI><A href="http://mars.group.javaeye.com/">火星常驻JE办事处</A> 
+  <LI><A href="http://pcdiy.group.javaeye.com/">电脑DIY</A> 
+  <LI><A href="http://eclipsercpforum.group.javaeye.com/">Eclipse 
+  PlugIns&amp;RCP&amp;OSGI</A> 
+  <LI><A href="http://javaeye-admin.group.javaeye.com/">JavaEye站务讨论</A> 
+  <LI><A href="http://javaeye-water.group.javaeye.com/">JavaEye水源</A> 
+</LI></UL></DIV>
+<DIV id=user_links>
+<H5>链接</H5>
+<UL>
+  <LI><A href="http://blog.sina.com.cn/musiq" target=_blank>阿信最爱★後青春期的詩</A> 
+  <LI><A href="http://aprilnew.blogcn.com/index.shtml" 
+  target=_blank>失散多年的牛牛姐姐</A> 
+  <LI><A href="http://extjs2.javaeye.com/" target=_blank>extJS</A> 
+</LI></UL></DIV>
+<DIV id=month_blogs>
+<H5>存档</H5>
+<UL>
+  <LI><A href="http://fins.javaeye.com/blog/monthblog/2009-05">2009-05</A> (1) 
+  <LI><A href="http://fins.javaeye.com/blog/monthblog/2009-04">2009-04</A> (8) 
+  <LI><A href="http://fins.javaeye.com/blog/monthblog/2009-03">2009-03</A> (9) 
+  <LI><A href="http://fins.javaeye.com/blog/monthblog_more">更多存档...</A> 
+</LI></UL></DIV>
+<DIV id=recent_comments>
+<H5>最新评论</H5>
+<UL>
+  <LI><A title=我有一个梦 
+  href="http://fins.javaeye.com/blog/214336#comments">我有一个梦</A><BR>我们大家正在努力，真的在努力！<BR>-- 
+  by <A href="http://aylishuai626.javaeye.com/" target=_blank>aylishuai626</A> 
+  <LI><A title='回答一下"为什么最近GT-Grid 不更新了?"' 
+  href="http://fins.javaeye.com/blog/346392#comments">回答一下"为什么最近GT-G 
+  ...</A><BR>我们的项目现在正在用。用的是1.0的版本。用起来很好，但是也发现了很多问题。最 ...<BR>-- by <A 
+  href="http://seanman.javaeye.com/" target=_blank>Seanman</A> 
+  <LI><A title="ECSide 综合讨论 :) " 
+  href="http://fins.javaeye.com/blog/48723#comments">ECSide 综合讨论 :) 
+  </A><BR>兄弟,能不能给一个页面有多个&lt;ec:table/&gt;的例子,我做的那个怎 ...<BR>-- by <A 
+  href="http://haray.javaeye.com/" target=_blank>haray</A> 
+  <LI><A title="GT-Grid 近期将会发布一个bug修正版本,然后将会进行较大的重构" 
+  href="http://fins.javaeye.com/blog/265276#comments">GT-Grid 近期将会发布一个 
+  ...</A><BR>与- Sigma Grid 2.2 有很大相似？<BR>-- by <A 
+  href="http://wangchunfei.javaeye.com/" target=_blank>wangchunfei</A> 
+  <LI><A title='★汇总★GT-Grid "缺陷,、bug、计划"汇总.(2009-02-17更新)' 
+  href="http://fins.javaeye.com/blog/218435#comments">★汇总★GT-Grid "缺陷, 
+  ...</A><BR>关于过滤的startwith，endwith与&gt;=,&lt;=功能上是否有重 ...<BR>-- by <A 
+  href="http://qin686-163-com.javaeye.com/" target=_blank>唯快不破</A> 
+</LI></UL></DIV>
+<DIV id=comments_top>
+<H5>评论排行榜</H5>
+<UL>
+  <LI><A title='[发布]GT-Grid 1.25 版 ★&amp; "前后台结合示例" ★2008-10-21 更新' 
+  href="http://fins.javaeye.com/blog/255954">[发布]GT-Grid 1.25 版 ★&amp; "前后台结合 
+  ...</A> 
+  <LI><A title="关于 <李刚 和 他的技术书籍们> " 
+  href="http://fins.javaeye.com/blog/271137">关于 &lt;李刚 和 他的技术书籍们&gt; </A>
+  <LI><A title=[问]sun如果真的被IBM收购了,那么JavaFX的明天会更好?还是将没有明天了? 
+  href="http://fins.javaeye.com/blog/275846">[问]sun如果真的被IBM收购了,那么JavaFX ...</A> 
+  <LI><A title="[部分转载+简单评论]<IE 到底要怎么样才能得到那部分人的认可？>" 
+  href="http://fins.javaeye.com/blog/240555">[部分转载+简单评论]&lt;IE 到底要怎么样才 ...</A> 
+  <LI><A title=说说自己喜欢的漫画吧 
+  href="http://fins.javaeye.com/blog/246412">说说自己喜欢的漫画吧</A> </LI></UL></DIV>
+<DIV id=rss>
+<UL>
+  <LI><A href="http://fins.javaeye.com/rss" target=_blank><IMG alt=Rss 
+  src="218427.files/rss.png"></A> 
+  <LI><A href="http://fusion.google.com/add?feedurl=http://fins.javaeye.com/rss" 
+  target=_blank><IMG alt=Rss_google src="218427.files/rss_google.gif"></A> 
+  <LI><A 
+  href="http://www.zhuaxia.com/add_channel.php?url=http://fins.javaeye.com/rss" 
+  target=_blank><IMG alt=Rss_zhuaxia src="218427.files/rss_zhuaxia.gif"></A> 
+  <LI><A 
+  href="http://www.xianguo.com/subscribe.php?url=http://fins.javaeye.com/rss" 
+  target=_blank><IMG alt=Rss_xianguo src="218427.files/rss_xianguo.jpg"></A> 
+  <LI><A href="http://www.google.com/search?hl=zh-CN&amp;q=RSS">[什么是RSS?]</A> 
+  </LI></UL></DIV>
+<DIV class=local_bottom></DIV></DIV></DIV>
+<DIV class=clearfix id=footer>
+<DIV id=copyright>
+<HR>
+声明：JavaEye文章版权属于作者，受法律保护。没有作者书面许可不得转载。若作者同意转载，必须以超链接形式标明文章原始出处和作者。<BR>© 
+2003-2009 JavaEye.com. All rights reserved. 上海炯耐计算机软件有限公司 [ 沪ICP备05023328号 ] 
+</DIV></DIV></DIV>
+<DIV id=chat_input style="DISPLAY: none"><IFRAME id=chat_iframe marginWidth=0 
+marginHeight=0 src="218427.files/CAGT2RGH.htm" frameBorder=0 scrolling=no 
+allowTransparency></IFRAME></DIV>
+<DIV id=chat_button><A style="COLOR: black; TEXT-DECORATION: none" 
+onclick="$('chat_input').show();$('chat_iframe').src='/chat/widget';return false;" 
+href="http://fins.javaeye.com/blog/218427#">说点啥吧 <IMG alt=Chat 
+src="218427.files/chat.gif"></A></DIV>
+<SCRIPT type=text/javascript>
+  document.write("<img src='http://stat.javaeye.com/?url="+ encodeURIComponent(document.location.href) + "&referrer=" + encodeURIComponent(document.referrer) + "&logged_in=yes" + "' width='0' height='0' />");
+</SCRIPT>
+</BODY></HTML>

@@ -1,0 +1,82 @@
+GT-Grid 1.0 基础教程(十二)
+
+[size=large][b]教程说明:[/b][/size]
+这是一个告诉大家如何快速的利用GT-Grid开发列表的基础教程.以后会推出"高级教程".
+查看[color=blue]其他教程[/color],以及最新版本信息,请[url="http://fins.javaeye.com/blog/214290"]点击这里[/url]
+
+
+[size=large][b]第十二章: 自定义表头[/b][/size]
+
+
+这一章将介绍大家如何创建自定义列表表头.
+本章示例文件"mydemo12.html"
+
+
+
+[color=green]=========================================[/color]
+
+
+
+GT-Grid自定义表头的实现原理很简单:
+开发人员在页面内用标准的html画出一个简单的(无样式)的table.
+该table的结构和内容 就是最终要显示的自定义表头的结构和内容.
+然后再将这个table和GT-Grid绑定.
+
+下面看一个列子.
+[code="html"]
+<table id="myHead" style="display:none">
+<tr>
+	<td rowspan="2" columnId='no'>学号</td>
+	<td colspan="3">基本信息</td>
+	<td colspan="3">成绩</td>
+	<td  >其他</td>
+</tr>
+<tr>
+	<td columnId='name'>姓名</td>
+	<td columnId='age'>年龄</td>
+	<td columnId='gender'>性别</td>
+	<td columnId='english'>英语</td>
+	<td columnId='math'>数学</td>
+	<td columnId='total'>总成绩</td>
+	<td columnId='detail'>详细信息</td>
+</tr>
+</table>
+[/code]
+
+这个table就是 自定义表头的一个示例,这个table必须要有一个页面内唯一的id.(上例中为'myHead')
+大家注意一下里面的单元格, 有些是有 columnId的 ,有些是没有的.
+有columnId的单元格就是要和 GT-Grid中的 columns定义能够对应上的表头单元格.
+而那些没有的 , 就是不与具体的columns定义对应的表头单元格.
+
+在绘制该table时 一定要注意列的数量要和grid的column数目一致.
+
+
+
+而grid的columns定义依然和普通的列表定义一样.
+
+grid的定义中需要将grid和该table绑定, 使用 customHead 属性:
+
+[code="javascript"]
+var gridConfig={
+	/* ... 略去其他属性设置 ...*/
+	
+	customHead : 'myHead', //值为自定义表头所用table的id
+}
+[/code]
+
+
+
+注意: 在目前版本中, 自定义列表头之后, 列的位置移动, 列冻结, 列隐藏功能将不再好用.
+
+
+
+
+
+[color=green]=========================================[/color]
+
+
+
+
+本章还是非常简单易懂的, 结合示例体会一下应该很好理解.
+
+

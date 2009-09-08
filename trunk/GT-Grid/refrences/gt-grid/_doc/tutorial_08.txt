@@ -1,0 +1,212 @@
+GT-Grid 1.0 基础教程(八)
+
+[size=large][b]教程说明:[/b][/size]
+这是一个告诉大家如何快速的利用GT-Grid开发列表的基础教程.以后会推出"高级教程".
+查看[color=blue]其他教程[/color],以及最新版本信息,请[url="http://fins.javaeye.com/blog/214290"]点击这里[/url]
+
+
+[size=large][b]第八章: 可编辑列表 之 添加记录[/b][/size]
+
+这章将主要讲解,如何添加记录 
+将上一章编写的"mydemo7.html"另存为"mydemo8.html".
+
+
+[color=green]=========================================[/color]
+
+
+要添加记录,首先要做的就是在工具栏上增加一个"添加记录"的按钮,只需在 toolbarContent 里加入 "add"即可.
+
+[code="javascript"]
+var gridConfig={
+	/* ... 略去其他属性设置 ...*/
+	toolbarContent : 'nav | goto | pagesize | reload | add del save | state' ,
+
+};
+[/code]
+
+这时候,工具栏会多出一个"+"按钮, 点击他就可以增加数据了.
+
+默认情况下,点击添加按钮, 会增加一条空记录. 该记录和数据集里已存在的记录具有相同的结构和字段, 所不同的是所有的字段值都是空字符串''.
+
+
+在本例中, 我们允许编辑的列是 数学成绩 和 英语成绩. 但是对新增加的记录, 学号 姓名 年龄 也需要是可编辑的 
+(total由于是由另两个值计算而来,而详细信息为扩展的显示列,所以该两列无需编辑)
+如果我们希望某一列只有在新增数据时是可编辑的, 那么只要为该列指定编辑器(editor),同时设置列属性 editable 为 false 即可.
+示例如下:
+
+[code="javascript"]
+
+var colsConfig = [
+	/* ... 略去其他属性设置 ...*/
+		{ id : 'no'      , header : "学号" , width : 50 , 	editable:false ,  editor: { type :'text' ,validRule : 'R,integer' }},
+		{ id : 'name'    , header : "姓名" , width : 100 ,	editable:false ,  editor: { type :'text' ,validRule : 'R' }},
+		{ id : 'age'     , header : "年龄" , width : 50 , 	editable:false ,  editor: { type :'text' ,validRule : 'R,integer' }},
+
+];
+
+[/code]
+
+其中前三列, 对于现有数据是无法进行编辑的, 但是新增加的记录是可编辑的.
+
+
+[color=green]=========================================[/color]
+
+
+前面讲的内容 告诉了大家如何添加一条空记录, 同时对它进行编辑.
+
+但是很多时候,我们并不希望新增加的数据是空的, 而是有默认值的(就相当于提供一个新记录的模板)
+
+我们可以通过 设置 grid的 defaultRecord属性来实现这个功能.
+
+该属性值 可以为一个 缺省的reocrd对象,该对象和现有的record结构一致.
+
+如下面的代码:
+[code="javascript"]
+var gridConfig={
+	/* ... 略去其他属性设置 ...*/
+
+	defaultRecord :  { no : 111 , name :'(请输入姓名)', age : 11, gender : 'U' , english : 60 , math :60 }
+}
+[/code]
+
+那么此时新增的记录将不再是空的新记录, 而是有默认值的新记录.
+
+
+上面的例子详细介绍了 如何使用 新数据的静态模板.
+其实有时候我们的模板是动态的.对于这种情况, GT-Grid也是支持的.
+defaultRecord 也可以是一个函数, 该函数返回值是一个缺省的reocrd对象,该对象和现有的record结构一致.
+
+
+例如你希望新加入的一行记录的值 默认等于 列表某一条记录.
+
+[code="javascript"]
+
+defaultRecord : function(grid, dataset ){
+	/*  伪代码 */
+	var record= grid.getRecord(0);	// 取得grid.中的第一行记录
+	var rr= clone(record);		// 克隆record. (注意 一定要clone)
+	return rr;		// 返回 克隆的记录,作为数据模板.
+}
+[/code]
+
+
+这时候 defaultRecord属性的指就是一个function了. 参数grid, dataset分别代表当前表格 和当前数据集 )
+
+
+[color=green]=========================================[/color]
+
+
+GT-Grid 的编辑 默认支持 "跨页编辑,一次保存".
+也就是使用者无需 编辑一页 保存一次, 可以在多页之间编辑 然后一次保存.
+不过为了更好的实现这个功能, 建议在 dataset 定义中 通过"uniqueField"属性来指定"唯一索引列/主键/唯一性字段".
+虽然这么做不是必须的, 但是强烈建议开发者为每一个dataset都指定uniqueField.
+
+uniqueField就是 告诉GT,数据中 哪一列是具有唯一性的. 例如,在本例中 学号"no" 是数据的主键. 那么就可以像下面这样定义:
+
+[code="javascript"]
+var dsConfig= {
+	data : data1 ,
+
+	uniqueField : 'no' ,
+
+	fields :[
+		{name : 'no'     ,  type: 'int'    },
+		{name : 'name'      },
+		{name : 'age'    ,  type: 'int'    },
+		{name : 'gender'    },
+		{name : 'english',  type: 'float'  },
+		{name : 'math'   ,  type: 'float'  },
+		{name : 'total'   , type: 'float',
+			initValue : function(record){
+				return record['english'] + record['math'];
+			}
+		}
+	]
+};
+[/code]
+
+
+如果 数据的 "唯一性字段" 是一个联合主键(由多个字段共同确定唯一性) ,
+那么实现也很简单:
+1 定义一个扩展数据列 , 类似上面的total.
+2 在该扩展列的 initValue 方法里 ,返回 联合主键拼接成的字符串(中间要用有特殊字符链接一下).
+
+例如, 假设, no并不能确定唯一性, 而是需要 no 和 age 共同确定唯一性 , 那么我们可以这么定义:
+[code="javascript"]
+var dsConfig= {
+	data : data1 ,
+
+	fields :[
+		{name : 'no'     ,  type: 'int'    },
+		{name : 'name'      },
+		{name : 'age'    ,  type: 'int'    },
+		{name : 'gender'    },
+		{name : 'english',  type: 'float'  },
+		{name : 'math'   ,  type: 'float'  },
+		{name : 'total'   , type: 'float',
+			initValue : function(record){
+				return record['english'] + record['math'];
+			}
+		},
+		{name : 'stdKey'   , 
+			initValue : function(record){
+				return record['no'] +'__' + record['age'];
+			}
+		}
+	],
+
+	uniqueField : 'stdKey' 
+};	
+
+[/code]
+
+
+为什么要用"__"这类的特殊字符链接一下? 
+理由很简单, 确保拼接出来的字符串具有唯一性.
+如果不这么做,而是直接相连 , 那么对于"1号19岁的同学 , 11号9岁的同学"这样的数据就难以区分了.
+
+
+[color=green]=========================================[/color]
+
+
+
+加入添加数据功能后, 提交的数据里 insertedRecords 下面就会有删除的记录信息.
+
+然后还是 json串--->java对象的转换. 这里就不再累述.
+
+对于新增的数据, 在点击保存的时候, GT-Grid会对数据再次进行校验, 以防止用户与在点击"+"按钮后, 不去碰那些新增加的数据.
+[img]http://fins.javaeye.com/blog/220013[/img]
+
+
+
+[color=green]=========================================[/color]
+
+
+
+到目前为止, "用GT-Grid创建一个支持CRUD的列表"的全部过程我们就讲解完了.
+
+但是这些只是GT-Grid的最基本的功能而已, 下一章开始 将为大家讲解更多深入的内容,包括:
+对数据进行排序和过滤 ,对列进行冻结/隐藏/编组, 以及GT-Grid的事件机制, 复杂表头列表....还有更多其他的功能.
+
+同时 还将推出 FAQ & How To ... 系列教程. 专门用来讲解那些 相对细小同时不易分类的知识.
+
+
+[color=green]=========================================[/color]
+
+
+
+P.S.:
+
+感觉这篇没有之前被我误删除的那篇"第八章"写的好 :(  写文档和写文学作品一样 需要灵感, 我的灵感都在丢失的第八章里用尽了 ... 
+
+
+计划中的 "FAQ & How To ..." 内容:
+
+如何实现数据导出?
+如何在重新统计总行数?
+如何在编辑时将错误输入自动转换成正确的值,而不是提示错误信息?
+
+GT-Grid和ECSide是什么关系?有何异同?
+为什么不支持日期类型?日期类型的格式化怎么办?
+为什么对中文排序时结果和预期不符?
+
