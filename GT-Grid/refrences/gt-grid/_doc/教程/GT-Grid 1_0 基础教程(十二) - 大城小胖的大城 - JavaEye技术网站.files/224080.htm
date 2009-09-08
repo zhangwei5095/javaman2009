@@ -1,0 +1,647 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-CN" dir="ltr">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>GT-Grid 1.0 基础教程(十二) - 大城小胖的大城 - JavaEye技术网站</title>
+    <meta name="description" content="GT-Grid 1.0 基础教程(十二) 教程说明: 这是一个告诉大家如何快速的利用GT-Grid开发列表的基础教程.以后会推出&quot;高级教程&quot;. 查看其他教程,以及最新版本信息,请点击这里 第十二章: 自定义表头 这一章将介绍大家如何创建自定义列表表头. 本章示例文件&quot;mydemo12.html&quot; ================================ ..." />
+    <meta name="keywords" content="ajax, grid AJAX GT-Grid 1.0 基础教程(十二)" />
+    <link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon" />
+    <link href="/rss" rel="alternate" title="大城小胖的大城" type="application/rss+xml" />
+    <link href="http://www.javaeye.com/stylesheets/blog.css?1252293748" media="screen" rel="stylesheet" type="text/css" />
+<link href="http://www.javaeye.com/stylesheets/themes/blog/blue.css?1235723792" media="screen" rel="stylesheet" type="text/css" />
+    <script src="http://www.javaeye.com/javascripts/application.js?1248170042" type="text/javascript"></script>
+      <link href="http://www.javaeye.com/javascripts/syntaxhighlighter/SyntaxHighlighter.css?1201588027" media="screen" rel="stylesheet" type="text/css" />
+  <script src="http://www.javaeye.com/javascripts/syntaxhighlighter/shCoreCommon.js?1238329845" type="text/javascript"></script>
+<script src="http://www.javaeye.com/javascripts/hotkey.js?1238403289" type="text/javascript"></script>
+  <style>
+    div#main {background-color: transparent; border: 0; padding: 0px; width: 740px;}
+  </style>
+  </head>
+  <body>
+    <div id="header">
+      <div id="blog_site_nav">
+  <a href="http://www.javaeye.com/" class="homepage">首页</a>
+  <a href="http://www.javaeye.com/news">新闻</a>
+  <a href="http://www.javaeye.com/forums">论坛</a>
+  <a href="http://www.javaeye.com/blogs">博客</a>
+  <a href="http://www.javaeye.com/job">招聘</a>
+  <a href="#" onclick="return false;" id="msna"><u>更多</u> <small>▼</small></a>
+  <div class="quick_menu" style="display:none;">
+    <a href="http://www.javaeye.com/ask">问答</a>
+    <a href="http://www.javaeye.com/wiki">知识库</a>
+    <a href="http://www.javaeye.com/groups">圈子</a>
+    <a href="http://www.javaeye.com/search">搜索</a>
+  </div>
+</div>
+      <div id="user_nav">
+      <a href="http://ndot.javaeye.com" title="查看我的博客首页" class="welcome">欢迎NDot</a>
+    
+      <a href="http://app.javaeye.com/messages" title="你有新的站内短信"><img alt="Newpm" src="http://www.javaeye.com/images/newpm.gif?1193643365" />收件箱(2)</a>
+    
+    
+      <a href="http://app.javaeye.com" title="我的应用首页">我的应用</a>
+    
+    <div class="quick_menu" style="display:none;">
+      <a href="http://app.javaeye.com/feed" title="我订阅的好友动态消息">我的订阅</a>
+      <a href="http://app.javaeye.com/feed/my" title="我参与的话题更新的消息">我的参与</a>
+      <a href="http://app.javaeye.com/chat" title="用闲聊发表简短的话题">我的闲聊</a>
+      <a href="http://app.javaeye.com/mygroup" title="我加入的圈子最新话题">我的圈子</a>
+      <a href="http://app.javaeye.com/links" title="我收藏的网络资源链接">我的收藏</a>
+      <a href="http://app.javaeye.com/myresume" title="我的个人简历">我的简历</a>
+    </div>
+        <a href="http://ndot.javaeye.com/admin" title="管理我的博客">我的博客</a>
+    <a href="http://app.javaeye.com/profile" title="修改我的个人设置">设置</a>
+    <a href="/logout" class="nobg" onclick="var f = document.createElement('form'); f.style.display = 'none'; this.parentNode.appendChild(f); f.method = 'POST'; f.action = this.href;var m = document.createElement('input'); m.setAttribute('type', 'hidden'); m.setAttribute('name', '_method'); m.setAttribute('value', 'put'); f.appendChild(m);f.submit();return false;">退出</a>
+  </div>
+    </div>
+
+    <div id="page">
+      <div id="branding" class="clearfix">
+        <div id="blog_name"><h1><a href="/">大城小胖的大城</a></h1></div>
+        <div id="blog_preview"></div>
+        <div id="blog_domain">永久域名 <a href="/">http://fins.javaeye.com</a></div>
+      </div>
+      
+      
+      <div id="content" class="clearfix">
+        <div id="main">
+          
+
+
+          
+
+
+<div class="blog_main"> 
+  <div id="blog_nav">
+    
+    <div id="pre_next">
+      <a href="/blog/225926" class="next" title="[发布] GT-Grid 1.0 奥运版 (080808发布) ★ without doc  ">[发布] GT-Grid 1.0 奥运版 (080808发布)  ...</a>
+      |
+      <a href="/blog/223827" class="pre" title="希望可以看到不一样的科比 不一样的美国队">希望可以看到不一样的科比 不一样的美国队</a>
+    </div>
+  </div>
+  <div class="blog_title">
+    <div class="date"><span class='year'>2008</span><span class='sep_year'>-</span><span class='month'>08</span><span class='sep_month'>-</span><span class='day'>05</span></div>
+    <h3 class='type_original' title='原创'><a href="/blog/224080">GT-Grid 1.0 基础教程(十二)</a></h3>
+                <strong>关键字: ajax, grid</strong>
+  </div>
+
+  <div class="blog_content">
+    GT-Grid 1.0 基础教程(十二)<br /><br /><span style="font-size: large"><strong>教程说明:</strong></span><br />这是一个告诉大家如何快速的利用GT-Grid开发列表的基础教程.以后会推出"高级教程".<br />查看<span style="color: blue">其他教程</span>,以及最新版本信息,请<a href="http://fins.javaeye.com/blog/214290" target="_blank">点击这里</a><br /><br /><br /><span style="font-size: large"><strong>第十二章: 自定义表头</strong></span><br /><br /><br />这一章将介绍大家如何创建自定义列表表头.<br />本章示例文件"mydemo12.html"<br /><br /><br /><span style="color: green">=========================================</span><br /><br /><br /><br />GT-Grid自定义表头的实现原理很简单:<br />开发人员在页面内用标准的html画出一个简单的(无样式)的table.<br />该table的结构和内容 就是最终要显示的自定义表头的结构和内容.<br />然后再将这个table和GT-Grid绑定.<br /><br />下面看一个列子.<br /><pre name="code" class="html">
+&lt;table id="myHead" style="display:none"&gt;
+&lt;tr&gt;
+	&lt;td rowspan="2" columnId='no'&gt;学号&lt;/td&gt;
+	&lt;td colspan="3"&gt;基本信息&lt;/td&gt;
+	&lt;td colspan="3"&gt;成绩&lt;/td&gt;
+	&lt;td  &gt;其他&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+	&lt;td columnId='name'&gt;姓名&lt;/td&gt;
+	&lt;td columnId='age'&gt;年龄&lt;/td&gt;
+	&lt;td columnId='gender'&gt;性别&lt;/td&gt;
+	&lt;td columnId='english'&gt;英语&lt;/td&gt;
+	&lt;td columnId='math'&gt;数学&lt;/td&gt;
+	&lt;td columnId='total'&gt;总成绩&lt;/td&gt;
+	&lt;td columnId='detail'&gt;详细信息&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/table&gt;
+</pre><br /><br /><img src="http://fins.javaeye.com/blog/224080" /><br />这个table就是 自定义表头的一个示例,这个table必须要有一个页面内唯一的id.(上例中为'myHead')<br />大家注意一下里面的单元格, 有些是有 columnId的 ,有些是没有的.<br />有columnId的单元格就是要和 GT-Grid中的 columns定义能够对应上的表头单元格.<br />而那些没有的 , 就是不与具体的columns定义对应的表头单元格.<br /><br />在绘制该table时 一定要注意列的数量要和grid的column数目一致.<br /><br /><br /><br />而grid的columns定义依然和普通的列表定义一样.<br /><br />grid的定义中需要将grid和该table绑定, 使用 customHead 属性:<br /><br /><pre name="code" class="javascript">
+var gridConfig={
+	/* ... 略去其他属性设置 ...*/
+	
+	customHead : 'myHead', //值为自定义表头所用table的id
+}
+</pre><br /><br /><br /><br />注意: 在目前版本中, 自定义列表头之后, 列的位置移动, 列冻结, 列隐藏功能将不再好用.<br /><br /><br /><br /><br /><br /><span style="color: green">=========================================</span><br /><br /><br /><br /><br />本章还是非常简单易懂的, 结合示例体会一下应该很好理解.<br /><br /><br />
+  </div>
+
+  
+
+  <div>
+      <script type="text/javascript">
+      alimama_pid="mm_11847803_1454875_3591335"; 
+      alimama_titlecolor="0000FF"; 
+      alimama_descolor ="000000"; 
+      alimama_bgcolor="FFFFFF"; 
+      alimama_bordercolor="E6E6E6"; 
+      alimama_linkcolor="008000"; 
+      alimama_bottomcolor="FFFFFF"; 
+      alimama_anglesize="0"; 
+      alimama_bgpic="0"; 
+      alimama_icon="0"; 
+      alimama_sizecode="14"; 
+      alimama_width=468; 
+      alimama_height=60; 
+      alimama_type=2; 
+      </script>
+      <script src="http://a.alimama.cn/inf.js" type=text/javascript>
+      </script>  
+    </div>
+
+  
+  
+
+  <div class="blog_bottom">
+    <ul>
+      <li>02:06</li>
+      <li>浏览 (7356)</li>
+      <li><a href="http://www.javaeye.com/topic/224080" title="在论坛被浏览了1625 次">论坛浏览 (1625)</a></li>       <li><a href="#comments">评论</a> (19)</li>
+      <li>分类: <a href="/category/7343">GT-Grid</a></li>
+      <li>发布在 <a href="http://ecside.group.javaeye.com">GT-Grid</a> 圈子
+      
+        <li><a href='http://app.javaeye.com/links?user_favorite%5Btitle%5D=GT-Grid+1.0+%E5%9F%BA%E7%A1%80%E6%95%99%E7%A8%8B%28%E5%8D%81%E4%BA%8C%29&amp;user_favorite%5Burl%5D=http%3A%2F%2Ffins.javaeye.com%2Fblog%2F224080' target='_blank' class='favorite'>收藏</a></li>
+        
+      
+      
+      <li class='last'><a href="http://www.javaeye.com/wiki/topic/224080" target="_blank" class="more">相关推荐</a></li>
+    </ul>
+  </div>
+
+  <div class="blog_comment">
+    <h5>评论</h5>
+    <a id="comments" name="comments"></a>
+    <div id="bc699066">
+  <div class="comment_title">
+    19 楼
+    <a href='http://fcw528.javaeye.com' target='_blank'>fcw528</a>
+    2008-10-16&nbsp;&nbsp;
+    <a href="#" onclick="quote_comment(699066);return false;">引用</a>
+    
+  </div>
+  <div class="comment_content"><div class="quote_title">fins 写道</div><div class="quote_div"><br />很好 你给出了你想要的合理的结果<br /><br />但是之前有两个客户 提过这个需求 他想要的就不是这样的.<br /><br />-------------------------------<br /><br />我提个问题 你可以思考一下:<br /><br />fixedColumn中的内容 是 "年龄" 和 "性别" 时要该怎么做?<br /><br />是不是可以这样:<br />在程序处理时&amp;nbsp; 发现了年龄 那么找到年龄的"父亲"是--基本信息<br />(判断"年龄"是不是一个子标题 以及寻找年龄的"父标题")<br />将整个"基本信息"冻结.<br />之后又发现了性别 ,而性别在 基本信息之下 所以不处理.<br /><br />然后 对基本信息内的 列的顺序是不是要调整呢?<br />fixcolumn是年龄和性别,那么是不是应该把这两列放到姓名的前面呢?<br />那么 你的答案是不是就是标准的答案呢?<br /><br />----------------------------------<br /><br />其实我说这么多 不是说 这些做不出来<br /><br />而是我想突出的是 "自定义与个性化"的一个问题<br /><br />当 表头是完全可以由客户"自定义"的时候 ,<br />是不可能提供出来一个通用的规范的 标准化的方法, 来满足客户全部需求的<br /><br />也就是说 "自定义"的东西,一定要用"自定义"的方法来解决.<br /><br />因为 由于自定义的存在 导致 每一个客户 心里都有一个自己渴望的"标准答案".<br /><br /><br />-----------------------------------<br /><br />另外 实现你提的这个需求 需要多少行代码??我简单分析了一下 大概需要500行以上.<br />(包括空行 和 大括号行)<br /><br />为了一个"不常用而且非必要" 的功能 增加了几百行代码 是否值得?<br />每一行代码 会带来新的bug, 每一个bug都需要大量的测试....<br />这背后的成本我是不得不去顾及的.<br /><br /><br />所以 开发产品 和做项目 或者是做技术验证 不一样的.<br />需要顾及的东西太多了<br /><br />希望你理解<br /></div><br /><br /><br />其实我也是在往产品的角度考虑，产品只考虑通用性，对于你此处提到的情况其实应该有个很简单的原则：既然基本信息下不是所有列都指定为冻结，那么基本信息下的所有列都不冻结，否则整个基本信息下的所有列都冻结</div>
+</div>
+<div id="bc699059">
+  <div class="comment_title">
+    18 楼
+    <a href='http://fins.javaeye.com' target='_blank'>fins</a>
+    2008-10-16&nbsp;&nbsp;
+    <a href="#" onclick="quote_comment(699059);return false;">引用</a>
+    
+  </div>
+  <div class="comment_content">很好 你给出了你想要的合理的结果<br /><br />但是之前有两个客户 提过这个需求 他想要的就不是这样的.<br /><br />-------------------------------<br /><br />我提个问题 你可以思考一下:<br /><br />fixedColumn中的内容 是 "年龄" 和 "性别" 时要该怎么做?<br /><br />是不是可以这样:<br />在程序处理时&nbsp; 发现了年龄 那么找到年龄的"父亲"是--基本信息<br />(判断"年龄"是不是一个子标题 以及寻找年龄的"父标题")<br />将整个"基本信息"冻结.<br />之后又发现了性别 ,而性别在 基本信息之下 所以不处理.<br /><br />然后 对基本信息内的 列的顺序是不是要调整呢?<br />fixcolumn是年龄和性别,那么是不是应该把这两列放到姓名的前面呢?<br />那么 你的答案是不是就是标准的答案呢?<br /><br />----------------------------------<br /><br />其实我说这么多 不是说 这些做不出来<br /><br />而是我想突出的是 "自定义与个性化"的一个问题<br /><br />当 表头是完全可以由客户"自定义"的时候 ,<br />是不可能提供出来一个通用的规范的 标准化的方法, 来满足客户全部需求的<br /><br />也就是说 "自定义"的东西,一定要用"自定义"的方法来解决.<br /><br />因为 由于自定义的存在 导致 每一个客户 心里都有一个自己渴望的"标准答案".<br /><br /><br />-----------------------------------<br /><br />另外 实现你提的这个需求 需要多少行代码??我简单分析了一下 大概需要500行以上.<br />(包括空行 和 大括号行)<br /><br />为了一个"不常用而且非必要" 的功能 增加了几百行代码 是否值得?<br />每一行代码 会带来新的bug, 每一个bug都需要大量的测试....<br />这背后的成本我是不得不去顾及的.<br /><br /><br />所以 开发产品 和做项目 或者是做技术验证 不一样的.<br />需要顾及的东西太多了<br /><br />希望你理解<br /><br /><br /></div>
+</div>
+<div id="bc699016">
+  <div class="comment_title">
+    17 楼
+    <a href='http://fcw528.javaeye.com' target='_blank'>fcw528</a>
+    2008-10-16&nbsp;&nbsp;
+    <a href="#" onclick="quote_comment(699016);return false;">引用</a>
+    
+  </div>
+  <div class="comment_content">“冻结"学号" 还是"姓名" 还是"所有的基本信息" 需要完全不同的算法 (因为学号跨行 而姓名又在一个跨列的大单元格下面)”<br />“另外 我冻结姓名时怎么处理?是把姓名单独作为一列　还是　依然在＂基本信息＂下面？<br />解除冻结时　放到什么位置？ ”<br />re：（1）姓名所在的大单元格（所有的基本信息）下面的所有列要么都冻结，要么都不冻结&nbsp;&nbsp; <br />&nbsp;&nbsp;&nbsp; （2）姓名依然在基本信息下面<br /><br />跨行不是问题，整个列冻结就行</div>
+</div>
+<div id="bc698874">
+  <div class="comment_title">
+    16 楼
+    <a href='http://fins.javaeye.com' target='_blank'>fins</a>
+    2008-10-16&nbsp;&nbsp;
+    <a href="#" onclick="quote_comment(698874);return false;">引用</a>
+    
+  </div>
+  <div class="comment_content">fixedColumns 这种思路我当然想过了<br />但是 问题依然是"由于自定义列表的不确定性 即使给了我 fixedColumns 这个集合"我也不知道要怎么处理<br /><br />我前面提到的那些疑问不是还是存在的吗?<br /><br /><div class="quote_title">引用</div><div class="quote_div"><br />冻结"学号" 还是"姓名" 还是"所有的基本信息" 需要完全不同的算法 (因为学号跨行 而姓名又在一个跨列的大单元格下面) <br /><br />这个还只是我的例子 如果你的自定义表头有三行呢?? <br />如果 姓名也是跨列的呢? <br /><br />另外 <span style="color: red">我冻结姓名时怎么处理?是把姓名单独作为一列　还是　依然在＂基本信息＂下面？ <br />解除冻结时　放到什么位置？ </span><br /><br /></div><br /><br />你是站在使用和api接口的角度来考虑 我是站在实现的角度<br /><br />所以看问题可能不一样吧 呵呵</div>
+</div>
+<div id="bc698860">
+  <div class="comment_title">
+    15 楼
+    <a href='http://fcw528.javaeye.com' target='_blank'>fcw528</a>
+    2008-10-16&nbsp;&nbsp;
+    <a href="#" onclick="quote_comment(698860);return false;">引用</a>
+    
+  </div>
+  <div class="comment_content">呵呵，fins你把问题复杂化了，从另一个角度思维，不是没有个列有个冻结属性，而是有个fixedColumns的集合，那么一切问题就简单了，具体实现可以参考一下ms flexgrid</div>
+</div>
+<div id="bc698748">
+  <div class="comment_title">
+    14 楼
+    <a href='http://fins.javaeye.com' target='_blank'>fins</a>
+    2008-10-16&nbsp;&nbsp;
+    <a href="#" onclick="quote_comment(698748);return false;">引用</a>
+    
+  </div>
+  <div class="comment_content">而且 这个地方 不是 "指定一个参数 告诉gt冻结哪一列" 就可以了<br /><br />因为 自定义 尤其有跨行跨列的单元格时&nbsp; 整个机制很复杂<br /><br />这个工作 几乎只能定制来实现<br /><br />也就是说 不同的自定义表头 需要不同的实现方法<br /><br />例如我例子中的<br /><br />http://fins.javaeye.com/admin/pictures/17932<br /><br /><br />冻结"学号" 还是"姓名" 还是"所有的基本信息" 需要完全不同的算法 (因为学号跨行 而姓名又在一个跨列的大单元格下面) <br /><br />这个还只是我的例子 如果你的自定义表头有三行呢??<br />如果 姓名也是跨列的呢?<br /><br />另外 我冻结姓名时怎么处理?是把姓名单独作为一列　还是　依然在＂基本信息＂下面？<br />解除冻结时　放到什么位置？<br /><br />而且　冻结　实际上内部也是做了移动的　因为冻结的时候　就是要先把列移动到所有非冻结列的前面．<br /><br />．．．．．．<br /><br />总之　一旦使用自定义表头　很多东西都非常难以控制</div>
+</div>
+<div id="bc698729">
+  <div class="comment_title">
+    13 楼
+    <a href='http://fins.javaeye.com' target='_blank'>fins</a>
+    2008-10-16&nbsp;&nbsp;
+    <a href="#" onclick="quote_comment(698729);return false;">引用</a>
+    
+  </div>
+  <div class="comment_content">"特定"的列可冻结<br />这个"特定"如果不明确的告诉我哪个列 ,那么对于我来说和"任意"列没有区别<br /><br /></div>
+</div>
+<div id="bc698697">
+  <div class="comment_title">
+    12 楼
+    <a href='http://fcw528.javaeye.com' target='_blank'>fcw528</a>
+    2008-10-16&nbsp;&nbsp;
+    <a href="#" onclick="quote_comment(698697);return false;">引用</a>
+    
+  </div>
+  <div class="comment_content">通用的做法应该是这样：自定义列表头之后, 列宽度可调整、列的位置不可以移动, 特定列可冻结</div>
+</div>
+<div id="bc698629">
+  <div class="comment_title">
+    11 楼
+    <a href='http://fins.javaeye.com' target='_blank'>fins</a>
+    2008-10-16&nbsp;&nbsp;
+    <a href="#" onclick="quote_comment(698629);return false;">引用</a>
+    
+  </div>
+  <div class="comment_content">这个有技术难度哦 <br />因为自定义表头 开发者是怎么自定义的 很难分析出来<br />可以很简单 可以很复杂 分析出来了 在处理时也比较郁闷<br />因为那些 colspan&nbsp; rowspan 之类的一旦指定 整个表格的 colIndex rowIndex 很难判断.<br /><br />另外 有些自定义表头根本就 无法进行锁定处理 也无法进行列位置调整的处理<br />如果你感兴趣&nbsp; 我可以给你截图上来<br /><br />总之 : 自定义的多样性 和 不可预知性 导致 对自定义表头进行处理非常的麻烦.<br /><br />如果要对于自定义表头实现上述功能 必须要根据自定义表头的内容和布局 做特殊的判断.<br />无法做成一个公共的模块.<br />这个 也许属于 定制 列表的范畴了<br /><br />如果你需要 你可以把你要定制的表头的 样子和布局 以及约束发给我 我帮你定制.<br /><br />约束很重要 因为不可能任意列的位置都可以调换的 例如: 基本信息下的 性别 姓名, 不可能调整到 成绩信息下面.<br /><br />当然 如我之前所言 定制是不免费的哦 呵呵<br /><br /><br /></div>
+</div>
+<div id="bc698310">
+  <div class="comment_title">
+    10 楼
+    <a href='http://fcw528.javaeye.com' target='_blank'>fcw528</a>
+    2008-10-15&nbsp;&nbsp;
+    <a href="#" onclick="quote_comment(698310);return false;">引用</a>
+    
+  </div>
+  <div class="comment_content">“自定义列表头之后, 列的位置移动, 列冻结, 列隐藏功能将不再好用”，这个不知什么时候能够修复，特别是自定义表头和列冻结、列位置移动经常会一起使用。感谢fins的辛勤付出，无私奉献<img src="/images/smiles/icon_biggrin.gif"/> </div>
+</div>
+<div id="bc674942">
+  <div class="comment_title">
+    9 楼
+    <a href='http://dar521lin.javaeye.com' target='_blank'>dar521lin</a>
+    2008-09-22&nbsp;&nbsp;
+    <a href="#" onclick="quote_comment(674942);return false;">引用</a>
+    
+  </div>
+  <div class="comment_content">恩 不错嘛 好东西</div>
+</div>
+<div id="bc636227">
+  <div class="comment_title">
+    8 楼
+    <a href='http://fins.javaeye.com' target='_blank'>fins</a>
+    2008-08-19&nbsp;&nbsp;
+    <a href="#" onclick="quote_comment(636227);return false;">引用</a>
+    
+  </div>
+  <div class="comment_content">自定义表头 不能与 锁定列功能一起使用</div>
+</div>
+<div id="bc635986">
+  <div class="comment_title">
+    7 楼
+    <a href='http://liliang205.javaeye.com' target='_blank'>liliang205</a>
+    2008-08-19&nbsp;&nbsp;
+    <a href="#" onclick="quote_comment(635986);return false;">引用</a>
+    
+  </div>
+  <div class="comment_content">功能很强大。我想请问一下<br /><br />自定义表头，锁定列之后，为什么会把列名去掉了。请问这是个怎么回事？</div>
+</div>
+<div id="bc631924">
+  <div class="comment_title">
+    6 楼
+    <a href='http://fins.javaeye.com' target='_blank'>fins</a>
+    2008-08-14&nbsp;&nbsp;
+    <a href="#" onclick="quote_comment(631924);return false;">引用</a>
+    
+  </div>
+  <div class="comment_content">不支持导出 <br />但是提供一个扩展 可以用来实现导出(不过具体生成文件的代码要大家自己写)</div>
+</div>
+<div id="bc631854">
+  <div class="comment_title">
+    5 楼
+    <a href='http://hdhhb1979.javaeye.com' target='_blank'>hdhhb1979</a>
+    2008-08-14&nbsp;&nbsp;
+    <a href="#" onclick="quote_comment(631854);return false;">引用</a>
+    
+  </div>
+  <div class="comment_content">grid现在支持导出功能吗？</div>
+</div>
+<div id="bc625134">
+  <div class="comment_title">
+    4 楼
+    <a href='http://fins.javaeye.com' target='_blank'>fins</a>
+    2008-08-07&nbsp;&nbsp;
+    <a href="#" onclick="quote_comment(625134);return false;">引用</a>
+    
+  </div>
+  <div class="comment_content">测试了 但是用的是 9.5<br />你的版本是???</div>
+</div>
+<div id="bc625106">
+  <div class="comment_title">
+    3 楼
+    <a href='http://kevin-gzhz.javaeye.com' target='_blank'>kevin_gzhz</a>
+    2008-08-07&nbsp;&nbsp;
+    <a href="#" onclick="quote_comment(625106);return false;">引用</a>
+    
+  </div>
+  <div class="comment_content">LZ:<br />&nbsp; 你有在Opera浏览器里测试通过吗？怎么用这个不行啊！</div>
+</div>
+<div id="bc622533">
+  <div class="comment_title">
+    2 楼
+    <a href='http://fins.javaeye.com' target='_blank'>fins</a>
+    2008-08-05&nbsp;&nbsp;
+    <a href="#" onclick="quote_comment(622533);return false;">引用</a>
+    
+  </div>
+  <div class="comment_content">支持这个接口的<br />但是这种对于 列表的扩展数据 高级教程 不属于基础教程<br />所以教程近期不会推出<br /><br /></div>
+</div>
+<div id="bc622378">
+  <div class="comment_title">
+    1 楼
+    <a href='http://kevin-gzhz.javaeye.com' target='_blank'>kevin_gzhz</a>
+    2008-08-05&nbsp;&nbsp;
+    <a href="#" onclick="quote_comment(622378);return false;">引用</a>
+    
+  </div>
+  <div class="comment_content">LZ:<br />&nbsp; grid里的新增操作怎么都是在当前列表里新起一行啊，对于字段很多的情况下，列表里一般都是显示部分重要的字段，而新增都在一个新的页面中进行，建议是否能提供一些扩展来自行选择新增的方式啦？</div>
+</div>
+
+    
+    
+  </div>
+
+  <div class="blog_comment">
+    <h5>发表评论</h5>
+    
+      <p style='font-weight: bold; margin: 5px 0;'>该博客是同时发布到<a href="http://www.javaeye.com/topic/224080">论坛</a>的，无法评论在论坛已被锁定的帖子</p>
+      </div>
+</div>
+
+
+<script type="text/javascript">
+  dp.SyntaxHighlighter.HighlightAll('code', true, true);
+
+  fix_image_size($$('div.blog_content img'), 700);
+  function quote_comment(id) {
+    new Ajax.Request('/editor/quote', {
+      parameters: {'id':id, 'type':'Post'},
+      onSuccess:function(response){editor.bbcode_editor.textarea.insertAfterSelection(response.responseText);}
+    });
+  }
+</script>
+
+
+        </div>
+
+        <div id="local">
+          <div class="local_top"></div>
+          <div id="blog_owner">
+            <div id="blog_owner_logo"><a href='http://fins.javaeye.com'><img alt="fins的博客" class="logo" src="http://www.javaeye.com/upload/logo/user/140680/8b5d1675-cdba-3cb7-8682-1c9ba0174e40.jpg?1251274936" title="fins的博客: 大城小胖的大城" /></a></div>
+            <div id="blog_owner_name">fins</div>
+          </div>
+          
+            <div id="twitter_decorate">&nbsp;</div>
+            <div id="twitter" class="twitter clearfix">
+              
+用js操作数据库的感觉真是爽
+<br/><em><a href="http://fins.javaeye.com/blog/chat/42565">2009-09-03</a>
+ 通过网页
+ 
+</em>
+       <a href="http://app.javaeye.com/chat?twitter%5Bbody%5D=%40fins+&amp;twitter%5Breply_to_id%5D=42565" title="回复这个闲聊"><img alt="Reply_twitter" src="http://www.javaeye.com/images/app/reply_twitter.gif?1232617931" /></a>
+              <div class="right"><a href="/blog/chat">&gt;&gt;更多闲聊</a></div>
+            </div>
+          
+          <div id="blog_actions">
+            <ul>
+              <li>浏览: 1143912 次</li>
+              <li>性别: <img alt="Icon_minigender_1" src="http://www.javaeye.com/images/icon_minigender_1.gif?1192779195" title="男" /></li>
+              <li>来自: 小胖儿的大城</li>
+              <li><img src='/images/status/offline.gif'/></li>
+              <li>
+                <a href="/blog/profile" class="profile">详细资料</a>
+                <a href="/blog/guest_book" class="guest_book">留言簿</a>
+              </li>
+              
+                <li>
+                  <a href="http://app.javaeye.com/messages/new?message%5Breceiver_name%5D=fins" class="message" title="发送站内短信">发短消息</a>
+                  
+                    <a href="http://app.javaeye.com/feed?subscription%5Bsubscribed_user_name%5D=fins" class="subscription" onclick="var f = document.createElement('form'); f.style.display = 'none'; this.parentNode.appendChild(f); f.method = 'POST'; f.action = this.href;f.submit();return false;">订阅</a>
+                  
+                </li>
+              
+            </ul>
+            <h5>搜索本博客</h5>
+            <form action="/blog/search" method="get">              <input class="text" id="query" name="query" style="margin-left: 10px;width: 110px;" type="text" />
+              <input class="submit" type="submit" value="搜索" />
+            </form>          </div>
+          
+            <div id="user_visits" class="clearfix">
+              <h5>最近访客 <span style='font-weight:normal;font-size:12px;padding-left:30px;'><a href="/blog/user_visits">&gt;&gt;更多访客</a></span></h5>
+              
+                <div class="user_visit">
+                  <div class="logo"><a href='http://ndot.javaeye.com' target='_blank'><img alt="NDot的博客" class="logo" src="http://www.javaeye.com/images/user-logo-thumb.gif?1194185304" title="NDot的博客: NDot" /></a></div>
+                  <div class="left"><a href='http://ndot.javaeye.com' target='_blank'>NDot</a></div>
+                </div>
+              
+                <div class="user_visit">
+                  <div class="logo"><a href='http://liqiotto.javaeye.com' target='_blank'><img alt="liqiotto的博客" class="logo" src="http://www.javaeye.com/images/user-logo-thumb.gif?1194185304" title="liqiotto的博客: liqiotto" /></a></div>
+                  <div class="left"><a href='http://liqiotto.javaeye.com' target='_blank'>liqiotto</a></div>
+                </div>
+              
+                <div class="user_visit">
+                  <div class="logo"><a href='http://lycvip.javaeye.com' target='_blank'><img alt="lycvip的博客" class="logo" src="http://www.javaeye.com/images/user-logo-thumb.gif?1194185304" title="lycvip的博客: lycvip" /></a></div>
+                  <div class="left"><a href='http://lycvip.javaeye.com' target='_blank'>lycvip</a></div>
+                </div>
+              
+                <div class="user_visit">
+                  <div class="logo"><a href='http://wlsever.javaeye.com' target='_blank'><img alt="wlsever的博客" class="logo" src="http://www.javaeye.com/images/user-logo-thumb.gif?1194185304" title="wlsever的博客: " /></a></div>
+                  <div class="left"><a href='http://wlsever.javaeye.com' target='_blank'>wlsever</a></div>
+                </div>
+              
+            </div>
+          
+                      <div id="blog_menu">
+              <h5>博客分类</h5>
+              <ul>
+                <li><a href="/">全部博客 (368)</a></li>
+                
+                  <li><a href="/category/7343">GT-Grid (109)</a></li>
+                
+                  <li><a href="/category/7344">java &amp; ee (29)</a></li>
+                
+                  <li><a href="/category/7347">js &amp; ajax (51)</a></li>
+                
+                  <li><a href="/category/46131">AIR &amp; Flex &amp; AS (8)</a></li>
+                
+                  <li><a href="/category/7365">oracle &amp;&amp; pl/sql (1)</a></li>
+                
+                  <li><a href="/category/7345">game develope (4)</a></li>
+                
+                  <li><a href="/category/28369">五月天 (28)</a></li>
+                
+                  <li><a href="/category/36821">音乐分享 (10)</a></li>
+                
+                  <li><a href="/category/7348">胡言乱语 (117)</a></li>
+                
+                  <li><a href="/category/32227">写着玩儿 (0)</a></li>
+                
+              </ul>
+            </div>
+            
+              <div id="blog_album">
+                <h5>我的相册</h5>
+                <div class="picture_thumb" style="float: none">
+                  <div><span class='thumb_box'><a href='/album'><img src='http://dl.javaeye.com/upload/picture/pic/36385/3b5867a9-7cd3-30a9-a0d9-b075f25d271b-thumb.jpg' /></a></span></div>
+                  <span>renzhetu<br/> <a href="/album">共 151 张</a></span>
+                </div>
+              </div>
+            
+            
+              <div id="guest_books">
+                <h5>我的留言簿 <span style='font-weight:normal;font-size:12px;padding-left:20px;'><a href="/blog/guest_book">&gt;&gt;更多留言</a></span></h5>
+                <ul>
+                  
+                    <li>
+                      请问下我通过传值的方式修改了表格的值如何显示在表格上<br/>
+                      -- by <a href="/blog/guest_book#10278">200322176</a>
+                    </li>
+                  
+                    <li>
+                      看了你的这篇文章 主题：[求助]高并发的大数据量查询导致系统频繁宕机,咋办啊 我 ...<br/>
+                      -- by <a href="/blog/guest_book#8460">lzg3267373</a>
+                    </li>
+                  
+                    <li>
+                      fins，这次五月天来上海的演唱会去看了吗？没看你写他们的文章了。。。<br/>
+                      -- by <a href="/blog/guest_book#7954">smalldeer</a>
+                    </li>
+                  
+                </ul>
+              </div>
+            
+            <div id="blog_others">
+              <h5>其他分类</h5>
+              <ul>
+                <li><a href="/blog/favorite">我的收藏</a> (23)</li>
+                                                <li><a href="/blog/forum">我的论坛帖子</a> (3041)</li>
+                <li><a href="/blog/article">我的精华良好贴</a> (13)</li>
+                
+                  <li><a href="/blog/solution">我解决的问题</a> (1) </li>
+                              </ul>
+            </div>
+            
+            <div id="recent_groups">
+              <h5>最近加入圈子</h5>
+              <ul>
+                
+                  <li><a href="http://mars.group.javaeye.com">火星常驻JE办事处</a></li>
+                
+                  <li><a href="http://pcdiy.group.javaeye.com">电脑DIY</a></li>
+                
+                  <li><a href="http://EclipseRCPForum.group.javaeye.com">Eclipse PlugIns&RCP&OSGI</a></li>
+                
+                  <li><a href="http://javaeye-admin.group.javaeye.com">JavaEye站务讨论</a></li>
+                
+                  <li><a href="http://javaeye-water.group.javaeye.com">JavaEye水源</a></li>
+                
+              </ul>
+            </div>
+            
+              <div id="user_links">
+                <h5>链接</h5>
+                <ul>
+                  
+                    <li><a href="http://blog.sina.com.cn/musiq" target="_blank">阿信最爱★後青春期的詩</a></li>
+                  
+                    <li><a href="http://aprilnew.blogcn.com/index.shtml" target="_blank">失散多年的牛牛姐姐</a></li>
+                  
+                    <li><a href="http://extjs2.javaeye.com" target="_blank">extJS</a></li>
+                  
+                </ul>
+              </div>
+            
+            
+                          <div id="month_blogs">
+                <h5>存档</h5>
+                <ul>
+                  
+                    <li><a href="/blog/monthblog/2009-05">2009-05</a> (1)</li>
+                  
+                    <li><a href="/blog/monthblog/2009-04">2009-04</a> (8)</li>
+                  
+                    <li><a href="/blog/monthblog/2009-03">2009-03</a> (9)</li>
+                  
+                  <li><a href="/blog/monthblog_more">更多存档...</a></li>
+                </ul>
+              </div>
+                        <div id="recent_comments">
+              <h5>最新评论</h5>
+              <ul>
+                
+                  <li>
+                    <a href="/blog/214336#comments" title="我有一个梦">我有一个梦</a><br/>
+                    我们大家正在努力，真的在努力！<br/>
+                    -- by <a href='http://aylishuai626.javaeye.com' target='_blank'>aylishuai626</a>
+                  </li>
+                
+                  <li>
+                    <a href="/blog/346392#comments" title="回答一下&quot;为什么最近GT-Grid 不更新了?&quot;">回答一下&quot;为什么最近GT-G ...</a><br/>
+                    我们的项目现在正在用。用的是1.0的版本。用起来很好，但是也发现了很多问题。最 ...<br/>
+                    -- by <a href='http://seanman.javaeye.com' target='_blank'>Seanman</a>
+                  </li>
+                
+                  <li>
+                    <a href="/blog/48723#comments" title="ECSide 综合讨论 :) ">ECSide 综合讨论 :) </a><br/>
+                    兄弟,能不能给一个页面有多个&lt;ec:table/&gt;的例子,我做的那个怎 ...<br/>
+                    -- by <a href='http://haray.javaeye.com' target='_blank'>haray</a>
+                  </li>
+                
+                  <li>
+                    <a href="/blog/265276#comments" title="GT-Grid 近期将会发布一个bug修正版本,然后将会进行较大的重构">GT-Grid 近期将会发布一个 ...</a><br/>
+                    与- Sigma Grid 2.2 有很大相似？<br/>
+                    -- by <a href='http://wangchunfei.javaeye.com' target='_blank'>wangchunfei</a>
+                  </li>
+                
+                  <li>
+                    <a href="/blog/218435#comments" title="★汇总★GT-Grid &quot;缺陷,、bug、计划&quot;汇总.(2009-02-17更新)">★汇总★GT-Grid &quot;缺陷, ...</a><br/>
+                    关于过滤的startwith，endwith与&gt;=,&lt;=功能上是否有重 ...<br/>
+                    -- by <a href='http://qin686-163-com.javaeye.com' target='_blank'>唯快不破</a>
+                  </li>
+                
+              </ul>
+            </div>
+            <div id="comments_top">
+              <h5>评论排行榜</h5>
+              <ul>
+                
+                  <li><a href="/blog/255954" title="[发布]GT-Grid 1.25 版 ★&amp; &quot;前后台结合示例&quot; ★2008-10-21 更新">[发布]GT-Grid 1.25 版 ★&amp; &quot;前后台结合 ...</a></li>
+                
+                  <li><a href="/blog/271137" title="关于 &lt;李刚 和 他的技术书籍们&gt; ">关于 &lt;李刚 和 他的技术书籍们&gt; </a></li>
+                
+                  <li><a href="/blog/275846" title="[问]sun如果真的被IBM收购了,那么JavaFX的明天会更好?还是将没有明天了?">[问]sun如果真的被IBM收购了,那么JavaFX ...</a></li>
+                
+                  <li><a href="/blog/240555" title="[部分转载+简单评论]&lt;IE 到底要怎么样才能得到那部分人的认可？&gt;">[部分转载+简单评论]&lt;IE 到底要怎么样才 ...</a></li>
+                
+                  <li><a href="/blog/246412" title="说说自己喜欢的漫画吧">说说自己喜欢的漫画吧</a></li>
+                
+              </ul>
+            </div>
+            <div id="rss">
+              <ul>
+                <li><a href="/rss" target="_blank"><img alt="Rss" src="http://www.javaeye.com/images/rss.png?1195448807" /></a></li>
+                <li><a href="http://fusion.google.com/add?feedurl=http://fins.javaeye.com/rss" target="_blank"><img alt="Rss_google" src="http://www.javaeye.com/images/rss_google.gif?1197872161" /></a></li>
+                <li><a href="http://www.zhuaxia.com/add_channel.php?url=http://fins.javaeye.com/rss" target="_blank"><img alt="Rss_zhuaxia" src="http://www.javaeye.com/images/rss_zhuaxia.gif?1197872161" /></a></li>
+                <li><a href="http://www.xianguo.com/subscribe.php?url=http://fins.javaeye.com/rss" target="_blank"><img alt="Rss_xianguo" src="http://www.javaeye.com/images/rss_xianguo.jpg?1206446465" /></a></li>
+                <li><a href="http://www.google.com/search?hl=zh-CN&q=RSS">[什么是RSS?]</a></li>
+              </ul>
+            </div>
+            <div class="local_bottom"></div>
+          
+        </div>
+      </div>
+
+      <div id="footer" class="clearfix">
+        <div id="copyright">
+          <hr/>
+          声明：JavaEye文章版权属于作者，受法律保护。没有作者书面许可不得转载。若作者同意转载，必须以超链接形式标明文章原始出处和作者。<br />
+          &copy; 2003-2009 JavaEye.com.   All rights reserved. 上海炯耐计算机软件有限公司 [ 沪ICP备05023328号 ]
+        </div>
+      </div>
+    </div>
+    
+  <div id="chat_input" style="display:none;">
+    <iframe id="chat_iframe" frameborder="0" scrolling="no" marginwidth="0" marginheight="0" allowTransparency="true"></iframe>
+  </div>
+  <div id="chat_button"><a href="#" style="text-decoration:none;color:black" onclick="$('chat_input').show();$('chat_iframe').src='/chat/widget';return false;">说点啥吧 <img alt="Chat" src="http://www.javaeye.com/images/app/chat.gif?1236064059" /></a></div>
+
+<script type="text/javascript">
+  document.write("<img src='http://stat.javaeye.com/?url="+ encodeURIComponent(document.location.href) + "&referrer=" + encodeURIComponent(document.referrer) + "&logged_in=yes" + "' width='0' height='0' />");
+</script>
+    
+  </body>
+</html>

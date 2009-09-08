@@ -1,0 +1,478 @@
+<!-- DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd" -->
+<!-- DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd" -->
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta http-equiv="Pragma" content="no-cache" />
+<meta http-equiv="Expires" content="-1" />
+<meta http-equiv="Cache-Control" content="no-cache" />
+<title>GT.Grid JSON 版 Demo</title>
+
+<!-- 如果不需要 日期组件 功能,请将下面 4行 代码去掉 -->
+<link rel="stylesheet" type="text/css" media="all" href="../../gt-grid/calendar/calendar-blue.css"  />
+<script type="text/javascript" src="../../gt-grid/calendar/calendar.js"></script>
+<script type="text/javascript" src="../../gt-grid/calendar/calendar-cn-utf8.js"></script>
+<script type="text/javascript" src="../../gt-grid/calendar/calendar-setup.js"></script>
+
+<link rel="stylesheet" type="text/css" href="../../gt-grid/gt_grid.css" />
+<link rel="stylesheet" type="text/css" href="../../gt-grid/skin/china/skinstyle.css" />
+<link rel="stylesheet" type="text/css" href="../../gt-grid/skin/vista/skinstyle.css" />
+<link rel="stylesheet" type="text/css" href="../../gt-grid/skin/mac/skinstyle.css" />
+
+<!-- 本示例使用的测试数据,正式使用时,请将下面 1行 代码去掉 -->
+<script type="text/javascript" src="../../gt-grid/_server/test_data.js"></script>
+
+<!-- 请根据语言和系统编码,自行选择引入的 gt_msg_...js 文件 (默认的msg文件为UTF-8编码) -->
+<script type="text/javascript" src="../../gt-grid/gt_msg_cn.js"></script>
+
+
+
+
+<script type="text/javascript" src="../../gt-grid/gt_grid_all.js"></script>
+
+
+<!-- 如果不需要 图表 功能,请将下面 1行 代码去掉 -->
+<script type="text/javascript" src="../../gt-grid/flashchart/fusioncharts/FusionCharts.js"></script>
+
+<script type="text/javascript" >
+ 
+
+///////////////////////////////////////
+
+
+var myDialogEditorCreater = new GT.DialogEditor({
+		id: "myDialogEditor1",
+		gridId : "myGrid1" ,
+		width: 250,
+		height:150 ,
+		title : '姓名 编辑器',
+		body : ['<textarea id="my_name_input" rows="5" cols="20" style="width:99%"></textarea><br/>',
+				'<input type="button" value="确定" onclick="GT.$grid(\'myGrid1\').activeDialog.confirm()"/>'].join(''),
+
+		/****
+			指定存放编辑器值的 页面元素 或 该元素的id  或可以取得该元素的函数, 有时候它未必是直接被用户操作的元素,也许是一个hidden input.
+
+			 元素形式:
+			 valueDom : GT.$("my_name_input")
+
+			 函数形式:
+				函数形式的作用: 有时候在创建editor时,那个valueDom 元素也许还并不存在,
+				或者是不同环境下对valueDom有不同的需求,需要通过if 来做判断,那么 函数形式就派上用场了.
+
+			 valueDom : function(){   return GT.$("my_name_input")   }
+
+		****/
+
+		// valueDom :"my_name_input"  ,
+
+		// 更高级的用法是 重写 setValue getValue方法,这样你就可以"为所欲为"了. 例子如下:
+
+		getValue : function(){
+			return GT.$("my_name_input").value;
+		},
+
+		setValue : function(value){
+			GT.$("my_name_input").value=value;
+		},
+
+		// 其实 仅仅重写这两个方法是不够的, 有时候你希望打开编辑器的时候,自动让某个元素得到焦点,所以还应该重新 active 方法.
+
+		active : function(){
+			GT.U.focus(GT.$("my_name_input"));  // 你可以指定任何一个可以得到焦点的元素得到焦点,不一定非要是 valueDom
+		}
+
+		// 如果你的  valueDom 可以取得, 那么 你完全没有必要重写  getValue setValue....
+		// 而且 Dialog 是有 beforeShow afterShow beforeHide afterHide 方法的 
+		// 可以通过重写这些方法 做一些before拦截和 after处理 以及对 Dialog 的数据校验
+
+	});
+
+
+function example_initAvg(record,rn,dataset){
+				var english = dataset.getValueByName( record,'english');
+				var history = dataset.getValueByName( record,'history');
+				var math = dataset.getValueByName( record,'math');
+				var physics =dataset.getValueByName( record,'physics'); 
+				var avg =(english+history+math+physics)/4;
+				avg = parseInt(avg*100)/100;
+				return avg;
+}
+
+
+function example_renderAvg(value ,record,columnObj,grid,colNo,rowNo){
+				var color=(value<60)?'red':(value>90?'green':'black');
+				return '<span style="width:100%;text-align:right;color:'+color+';">'+(value||'')+'</span>';
+}
+
+
+///////////////////////////////////////
+
+var grid_demo_id = "myGrid1" ;
+
+var TEST_TOTAL = 30 ;
+
+var dsConfig= {
+
+	fields :[
+		{name : 'no'  },
+		{name : 'name'  },
+		{name : 'birthday' ,type:'date'  },
+		{name : 'gender' ,type: 'int' },
+		{name : 'english' ,type: 'float'  },
+		{name : 'history' ,type: 'float' },
+		{name : 'math' ,type: 'float' },
+		{name : 'physics' ,type: 'float' },
+		{name : 'average' ,type: 'float' , 
+			// 初始化"伪列"值
+			initValue : example_initAvg }
+	],
+
+	data : createTestData( TEST_TOTAL ),
+
+	recordType : 'array'
+}
+
+
+
+var colsConfig = [
+		// isCheckColumn 来指定是不是"checkbox选择列" ,通过 grid.checkedRows 能取得所有被选中的行
+		// checkbox的value 通过 fieldName来指定(数据记录的某一列)
+		// grid.checkedRows 是一个{}, key为 checkbox的value, value为true/false. 所以要求这一列的值必须是唯一的.
+		{id: 'chk' ,isCheckColumn : true, _checkType:'radio', 	frozen : true , filterable : false, header: "", title: "全选" , fieldName : 'no'},
+		
+		{id: 'no' , header: "学号" , width :55
+		},
+
+		{id: 'name' , header: "姓名" , width :100 ,chartCaption : '{@} 的成绩', toolTip : true ,toolTipWidth : 150 ,
+			frozen : true ,
+			editor : myDialogEditorCreater ,
+			//getSortValue : function(value,record){ 
+			//	return  String(value).length;
+			//},
+			sortFn :function(r1,r2,sortOrder){
+				if (sortOrder=='desc'){
+					return String(r2[1]).localeCompare(r1[1]);
+				}
+				return String(r1[1]).localeCompare(r2[1]);
+			}
+		},
+
+		// validRule 是校验规则 
+		// 'required' 表示必填 , (简写 R )
+		// 'float' 浮点数 , 'int' 整数 , date 日期, 还有 time ,datetime  email ..... 
+		//  validator 为自定义校验函数, 函数的参数为 ( 待校验的值, editor对象 ),
+		//  返回true为校验通过, 其他返回值被当作"错误信息".
+
+		{id: 'birthday' , header: "生日" , width :100,
+			editor : {  type :"date" ,validRule : ['date'] ,validator : null , format : "yyyy-MM-dd" }
+		},
+
+		{id: 'gender' , header: "性别" , width :100,  
+			sortOrder : 'asc' ,
+			grouped : true ,
+			frozen : !true , 
+			syncRefresh : false ,
+			editor : { type :"select" ,options : {'0': '未知' ,'1':'男', '2':'女'} ,defaultText : '' },
+			renderer : 'by editor',
+			// renderer : GT.Grid.mappingRenderer( {'0': '未知' ,'1':'男', '2':'女'} , '' )
+
+			// 该列是否可过滤 默认是true. 目前过滤是客户端过滤,只能过滤客户端已有的数据.
+			filterable : true,
+
+			// 自定义过滤时使用的输入框(html代码),默认是普通文本, 本例中该项是一个选择性别的select框.
+			filterField :　GT.U.createSelectHTML( {'0': '未知' ,'1':'男', '2':'女'} )
+
+		},
+
+
+		{id: 'english' , header: "英语" , width :100, inChart :true, chartColor : '66eeaa',
+			editor: { type :"text" ,validRule : ['R','float'] }
+		},
+
+		{id: 'history' , header: "历史" , width :100, inChart :true,  hidden : !false,  
+			editor: { type :"text" ,validRule : ['R','float'] }
+		},
+
+		{id: 'math' , header: "数学" , width :100, inChart :true, chartColor : 'eecc99',
+			editor: { type :"text" ,validRule : ['R','float'] }
+		},
+
+		{id: 'physics' , header: "物理" , width :100, inChart :true, chartColor : 'd65555',
+			editor: { type :"text" ,validRule : ['R','float'] }
+		},
+
+		{id: 'average' , header: "平均分" , width :100,
+
+			//渲染"伪列"的显示效果
+			renderer : example_renderAvg
+		}
+ ];
+
+var gridConfig={
+
+	showIndexColumn : !true,
+
+	debug : true,
+
+	id : grid_demo_id,
+
+
+	loadURL : null ,		// './_server/students.info.js'  ,
+
+	saveURL : null,				// './_server/students.save.js',
+
+	width: "700",  //"100%", // 700,
+	height: "330",  //"100%", // 330,
+
+	
+	multiSelect : true,
+
+	autoUpdateSortState : true ,
+
+	container : 'mygrid_container',
+	replaceContainer : false,
+	listenResize : false,
+
+
+	resizable : true,
+	editable : true,
+	
+	remotePaging : true , // 为false时 客户端分页, 一次性将数据全部发送到前台,在客户端分页
+	remoteSort : false,
+	remoteFilter : false,
+
+
+	showGridMenu : true,
+
+allowCustomSkin : true,
+allowFreeze : true,
+allowGroup : true,
+allowHide : true,
+
+transparentMask : false ,
+
+toolbarPosition : 'bottom', // 'top',  工具条显示的位置, 暂时不支持上下都显示.
+
+// 工具条的内容.以及显示的相对顺序. | 代表分割线, 注意各个内容之间有" "分隔.
+toolbarContent : 'nav | goto | pagesize | reload | add del save | print | filter chart | state',
+
+
+	stripeRows : true,
+	lightOverRow : true,
+
+
+	encoding : 'UTF-8', // GT.$encoding(),
+
+		
+	pageSize :  15 ,
+
+	pageSizeList : [5, 10,15,20,30,50,100,200],
+	pageStateBar : null , //'outStateBar',
+
+	dataset : dsConfig ,
+
+	columns : colsConfig ,
+
+	
+	onComplete : function(){  
+		/*  列表创建后,并且数据载入完成 时触发的函数  */  
+		//alert( GT.toJsonString(this.getInsertedRecords()) )
+	}, 
+
+	clickStartEdit : false ,
+
+	customRowAttribute : function(record,rn,grid){
+		if (record[4]>90){
+			return 'style="height:100px;background-color:#ffddcc"';
+		}
+	},
+
+	onmouseover : function(event,grid){
+		var ts= grid.getEventTargets(event);
+
+		if (ts.column && ts.column.toolTip) {
+			grid.showCellToolTip(ts.cell,ts.column.toolTipWidth);
+		}else{
+			grid.hideCellToolTip();
+		}
+	},
+	onmouseout : function(event,grid){
+		grid.hideCellToolTip();
+	},
+
+	beforeSelectRow  : function(value, record , cell, row,  colNO, rowNO, columnObj,grid){
+		document.title= ['beforeSelectRow ',rowNO,value].join('  --  ')
+	},
+	afterSelectRow  : function(value, record , cell, row,  colNO, rowNO, columnObj,grid){
+
+		document.title += '  --  '+['afterSelectRow ',rowNO,value].join('  --  ')
+	},
+	onClickCell  : function(value, record , cell, row,  colNO, rowNO,columnObj,grid){
+		document.title += '  --  '+['onClickCell ',rowNO,value].join('  --  ')
+	},
+
+	loadResponseHandler : function(response,requestParameter){  /* 处理 load 响应数据的函数 */ },
+	saveResponseHandler : function(response,requestParameter){   /* 处理 save 响应数据的函数 */ },
+
+	customHead : null, //'myHead',
+
+	resizable : true, // 整个列表区域是否可改变大小 (当toolbar在上面时 无论该属性如何设置 都不允许调整大小)
+
+	/*  新加记录时,默认的数据(类似于一个新记录的模板) */
+	defaultRecord : [
+			'010-000',
+			'(请输入姓名)',
+			'1910-01-01',
+			0,
+			0,
+			0,
+			0,
+			0
+		],
+
+	beforeLoad : function(reqParam){
+
+	//	alert(GT.$json(reqParam) )
+
+		
+	},
+
+	beforeSelectRow : function( record ,row, rowNo, grid){
+		//	alert(row.id + '  '+row.tagName);
+			return true;
+	},
+
+
+	afterRefresh : function(){
+		//var pageInfo={
+		//			totalRowNum :300,
+		//			pageNum : 2
+
+		//};
+		//mygrid.setPageInfo(pageInfo); 
+		//mygrid.refreshToolBar();	
+	
+	},
+
+	beforeSave : function(reqParam){
+
+		alert(GT.$json(reqParam) )
+		this.reload(true);
+		return false;
+		
+	},
+	//onDblClickCell --> onCellDblClick
+	onCellDblClick : function(value, record , cell,row, colNO, rowNO,column,event){
+		alert(cell.innerHTML);
+	},
+
+	//	skin : 'mac',
+	onComplete : function(){
+		// todo
+
+	},
+
+	clickStartEdit : true 
+
+};
+
+
+var mygrid=new GT.Grid( gridConfig );
+
+/*
+mygrid.filterDialog = new GT.Dialog({
+					gridId : mygrid.id , container : mygrid.gridMask ,
+					id: "filterDialog" ,
+					width: 300,height:200 ,
+					title : "自定义的过滤对话框",
+					body : "一些html代码" // 或dom元素
+				} );
+*/
+
+GT.U.onLoad( GT.Grid.render(mygrid) );
+
+//////////////////////////////////////////////////////////
+
+function unlockAllColumn(){
+	GT.Column.unlockAllColumn(grid_demo_id);
+}
+
+function lockColumnNAllBefore(){
+	GT.Column.lockColumnNAllBefore(grid_demo_id,GT.$("idx2").value);
+}
+
+function showGrid(){
+	if (GT.$('bigbox').style.display!="none") {
+		GT.$('bigbox').style.display="none";
+	}else{
+	GT.$('bigbox').style.display='';
+
+	// must call onShow() !!!!
+	mygrid.onShow();
+	}
+}
+
+//////////////////////////////////////////////////////////
+
+function lazyLoad(){
+	//dsConfig.data = createTestData( TEST_TOTAL );
+	mygrid.refresh(createTestData( TEST_TOTAL ));
+}
+
+function init(){
+	//mygrid.render("mygrid_container");
+}
+
+</script>
+</head>
+
+<body onload="init()" style="padding:0px;margin:10px;">
+
+<table id="myHead" style="display:none">
+<tr>
+	<td rowspan="2" columnId='no' resizable='false'>学号</td>
+	<td colspan="3">基本信息</td>
+	<td colspan="4">成绩</td>
+</tr>
+<tr>
+	<td columnId='name'>姓名</td>
+	<td columnId='birthday'>生日</td>
+	<td columnId='gender'>性别</td>
+	<td columnId='english'>英语</td>
+	<td columnId='history'>历史</td>
+	<td columnId='math'>数学</td>
+	<td columnId='physics'>物理</td>
+</tr>
+</table>
+<div id="bigbox" style="display:!none;">
+
+<div id="mygrid_container" style="padding:5px;width:100%;" ></div>
+
+</div>
+
+<br/>
+
+<br/><br/>============================<br/><br/>
+
+<input type="button" value="hide/show grid" onclick="showGrid()" />
+
+<input type="button" value="setSize" onclick="mygrid.setSize(500,300)" />
+
+<input type="button" value="setHeader" onclick="mygrid.getColumn(3).setHeader('新标题')" />
+
+<input type="button" value="lazyLoad" onclick="lazyLoad()" />
+
+<input type="button" value="test activeCell" onclick="alert( mygrid.activeCell.innerHTML )" />
+
+<input type="button" value="testCheck" onclick="alert( GT.$json(mygrid.getSelectedRecords() ) )" />
+
+<br/>
+
+<input type="button" value="test readOnly true" onclick=" mygrid.readOnly=true" />
+
+<input type="button" value="test readOnly false" onclick=" mygrid.readOnly=false" />
+<br/>
+<form>
+</form>
+ </body>
+</html>

@@ -1,0 +1,188 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta http-equiv="Pragma" content="no-cache" />
+<meta http-equiv="Expires" content="-1" />
+<meta http-equiv="Cache-Control" content="no-cache" />
+<title>GT-Grid 教程示例</title>
+
+<link rel="stylesheet" type="text/css" href="../../gt-grid/gt_grid.css" />
+<link rel="stylesheet" type="text/css" href="../../gt-grid/skin/china/skinstyle.css" />
+<link rel="stylesheet" type="text/css" href="../../gt-grid/skin/vista/skinstyle.css" />
+<link rel="stylesheet" type="text/css" href="../../gt-grid/skin/mac/skinstyle.css" />
+
+<!-- 请根据语言和系统编码,自行选择引入的 gt_msg_...js 文件 (默认的msg文件为UTF-8编码) -->
+<script type="text/javascript" src="../../gt-grid/gt_msg_cn.js"></script>
+
+
+
+
+<script type="text/javascript" src="../../gt-grid/gt_grid_all.js"></script>
+
+
+<!-- 如果不需要 图表 功能,请将下面 1行 代码去掉 -->
+<script type="text/javascript" src="../../gt-grid/flashchart/fusioncharts/FusionCharts.js"></script>
+
+
+<script type="text/javascript" >
+// 教程中的代码就写在这个区域里.
+
+	function getClientTestData(max){
+		max=max||100;
+		var getInt=function(min,max) {
+				min = min || 0;
+				max = max || 100;
+				var _min= Math.min(min,max);
+				max=Math.max(min,max);
+				min=_min;
+				var step= max - min +1;
+				var s= (Math.random()+1)*max*10 % step;
+				var num= min +  s ;
+				return parseInt(num,10);
+		}
+
+		var data=[];
+		var gl=['U','M','F'];
+		for (var i=0;i<max;i++){
+			var record={ no : 30+i , 
+					name : 'abc'+i , 
+					age :getInt(12,15) , 
+					gender : gl[getInt(1,9)%3] , 
+					english : 50+getInt(1,49), 
+					math : 40+getInt(1,59)
+				}
+			data.push(record);
+		}
+		return data;	
+	}
+
+var data1 = getClientTestData( 30 );
+
+var dsConfig= {
+
+	data : data1 ,
+
+	uniqueField : 'no' ,
+
+	fields :[
+		{name : 'no'     ,  type: 'int'    },
+		{name : 'name'      },
+		{name : 'age'    ,  type: 'int'    },
+		{name : 'gender'    },
+		{name : 'english',  type: 'float'  },
+		{name : 'math'   ,  type: 'float'  },
+		{name : 'total'   , type: 'float',
+			initValue : function(record){
+				return record['english'] + record['math'];
+			}
+		}
+	]
+};
+
+var colsConfig = [
+		{ id : 'no'      , header : "学号" , width : 50 , 	editable:false ,  editor: { type :'text' ,validRule : 'R,integer' } },
+		{ id : 'name'    , header : "姓名" , width : 100 ,  editable: true ,  editor: { type :'textarea' , width:'300px',height:'100px',validRule : 'R' } , chartCaption : '{@} 的成绩' },
+		{ id : 'age'     , header : "年龄" , width : 50 , 	editable:false ,  editor: { type :'text' ,validRule : 'R,integer' } },
+		{ id : 'gender'  , header : "性别" , width : 50 ,
+			editor : { type :'select' ,options : {'U': '未知' , 'M':'男', 'F':'女'}  },
+			renderer : GT.Grid.mappingRenderer(  {'U': '未知' , 'M':'男', 'F':'女'} , '未知' ),
+			filterField :　GT.U.createSelectHTML( {'0': '未知' ,'1':'男', '2':'女'} )
+
+		},
+		{ id : 'english' , header : "英语" , width : 60 , align :'right' , 	editor: { type :'text' ,validRule : 'R,integer' } ,inChart :true, chartColor : '66eeaa' },
+		{ id : 'math'    , header : "数学" , width : 60 , align :'right' , 	inChart :true, chartColor : 'eecc99' ,
+			editor: { type :'text' ,
+			
+				validator : function(value,record,colObj,grid){ 
+
+					// 将输入的数学成绩转换成数值形.
+					value=Number(value);
+
+					//取得英语成绩,并转换成数值形.
+					var english = Number(record['english']);
+					
+					// 做校验
+					if ( !isNaN(value) && ( value>10 && value< 100 ) && ( english-value <= 30 ) )   {
+						return true;
+					}
+					return " 数学成绩 必须满足下列条件:\n"+
+							" 1 输入的必须是 10到100之间(开区间)的整数.\n"+
+							" 2 数学成绩 不能比 英语成绩 少30分以上.";
+				
+				} 
+			}  
+		},
+		
+		{ id : 'total'   , header : "总成绩" , width : 70 , align :'right' ,
+			renderer : function(value ,record,columnObj,grid,colNo,rowNo){
+				   var total = record['total'];
+				   if (total>170) {
+						total =  '<span style="color:red" >'+ total +'</span>';
+				   }else if (total<120) {
+						total = '<span style="color:blue" >'+ total +'</span>';
+				   }
+				   return total;
+			}
+		},
+
+		{ id : 'detail'   , header : "详细信息" , width : 120,
+			renderer : function(value ,record,columnObj,grid,colNo,rowNo){
+				return '&#160;<a href=".?no='+record['no']+'" style="margin-left:3px;" >&#160;'+ record['name'] +' 的详细信息&#160;</a>';
+			}
+		}
+];
+
+var gridConfig={
+
+	id : "grid1",
+	
+	dataset : dsConfig ,
+
+	columns : colsConfig ,
+
+	container : 'grid1_container', 
+
+	showGridMenu : true ,
+	allowCustomSkin	: true ,
+	allowFreeze	: true ,
+	allowHide	: true ,
+	allowGroup	: true ,
+
+	toolbarPosition : 'bottom',
+
+	toolbarContent : 'nav | goto | pagesize | reload | add del save | print | filter chart | state' ,
+
+	beforeSave : function(reqParam){
+		
+		alert(GT.$json(this.getUpdatedFields()) ) ;
+		//GT.$grid('grid1').reload(true);
+		//return false;
+	},
+	pageSize : 10 ,
+	
+	pageSizeList : [5,10,15,20],
+
+	GTGridPath : '../../gt-grid',
+
+	defaultRecord :  { no : 111 , name :'', age : '', gender : 'U' , english : 50 , math :50 }
+
+
+};
+
+var mygrid=new GT.Grid( gridConfig );
+
+GT.Utils.onLoad( function(){
+	mygrid.render();
+} );
+
+
+</script>
+</head>
+
+<body>
+<!-- grid的容器. -->
+<div id="grid1_container" style="width:700px;height:300px">
+</div>
+
+ </body>
+</html>

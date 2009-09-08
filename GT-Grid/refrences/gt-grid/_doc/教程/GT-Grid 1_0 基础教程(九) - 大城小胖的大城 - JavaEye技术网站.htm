@@ -1,0 +1,734 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3c.org/TR/1999/REC-html401-19991224/loose.dtd">
+<!-- saved from url=(0035)http://fins.javaeye.com/blog/220244 -->
+<HTML dir=ltr xml:lang="zh-CN" 
+xmlns="http://www.w3.org/1999/xhtml"><HEAD><TITLE>GT-Grid 1.0 基础教程(九) - 大城小胖的大城 - JavaEye技术网站</TITLE>
+<META http-equiv=Content-Type content="text/html; charset=UTF-8">
+<META 
+content='GT-Grid 1.0 基础教程(九) 教程说明: 这是一个告诉大家如何快速的利用GT-Grid开发列表的基础教程.以后会推出"高级教程". 查看其他教程,以及最新版本信息,请点击这里 第九章: 排序 第一章中的示例 就已经具备排序功能了, 但是只是简单的客户端排序. 客户端排序处理的数据并不一定时"当前页的数据", 而是"所有在客户端的数据&amp;quo ...' 
+name=description>
+<META content="ajax, grid AJAX GT-Grid 1.0 基础教程(九)" name=keywords><LINK 
+href="/images/favicon.ico" type=image/x-icon rel="shortcut icon"><LINK 
+title=大城小胖的大城 href="/rss" type=application/rss+xml rel=alternate><LINK 
+media=screen href="GT-Grid 1_0 基础教程(九) - 大城小胖的大城 - JavaEye技术网站.files/blog.css" 
+type=text/css rel=stylesheet><LINK media=screen 
+href="GT-Grid 1_0 基础教程(九) - 大城小胖的大城 - JavaEye技术网站.files/blue.css" type=text/css 
+rel=stylesheet>
+<SCRIPT src="GT-Grid 1_0 基础教程(九) - 大城小胖的大城 - JavaEye技术网站.files/application.js" 
+type=text/javascript></SCRIPT>
+<LINK media=screen 
+href="GT-Grid 1_0 基础教程(九) - 大城小胖的大城 - JavaEye技术网站.files/SyntaxHighlighter.css" 
+type=text/css rel=stylesheet>
+<SCRIPT src="GT-Grid 1_0 基础教程(九) - 大城小胖的大城 - JavaEye技术网站.files/shCoreCommon.js" 
+type=text/javascript></SCRIPT>
+
+<SCRIPT src="GT-Grid 1_0 基础教程(九) - 大城小胖的大城 - JavaEye技术网站.files/hotkey.js" 
+type=text/javascript></SCRIPT>
+
+<STYLE>DIV#main {
+	BORDER-TOP-WIDTH: 0px; PADDING-RIGHT: 0px; PADDING-LEFT: 0px; BORDER-LEFT-WIDTH: 0px; BORDER-BOTTOM-WIDTH: 0px; PADDING-BOTTOM: 0px; WIDTH: 740px; PADDING-TOP: 0px; BACKGROUND-COLOR: transparent; BORDER-RIGHT-WIDTH: 0px
+}
+</STYLE>
+
+<META content="MSHTML 6.00.2900.3603" name=GENERATOR></HEAD>
+<BODY>
+<DIV id=header>
+<DIV id=blog_site_nav><A class=homepage href="http://www.javaeye.com/">首页</A> <A 
+href="http://www.javaeye.com/news">新闻</A> <A 
+href="http://www.javaeye.com/forums">论坛</A> <A 
+href="http://www.javaeye.com/blogs">博客</A> <A 
+href="http://www.javaeye.com/job">招聘</A> <A id=msna onclick="return false;" 
+href="http://fins.javaeye.com/blog/220244#"><U>更多</U> <SMALL>▼</SMALL></A> 
+<DIV class=quick_menu style="DISPLAY: none"><A 
+href="http://www.javaeye.com/ask">问答</A> <A 
+href="http://www.javaeye.com/wiki">知识库</A> <A 
+href="http://www.javaeye.com/groups">圈子</A> <A 
+href="http://www.javaeye.com/search">搜索</A> </DIV></DIV>
+<DIV id=user_nav><A class=welcome title=查看我的博客首页 
+href="http://ndot.javaeye.com/">欢迎NDot</A> <A title=你有新的站内短信 
+href="http://app.javaeye.com/messages"><IMG alt=Newpm 
+src="GT-Grid 1_0 基础教程(九) - 大城小胖的大城 - JavaEye技术网站.files/newpm.gif">收件箱(2)</A> <A 
+title=我的应用首页 href="http://app.javaeye.com/">我的应用</A> 
+<DIV class=quick_menu style="DISPLAY: none"><A title=我订阅的好友动态消息 
+href="http://app.javaeye.com/feed">我的订阅</A> <A title=我参与的话题更新的消息 
+href="http://app.javaeye.com/feed/my">我的参与</A> <A title=用闲聊发表简短的话题 
+href="http://app.javaeye.com/chat">我的闲聊</A> <A title=我加入的圈子最新话题 
+href="http://app.javaeye.com/mygroup">我的圈子</A> <A title=我收藏的网络资源链接 
+href="http://app.javaeye.com/links">我的收藏</A> <A title=我的个人简历 
+href="http://app.javaeye.com/myresume">我的简历</A> </DIV><A title=管理我的博客 
+href="http://ndot.javaeye.com/admin">我的博客</A> <A title=修改我的个人设置 
+href="http://app.javaeye.com/profile">设置</A> <A class=nobg 
+onclick="var f = document.createElement('form'); f.style.display = 'none'; this.parentNode.appendChild(f); f.method = 'POST'; f.action = this.href;var m = document.createElement('input'); m.setAttribute('type', 'hidden'); m.setAttribute('name', '_method'); m.setAttribute('value', 'put'); f.appendChild(m);f.submit();return false;" 
+href="http://fins.javaeye.com/logout">退出</A> </DIV></DIV>
+<DIV id=page>
+<DIV class=clearfix id=branding>
+<DIV id=blog_name>
+<H1><A href="http://fins.javaeye.com/">大城小胖的大城</A></H1></DIV>
+<DIV id=blog_preview></DIV>
+<DIV id=blog_domain>永久域名 <A 
+href="http://fins.javaeye.com/">http://fins.javaeye.com/</A></DIV></DIV>
+<DIV class=clearfix id=content>
+<DIV id=main>
+<DIV class=blog_main>
+<DIV id=blog_nav>
+<DIV id=pre_next><A class=next title="不错的国产开源免费的php框架: FleaPHP" 
+href="http://fins.javaeye.com/blog/220258">不错的国产开源免费的php框架: FleaPHP</A> | <A 
+class=pre title="我的两点请求, 麻烦关注GT和ecside的朋友看一下,谢谢了" 
+href="http://fins.javaeye.com/blog/220218">我的两点请求, 麻烦关注GT和ecside的朋友看 ...</A> 
+</DIV></DIV>
+<DIV class=blog_title>
+<DIV class=date><SPAN class=year>2008</SPAN><SPAN class=sep_year>-</SPAN><SPAN 
+class=month>07</SPAN><SPAN class=sep_month>-</SPAN><SPAN 
+class=day>28</SPAN></DIV>
+<H3 class=type_original title=原创><A 
+href="GT-Grid 1_0 基础教程(九) - 大城小胖的大城 - JavaEye技术网站.files/220244.htm">GT-Grid 1.0 
+基础教程(九)</A></H3><STRONG>关键字: ajax, grid</STRONG> </DIV>
+<DIV class=blog_content>GT-Grid 1.0 基础教程(九) <BR><BR><SPAN 
+style="FONT-SIZE: large"><STRONG>教程说明:</STRONG></SPAN> 
+<BR>这是一个告诉大家如何快速的利用GT-Grid开发列表的基础教程.以后会推出"高级教程". <BR>查看<SPAN 
+style="COLOR: blue">其他教程</SPAN>,以及最新版本信息,请<A 
+href="http://fins.javaeye.com/blog/214290" target=_blank>点击这里</A> <BR><BR><SPAN 
+style="FONT-SIZE: large"><STRONG>第九章: 排序</STRONG></SPAN> <BR><BR>第一章中的示例 
+就已经具备排序功能了, 但是只是简单的客户端排序. <BR>客户端排序处理的数据并不一定时"当前页的数据", 
+<BR>而是"所有在客户端的数据",也就是说,当你将数据全部加载到客户端,在客户端进行分页时,客户端排序实际上排列的就是所有数据. <BR><BR>本章将讲解 
+自定义排序函数 以及如何进行 服务端排序. <BR><BR>将上一章编写的"mydemo8.html"另存为"mydemo9.html". 
+<BR><BR><BR><BR><SPAN 
+style="COLOR: green">=========================================</SPAN> 
+<BR><BR><BR><BR>先来说一个 很重要 但是很简单的属性:columns定义中的 "sortable" 属性, 
+<BR>顾名思义,当不希望某一列可排序时,就把那一列的该属性设置为 false, 本例中不希望对"详细信息"列进行排序,那么可如下定义: <BR><BR><PRE class=javascript name="code">var  colsConfig ={
+
+	/* ... 略去其他属性设置 ...*/
+
+	{ id : 'detail'   , header : "详细信息" , width : 120, sortable : false,
+		renderer : function(value ,record,columnObj,grid,colNo,rowNo){
+			return '&amp;#160;&lt;a href=".?no='+record['no']+'" style="margin-left:3px;" &gt;&amp;#160;'+ record['name'] +' 的详细信息&amp;#160;&lt;/a&gt;';
+		}
+	}
+];
+
+</PRE><BR><BR><BR><BR><SPAN 
+style="COLOR: green">=========================================</SPAN> 
+<BR><BR><BR><BR>下面说一说自定义排序函数. GT-Grid 自身只提供了两种数据排序方式 : 按数字数据排序 和 按字符串数据排序. 
+<BR>这两种排序显然无法应对多样的需求, 所以GT-Grid 提供了一个 接口函数,columns定义中的 : getSortValue(&nbsp; 
+value, recrod ) <BR>开发人员重写该接口,就可以实现自定义的更加复杂的排序方式. <BR>例如有这样一个需求 : 按照姓名的字符串长度排序. 
+那么我们可以这么定义 姓名 列: <BR><BR><PRE class=javascript name="code">var  colsConfig ={
+
+	/* ... 略去其他属性设置 ...*/
+
+	{ id : 'name'    , header : "姓名" , width : 100 ,  editable:false ,  editor: { type :'text' ,validRule : 'R' }	,
+		getSortValue : function(value , record){
+			return value?value.length:0;
+		}		
+	},
+];
+
+</PRE><BR><BR>getSortValue函数的两个参数分别为: <BR>&nbsp; value :当前记录中，该列对应的数据 <BR>&nbsp; 
+record : 排序时的 当前记录. <BR><BR><IMG 
+src="GT-Grid 1_0 基础教程(九) - 大城小胖的大城 - JavaEye技术网站.files/220244.htm"> <BR>在上例中, 
+排序时,取响应数值时就不再是 取记录的"name"值,而为变为了取name的字符串长度,从而实现了按姓名字符长度排序的功能. 
+<BR>在这里就暂时先不列举更复杂的例子了. <BR><BR><BR><BR><SPAN 
+style="COLOR: green">=========================================</SPAN> 
+<BR><BR><BR><BR><BR>下面该说一说 服务端排序了. 要使用服务端排序,需要 将 grid的 remoteSort 属性设置为 true. 
+<BR><PRE class=javascript name="code">var gridConfig={
+	/* ... 略去其他属性设置 ...*/
+	remoteSort :  true
+}
+</PRE><BR><BR>下一步要知道 排序信息 传递到后台的格式, 以及后台如何处理这些信息了. <BR><BR>排序信息 是和 load信息 
+一起提交到后台的 其格式如下(注意看 sortInfo 部分: <BR><BR><PRE class=javascript name="code">{
+	action	 : 'load',	
+	pageInfo : {
+		/* ... 略去pageInfo信息 ...*/
+	},
+
+	sortInfo : [
+			{ 
+				columnId : "排序的列id" , 
+				fieldName : "排序的列对应的dataset中的field字段名" ,
+				sortOrder : "asc"  // 排序的顺序状态 : 升序"asc"  降序"desc"  默认"defaultsort"
+			}
+		]
+}
+</PRE><BR><BR>大家可能注意到了, sortInfo信息对应的是一个数组, 这是为了将来做多重排序而准备的. 
+在目前版本(1.1之前),该数组最多只会有一组排序信息. <BR><BR>后台得到这个信息之后, 可以把 sortInfo 转换为一个 List对象. 
+<BR>而这个list的第一个元素 就是排序的信息了, 然后开发人员就可以根据这些排序信息来实现服务端的排序了. <BR>(与服务端结合的完整示例 
+会有与此相关的参考实现) <BR>看一下示例中的&nbsp; GridServerHandler 类下的 initSortInfo方法 和 
+getSingleSort 方法 大家应该可以更好的理解读取sortInfo信息的原理. <BR><BR><BR><BR><SPAN 
+style="COLOR: green">=========================================</SPAN> 
+<BR><BR><BR><BR>关于服务端的排序 就先讲到这里, 下一章将讲解的是过滤功能(客户端和服务端)的实现. <BR><BR>. 
+<BR><BR><BR></DIV>
+<DIV>
+<SCRIPT type=text/javascript>
+      alimama_pid="mm_11847803_1454875_3591335"; 
+      alimama_titlecolor="0000FF"; 
+      alimama_descolor ="000000"; 
+      alimama_bgcolor="FFFFFF"; 
+      alimama_bordercolor="E6E6E6"; 
+      alimama_linkcolor="008000"; 
+      alimama_bottomcolor="FFFFFF"; 
+      alimama_anglesize="0"; 
+      alimama_bgpic="0"; 
+      alimama_icon="0"; 
+      alimama_sizecode="14"; 
+      alimama_width=468; 
+      alimama_height=60; 
+      alimama_type=2; 
+      </SCRIPT>
+
+<SCRIPT src="GT-Grid 1_0 基础教程(九) - 大城小胖的大城 - JavaEye技术网站.files/inf.js" 
+type=text/javascript>
+      </SCRIPT>
+</DIV>
+<DIV class=blog_bottom>
+<UL>
+  <LI>00:43 </LI>
+  <LI>浏览 (6538) </LI>
+  <LI><A title="在论坛被浏览了3075 次" href="http://www.javaeye.com/topic/220244">论坛浏览 
+  (3075)</A> </LI>
+  <LI><A href="http://fins.javaeye.com/blog/220244#comments">评论</A> (21) </LI>
+  <LI>分类: <A href="http://fins.javaeye.com/category/7343">GT-Grid</A> </LI>
+  <LI>发布在 <A href="http://ecside.group.javaeye.com/">GT-Grid</A> 圈子 </LI>
+  <LI><A class=favorite 
+  href="http://app.javaeye.com/links?user_favorite%5Btitle%5D=GT-Grid+1.0+%E5%9F%BA%E7%A1%80%E6%95%99%E7%A8%8B%28%E4%B9%9D%29&amp;user_favorite%5Burl%5D=http%3A%2F%2Ffins.javaeye.com%2Fblog%2F220244" 
+  target=_blank>收藏</A> </LI>
+  <LI class=last><A class=more href="http://www.javaeye.com/wiki/topic/220244" 
+  target=_blank>相关推荐</A> </LI></UL></DIV>
+<DIV class=blog_comment>
+<H5>评论</H5><A id=comments name=comments></A>
+<DIV id=bc642458>
+<DIV class=comment_title>21 楼 <A href="http://jackey3316.javaeye.com/" 
+target=_blank>jackey3316</A> 2008-08-25&nbsp;&nbsp; <A 
+onclick="quote_comment(642458);return false;" 
+href="http://fins.javaeye.com/blog/220244#">引用</A> </DIV>
+<DIV class=comment_content>extreme component&nbsp; 好像一样的dd嘛~~</DIV></DIV>
+<DIV id=bc618240>
+<DIV class=comment_title>20 楼 <A href="http://sshwsfc.javaeye.com/" 
+target=_blank>差沙</A> 2008-08-01&nbsp;&nbsp; <A 
+onclick="quote_comment(618240);return false;" 
+href="http://fins.javaeye.com/blog/220244#">引用</A> </DIV>
+<DIV class=comment_content>我觉得，不管是用fins的方法还是用原来的排序方法，道理上来讲都是一样的。 
+<BR><BR>可以理解fins的设计初衷，排序的根本操作是要找到排序的索引值，而fins就是把这个权力交给用户，后面的就不要用户来管了。 
+<BR><BR>QW一直强调常用的sort方法。 
+<BR><BR>其实我觉得sort方法还是有必要提供的，因为很多排序的方法已经封装好了。你想一下，封装一个排序方法很有必要，而封装一个取排序的索引值可能就不那么重要了，因为很多索引值仅仅在排序时才有意义。而一个列表组件跟其他jslib结合的时候更是如此，lib可能会直接给你compare方法，不会给你一个返回索引值方法。就拿QW举的localCompare例子就很有说服力。 
+<BR><BR>所以这个时候就一定要有sort方法了，你说对吧。 
+<BR><BR>其实两个方法都可取的，fins的方法也想的很周到。但是既有的东西还是要满足的，罗马也不是一天造成的，好的框架都是要承上启下的。而且我想信GT-Grid肯定有自己的sort方法，也加到文档里也无妨。 
+<BR></DIV></DIV>
+<DIV id=bc616493>
+<DIV class=comment_title>19 楼 <A href="http://fins.javaeye.com/" 
+target=_blank>fins</A> 2008-07-30&nbsp;&nbsp; <A 
+onclick="quote_comment(616493);return false;" 
+href="http://fins.javaeye.com/blog/220244#">引用</A> </DIV>
+<DIV class=comment_content>
+<DIV class=quote_title>引用</DIV>
+<DIV 
+class=quote_div>按照你之前提到的这个原则，这里参与到了排序操作，用户不应该使用扩展显示例，所以你最初举的例子实际上不可能出现。</DIV><BR><BR>你的这个不可能出现的假设是错误的, 
+是会出现的,我遇到过了, 而且gt目前的设计必然会出现这种需求. <BR>我之前也说过"在gt目前的设计下", 你的那种做法 我不会采用 
+因为很多需求都无法实现. <BR><BR><BR><BR>1 那个你说的类似多重排序的需求是有 而且使用 getSortValue 很容易实现 
+<BR><BR>2 点击A列 但是实际上排序的值 不仅仅是A列直接对应的值,还有肯能使record中的其他的属性值 或者是通过一系列计算得到的值 
+<BR>这个需求也是有的 <BR>而且这个需求 实际上非常强大和必要, 可以衍生出很多排序 编组相关的相对高级的技巧 <BR><BR>3 实际开发中 
+我遇到了太多 不知道如何写那个排序方法的人了. <BR><BR><BR><BR>如果 真的有无法满足的需求 例如你说那个 locale比较的 
+(其实那个取的不是拼音 而是按区位表排列的, 而且它依赖于客户端的操作系统 所以我一直不喜欢用那个东西) <BR>那么也支持你说的那种方法, 
+只是在客户有确实需求的时候 我才会告诉客户. <BR><BR>最后 我坚持以下观点 <BR>
+<DIV class=quote_title>引用</DIV>
+<DIV class=quote_div>希望用户更专注于"在排序时,一条记录,参与排序的值是什么". <BR>因为 这个是排序最核心的东西 , 也是与排序算法 
+和语言无关的 对排序最自然的理解方式. <BR><BR>而不希望用户去关注 "在排序时,如何决定任意两条之间记录之间的顺序" <BR>更不希望用户去理解和了解 
+"更多的关于 多重排序等其他的排序细节". <BR></DIV><BR><BR><BR>这个话题 stop吧 , 根据我开发 和使用列表的经验: 
+<BR>自定义排序算法/方法 这种情况压根就是不多见的 为了一个不多见的问题 讨论这么多实在有些无意义 <BR></DIV></DIV>
+<DIV id=bc616231>
+<DIV class=comment_title>18 楼 <A href="http://quake.javaeye.com/" 
+target=_blank>QuakeWang</A> 2008-07-30&nbsp;&nbsp; <A 
+onclick="quote_comment(616231);return false;" 
+href="http://fins.javaeye.com/blog/220244#">引用</A> </DIV>
+<DIV class=comment_content>
+<DIV class=quote_title>fins 写道</DIV>
+<DIV class=quote_div><BR>但是 如果用你的设计 呢? (用户不想使用initValue来扩展列) <BR></DIV><BR><BR>
+<DIV class=quote_title>fins 写道</DIV>
+<DIV class=quote_div><BR>那么该如何选择呢?? 一个简单的原则如下: <BR>如果你扩展的列 只是用来显示给用户看 , 而不会参与到 
+编辑 排序 统计 运算 等数据操作中, <BR>那么使用扩展显示列就可以, 否则就应该使用扩展数据列. 
+<BR></DIV><BR><BR>按照你之前提到的这个原则，这里参与到了排序操作，用户不应该使用扩展显示例，所以你最初举的例子实际上不可能出现。 
+<BR><BR>
+<DIV class=quote_title>fins 写道</DIV>
+<DIV class=quote_div><BR>还有我下面的需求 看看你的那个方法怎么实现: <BR><BR>按姓名排序, 姓名相等时, 女性在前,男性在后 
+,性别相等时, 年龄小的在前, 年龄大的在后. 
+<BR></DIV><BR>你是否有做过用户的实际需求调查？这种功能在微软强大的excel里面也没有实现，这个需求其实就是多重排序，对用户来说便捷的操作是GT-Grid提供多重排序，比如定义用户在按住ctrl时候进行点击就是多重排序： 
+<BR>点击姓名列排序，然后按住ctrl，再点击性别列，然后再点击年龄列，这样就能很自然地达到他的需求，而且用户可以自由地定义进行不同列的组合多重排序，而不需要开发人员预先写死。 
+<BR><BR>在这里开发人员不需要定义任何特别的多重排序方法，他只用定义好单个column就行了。 
+<BR><BR>这2个例子都是脱离实际需求的，我还是看不出来在这里放一个record有它任何的实际用途。 <BR><BR>
+<DIV class=quote_title>fins 写道</DIV>
+<DIV class=quote_div><BR>举个例子: <BR>服务端 送过来的 数据 是 "月/日/年" 格式的字符串.显示的时候也是 "月/日/年" 
+<BR><BR>我要对这列进行排序. <BR>实际上这个排序要求对数值进行转换, <BR>要么转换成位数相等的 年/月/日 然后做字符串比较 
+<BR>要么转换成日期格式进行比较 <BR>不管怎么转换 这个转换成本是不低的. <BR><BR>一定要缓存,缓存的问题怎么办??让开发人员自己写? 
+<BR></DIV><BR>我的建议是不要考虑缓存，因为js Array 
+sort是内置功能，它的效率一定是比写映射功能获取值然后再对值进行排序要来的高，如果你有兴趣的话，不妨单独将这一块缓存＋排序的代码拿出来和Array 
+sort做一个性能测试，我们可以另外开一个话题讨论：看看到底要在什么样的数据量和复杂的数值转换程度下，缓存＋自定义排序会比built in 
+sort性能要好。</DIV></DIV>
+<DIV id=bc616188>
+<DIV class=comment_title>17 楼 <A href="http://fins.javaeye.com/" 
+target=_blank>fins</A> 2008-07-30&nbsp;&nbsp; <A 
+onclick="quote_comment(616188);return false;" 
+href="http://fins.javaeye.com/blog/220244#">引用</A> </DIV>
+<DIV class=comment_content>我说: <BR>
+<DIV class=quote_title>引用</DIV>
+<DIV class=quote_div><BR>实际上还有很多更复杂的操作 是我要在 sort 时做的 , 而这些 都不能暴露给客户的, 
+例如对sort值的缓存 值的类型转换 ... 等等.如果这些都让用户来做, 我绝对对于用户的要求 以及自定义函数的成本太高了. 
+<BR></DIV><BR><BR>这里面 数值转换 以及 排序值的缓存 也是很重要的因素. <BR><BR>举个例子: <BR>服务端 送过来的 数据 是 
+"月/日/年" 格式的字符串.显示的时候也是&nbsp; "月/日/年" <BR><BR>我要对这列进行排序. <BR>实际上这个排序要求对数值进行转换, 
+<BR>要么转换成位数相等的 年/月/日 然后做字符串比较 <BR>要么转换成日期格式进行比较 <BR>不管怎么转换 这个转换成本是不低的. 
+<BR><BR>一定要缓存,缓存的问题怎么办??让开发人员自己写? <BR><BR>还有我下面的需求 看看你的那个方法怎么实现: <BR><BR>按姓名排序, 
+姓名相等时, 女性在前,男性在后 ,性别相等时, 年龄小的在前, 年龄大的在后. <BR><BR><BR><BR><BR><BR></DIV></DIV>
+<DIV id=bc616184>
+<DIV class=comment_title>16 楼 <A href="http://fins.javaeye.com/" 
+target=_blank>fins</A> 2008-07-30&nbsp;&nbsp; <A 
+onclick="quote_comment(616184);return false;" 
+href="http://fins.javaeye.com/blog/220244#">引用</A> </DIV>
+<DIV class=comment_content>
+<DIV class=quote_title>引用</DIV>
+<DIV class=quote_div><BR>那这个getSortValue方法是定义在哪里呢？我看了一下下载的代码和文档，没有找到相关的例子。 
+<BR>使用renderer？那么和renderer里面的代码是不是又重复了呢？ <BR></DIV><BR><BR>用renderer的话确实是重复的 
+<BR><BR>但是 如果用你的设计 呢? (用户不想使用initValue来扩展列) <BR><BR>column : <BR>{ <BR>renderer 
+: function(){ <BR>&nbsp;&nbsp;&nbsp; return record[数学]+record[外语]; <BR>} <BR>} 
+<BR><BR>dataset的record中根本就没有总成绩这项 <BR>也就是说 v1 v2根本就是undefined 
+<BR>&nbsp;&nbsp;&nbsp; sort : function(v1, v2){&nbsp;&nbsp; 
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ... ... <BR>&nbsp;&nbsp;&nbsp; 
+}&nbsp;&nbsp; </DIV></DIV>
+<DIV id=bc616179>
+<DIV class=comment_title>15 楼 <A href="http://quake.javaeye.com/" 
+target=_blank>QuakeWang</A> 2008-07-30&nbsp;&nbsp; <A 
+onclick="quote_comment(616179);return false;" 
+href="http://fins.javaeye.com/blog/220244#">引用</A> </DIV>
+<DIV class=comment_content>那这个getSortValue方法是定义在哪里呢？我看了一下下载的代码和文档，没有找到相关的例子。 
+<BR>使用renderer？那么和renderer里面的代码是不是又重复了呢？ <BR><BR>
+<DIV class=quote_title>fins 写道</DIV>
+<DIV class=quote_div><BR>那么该如何选择呢?? 一个简单的原则如下: <BR>如果你扩展的列 只是用来显示给用户看 , 而不会参与到 
+编辑 排序 统计 运算 等数据操作中, <BR>那么使用扩展显示列就可以, 否则就应该使用扩展数据列. 
+<BR></DIV><BR><BR>按照你之前提到的这个原则，这里参与到了排序操作，不应该使用扩展显示例，所以你最初举的例子实际上就不可能出现。</DIV></DIV>
+<DIV id=bc616170>
+<DIV class=comment_title>14 楼 <A href="http://fins.javaeye.com/" 
+target=_blank>fins</A> 2008-07-30&nbsp;&nbsp; <A 
+onclick="quote_comment(616170);return false;" 
+href="http://fins.javaeye.com/blog/220244#">引用</A> </DIV>
+<DIV class=comment_content>看帖不仔细啊 你 呵呵 <BR><BR>我说: <BR>
+<DIV class=quote_title>引用</DIV>
+<DIV class=quote_div><BR>如果由于某种原因 总成绩 并没有在record中, <SPAN 
+style="COLOR: red">而且客户也不希望扩展数据列</SPAN> <BR></DIV><BR><BR>也就是说 我的意思是 如果用户 不希望 
+使用initValue 的话. <BR><BR>如果他愿意使用initValue来阔真数据列的话 , 那么根本就没必要写 getSortValue 
+<BR>所以不存在重复的问题</DIV></DIV>
+<DIV id=bc616156>
+<DIV class=comment_title>13 楼 <A href="http://quake.javaeye.com/" 
+target=_blank>QuakeWang</A> 2008-07-30&nbsp;&nbsp; <A 
+onclick="quote_comment(616156);return false;" 
+href="http://fins.javaeye.com/blog/220244#">引用</A> </DIV>
+<DIV class=comment_content>
+<DIV class=quote_title>fins 写道</DIV>
+<DIV class=quote_div>引入 record 为的是在排序时 可以取到更多信息: <BR><BR>例如 按 总成绩排序. 
+<BR>如果由于某种原因 总成绩 并没有在record中, 而且客户也不希望扩展数据列 <BR><BR>那么 总成绩列的 
+<BR><BR>getSortValue : function(v,record){ <BR>&nbsp;&nbsp; return record.数学成绩+ 
+record.英语成绩; <BR>} 
+<BR></DIV><BR><BR>根据下载的示例代码来看，总成绩列应该是通过一个定义加总列来显示的，按照你目前的设计就会变成： <BR><PRE class=js name="code">{name : 'total', type: 'float',
+    initValue : function(record){
+        return record['english'] + record['math'];
+    },
+    getSortValue : function(v,record){
+        return record['english'] + record['math'];
+    }
+}
+</PRE><BR><BR>这里出现了2次重复的return record['english'] + record['math']代码，这不符合Don't 
+Repeat Yourself原则，顺便问一下，在这里的v会是什么值？ <BR><BR>如果是采用我们惯用的sort function，那么代码就可以写成： 
+<BR><PRE class=js name="code">{name : 'total', type: 'float',
+    initValue : function(record){
+        return record['english'] + record['math'];
+    },
+    sort : function(v1, v2){
+        return v1 - v2;
+    }
+}
+</PRE><BR>而且由于这里是按照数值排序，所以其实用户不需要写sort的定义： <BR><PRE class=js name="code">{name : 'total', type: 'float',
+    initValue : function(record){
+        return record['english'] + record['math'];
+    }
+}
+</PRE><BR><BR>现在你觉得那种方法更简单方便呢？ 
+<BR><BR>还有一个你前面没有回答的问题，我想再提一下：在目前的排序设计中，如何利用js提供的内置功能(localeCompare)实现汉字拼音排序？</DIV></DIV>
+<DIV id=bc616053>
+<DIV class=comment_title>12 楼 <A href="http://fins.javaeye.com/" 
+target=_blank>fins</A> 2008-07-30&nbsp;&nbsp; <A 
+onclick="quote_comment(616053);return false;" 
+href="http://fins.javaeye.com/blog/220244#">引用</A> </DIV>
+<DIV class=comment_content>引入 record 为的是在排序时 可以取到更多信息: <BR><BR>例如 按 总成绩排序. 
+<BR>如果由于某种原因 总成绩 并没有在record中, 而且客户也不希望扩展数据列 <BR><BR>那么 总成绩列的 
+<BR><BR>getSortValue : function(v,record){ <BR>&nbsp;&nbsp; return record.数学成绩+ 
+record.英语成绩; <BR>} <BR><BR><BR>"产品设计中一个重要的理念是尊重用户习惯，不要增加学习成本，而你这个设计恰恰是违背了这一点。" 
+<BR><BR>首先 ,我不认为这会增加成本. (getSortValue的学习成本绝对比js.sort的学习成本低,而且你乐观的估计了学习 
+js排序原理的成本) <BR><BR>其次 我不认为这是不尊重用户习惯. <BR><BR>而且 你说的那种方式 GT是支持的 只是不作为推荐的方式, 
+不会写入文档. <BR><BR><BR>"尊重用户习惯" 不等于 "不提供新的使用方式给用户" <BR><BR>否则 就不会有ajax 了, ajax 
+改变的就是传统的开发页面的习惯 <BR>在GUI出现之前, 用户的习惯是 命令行. <BR>车辆出现之前,人们的习惯是骑马或步行 <BR><BR>... ... 
+<BR><BR><BR>好的产品 除了尊重用户习惯之外, 还有"引导用户改现有习惯"的责任. <BR><BR>这个问题不要再争论了 , <BR>因为这就好像是问 
+红色和绿色哪个颜色好看一样? <BR><BR>答案是 都好看,关键看个人喜好. 
+<BR><BR><BR><BR><BR><BR><BR><BR><BR><BR><BR><BR></DIV></DIV>
+<DIV id=bc616010>
+<DIV class=comment_title>11 楼 <A href="http://quake.javaeye.com/" 
+target=_blank>QuakeWang</A> 2008-07-30&nbsp;&nbsp; <A 
+onclick="quote_comment(616010);return false;" 
+href="http://fins.javaeye.com/blog/220244#">引用</A> </DIV>
+<DIV class=comment_content>
+<DIV class=quote_title>fins 写道</DIV>
+<DIV class=quote_div>你的这个思路我明白 你说的那些技术手段我也明白</DIV><BR>我觉得你还是没有明白， 
+再来强调一次：我前面讲的多重排序/倒序是建议如何在GT-Grid内部实现的细节，而用户如果要使用这个功能，只需要关注于一个栏位的排序function就可以了。 
+<BR>而你的接口设计引入了record和value的概念，但是record其实对于单个栏位的排序是完全用不到的，我猜测你引入record可能是为了实现多重排序，所以建议你换常见的/大家都早已习惯的sort接口，这样可以避免新的学习成本。 
+<BR><BR>至于你说的用户是否明白JS排序的原理，这个大不必担心，你的用户毕竟是程序员，哪怕再新手的程序员，也会听说过快速排序或者冒泡排序算法。 
+<BR><BR>退一步说，哪怕是一个非程序员，他也有上体育课按高矮排队经历：和他人比较一下高矮，交换位置，而不是报一个xxxCM给老师，让老师再给你指定位置。 
+<BR><BR>产品设计中一个重要的理念是尊重用户习惯，不要增加学习成本，而你这个设计恰恰是违背了这一点。</DIV></DIV>
+<DIV id=bc615602>
+<DIV class=comment_title>10 楼 <A href="http://fins.javaeye.com/" 
+target=_blank>fins</A> 2008-07-30&nbsp;&nbsp; <A 
+onclick="quote_comment(615602);return false;" 
+href="http://fins.javaeye.com/blog/220244#">引用</A> </DIV>
+<DIV class=comment_content>忘了 补充一下: <BR><BR>真的非常感谢你的关注 和 建议. <BR><BR>我说那么多 
+不是为了反驳你 <BR><BR>其实你说的 是很有道理的 只是我不愿意采用而已. <BR><BR>当然 以后在实际使用中 如果这种需求很多 
+我一定会及时调整思路的 <BR><BR>再次感谢你<IMG 
+src="GT-Grid 1_0 基础教程(九) - 大城小胖的大城 - JavaEye技术网站.files/icon_smile.gif"> 
+<BR></DIV></DIV>
+<DIV id=bc615597>
+<DIV class=comment_title>9 楼 <A href="http://fins.javaeye.com/" 
+target=_blank>fins</A> 2008-07-30&nbsp;&nbsp; <A 
+onclick="quote_comment(615597);return false;" 
+href="http://fins.javaeye.com/blog/220244#">引用</A> </DIV>
+<DIV class=comment_content>你的这个思路我明白 你说的那些技术手段我也明白 <BR><BR>但是我目前的设计中, 
+希望用户更专注于"在排序时,一条记录,参与排序的值是什么". <BR>因为 这个是排序最核心的东西 , 也是与排序算法 和语言无关的 对排序最自然的理解方式. 
+<BR><BR>而不希望用户去关注 "在排序时,如何决定任意两条之间记录之间的顺序" <BR>更不希望用户去理解和了解 "更多的关于 
+多重排序等其他的排序细节". <BR><BR><BR>而且 ,我觉得编写 sort 函数所需要掌握的内容 明显要更多 <BR>要明白 sort 函数的用法 
+返回值的意义 <BR>而且 你这些都是建立在下列基础之上的: <BR>1 用户明白js自带的排序方式的原理 (这个请相信我 不是所有人都明白的) <BR>2 
+系统使用js默认的 array.srot( ... )方法进行排序. <BR><BR>以上两点 有任何一点不明白 都不行. <BR><BR><BR>另外关于 
+多种排序&nbsp; 和 多重排序等 只是我举的例子 <BR>(按你的思路 面对这几个例子时,用户需要写的东西已经很多了, <BR>要比 
+getSortValue复杂很多) <BR><BR>实际上还有很多更复杂的操作 是我要在 sort 时做的 , 而这些 都不能暴露给客户的, 
+例如对sort值的缓存 值的类型转换 ... 等等.如果这些都让用户来做, 我绝对对于用户的要求 以及自定义函数的成本太高了. <BR>再而且, 
+给客户越多低层的东西 我要面临的问题越多. <BR><BR>" <BR>客户自己写的sort函数有问题, 他自己没检查出来, 会跟你说"排序不好用" 
+<BR>要代码, "对不起 系统保密 代码不能给你" <BR>于是 两个人开始了文字和语言的交流, 耗时一个上午之后 终于明白了原因... <BR>" 
+<BR>这种情况在产品开发里太常见了,而我希望极力避免这种问题 <BR><BR><BR><BR>其实 你的需求 可以实现的 有一个 
+sortFunction&nbsp; 你只要重写他就可以了 <BR>但是 我不会把这种给"达人"准备的方法暴露给客户的. <BR><BR>其实 你想想 
+利用override 有什么是不能实现的呢? <BR>只是 开发者是否希望用户那么做而已. <BR><BR>(你买来的正版windows中 
+绝对不会送你一本"注册表修改权威指南 以及windows优化指南的"对吧? 为什么呢???) <BR><BR><BR>说这么多 
+已经超出了技术的范畴.更多的是我对"产品"的一个设计上的理念. <BR><BR><BR>总之 在GT目前的整体架构中(以及我的设计理念) 你提出的这种做法 
+我是不会采用的. <BR><BR><BR><BR></DIV></DIV>
+<DIV id=bc615570>
+<DIV class=comment_title>8 楼 <A href="http://quake.javaeye.com/" 
+target=_blank>QuakeWang</A> 2008-07-30&nbsp;&nbsp; <A 
+onclick="quote_comment(615570);return false;" 
+href="http://fins.javaeye.com/blog/220244#">引用</A> </DIV>
+<DIV class=comment_content>多重排序可以用组合，假设已经有了现成的3个单列排序:<BR><PRE class=js name="code">nameSort: function(r1, r2) {
+  return r1['name'].localeCompare(r2['name'];
+}
+
+ageSort: function(r1, r2) {
+  return r1['age'] - r2['age'];
+}
+
+workYearSort: function(r1, r2) {
+  return r1['workYear'] - r2['workYear'];  
+}
+</PRE><BR><BR>我们可以写一个通用的multiSort:<BR><PRE class=js name="code">function multiSort() {
+  var args = Array.prototype.slice.call(arguments);
+     return function(a,b) {
+     for (var i=0;i&lt;args.length;i++) {
+        var result = args[i](a,b);
+        if (result!=0) return result;
+     }
+     return 0;        
+    }
+}
+</PRE><BR><BR>调用可以是：<BR><PRE class=js name="code">multiSort(nameSort,ageSort,workYearSort);
+</PRE><BR>主排序，第2排序，第3排序，可以通过调整3个参数的顺序实现。<BR><BR>正序/倒序的问题，可以再写一个：<BR><PRE class=js name="code">function negative(func) {
+    return function(a,b) {
+        var i = func(a,b);
+		return i == 0 ? i : -i;
+    }
+}
+</PRE><BR><BR>调用就是：<BR><PRE class=js name="code">multiSort(nameSort,negative(ageSort),workYearSort);
+</PRE><BR><BR>这2个方法都可以在gtgrid中提供，使用者不需要关心他们的实现，只要实现单个栏位的排序即可。我不知道用你的方法做多重排序是否会更简单？能否举例说明一下？<BR><BR>p.s 
+以上代码未经调试，仅做示例，这些其实在各种UI工具里面都是用类似思路（比如swing/swt的table sort）。<BR></DIV></DIV>
+<DIV id=bc615548>
+<DIV class=comment_title>7 楼 <A href="http://fins.javaeye.com/" 
+target=_blank>fins</A> 2008-07-30&nbsp;&nbsp; <A 
+onclick="quote_comment(615548);return false;" 
+href="http://fins.javaeye.com/blog/220244#">引用</A> </DIV>
+<DIV class=comment_content>如果只是排序一次很好办 <BR><BR>升序 <BR>降序 <BR>默认排序 <BR><BR>多重排序 
+<BR><BR>这些问题如果你自己写sort <BR><BR>你要处理很多问题 <BR><BR>例如 取得当前的排序状态,然后判断 如果是这样那么... 
+如果是那样那么... <BR>如果是主排序... 如果是第2排序 如果是第3排序... <BR><BR></DIV></DIV>
+<DIV id=bc615524>
+<DIV class=comment_title>6 楼 <A href="http://quake.javaeye.com/" 
+target=_blank>QuakeWang</A> 2008-07-30&nbsp;&nbsp; <A 
+onclick="quote_comment(615524);return false;" 
+href="http://fins.javaeye.com/blog/220244#">引用</A> </DIV>
+<DIV class=comment_content>这不是一个讨论简单或者易用的问题，我想要表达的是：接口设计要符合大家的习惯。 
+<BR>大家都已经习惯的写法：比如javascript Array.sort接受一个function(a, 
+b)，比如Java的Arrays.sort接受一个Comparator#public int compare(Object o1, Object 
+o2)，没有必要引入新的学习成本。 <BR><BR>另外，就算从简单或者易用来讨论，这个设计也有问题： 
+<BR>你的设想是所有排序都是通过一个方法调用获取一个值，然后再对值进行排序。但实际上，这个调用在一些情况下面是不必要甚至是写不出来的，比如前面的按照拼音排序，localeCompare是js自己带的功能，可以写成这样： 
+<BR><PRE class=js name="code">sort: function(r1, r2) {
+  return r1['name'].localeCompare(r2['name'];
+}
+</PRE><BR>如果要用你原先的设计，我还得去自己实现一个通过字符获取拼音映射值的功能，那样就太麻烦了。</DIV></DIV>
+<DIV id=bc615474>
+<DIV class=comment_title>5 楼 <A href="http://fins.javaeye.com/" 
+target=_blank>fins</A> 2008-07-30&nbsp;&nbsp; <A 
+onclick="quote_comment(615474);return false;" 
+href="http://fins.javaeye.com/blog/220244#">引用</A> </DIV>
+<DIV class=comment_content>Quake Wang 你的理解还是有偏差 <BR><BR>我的这个做法 只比你说的那种更简单易用 
+<BR><BR>如果非要说有什么缺点 那就是 "可能会慢一点 因为用到了双层闭包的引用" <BR><BR>我说个例子 你就明白了 
+<BR><BR>"按姓名的拼音排序" <BR><BR>假设 你已经写好了一个方法 , 传入 汉字 取得拼音: getPinYin(cnstr) 
+<BR><BR>那么 你在 name列的getSortValue 只要这么写就可以: <BR><BR>getSortValue : 
+function(value,r){ <BR>&nbsp;&nbsp; return getPinYin(value); // 此时value 
+其实就是那各个记录的姓名了; <BR>} <BR><BR>如果按你的思路是不是要这样写: <BR><BR>sort : function(r1,r2){ 
+<BR>&nbsp; var pinyin1 = getPinYin( r1['name'] ); <BR>&nbsp; var pinyin2 = 
+getPinYin( r2['name'] ); <BR><BR>&nbsp; return pinyin1 &lt;pinyin2 ? -1 : 
+(pinyin1 &gt;pinyin2?1:0); <BR><BR>} <BR><BR>你比较一下 你觉得哪个好呢??? 
+<BR><BR><BR></DIV></DIV>
+<DIV id=bc615395>
+<DIV class=comment_title>4 楼 <A href="http://quake.javaeye.com/" 
+target=_blank>QuakeWang</A> 2008-07-30&nbsp;&nbsp; <A 
+onclick="quote_comment(615395);return false;" 
+href="http://fins.javaeye.com/blog/220244#">引用</A> </DIV>
+<DIV 
+class=comment_content>为什么不采用标准的sort方法呢？javascript/java都是用这种标准方法。<BR>而且按我的理解，你这种接口是按照取得值，再来做一个sort，这样会导致一些排序无法实现，比如我前面提到的按照拼音排序。</DIV></DIV>
+<DIV id=bc615326>
+<DIV class=comment_title>3 楼 <A href="http://fins.javaeye.com/" 
+target=_blank>fins</A> 2008-07-30&nbsp;&nbsp; <A 
+onclick="quote_comment(615326);return false;" 
+href="http://fins.javaeye.com/blog/220244#">引用</A> </DIV>
+<DIV class=comment_content>不是的 你可以理解为getSortValue 的返回值是 a 或 b <BR><BR>record1 = 
+{ age : 11 } <BR><BR>record2 = { age : 22 } <BR><BR>正常的 按 age的升序排序 那么结果是 record1 
+,record2 <BR>但是 如果 你在 getSortValue&nbsp; 里 写上 getSortValue = function(v,r){ 
+<BR>return 0-v;&nbsp; // v == r['age'] <BR><BR>} <BR><BR>那么结果就是 record2 和 
+record1&nbsp; 了 <BR><BR>也就是 在排序时&nbsp; 从 record1中取age时&nbsp; 取得不再是 
+record1的真正的age了 <BR>而是经过 getSortValue 处理过的值</DIV></DIV>
+<DIV id=bc615309>
+<DIV class=comment_title>2 楼 <A href="http://quake.javaeye.com/" 
+target=_blank>QuakeWang</A> 2008-07-30&nbsp;&nbsp; <A 
+onclick="quote_comment(615309);return false;" 
+href="http://fins.javaeye.com/blog/220244#">引用</A> </DIV>
+<DIV class=comment_content>getSortValue 这个方法有点不明白，value和record 2个名称是否就是js array 
+sort里面接受function的2个参数？<BR>比如按照拼音排序：<BR><PRE class=js name="code">function(a,b){return a.localeCompare(b)}</PRE></DIV></DIV>
+<DIV class=pagination><SPAN class="disabled prev_page">« 上一页</SPAN> <SPAN 
+class=current>1</SPAN> <A 
+href="http://fins.javaeye.com/blog/220244?page=2#comments" rel=next>2</A> <A 
+class=next_page href="http://fins.javaeye.com/blog/220244?page=2#comments" 
+rel=next>下一页 »</A></DIV></DIV>
+<DIV class=blog_comment>
+<H5>发表评论</H5>
+<P style="FONT-WEIGHT: bold; MARGIN: 5px 0px">该博客是同时发布到<A 
+href="http://www.javaeye.com/topic/220244">论坛</A>的，无法评论在论坛已被锁定的帖子</P></DIV></DIV>
+<SCRIPT type=text/javascript>
+  dp.SyntaxHighlighter.HighlightAll('code', true, true);
+
+  fix_image_size($$('div.blog_content img'), 700);
+  function quote_comment(id) {
+    new Ajax.Request('/editor/quote', {
+      parameters: {'id':id, 'type':'Post'},
+      onSuccess:function(response){editor.bbcode_editor.textarea.insertAfterSelection(response.responseText);}
+    });
+  }
+</SCRIPT>
+</DIV>
+<DIV id=local>
+<DIV class=local_top></DIV>
+<DIV id=blog_owner>
+<DIV id=blog_owner_logo><A href="http://fins.javaeye.com/"><IMG class=logo 
+title="fins的博客: 大城小胖的大城" alt=fins的博客 
+src="GT-Grid 1_0 基础教程(九) - 大城小胖的大城 - JavaEye技术网站.files/8b5d1675-cdba-3cb7-8682-1c9ba0174e40.jpg"></A></DIV>
+<DIV id=blog_owner_name>fins</DIV></DIV>
+<DIV id=twitter_decorate>&nbsp;</DIV>
+<DIV class="twitter clearfix" id=twitter>用js操作数据库的感觉真是爽 <BR><EM><A 
+href="http://fins.javaeye.com/blog/chat/42565">2009-09-03</A> 通过网页 </EM><A 
+title=回复这个闲聊 
+href="http://app.javaeye.com/chat?twitter%5Bbody%5D=%40fins+&amp;twitter%5Breply_to_id%5D=42565"><IMG 
+alt=Reply_twitter 
+src="GT-Grid 1_0 基础教程(九) - 大城小胖的大城 - JavaEye技术网站.files/reply_twitter.gif"></A> 
+<DIV class=right><A 
+href="http://fins.javaeye.com/blog/chat">&gt;&gt;更多闲聊</A></DIV></DIV>
+<DIV id=blog_actions>
+<UL>
+  <LI>浏览: 1143904 次 
+  <LI>性别: <IMG title=男 alt=Icon_minigender_1 
+  src="GT-Grid 1_0 基础教程(九) - 大城小胖的大城 - JavaEye技术网站.files/icon_minigender_1.gif"> 
+
+  <LI>来自: 小胖儿的大城 
+  <LI><IMG src="GT-Grid 1_0 基础教程(九) - 大城小胖的大城 - JavaEye技术网站.files/offline.gif"> 
+  <LI><A class=profile href="http://fins.javaeye.com/blog/profile">详细资料</A> <A 
+  class=guest_book href="http://fins.javaeye.com/blog/guest_book">留言簿</A> 
+  <LI><A class=message title=发送站内短信 
+  href="http://app.javaeye.com/messages/new?message%5Breceiver_name%5D=fins">发短消息</A> 
+  <A class=subscription 
+  onclick="var f = document.createElement('form'); f.style.display = 'none'; this.parentNode.appendChild(f); f.method = 'POST'; f.action = this.href;f.submit();return false;" 
+  href="http://app.javaeye.com/feed?subscription%5Bsubscribed_user_name%5D=fins">订阅</A> 
+  </LI></UL>
+<H5>搜索本博客</H5>
+<FORM action=/blog/search method=get><INPUT class=text id=query 
+style="MARGIN-LEFT: 10px; WIDTH: 110px" name=query> <INPUT class=submit type=submit value=搜索> </FORM></DIV>
+<DIV class=clearfix id=user_visits>
+<H5>最近访客 <SPAN 
+style="PADDING-LEFT: 30px; FONT-WEIGHT: normal; FONT-SIZE: 12px"><A 
+href="http://fins.javaeye.com/blog/user_visits">&gt;&gt;更多访客</A></SPAN></H5>
+<DIV class=user_visit>
+<DIV class=logo><A href="http://ndot.javaeye.com/" target=_blank><IMG class=logo 
+title="NDot的博客: NDot" alt=NDot的博客 
+src="GT-Grid 1_0 基础教程(九) - 大城小胖的大城 - JavaEye技术网站.files/user-logo-thumb.gif"></A></DIV>
+<DIV class=left><A href="http://ndot.javaeye.com/" 
+target=_blank>NDot</A></DIV></DIV>
+<DIV class=user_visit>
+<DIV class=logo><A href="http://liqiotto.javaeye.com/" target=_blank><IMG 
+class=logo title="liqiotto的博客: liqiotto" alt=liqiotto的博客 
+src="GT-Grid 1_0 基础教程(九) - 大城小胖的大城 - JavaEye技术网站.files/user-logo-thumb.gif"></A></DIV>
+<DIV class=left><A href="http://liqiotto.javaeye.com/" 
+target=_blank>liqiotto</A></DIV></DIV>
+<DIV class=user_visit>
+<DIV class=logo><A href="http://lycvip.javaeye.com/" target=_blank><IMG 
+class=logo title="lycvip的博客: lycvip" alt=lycvip的博客 
+src="GT-Grid 1_0 基础教程(九) - 大城小胖的大城 - JavaEye技术网站.files/user-logo-thumb.gif"></A></DIV>
+<DIV class=left><A href="http://lycvip.javaeye.com/" 
+target=_blank>lycvip</A></DIV></DIV>
+<DIV class=user_visit>
+<DIV class=logo><A href="http://wlsever.javaeye.com/" target=_blank><IMG 
+class=logo title="wlsever的博客: " alt=wlsever的博客 
+src="GT-Grid 1_0 基础教程(九) - 大城小胖的大城 - JavaEye技术网站.files/user-logo-thumb.gif"></A></DIV>
+<DIV class=left><A href="http://wlsever.javaeye.com/" 
+target=_blank>wlsever</A></DIV></DIV></DIV>
+<DIV id=blog_menu>
+<H5>博客分类</H5>
+<UL>
+  <LI><A href="http://fins.javaeye.com/">全部博客 (368)</A> 
+  <LI><A href="http://fins.javaeye.com/category/7343">GT-Grid (109)</A> 
+  <LI><A href="http://fins.javaeye.com/category/7344">java &amp; ee (29)</A> 
+  <LI><A href="http://fins.javaeye.com/category/7347">js &amp; ajax (51)</A> 
+  <LI><A href="http://fins.javaeye.com/category/46131">AIR &amp; Flex &amp; AS 
+  (8)</A> 
+  <LI><A href="http://fins.javaeye.com/category/7365">oracle &amp;&amp; pl/sql 
+  (1)</A> 
+  <LI><A href="http://fins.javaeye.com/category/7345">game develope (4)</A> 
+  <LI><A href="http://fins.javaeye.com/category/28369">五月天 (28)</A> 
+  <LI><A href="http://fins.javaeye.com/category/36821">音乐分享 (10)</A> 
+  <LI><A href="http://fins.javaeye.com/category/7348">胡言乱语 (117)</A> 
+  <LI><A href="http://fins.javaeye.com/category/32227">写着玩儿 (0)</A> 
+</LI></UL></DIV>
+<DIV id=blog_album>
+<H5>我的相册</H5>
+<DIV class=picture_thumb style="FLOAT: none">
+<DIV><SPAN class=thumb_box><A href="http://fins.javaeye.com/album"><IMG 
+src="GT-Grid 1_0 基础教程(九) - 大城小胖的大城 - JavaEye技术网站.files/3b5867a9-7cd3-30a9-a0d9-b075f25d271b-thumb.jpg"></A></SPAN></DIV><SPAN>renzhetu<BR><A 
+href="http://fins.javaeye.com/album">共 151 张</A></SPAN> </DIV></DIV>
+<DIV id=guest_books>
+<H5>我的留言簿 <SPAN 
+style="PADDING-LEFT: 20px; FONT-WEIGHT: normal; FONT-SIZE: 12px"><A 
+href="http://fins.javaeye.com/blog/guest_book">&gt;&gt;更多留言</A></SPAN></H5>
+<UL>
+  <LI>请问下我通过传值的方式修改了表格的值如何显示在表格上<BR>-- by <A 
+  href="http://fins.javaeye.com/blog/guest_book#10278">200322176</A> 
+  <LI>看了你的这篇文章 主题：[求助]高并发的大数据量查询导致系统频繁宕机,咋办啊 我 ...<BR>-- by <A 
+  href="http://fins.javaeye.com/blog/guest_book#8460">lzg3267373</A> 
+  <LI>fins，这次五月天来上海的演唱会去看了吗？没看你写他们的文章了。。。<BR>-- by <A 
+  href="http://fins.javaeye.com/blog/guest_book#7954">smalldeer</A> 
+</LI></UL></DIV>
+<DIV id=blog_others>
+<H5>其他分类</H5>
+<UL>
+  <LI><A href="http://fins.javaeye.com/blog/favorite">我的收藏</A> (23) 
+  <LI><A href="http://fins.javaeye.com/blog/forum">我的论坛帖子</A> (3041) 
+  <LI><A href="http://fins.javaeye.com/blog/article">我的精华良好贴</A> (13) 
+  <LI><A href="http://fins.javaeye.com/blog/solution">我解决的问题</A> (1) 
+</LI></UL></DIV>
+<DIV id=recent_groups>
+<H5>最近加入圈子</H5>
+<UL>
+  <LI><A href="http://mars.group.javaeye.com/">火星常驻JE办事处</A> 
+  <LI><A href="http://pcdiy.group.javaeye.com/">电脑DIY</A> 
+  <LI><A href="http://eclipsercpforum.group.javaeye.com/">Eclipse 
+  PlugIns&amp;RCP&amp;OSGI</A> 
+  <LI><A href="http://javaeye-admin.group.javaeye.com/">JavaEye站务讨论</A> 
+  <LI><A href="http://javaeye-water.group.javaeye.com/">JavaEye水源</A> 
+</LI></UL></DIV>
+<DIV id=user_links>
+<H5>链接</H5>
+<UL>
+  <LI><A href="http://blog.sina.com.cn/musiq" target=_blank>阿信最爱★後青春期的詩</A> 
+  <LI><A href="http://aprilnew.blogcn.com/index.shtml" 
+  target=_blank>失散多年的牛牛姐姐</A> 
+  <LI><A href="http://extjs2.javaeye.com/" target=_blank>extJS</A> 
+</LI></UL></DIV>
+<DIV id=month_blogs>
+<H5>存档</H5>
+<UL>
+  <LI><A href="http://fins.javaeye.com/blog/monthblog/2009-05">2009-05</A> (1) 
+  <LI><A href="http://fins.javaeye.com/blog/monthblog/2009-04">2009-04</A> (8) 
+  <LI><A href="http://fins.javaeye.com/blog/monthblog/2009-03">2009-03</A> (9) 
+  <LI><A href="http://fins.javaeye.com/blog/monthblog_more">更多存档...</A> 
+</LI></UL></DIV>
+<DIV id=recent_comments>
+<H5>最新评论</H5>
+<UL>
+  <LI><A title=我有一个梦 
+  href="http://fins.javaeye.com/blog/214336#comments">我有一个梦</A><BR>我们大家正在努力，真的在努力！<BR>-- 
+  by <A href="http://aylishuai626.javaeye.com/" target=_blank>aylishuai626</A> 
+  <LI><A title='回答一下"为什么最近GT-Grid 不更新了?"' 
+  href="http://fins.javaeye.com/blog/346392#comments">回答一下"为什么最近GT-G 
+  ...</A><BR>我们的项目现在正在用。用的是1.0的版本。用起来很好，但是也发现了很多问题。最 ...<BR>-- by <A 
+  href="http://seanman.javaeye.com/" target=_blank>Seanman</A> 
+  <LI><A title="ECSide 综合讨论 :) " 
+  href="http://fins.javaeye.com/blog/48723#comments">ECSide 综合讨论 :) 
+  </A><BR>兄弟,能不能给一个页面有多个&lt;ec:table/&gt;的例子,我做的那个怎 ...<BR>-- by <A 
+  href="http://haray.javaeye.com/" target=_blank>haray</A> 
+  <LI><A title="GT-Grid 近期将会发布一个bug修正版本,然后将会进行较大的重构" 
+  href="http://fins.javaeye.com/blog/265276#comments">GT-Grid 近期将会发布一个 
+  ...</A><BR>与- Sigma Grid 2.2 有很大相似？<BR>-- by <A 
+  href="http://wangchunfei.javaeye.com/" target=_blank>wangchunfei</A> 
+  <LI><A title='★汇总★GT-Grid "缺陷,、bug、计划"汇总.(2009-02-17更新)' 
+  href="http://fins.javaeye.com/blog/218435#comments">★汇总★GT-Grid "缺陷, 
+  ...</A><BR>关于过滤的startwith，endwith与&gt;=,&lt;=功能上是否有重 ...<BR>-- by <A 
+  href="http://qin686-163-com.javaeye.com/" target=_blank>唯快不破</A> 
+</LI></UL></DIV>
+<DIV id=comments_top>
+<H5>评论排行榜</H5>
+<UL>
+  <LI><A title='[发布]GT-Grid 1.25 版 ★&amp; "前后台结合示例" ★2008-10-21 更新' 
+  href="http://fins.javaeye.com/blog/255954">[发布]GT-Grid 1.25 版 ★&amp; "前后台结合 
+  ...</A> 
+  <LI><A title="关于 <李刚 和 他的技术书籍们> " 
+  href="http://fins.javaeye.com/blog/271137">关于 &lt;李刚 和 他的技术书籍们&gt; </A>
+  <LI><A title=[问]sun如果真的被IBM收购了,那么JavaFX的明天会更好?还是将没有明天了? 
+  href="http://fins.javaeye.com/blog/275846">[问]sun如果真的被IBM收购了,那么JavaFX ...</A> 
+  <LI><A title="[部分转载+简单评论]<IE 到底要怎么样才能得到那部分人的认可？>" 
+  href="http://fins.javaeye.com/blog/240555">[部分转载+简单评论]&lt;IE 到底要怎么样才 ...</A> 
+  <LI><A title=说说自己喜欢的漫画吧 
+  href="http://fins.javaeye.com/blog/246412">说说自己喜欢的漫画吧</A> </LI></UL></DIV>
+<DIV id=rss>
+<UL>
+  <LI><A href="http://fins.javaeye.com/rss" target=_blank><IMG alt=Rss 
+  src="GT-Grid 1_0 基础教程(九) - 大城小胖的大城 - JavaEye技术网站.files/rss.png"></A> 
+  <LI><A href="http://fusion.google.com/add?feedurl=http://fins.javaeye.com/rss" 
+  target=_blank><IMG alt=Rss_google 
+  src="GT-Grid 1_0 基础教程(九) - 大城小胖的大城 - JavaEye技术网站.files/rss_google.gif"></A> 
+  <LI><A 
+  href="http://www.zhuaxia.com/add_channel.php?url=http://fins.javaeye.com/rss" 
+  target=_blank><IMG alt=Rss_zhuaxia 
+  src="GT-Grid 1_0 基础教程(九) - 大城小胖的大城 - JavaEye技术网站.files/rss_zhuaxia.gif"></A> 
+  <LI><A 
+  href="http://www.xianguo.com/subscribe.php?url=http://fins.javaeye.com/rss" 
+  target=_blank><IMG alt=Rss_xianguo 
+  src="GT-Grid 1_0 基础教程(九) - 大城小胖的大城 - JavaEye技术网站.files/rss_xianguo.jpg"></A> 
+  <LI><A href="http://www.google.com/search?hl=zh-CN&amp;q=RSS">[什么是RSS?]</A> 
+  </LI></UL></DIV>
+<DIV class=local_bottom></DIV></DIV></DIV>
+<DIV class=clearfix id=footer>
+<DIV id=copyright>
+<HR>
+声明：JavaEye文章版权属于作者，受法律保护。没有作者书面许可不得转载。若作者同意转载，必须以超链接形式标明文章原始出处和作者。<BR>© 
+2003-2009 JavaEye.com. All rights reserved. 上海炯耐计算机软件有限公司 [ 沪ICP备05023328号 ] 
+</DIV></DIV></DIV>
+<DIV id=chat_input style="DISPLAY: none"><IFRAME id=chat_iframe marginWidth=0 
+marginHeight=0 
+src="GT-Grid 1_0 基础教程(九) - 大城小胖的大城 - JavaEye技术网站.files/CAUTIRKB.htm" 
+frameBorder=0 scrolling=no allowTransparency></IFRAME></DIV>
+<DIV id=chat_button><A style="COLOR: black; TEXT-DECORATION: none" 
+onclick="$('chat_input').show();$('chat_iframe').src='/chat/widget';return false;" 
+href="http://fins.javaeye.com/blog/220244#">说点啥吧 <IMG alt=Chat 
+src="GT-Grid 1_0 基础教程(九) - 大城小胖的大城 - JavaEye技术网站.files/chat.gif"></A></DIV>
+<SCRIPT type=text/javascript>
+  document.write("<img src='http://stat.javaeye.com/?url="+ encodeURIComponent(document.location.href) + "&referrer=" + encodeURIComponent(document.referrer) + "&logged_in=yes" + "' width='0' height='0' />");
+</SCRIPT>
+</BODY></HTML>

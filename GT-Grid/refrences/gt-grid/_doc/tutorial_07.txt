@@ -1,0 +1,131 @@
+GT-Grid 1.0 基础教程(七)
+
+[size=large][b]教程说明:[/b][/size]
+这是一个告诉大家如何快速的利用GT-Grid开发列表的基础教程.以后会推出"高级教程".
+查看[color=blue]其他教程[/color],以及最新版本信息,请[url="http://fins.javaeye.com/blog/214290"]点击这里[/url]
+
+
+[size=large][b]第七章: 可编辑列表 之 删除记录 以及 数据提交[/b][/size]
+
+这章将主要讲解,如何删除记录 如何将编辑过的数据提到给服务端, 以及服务端要如何取得这些数据.
+首先还是老套路,将"mydemo6.html"另存为"mydemo7.html".
+
+
+[color=green]=========================================[/color]
+
+
+要将数据提交给服务端 首先要 指定grid提交数据的"目的地", 就是 saveURL, 同时还要在工具栏上添加一个保存按钮.
+
+
+
+[code="javascript"]
+var gridConfig={
+	/* ... 略去其他属性设置 ...*/
+	saveURL : 'studentsSave.servlet',
+	toolbarContent : 'nav | goto | pagesize | reload | save | state' 
+
+};
+[/code]
+
+toolbarContent中的 save 即标示 保存按钮
+saveURL 指向的是后台对应的服务.
+
+页面的改动只有这两处.
+下面需要编写 服务端了, 在编写之前, 首先我们要了解, 客户端提交给服务端的数据格式和内容.
+
+客户端提交的json串如下.
+[code="javascript"]
+{
+	action	 : 'save',	// 执行的操作.保存数据的操作为 save.
+
+	insertedRecords : [
+		/* ... 新增的记录. 是一个数组,数组的每个元素为一条记录(json-object) 下同... */
+		 { no : 51 , name :'zxcx', age : 12, gender : 'M' , english : 26.5 , math :92 },
+		 ... ...
+	
+	],
+	updatedRecords : [
+		/* ... 修改的记录 ... */
+		{ no : 3 , name :'ccc', age : 12, gender : 'F' , english : 53   , math :62 },
+		 ... ...
+	],
+	deletedRecords : [
+		/* ... 删除的记录 ... */
+		{ no : 2 , name :'bbb', age : 11, gender : 'F' , english : 89   , math :87 },
+		... ...
+
+	]
+}
+[/code]
+
+这些数据同样是以json串的形式一次性传给服务端.参数名依然是"_gt_json"
+服务端就可以通过 "_gt_json" 来把这些数据从request中取出.( request.getParameter("_gt_json"); )
+然后借助第三方工具来将json串 转换为 java对象.
+本章可参考第5章,一并阅读.
+
+在本例中, 将只有 action 和 updatedRecords 数据.
+
+服务端得到 updatedRecords 对应的记录后, 就可以在dao里执行相应的操作了.
+
+
+
+[color=green]=========================================[/color]
+
+
+数据的删除,也是一种很重要的操作. 要实现删除功能, 只需在 toolbarContent 里加入 "del".
+
+[code="javascript"]
+var gridConfig={
+	/* ... 略去其他属性设置 ...*/
+	saveURL : 'studentsSave.servlet',
+	toolbarContent : 'nav | goto | pagesize | reload | del | save | state' 
+
+};
+[/code]
+
+这时候预览页面 会看到多了一个"-"按钮, 该按钮即为删除按钮.
+选中一行后, 点击删除按钮, 该记录将被打上"删除"标记.(灰色+删除线)
+如果后悔了,或者是发现删除错了, 那么可以再次选中此行,然后再点删除按钮, 该行将会被回复.
+(这个功能只有在 按save(保存)按钮之前才有效.
+
+加入删除功能后, 提交的数据里 deletedRecords 下面就会有删除的记录信息.
+
+然后还是 json串--->java对象的转换. 这里就不再累述.
+
+
+
+[color=green]=========================================[/color]
+
+
+保存时有数据提交,自然也会有数据返回.
+返回的数据同样是一个json串, 里面记载了 保存是否成功以及异常信息. json串的格式如下:
+
+[code="javascript"]
+{
+	success : true  , /* true/false */
+	exception : "...异常信息..."
+}
+[/code]
+
+success 为false时 代表保存操作失败, 不设置或者是设置为其他值都表示成功.
+失败时, 前台会弹出提示,提示里会显示 exception 对应的字符串.
+
+
+
+[color=green]=========================================[/color]
+
+
+
+这章就先到这里, 内容少了点, 但是关于列表关键的核心最重要的内容, 我相信有一定使用纯ajax控件经验的人,应该已经可以独立开发出一个列表了.
+
+第四五六七 4章讲解的内容更注重原理,而非实例,所以需要大家更多的动手实践.
+
+欢迎大家就实践中出现的问题和不解与我进行交流.
+
+这4章对应的"与服务端结合的完整示例" 将会在正式版发布时提供给大家.
+
+同时 我也需要大家的帮助来进一步完善教程. 
+
+在这里对所有关注和使用GT-Grid的朋友说声 谢谢.
+
+
