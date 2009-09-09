@@ -37,7 +37,7 @@ public class PlatMsg2IsoMsg extends DefaultHandler
   public static void main(String[] args) throws Exception
   {
     PlatMsg2IsoMsg p = new PlatMsg2IsoMsg();
-//    System.out.println(p.transform("<root><BF1>abcd</BF1><BF2 type=\"binary\">abce</BF2></root>"));
+    System.out.println(p.transform("<root><BF1>abcd</BF1><BF132 type=\"binary\">abce</BF132></root>"));
   }
   public void setHeader(BaseHeader header)
   {
@@ -143,11 +143,7 @@ public class PlatMsg2IsoMsg extends DefaultHandler
     name = name.substring(0, name.indexOf('|'));
     
     String value = new String(characters, arg1, arg2);
-    if(name.equals("BF111")){
-    	System.out.println(value);
-    }
-    
-    
+
     if (PLAT_BODY_PRIFIX.equals(name.substring(0, PLAT_BODY_PRIFIX.length())))
     { 
       //String value = new String(characters, arg1, arg2);

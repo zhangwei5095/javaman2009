@@ -29,9 +29,9 @@ public class IsoMsg2PlatMsg extends DefaultHandler
   public static void main(String[] args) throws Exception
   {
     IsoMsg2PlatMsg p = new IsoMsg2PlatMsg();
-//    System.out.println(p.transform("<isomsg><field id=\"0\" value=\"abc\" /> <field id=\"2\" value=\"abc\" type=\"binary\"/><field id=\"43\" value=\"CHNTJ&#20013;&#22269;&#24314;&#35774;&#38134;&#34892;&#22825;&#27941;&#24066;&#20998;&#34892;             \"/></isomsg>"));
+System.out.println(p.transform("<isomsg><field id=\"0\" value=\"abc\" /> <field id=\"2\" value=\"abc\" type=\"binary\"/><field id=\"143\" value=\"CHNTJ&#20013;&#22269;&#24314;&#35774;&#38134;&#34892;&#22825;&#27941;&#24066;&#20998;&#34892;             \"/></isomsg>"));
     
-//    System.out.println(p.transform("<root><HF1>RQ</HF1><HF2>82599A</HF2><HF3>2007-09-21</HF3><HF4>2008-03-0513.47.20</HF4><HF5>12102</HF5><HF6>0</HF6><HF7>¸ß</HF7></root>"));
+//System.out.println(p.transform("<root><HF1>RQ</HF1><HF2>82599A</HF2><HF3>2007-09-21</HF3><HF4>2008-03-0513.47.20</HF4><HF5>12102</HF5><HF6>0</HF6><HF7>¸ß</HF7></root>"));
   }
   
 
