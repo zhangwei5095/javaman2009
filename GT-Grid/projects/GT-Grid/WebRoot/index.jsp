@@ -1,20 +1,26 @@
-<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+<%@ page language="java" import="java.util.*" pageEncoding="ISO-8859-1"%>
+<%
+String path = request.getContextPath();
+String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
+%>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
-	<head>
-	</head>
-
-	<body>
-		<a href="test1.jsp">test1</a>
-		<a href="test2.jsp">test2</a>
-		<a href="test3.jsp">test3</a>
-		<a href="test4.jsp">test4</a>
-		<a href="test5.jsp">test5</a>
-		<a href="test6.jsp">test6</a>
-		<a href="test7.jsp">test7</a>
-		<a href="test8.jsp">test8</a>
-		<a href="test9.jsp">test9</a>
-		<a href="test10.jsp">test10</a>
-	</body>
+  <head>
+    <base href="<%=basePath%>">
+    
+    <title>My JSP 'index.jsp' starting page</title>
+	<meta http-equiv="pragma" content="no-cache">
+	<meta http-equiv="cache-control" content="no-cache">
+	<meta http-equiv="expires" content="0">    
+	<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
+	<meta http-equiv="description" content="This is my page">
+	<!--
+	<link rel="stylesheet" type="text/css" href="styles.css">
+	-->
+  </head>
+  
+  <body>
+    This is my JSP page. <br>
+  </body>
 </html>
