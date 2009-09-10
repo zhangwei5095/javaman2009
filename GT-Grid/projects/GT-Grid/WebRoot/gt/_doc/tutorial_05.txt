@@ -1,0 +1,254 @@
+GT-Grid 1.0 基础教程(五)
+
+[size=large][b]教程说明:[/b][/size]
+这是一个告诉大家如何快速的利用GT-Grid开发列表的基础教程.以后会推出"高级教程".
+查看[color=blue]其他教程[/color],以及最新版本信息,请[url="http://fins.javaeye.com/blog/214290"]点击这里[/url]
+
+
+[size=large][b]第五章: 服务端数据的加载(下)[/b][/size]
+
+本章紧承前一章, 将讲解如何实现"服务端分页"的真正的列表.
+该列表将是一个 "远程加载数据,并进行远程分页的只读列表".
+(注: 本文中 "远程" 和 "服务端"往往是指一个东西.)
+
+还是那句话: 
+在开始之前,为了保留我们之前的成果,不至于学习的过程中把前一个成果弄坏, 我们将"mydemo4.html"另存为"mydemo5.html".
+OK,开始.
+
+
+[color=green]=========================================[/color]
+
+
+首先,修改代码, 把 dsConfig 中的 "	remotePaging : false ," 改为true 或者删除.
+(当有url时, remotePaging默认为true )
+
+
+也许有人会问, 上一章将的也是客户端分页, 但是并没有写 "remotePaging : false "啊.
+这是因为, 当loadURL==null(默认为null)时 GT-Grid 会强制把分页模式设置成"客户端分页",即remotePaging=false.
+
+关于页面的改动 就先到这里, 下一步写服务端代码, 我们要改写前一章里的那个 studentsList.servlet, 同时还要添加点东西..
+
+
+[color=green]=========================================[/color]
+
+前一章中, 我们通过"造假" 直接向客户端输出了3条数据(以json串的形式) .
+我们知道了 服务端返回给客户端的数据的结构(实际上是json串的格式):
+[code="javascript"]
+
+	{
+		data : [
+			/* 以下为具体传输的数据 */
+		   { no : 1 , name :'aaa', age : 12, gender : 'M' , english : 76.5 , math :92 },
+		   { no : 2 , name :'bbb', age : 11, gender : 'F' , english : 89   , math :87 },
+		   { no : 3 , name :'ccc', age : 13, gender : 'F' , english : 53   , math :62 }
+		]
+	}
+
+
+[/code]
+
+如果要实现客户端分页 ,需要在返回的数据中加入 pageInfo 结点.
+而这个pageInfo节点下需要放入的是 totalRowNum (还有其他,但是本例中只需放入 totalRowNum )．
+一个服务端分页所需要返回的json串结构如下：
+
+[code="javascript"]
+
+	{
+		pageInfo : {
+			totalRowNum : 3
+		},
+
+		data : [
+			/* 以下为具体传输的数据 */
+		   { no : 1 , name :'aaa', age : 12, gender : 'M' , english : 76.5 , math :92 },
+		   { no : 2 , name :'bbb', age : 11, gender : 'F' , english : 89   , math :87 },
+		   { no : 3 , name :'ccc', age : 13, gender : 'F' , english : 53   , math :62 }
+		]
+	}
+
+
+[/code]
+
+
+以上是　服务端返回给客户端的数据结构.
+
+
+[color=green]=========================================[/color]
+
+
+在服务端分页时　还有一些信息是需要客户端提交给服务端的．
+这些信息包括：	"pageSize" ,"pageNum" ,	"totalRowNum" ,	"totalPageNum" ,"startRowNum" ,	"endRowNum"
+当然这些信息不一定都能用得上，　使用哪个由你的dao中负责查询的方法来决定.
+在本例中我只需要 startRowNum 和 pageSize 就足够了.
+
+客户端提交给服务端的信息也是一个 序列化后的json串. 这个串可以通过:
+[code="java"]
+	String gtJson = request.getParameter("_gt_json");
+[/code]
+来取得.如果你使用的框架是那种屏蔽了 request 的框架, 请你自行查找一下能够间接从request中取数据的方法.
+有些框架会把 request.parameter 区的数据放入 javabean内,有的框架会将request转换成一个map.
+总之 方法总是有的,但是在这里恕我不能把所有框架中的做法一一列出. 我只写出最本质的东西,供大家参考.
+
+这个 "叫_gt_json"的json串的格式如下:
+
+[code="javascript"]
+{
+	action	 : 'load',	// 执行的操作.显示列表属于 load 操作,所以传入的action为load, 保存数据时提交的action为save.
+	pageInfo : {
+		pageSize	: 20 ,  // 每页显示条数. 这个值决定于 你创建grid时的设置.
+		totalRowNum	: 0  ,	// 总记录数. 这个值在第一次载入列表时 为 0 ,以后是什么值 取决于服务端返回的值.
+		startRowNum	: 1,	// 开始行号. 第一次载入列表或是查看列表的首页时,会传入1,(注意表示"开始行号"的数字是从1开始.
+		endRowNum	: (startRowNum+pageSize)  // 结束行号.这个值会在客户端计算好之后发给服务端.
+	}
+}
+[/code]
+(其实还有其它数据,但是目前不讲那么多,知道这些已经足够).
+知道了"_gt_json串"的格式, 下一步我们要做的就是 利用第三方工具, 把这个json结构的数据 转换成java对象.然后从这个对象中取得相应的值. 
+同时,建议将这个工作封装成一个公共方法,在整个系统中使用.
+
+理由和前面类似 由于不同系统使用的框架和json转换工具库不同, 所以在这里我同样不能列出例子来.
+大家可以看我提供的"与后台结合的完整示例" ,以其作为参考.
+
+
+[color=green]=========================================[/color]
+
+
+上一章 以及本章前半部分着重讲了两点:
+1 服务端返回给客户端的数据结构,以及如何生成和发送这些数据给客户端
+2 客户端提交给服务端的数据结构, 以及服务端怎么取得这些数据.
+
+
+现在我们要把这些贯穿起来, 进一步完善上一章的例子, 使其成为真正的"远程加载数据,并进行远程分页的只读列表".
+
+
+我们选择的方式依然是继续"造假"(因为我实在不想在这个期间就引入数据库相关的东西(这样会使教程变得复杂 凌乱), 
+而且我相信大家只要理解了原理 从"造假"变成"玩真的"是很简单的事情.
+但是这次"造假"层次要高一些, 我们要造假的DAO , 还有假的map.
+
+来 让我们先造DAO , DAO里有两个方法: 
+[code]
+int countStudents() : 模拟查询总数的操作. (这个操作几乎所有的分页查询都是需要的).
+List getStudentsByPage(int startRowNum , int pageSize) : 模拟查询操作. 返回的是一个map构成的list, 每个map对应一条记录.
+
+getStudentsByPage的参数为 分页查询的必要条件, startRowNum 开始行行号, pageSize 每页大小 (也就是每次要查出多少条记录) 
+根据dao的不同 有些查询需要传入的参数可能是 startRowNum 和 endRowNum ,甚至更多参数 这个大家自己把握就好了. 本例中就是这么简单.
+
+[/code]
+(方法getStudentsByPage 如果返回的是pojo/vo/sdo/javabean的集合也是可以的,不过为了例子的简单,拿map构成的list举例子.)
+
+下面是一个dao实现的参考.  demo.grid.dao.StudentsListDAO.class
+首先是一段用来mock假数据的代码
+
+[code="java"]
+	// mock 数据 相关的方法
+	private static int total = 200;
+	public static List  MOCK_DATA=new ArrayList();
+
+	static {
+		String[] genders={"U","M","F"};
+		for (int i=0;i<total;i++){
+			Map reocrd=new HashMap();
+			reocrd.put("no", new Integer(i+1));
+			reocrd.put("name", "ab"+i);
+			reocrd.put("gender", genders[i%3]);
+			reocrd.put("english", new Integer((int)(((Math.random()+1)*100)%80+20)));
+			reocrd.put("math", new Integer((int)(((Math.random()+1)*100)%70+30)));
+			MOCK_DATA.add(reocrd);
+		}
+	}
+[/code]
+这段代码生成200条假记录 存放到dao的静态成员 MOCK_DATA 中 .
+下面的两个方法上面已经说过了. 这里我们把 MOCK_DATA 想象成一个特殊的数据库,
+这两个方法直接操作MOCK_DATA.
+
+[code="java"]	
+	public int countStudents(){
+		return MOCK_DATA.size();
+	}
+	
+	public List getStudentsByPage(int startRowNum , int pageSize){
+		List pageData=new ArrayList();
+		for (int i=startRowNum,len= startRowNum +pageSize;i<len;i++){
+			pageData.add(MOCK_DATA.get(i));
+		}
+		return pageData;
+	}
+[/code]
+上面的代码我就不详细说了,相信大家都看得懂.
+
+有了这个DAO之后, 之前我们创建servlet的doPost方法就要做些修改了.
+我们无需拼串了. 我们可以这样做: (伪代码 不能执行)
+[code="java"]
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		// 这里假设你有一个类似的工具类可以实现json串 到java对象的转换
+		Map gtJsonIn = JSONUtils.string2Map( request.getParameter("_gt_json") );
+
+		Map pageInfo = 	(Map)gtJsonIn.get("pageInfo");
+		int totalRowNum= (Integer)pageInfo.get("totalRowNum").intValue();
+		int startRowNum= (Integer)pageInfo.get("startRowNum").intValue();
+		int pageSize= (Integer)pageInfo.get("pageSize").intValue();
+		
+		StudentsListDAO studentsDao=new StudentsListDAO();
+
+		if (totalRowNum<1){  //如果客户端传来的总行数小于1,则重新统计总行数.你也可以设计成总是查询,这个比较随意.
+			totalRowNum= studentsDao.countStudents();
+			// 查完了一定要记得 传回给客户端.
+			pageInfo.put("totalRowNum" , new Integer(totalRowNum) );
+		}
+
+		// 查询学生信息
+		List studentsList = studentsDao.getStudentsByPage(startRowNum,pageSize);
+
+		// 将pageInfo 和 data 放入一个map,然后将这个map 转换成 json串 ,输出到客户端
+		Map gtJsonOut=new HashMap();
+		gtJsonOut.put("pageInfo",pageInfo);
+		gtJsonOut.put("data",studentsList);
+		String outData =  JSONUtils.map2String(gtJsonOut);
+
+		response.setContentType("text/html; charset=UTF-8");
+		PrintWriter out = response.getWriter();
+		out.print(outData);
+		out.flush();
+		out.close();
+	}  
+[/code]
+
+到此位置 关于 服务端查询 分页的知识就介绍完了.
+
+看起来 服务端写的东西似乎很多 ,但是 只要进行适当的封装,
+你会发现其实很简单.
+
+
+[color=green]=========================================[/color]
+
+
+再次重复上一章的说明: 
+
+如果使用的是PHP ,那么可以将loadURL指向某个php文件,而那个文件只要可以 echo 出这个json串就可以了.
+
+在实际系统中, 开发人员要做的就是把数据库里(当然你可以从其他地方取)的查询结果 (一个 map-list 或者 pojo-list )
+转换成一个类似上例的 json串. 然后发送到客户端.
+
+转换成json串的工作可以通过 各种第三方的json库来实现.
+你可以到[url="http://www.json.org"]http://www.json.org[/url] 上去寻找更多的帮助.
+
+
+注意,为了减低入门门槛, 我在这个示例中没有引入任何其他的问题.
+在正常系统中, 文件编码, 文件路径等问题总是会困扰一些新手.
+如果你是新手, 那么这些问题你可以参考我提供的"与后台结合的示例"中的完整代码 或者是找google帮忙.
+我在这里就不多说了.
+
+
+
+[color=green]=========================================[/color]
+
+
+这章就先讲到这里 , 最后成果的截图就不奉上了 因为看起来和 前一章的一样.
+下一章,将讲解的内容待定. 想好了及时跟大家说 :).
+
+
+
+
+
+

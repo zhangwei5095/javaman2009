@@ -1,0 +1,165 @@
+GT-Grid 1.12版 说明文档.
+
+这篇文档主要说明一些这个版本的变化(新增功能 新特性)
+
+
+========================================
+
+首先来说一下关于列表的创建函数.
+
+在以前的示例中, 有这样的代码:
+[code="javascript"]
+GT.Utils.onLoad( GT.Grid.render(mygrid) );
+[/code]
+
+它的意思是 在页面载入时 创建列表. 但是由于我设计上的失误,导致这个示例很容易误导大家.
+让开发人员以为 GT.Grid.render(mygrid) 是用来创建列表的.
+
+其实不是, GT.Grid.render 的结果是返回一个函数 这个函数才是用来创建表格的.
+这里比较绕,所以 我决定反对使用  GT.Grid.render函数.
+
+
+如果要在页面载入时创建表格 请使用下面的代码
+[code="javascript"]
+GT.Utils.onLoad( function(){
+	mygrid.render();
+} );
+[/code]
+
+
+
+如果想在其他时机 (如按某个按钮之后)创建 那么就在相应的时机调用
+"mygrid.render();" 即可.
+
+另外再重申一下函数 GT.$grid("你的grid的id") ,这个函数是通过id取得列表对象.
+
+
+
+==============================
+
+
+
+新增属性:
+grid.selectRowByCheck : false/true ;
+
+当列中有checkBox列时, 如果selectRowByCheck==true ,那么选中一行的效果将通过选择checkBox来实现.
+
+
+新增方法
+grid.getSelectedRecords()
+取得所有选中行对应的记录.
+
+
+
+==============================
+
+
+column.renderer 支持字符串模板
+column.renderer 除了可以是一个函数之外, 还可以是一个字符串模板.例如 
+
+renderer : "@{age}岁"
+那么这列数据 就会变为 "相应记录的age字段的值 + '岁'
+
+[code="javascript"]
+
+renderer : "@{age}岁"  
+相当于
+
+renderer : function(value,record){
+	return record['age']+'岁';
+}
+[/code]
+
+
+
+==============================
+
+exception回调函数 : 
+在执行load 和save 操作后, 处理服务端返回的异常的函数如下:
+
+[code="javascript"]
+
+// grid.loadFailure(responseJson)
+
+	// 默认函数实现
+	loadFailure : function(respD){
+		alert(' LOAD Failed! '+'\n Exception : \n'+(respD[this.CONST.exception]||''));
+	},
+
+// grid.saveFailure(responseJson)
+
+	// 默认函数实现
+	saveFailure : function(respD){
+				alert(' SAVE Failed! '+'\n Exception : \n'+(respD[this.CONST.exception]||''));
+	}
+
+[/code]
+
+responseJson为服务端返回的json对象.
+
+
+大家可以通过重写这两个方法 来实现自己的对异常信息的处理.
+
+
+
+
+==============================
+
+工具栏上的简单按钮  现在支持 自定义.
+
+自定义的方法是,首先是定义按钮并注册 然后在toolbarContent里面设置即可.
+
+定义并注册按钮的方式如下:
+
+[code="javascript"]
+
+GT.ToolFactroy.register(
+	'mybutton',  //按钮的标识 (请使用全小写字母)
+	{
+		// cls 为按钮的样式,目前只支持简单按钮,简单按钮的样式请这样写:
+		// .mybutton-cls { 
+		//		background : url(./mybutton.png) no-repeat center center; 
+		// }
+		cls : 'mybutton-cls',  
+		// 按钮的提示信息
+		toolTip : '自定义按钮:显示列表的id',
+		
+		// 点击按钮时 执行的动作
+		action : function(event,grid) {  alert( 'The id of this grid is  '+grid.id)  }
+	}
+);
+[/code]
+
+按钮定义的形式 如上面代码中的注释所示, 就不再多说了.
+GT.ToolFactroy.register( key , options)
+这个函数 负责将 定义的按钮以 key的名字注册
+
+
+然后就可以在 toolbarContent 中来指定在什么位置显示这个自定义按钮了.
+
+
+==============================
+
+改变ajax提交的方式 :"POST" 或 "GET"
+grid的属性:
+
+ajaxMethod : "POST" // POST/GET  默认是 POST
+
+==============================
+
+
+以上的说明不是很详细, 建议大家结合 mydemo_for_1.12.html 这个示例来看一下.
+
+
+
+==============================
+
+
+关于GT的更多介绍可以参加下面两个地址
+
+具体文档请参见下面地址:
+[url="http://fins.javaeye.com/blog/214290"]列表组件 GT-Grid 最新版本 & 教程[/url]
+
+与服务端结合的例子(8月3日版本)
+[url="http://fins.javaeye.com/blog/219217"]与服务端结合的例子[/url]
+========================================

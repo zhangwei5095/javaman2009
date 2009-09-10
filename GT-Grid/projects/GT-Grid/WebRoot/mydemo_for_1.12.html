@@ -1,0 +1,202 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta http-equiv="Pragma" content="no-cache" />
+<meta http-equiv="Expires" content="-1" />
+<meta http-equiv="Cache-Control" content="no-cache" />
+<title>GT-Grid 教程示例</title>
+
+<link rel="stylesheet" type="text/css" href="../../gt-grid/gt_grid.css" />
+
+<!-- 请根据语言和系统编码,自行选择引入的 gt_msg_...js 文件 (默认的msg文件为UTF-8编码) -->
+<script type="text/javascript" src="../../gt-grid/gt_msg_cn.js"></script>
+
+
+
+
+<script type="text/javascript" src="../../gt-grid/gt_grid_all.js"></script>
+
+
+<script type="text/javascript" >
+// 教程中的代码就写在这个区域里.
+
+	function getClientTestData(max){
+		max=max||100;
+		var getInt=function(min,max) {
+				min = min || 0;
+				max = max || 100;
+				var _min= Math.min(min,max);
+				max=Math.max(min,max);
+				min=_min;
+				var step= max - min +1;
+				var s= (Math.random()+1)*max*10 % step;
+				var num= min +  s ;
+				return parseInt(num,10);
+		}
+
+		var data=[];
+		var gl=['U','M','F'];
+		for (var i=0;i<max;i++){
+			var record={ no : 30+i , 
+					name : 'abc'+i , 
+					age :getInt(12,15) , 
+					gender : gl[getInt(1,9)%3] , 
+					english : 50+getInt(1,49), 
+					math : 40+getInt(1,59)
+				}
+			data.push(record);
+		}
+		return data;	
+	}
+
+var data1 = getClientTestData( 30 );
+
+var dsConfig= {
+
+	data : data1 ,
+
+	uniqueField : 'no' ,
+
+	fields :[
+		{name : 'no'     ,  type: 'int'    },
+		{name : 'name'      },
+		{name : 'age'    ,  type: 'int'    },
+		{name : 'gender'    },
+		{name : 'english',  type: 'float'  },
+		{name : 'math'   ,  type: 'float'  },
+		{name : 'total'   , type: 'float',
+			initValue : function(record){
+				return record['english'] + record['math'];
+			}
+		}
+	]
+};
+
+var colsConfig = [
+		{ id : 'nso'  , header : "学号" , width : 50 , 	editable:false ,  
+		//editor: { type :'text' ,validRule : 'R,integer' },
+		// checkBox列
+		isCheckColumn : true
+		},
+		{ id : 'name'    , header : "姓名" , width : 100 ,  editable:false ,  
+			editor: { type :'text' ,validRule : 'R' }	},
+		{ id : 'age'     , header : "年龄" , width : 50 , 	editable:false ,  
+			editor: { type :'text' ,validRule : 'R,integer' },
+		
+		// column.renderer 支持字符串模板
+		renderer : "@{age} 岁" },
+
+		{ id : 'gender'  , header : "性别" , width : 50 ,
+			editor : { type :'select' ,options : {'U': '未知' , 'M':'男', 'F':'女'}  },
+			renderer : GT.Grid.mappingRenderer(  {'U': '未知' , 'M':'男', 'F':'女'} , '未知' )
+		},
+		{ id : 'english' , header : "英语" , width : 60 , align :'right' , 	editor: { type :'text' ,validRule : 'R,integer' }  },
+		{ id : 'math'    , header : "数学" , width : 60 , align :'right' , 	editor: { type :'text' ,validRule : 'R,integer' }  },
+		
+		{ id : 'total'   , header : "总成绩" , width : 70 , align :'right' ,
+			renderer : function(value ,record,columnObj,grid,colNo,rowNo){
+				   var total = record['total'];
+				   if (total>170) {
+						total =  '<span style="color:red" >'+ total +'</span>';
+				   }else if (total<120) {
+						total = '<span style="color:blue" >'+ total +'</span>';
+				   }
+				   return total;
+			}
+		},
+
+		{ id : 'detail'   , header : "详细信息" , width : 120,
+
+			// column.renderer 支持字符串模板
+			renderer : '&#160;<a href=".?no=@{no}" style="margin-left:3px;" >&#160;@{name} 的详细信息&#160;</a>'
+		}
+];
+
+
+// 注册自定义工具按钮
+GT.ToolFactroy.register(
+	'mybutton',  //按钮的标识 (请使用全小写字母)
+	{
+		// cls 为按钮的样式,目前只支持简单按钮,简单按钮的样式请这样写:
+		// .mybutton-cls { 
+		//		background : url(./mybutton.png) no-repeat center center; 
+		// }
+		cls : 'mybutton-cls',  
+		// 按钮的提示信息
+		toolTip : '自定义按钮:显示列表的id',
+		
+		// 点击按钮时 执行的动作
+		action : function(event,grid) {  alert( 'The id of this grid is  '+grid.id)  }
+	}
+);
+
+
+var gridConfig={
+
+	id : "grid1",
+	
+	// 通过checkBox列 来选择行.
+	selectRowByCheck : true, 
+
+	dataset : dsConfig ,
+
+	columns : colsConfig ,
+
+	container : 'grid1_container', 
+
+	toolbarPosition : 'bottom',
+
+	toolbarContent : 'nav | goto | pagesize | reload | add del save  | xls mybutton | state' ,
+
+
+	beforeExport : function(type, fileName, url, name, action,grid){
+		// 拦截导出操作.
+		alert([ type, fileName, url, name, action,grid ]);
+		return false;
+	},
+
+	//自定义的保存时错误提示.
+	saveFailure : function(respD){
+		var msgZone = GT.$('errMsgBox');
+		msgZone &&　(msgZone.innerHTML=' 我自定一个异常错误提示哦!!!! <br/> SAVE Failed! '+'<br/> Exception : <br/>'+(respD[this.CONST.exception]||'') );
+	},
+	
+	ajaxMethod : "POST" , // POST/GET  默认是 POST
+	pageSize : 10 ,
+	
+	pageSizeList : [5,10,15,20],
+
+	defaultRecord :  { no : 111 , name :'', age : '', gender : 'U' , english : 50 , math :50 }
+
+
+};
+
+var mygrid=new GT.Grid( gridConfig );
+
+GT.Utils.onLoad( function(){
+	mygrid.render();
+} );
+
+
+</script>
+
+<style type="text/css">
+/* 自定按钮的样式 */
+ .mybutton-cls { 
+		background : url(./mybutton.png) no-repeat center center; 
+}
+</style>
+</head>
+
+<body>
+<!-- grid的容器. -->
+<div id="grid1_container" style="width:700px;height:300px">
+</div>
+<br/>
+<div id="errMsgBox">
+</div>
+<br/>
+<input type="button" value="看看哪些数据被选中了" 
+onclick="alert( GT.$json(mygrid.getSelectedRecords() ) )" />
+ </body>
+</html>

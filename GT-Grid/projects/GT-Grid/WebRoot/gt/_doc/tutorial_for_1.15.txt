@@ -1,0 +1,90 @@
+GT-Grid 1.15版 说明文档.
+
+这篇文档主要说明一些这个版本的变化(新增功能 新特性)
+
+
+========================================
+这个版本照例修正了一些bug 同时增加了一些小功能
+这些小功能主要是通过api方面的改造,让大家用起来更顺手一些.
+另外尝试了一下 与 ext的结合
+
+========================================
+
+下面结合示例来做一下说明.
+
+我们在围绕列表开发时 常常有这样的需求.
+
+一个页面, 上方是查询表单, 下面是列表. 初始情况下,表单是空的.
+在表单中输入一些查询条件后,点击查询按钮,然后列表才出现响应的信息.
+
+示例 mydemo_for_1.15.html 就演示了这样的场景.
+
+大家需要注意的是如下内容:
+
+首先 "初始情况下,表单是空的" 这个需求通过 grid的 autoLoad属性来实现.
+当该属性为false时, 列表第一次显示时 不会出现数据. 
+
+其次, 在这个版本里增加了 grid.query 方法. 用法如下:
+
+[code="javascript"]
+ grid.query(params)
+[/code]
+
+其中 params 是一个json对象, 用来作为查询条件的.
+它将以 name1=value1&name2=value2&name3=value3... 的形式将参数传递给后台.
+后台可以通过传统的 request.gerParameter("name") 方式来取得这些参数.
+这样大家就可以灵活的来做查询操作了.
+例如
+[code="javascript"]
+ grid.query( {
+  name : "abc",
+  age : 27 ,
+  others : [ 1,2,3 ]
+  })
+[/code]
+那么 传递到后台的 queryString 将为
+name=abc&age=27&others=1&others=2&others=3
+
+注意:  mydemo_for_1.15.html 这个示例由于只是前台的一个代码示例,
+所以页面中的查询并不会真的起到查询的作用, 而只是载入一些随机生成的数据.
+
+==============================
+
+与 ext的结合:
+
+这个版本可以和简单的 Ext.Panel进行结合.
+也就是说 GT-Grid可以放入 Ext.Panel 的panel里了
+具体的例子见 
+\_demo\for_ext.html 
+
+注意for_ext.html文件中下面的部分:
+[code="html"]
+<!-- 请根据你机器内ext存放的位置来自行修改下面3行的内容 -->
+    <link rel="stylesheet" type="text/css" href="file:/d:/mydev/ext-2.2/resources/css/ext-all.css" />
+ 	<script type="text/javascript" src="file:/d:/mydev/ext-2.2/adapter/ext/ext-base.js"></script>
+    <script type="text/javascript" src="file:/d:/mydev/ext-2.2/ext-all.js"></script>
+[/code]
+
+这个与ext的融合 目前还只是一个开始, 还有很多问题, 例如不能放到window里等等.
+不过 以后会努力加强这方面的兼容性的.
+
+
+==============================
+
+
+以上的说明不是很详细, 建议大家结合 mydemo_for_1.15.html 这个示例来看一下.
+
+
+==============================
+
+
+关于GT的更多介绍可以参加下面两个地址
+
+具体文档请参见下面地址:
+[url="http://fins.javaeye.com/blog/214290"]列表组件 GT-Grid 最新版本 & 教程[/url]
+
+与服务端结合的例子(8月3日版本)
+[url="http://fins.javaeye.com/blog/219217"]与服务端结合的例子[/url]
+========================================
+
+

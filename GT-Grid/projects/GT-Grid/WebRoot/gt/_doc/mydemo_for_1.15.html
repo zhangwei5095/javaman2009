@@ -1,0 +1,203 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta http-equiv="Pragma" content="no-cache" />
+<meta http-equiv="Expires" content="-1" />
+<meta http-equiv="Cache-Control" content="no-cache" />
+<title>GT-Grid 教程示例</title>
+
+<link rel="stylesheet" type="text/css" href="../../gt-grid/gt_grid.css" />
+
+<!-- 请根据语言和系统编码,自行选择引入的 gt_msg_...js 文件 (默认的msg文件为UTF-8编码) -->
+<script type="text/javascript" src="../../gt-grid/gt_msg_cn.js"></script>
+
+
+
+
+<script type="text/javascript" src="../../gt-grid/gt_grid_all.js"></script>
+
+
+<script type="text/javascript" >
+// 教程中的代码就写在这个区域里.
+
+	function getClientTestData(max){
+		max=max||100;
+		var getInt=function(min,max) {
+				min = min || 0;
+				max = max || 100;
+				var _min= Math.min(min,max);
+				max=Math.max(min,max);
+				min=_min;
+				var step= max - min +1;
+				var s= (Math.random()+1)*max*10 % step;
+				var num= min +  s ;
+				return parseInt(num,10);
+		}
+
+		var data=[];
+		var gl=['U','M','F'];
+		for (var i=0;i<max;i++){
+			var record={ no : 30+i , 
+					name : 'abc'+i , 
+					age :getInt(12,15) , 
+					gender : gl[getInt(1,9)%3] , 
+					english : 50+getInt(1,49), 
+					math : 40+getInt(1,59)
+				}
+			data.push(record);
+		}
+		return data;	
+	}
+
+var data1 = getClientTestData( 30 );
+
+var dsConfig= {
+
+	data : data1 ,
+
+	uniqueField : 'no' ,
+
+	fields :[
+		{name : 'no'     ,  type: 'int'    },
+		{name : 'name'      },
+		{name : 'age'    ,  type: 'int'    },
+		{name : 'gender'    },
+		{name : 'english',  type: 'float'  },
+		{name : 'math'   ,  type: 'float'  },
+		{name : 'total'   , type: 'float',
+			initValue : function(record){
+				return record['english'] + record['math'];
+			}
+		}
+	]
+};
+
+var colsConfig = [
+		{ id : 'no'  , header : "学号" , width : 50	},
+		{ id : 'name'    , header : "姓名" , width : 100},
+		{ id : 'age'     , header : "年龄" , width : 50 ,	renderer : "@{age} 岁" },
+
+		{ id : 'gender'  , header : "性别" , width : 50 ,
+			renderer : GT.Grid.mappingRenderer(  {'U': '未知' , 'M':'男', 'F':'女'} , '未知' )
+		},
+		{ id : 'english' , header : "英语" , width : 60 , align :'right'   },
+		{ id : 'math'    , header : "数学" , width : 60 , align :'right'   },
+		
+		{ id : 'total'   , header : "总成绩" , width : 70 , align :'right' ,
+			renderer : function(value ,record,columnObj,grid,colNo,rowNo){
+				   var total = record['total'];
+				   if (total>170) {
+						total =  '<span style="color:red" >'+ total +'</span>';
+				   }else if (total<120) {
+						total = '<span style="color:blue" >'+ total +'</span>';
+				   }
+				   return total;
+			}
+		},
+
+		{ id : 'detail'   , header : "详细信息" , width : 120,
+
+			// column.renderer 支持字符串模板
+			renderer : '&#160;<a href=".?no=@{no}" style="margin-left:3px;" >&#160;@{name} 的详细信息&#160;</a>'
+		}
+];
+
+
+
+
+var gridConfig={
+
+	id : "grid1",
+	
+
+	dataset : dsConfig ,
+
+	columns : colsConfig ,
+
+	container : 'grid1_container', 
+
+	toolbarPosition : 'bottom',
+
+	toolbarContent : 'nav | goto | pagesize | state' ,
+
+	pageSize : 10 ,
+	
+	pageSizeList : [5,10,15,20],
+
+	autoLoad : false 
+
+
+};
+
+var mygrid=new GT.Grid( gridConfig );
+
+GT.Utils.onLoad( function(){
+	mygrid.render();
+} );
+
+function query() {
+	var param={
+		name : GT.U.getValue(GT.$('q_name')),
+		gender : GT.U.getValue(GT.$('q_gender')),
+		age : GT.U.getValue(GT.$('q_age'))
+	}
+	alert( "在查询数据的request中, 将会有如下参数:\n\n"+GT.toQueryString(param) );
+	mygrid.query( param );
+}
+
+</script>
+
+
+</head>
+
+<body>
+
+
+<form name="queryForm" >
+<div class="gt-panel" style="width:700px;" >
+<div class="gt-panel-head"><span>查 询</span></div>
+	<div class="gt-panel-body">
+		<table>
+			<tr>
+				<td width="15%">姓名</td>
+				<td width="35%">
+					<input type="text" name="name" id="q_name">
+				</td>
+				<td width="15%">性别</td>
+				<td width="35%">
+					<select	style="width:100px" name="gender" id="q_gender" >
+						<option value="">全部</option>
+						<option value="U">未知</option>
+						<option value="M">男</option>
+						<option value="F">女</option>
+					</select>
+				</td>	
+			</tr>
+			<tr>
+				<td width="15%">年龄</td>
+				<td width="35%">
+					<input type="text" name="age" id="q_age" />
+				</td>
+				<td width="15%"> </td>
+				<td width="35%"> </td>
+
+			</tr>
+		</table>
+	</div>
+	<div class="gt-button-area">
+		<input type="button" class="gt-input-button" value="查询" onclick="query()" />
+		<input type="reset" class="gt-input-button" />
+	</div>
+</div>
+</form>
+
+<br/>
+<!-- grid的容器. -->
+<div id="grid1_container" style="width:700px;height:300px">
+</div>
+<br/>
+<div id="errMsgBox">
+</div>
+<br/>
+ </body>
+</html>

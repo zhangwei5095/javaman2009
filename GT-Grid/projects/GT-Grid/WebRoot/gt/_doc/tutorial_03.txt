@@ -1,0 +1,141 @@
+GT-Grid 1.0 基础教程(三)
+
+[size=large][b]教程说明:[/b][/size]
+这是一个告诉大家如何快速的利用GT-Grid开发列表的基础教程.以后会推出"高级教程".
+查看[color=blue]其他教程[/color],以及最新版本信息,请[url="http://fins.javaeye.com/blog/214290"]点击这里[/url]
+
+
+[size=large][b]第三章: 没有分页怎么行[/b][/size]
+
+通过前两章的介绍,我相信大家应该可以很轻松的创建出一个"纯客户端只读列表".
+但是作为列表, 数据多的时候, 不采用分页怎么行呢?
+
+下面就让我们一起来把上一章中的列表变成 "支持客户端分页的纯客户端只读列表".
+还是那句话: 
+在开始之前,为了保留我们之前的成果,不至于学习的过程中把前一个成果弄坏, 我们将"mydemo2.html"另存为"mydemo3.html".
+OK,开始.
+
+
+[color=green]=========================================[/color]
+
+
+[b]1 准备测试数据 [/b]
+
+既然要分页 我们就要有很多数据才行. 之前那么几条 显然是太少了.
+那么 我们就先来编写一个函数 来自动生成很多很多的测试数据吧 (这个函数你也可以自己写,没必要读下面这段代码).
+[code="javascript"]
+	function getClientTestData(max){
+		max=max||100;
+		var getInt=function(min,max) {
+				min = min || 0;
+				max = max || 100;
+				var _min= Math.min(min,max);
+				max=Math.max(min,max);
+				min=_min;
+				var step= max - min +1;
+				var s= (Math.random()+1)*max*10 % step;
+				var num= min +  s ;
+				return parseInt(num,10);
+		}
+
+		var data=[];
+		var gl=['M','F','U'];
+		for (var i=0;i<max;i++){
+			var record={ no : 30+i , 
+					name : 'abc'+i , 
+					age :getInt(12,15) , 
+					gender : gl[getInt(1,9)%3] , 
+					english : 50+getInt(1,49), 
+					math : 40+getInt(1,59)
+				}
+			data.push(record);
+		}
+		return data;	
+	}
+
+// 然后执行下面的语句, 客户端的数据就会有200条. (作为测试,我没有生成太多).
+var data1 = getClientTestData( 200 );
+[/code]
+现在预览一下页面, 会看到一个有200条数据的大列表.
+
+
+[color=green]=========================================[/color]
+
+
+[b]2 分页 [/b]
+
+现在我们要对他进行分页. 通过给 grid对象设置"pageSize"属性来实现.
+
+[code="javascript"]
+var gridConfig={
+	/* ... 其他属性设置略 ... */
+	pageSize : 10 
+}
+[/code]
+只有 这个属性还不够, 它只是实现了分页, 但是列表必须要有导航按钮 才能在各个页面之间"穿梭".
+这个我们通过 修改 toolbarContent 的内容来实现.
+[code="javascript"]
+var gridConfig={
+	/* ... 其他属性设置略 ... */
+	toolbarContent : 'nav | state' 
+}
+[/code]
+为 toolbarContent 加入了 nav 和 一个竖线, 大家要注意, nav ,| ,state 三者之间有空格间隔.
+nav代表的就是 导航按钮区.
+
+
+导航区中包含了 四个按钮: 第一页 前一页 后一页 最后一页. 有时候也许我们还需要一个"直接调转到指定页"的功能.
+我们可以通过 给 toolbarContent 加入 "goto" 子属性来实现这个功能.
+[code="javascript"]
+	toolbarContent : 'nav | goto | state' 
+[/code]
+OK,现在这个完整的分页按钮区就算是完成了
+
+
+现在预览一下吧, 会看到一个共有200条数据,但每页只有10条的列表.
+
+
+[color=green]=========================================[/color]
+
+
+[b]2 页大小选择框 [/b]
+
+通常pageSize这个属性是固定的,但是也有一些场景,希望用户可以在查看列表时自由的改变这个大小.
+那么我们就需要提供一个"页大小选择框"来实现这个需求. 按下面所示修改代码.
+[code="javascript"]
+var gridConfig={
+	/* ... 其他属性设置略 ... */
+	toolbarContent : 'nav | goto | pagesize | state' ,
+
+	pageSize : 10 ,
+	
+	pageSizeList : [5,10,15,20]
+}
+[/code]
+pageSizeList 是一个数组,列出了将要出现在下拉列表里的可供选择的"页大小".
+toolbarContent 中也增加了一项 pagesize .
+
+
+
+toolbarContent 中的 各个工具区域的位置是可以调整的, 大家可以根据自己的习惯来设置, 例如下面的设置方法都是合法的:
+
+toolbarContent : 'nav | pagesize | goto | state' ,
+toolbarContent : 'goto | nav | pagesize | state' ,
+... ...
+
+
+[color=green]=========================================[/color]
+
+
+
+这一章讲解了 分页的一些基本知识, 内容比较少,但是非常重要.
+下一章开始 将讲解激动人心的"非纯客户端只读列表"的实现了, 敬请期待.
+
+Over!  See you tonight or tomorrow :) .
+
+
+[color=green]=========================================[/color]
+
+
+最后的成果图:
+[img]http://fins.javaeye.com/upload/picture/pic/17852/6e761ede-569f-3912-888e-5acb7bf59bff.jpg[/img]

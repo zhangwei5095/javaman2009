@@ -1,0 +1,217 @@
+GT-Grid 1.0 基础教程(二)
+
+[size=large][b]教程说明:[/b][/size]
+这是一个告诉大家如何快速的利用GT-Grid开发列表的基础教程.以后会推出"高级教程".
+查看[color=blue]其他教程[/color],以及最新版本信息,请[url="http://fins.javaeye.com/blog/214290"]点击这里[/url]
+
+
+[size=large][b]第二章: 让"纯客户端只读列表"变得更强大一些吧[/b][/size]
+
+让我们继续来完善和加强上一章中做出的那个列表吧.
+
+在开始之前,为了保留我们之前的成果,不至于学习的过程中把前一个成果弄坏, 我们将"mydemo1.html"另存为"mydemo2.html".
+
+OK,开始.
+
+
+[color=green]=========================================[/color]
+
+
+[b]1 扩展数据列 [/b]
+
+示例中的数据(学生的信息) , 由6列构成 : 学号 , 姓名 , 年龄 , 性别, 英语成绩, 数学成绩.
+这是我们能拿到的原始信息.
+但是有时候,我们往往需要在页面中扩展出新的信息, 这些信息并不在原始信息内.
+例如 我希望列表中包含 "总成绩"一列.  这时候,"总成绩"对应的数据就必须在页面内生成.
+我们将这种并不存在于原始数据中,但是希望扩充到原始数据中的列叫做"扩展数据列".
+
+在GT-Grid中, 利用数据集列 (dataset的field) 的initValue方法就可以实现.
+按下面的方式修改代码.
+[code="javascript"]
+var dsConfig= {
+	data : data1 ,
+
+	fields :[
+		/* ...其他field略 ...  */
+		{name : 'total'   , type: 'float',
+			initValue : function(record){
+				return 1;
+			}
+		}
+	]
+};
+[/code]
+initValue 属性指向一个函数, 该函数的返回值, 就为record的该列数据.
+上例中, 会创建一个叫total的"扩展列" , 它会使每一条record的 total 属性值为 1.即 :
+record['total']=1;
+
+然后,我们就可以在 columns的定义中加入一个column,让其显示 total列 (此时total就和普通的数据列是一样的).
+[code="javascript"]
+var colsConfig = [
+		/* ...其他column略 ...  */
+		{ id : 'total'   , header : "总成绩" }
+];
+
+[/code]
+
+运行看一下效果, 你会发现,列表变成了7列, 所有记录的第7列"总成绩"值都为1.
+为1 肯定不是我们想要的结果, 我们需要的是 计算 英语成绩与数学成绩的总和.
+
+我们来改造一下 initValue 函数.  initValue 函数的第一个参数为"对数据集进行迭代时的,当前record".
+那么我们只要从record中取出 english 和 math成绩 相加即可.
+[code="javascript"]
+		{ name : 'total'   , type: 'float',
+			initValue : function(record){
+				return record['english'] + record['math'];
+			}
+		}
+[/code]
+
+另外, 现在列多了, 看起来不方便, 我们可以通过调整列宽来 美化外观. 通过给各个column设置"width"属性来实现.
+目前版本的 GT-Grid的列宽只支持整数(单位:像素) 不支持百分比.
+我们将7列的宽度 依次调整为 : 50 , 100 ,50, 50 ,60 ,60 ,70 .
+
+这时候也许大家会发现, 分数相关的列都是内容左对齐, 这个似乎不符合国际关联, 通常数字都是右对齐的.
+那么我们也改一下吧. 很简单,  通过给column设置"align"属性来实现.
+align : 水平方向上 内容的对齐方式, 可选值: left(默认) center right.
+[code="javascript"]
+var colsConfig = [
+	/* ...其他column略 ...  */
+	{ id : 'english' , header : "英语" , width : 60 , align :'right'}
+]
+[/code]
+
+
+
+运行一下看看结果吧 :) .
+
+
+[color=green]=========================================[/color]
+
+
+[b]2 扩展显示列 [/b]
+除了前面提到的"扩展数据列" ,还有一种扩展列, 它和"数据"本身关系不大,他更主要的作用是用来显示一些数据以外的东西.
+举个例子. 我们肯定常常简单这样的列表:
+前面使一些数据,最后一个单元格里有一个按钮或者是图片 或者是链接, 点击后可以执行一些特殊的操作.
+
+那么这时候, 这最后一列就不能叫做 扩展数据列了, 它更多的职责时"显示", 它通常不会参与到 排序 统计 运算 等数据操作中.
+这样的扩展列, 我们叫做"扩展显示列".
+
+在GT-Grid中, 利用column 的  renderer 方法就可以实现.
+
+对示例中的 column定义做如下修改 : 
+[code="javascript"]
+var colsConfig = [
+	/* ...其他column略 ...  */
+	{ id : 'detail'   , header : "详细信息" , width : 120,
+		renderer : function(value ,record,columnObj,grid,colNo,rowNo){
+			return '<a href=".?no='+record['no']+'" >'+ record['name'] +' 的详细信息</a>';
+		}
+	}
+];
+
+[/code]
+我们加入了一列"详细信息".
+column.renderer 函数的返回值 是一个合法的html字符串. 这个返回值将显示在表格的相应单元格内.
+renderer 函数的 6个参数依次为
+[code="javascript"]
+value : 相应单元格对应的数据值 (本例中为null, 因为数据集中 根本就没有detail列)
+record : 迭代中当前的record
+columnObj :　当前的column对象,
+grid　:　当前的grid对象.
+colNo : 当前的列号
+rowNo : 迭代中当前的行号
+[/code]
+
+此例中,暂时我们只需要一个record就可以了. 我们根据record信息,拼装出了一个链接.(当然在这个演示中链接的地址是无效的)
+
+再次运行吧.
+
+
+[color=green]=========================================[/color]
+
+
+其实 很多 扩展数据列的功能 ,通过扩展显示列 也可以实现.
+例如关于 total 列的 , 我们也可以只在columns中扩展显示列, 直接使用:
+
+renderer : function(...) { return 数学+英语 ; }
+
+那么该如何选择呢?? 一个简单的原则如下:
+如果你扩展的列 只是用来显示给用户看 , 而不会参与到 编辑 排序 统计 运算 等数据操作中,
+那么使用扩展显示列就可以, 否则就应该使用扩展数据列.
+(GT-Grid 考虑的真是周全啊 哈哈哈)
+
+[color=green]=========================================[/color]
+
+
+[b]3 个性化渲染列 [/b]
+之前的例子中, 所有数据在显示的时候都是"中规中矩". 这样有时候是无法满足我们的需求的 , 有时候我们也许希望列表显示的更加丰富一些.
+例如: 在成绩一列, 我们希望总成绩大于170分的 用红颜色标识出来(因为这是一个很不错的成绩), 而120分以下的用蓝色标识出来(成绩很差).
+
+这个需求怎么实现呢? 我想从上面加连接的例子 里大家应该能够悟出来  ,是的 没错, 继续使用 renderer .
+大家直接看代码, 应该很容易就明白怎样做 以及为什么这样做.
+
+[code="javascript"]
+var colsConfig = [
+		/* ...其他column略 ...  */
+		{ id : 'total'   , header : "总成绩" , width : 70 , align :'right',
+			renderer : function(value ,record,columnObj,grid,colNo,rowNo){
+				   var total = record['total'];
+				   if (total>170) {
+						total =  '<span style="color:red" >'+ total +'</span>';
+				   }else if (total<120) {
+						total = '<span style="color:blue" >'+ total +'</span>';
+				   }
+				   return total;
+			}
+		}
+];
+
+[/code]
+
+对本小节做个简单概括: 我们利用renderer返回html的特性, 利用html代码对原始数据进行包装,便可以实现显示效果的自定(个性化渲染列).
+
+
+[color=green]=========================================[/color]
+
+
+[b]4 数据值 与 显示值的映射 [/b]
+本例中, 大家看到了, 性别一列一值 显示的时M/F, 这并不是我们希望看到的.
+有了前两节的基础, 我想大家都可以 利用 renderer 方法轻易的实现 将M/F变成男/女.
+
+在这小节我要告诉大家的是, 这种简单的映射, GT-Grid提供了一个工具函数, 可以帮助大家更简单的完成这个工作.
+
+[code="javascript"]
+var colsConfig = [
+		/* ...其他column略 ...  */
+		{ id : 'gender'  , header : "性别" , width : 50 ,
+			renderer : GT.Grid.mappingRenderer(  {'U': '未知' , 'M':'男', 'F':'女'} , '未知' )
+		}
+];
+
+[/code]
+
+GT.Grid.mappingRenderer函数有两个参数:
+第一个是用来做映射的json-object, 第二个是数据不满足映射关系时 希望返回的值.
+用来做映射的json-object就相当于一个可 key-value的hashmap, key就是列对应的数据的值, value就是希望映射成的值.
+这个还是很好理解的.
+当数据的值不在 这个关于性别的 映射关系中时, 将返回 '未知'.
+
+
+
+[color=green]=========================================[/color]
+
+
+
+
+这一章讲解了 对列的扩展和显示效果的自定义, 只要你合理的利用 initValue 以及 renderer ,绝对可以创造出丰富多彩的列表.
+
+好了 ,第二章到此结束了. 已经很晚了, 明天再写吧. 下一章再见 :).
+
+
+
+[color=green]=========================================[/color]
+
+
+最后的成果图: 
+[img]http://fins.javaeye.com/upload/picture/pic/17850/1651c3fe-fdcf-3146-bf7e-6aa7a7cb74f5.jpg[/img]
