@@ -1,6 +1,7 @@
 package org.ndot.spring25.junit;
 
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 import org.junit.Test;
@@ -19,39 +20,42 @@ import org.ndot.spring25.instance.Canada;
 import org.ndot.spring25.instance.Chinise;
 import org.ndot.spring25.scop.UserManager;
 import org.ndot.spring25.scop.xml.UserManagerXML;
+import org.ndot.spring25.transaction.pojo.Usertab;
+import org.ndot.spring25.transaction.services.DBService;
+import org.ndot.spring25.transaction.services.DBServiceImp;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.AbstractApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 /**
- * ¡¾Ð¡ÂìÒÏÑ§ÌÃ Ö® J2EE¡¿
+ * ï¿½ï¿½Ð¡ï¿½ï¿½ï¿½ï¿½Ñ§ï¿½ï¿½ Ö® J2EEï¿½ï¿½
  * 
  *<P>
  * 
- * ÏîÄ¿Ãû³Æ£ºSpring2.5_study
+ * ï¿½ï¿½Ä¿ï¿½ï¿½Æ£ï¿½Spring2.5_study
  * 
  *<P>
  * 
- * ÎÄ¼þÃû£º Spring25Tester.java
+ * ï¿½Ä¼ï¿½ï¿½ï¿½ Spring25Tester.java
  * 
  *<P>
  * 
- * ¹¦ ÄÜ:
+ * ï¿½ï¿½ ï¿½ï¿½:
  * 
  * 
  *<P>
  * 
  * 
- * ×÷ Õß: SunJincheng
+ * ï¿½ï¿½ ï¿½ï¿½: SunJincheng
  * 
  *<P>
  * 
- * ´´½¨Ê±¼ä: 2009-8-20
+ * ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½: 2009-8-20
  * 
  */
 public class Spring25Tester {
 	/**
-	 * ¼òµ¥µÄ²âÊÔÈÝÆ÷µÄ´´½¨ºÍbean µÄ»ñÈ¡
+	 * ï¿½òµ¥µÄ²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä´ï¿½ï¿½ï¿½ï¿½ï¿½bean ï¿½Ä»ï¿½È¡
 	 */
 	@Test
 	public void simpleTest() {
@@ -68,7 +72,7 @@ public class Spring25Tester {
 
 	/**
 	 * 
-	 * ¹¦ ÄÜ£ºÀûÓÃ×Ô¶¨ÒåµÄIOCÈÝÆ÷¹ÜÀíbean
+	 * ï¿½ï¿½ ï¿½Ü£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô¶ï¿½ï¿½ï¿½ï¿½IOCï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½bean
 	 * 
 	 *<P>
 	 */
@@ -87,7 +91,7 @@ public class Spring25Tester {
 
 	/**
 	 * 
-	 * ¹¦ ÄÜ£º²âÊÔÊµÀý»¯beanµÄÈýÖÖ·½Ê½
+	 * ï¿½ï¿½ ï¿½Ü£ï¿½ï¿½ï¿½ï¿½ï¿½Êµï¿½ï¿½beanï¿½ï¿½ï¿½ï¿½ï¿½Ö·ï¿½Ê½
 	 * 
 	 *<P>
 	 */
@@ -115,7 +119,7 @@ public class Spring25Tester {
 
 	/**
 	 * 
-	 * ¹¦ ÄÜ£º²âÊÔÒÀÀµ×¢Èë¹¦ÄÜ
+	 * ï¿½ï¿½ ï¿½Ü£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½×¢ï¿½ë¹¦ï¿½ï¿½
 	 * 
 	 *<P>
 	 */
@@ -125,7 +129,7 @@ public class Spring25Tester {
 			ApplicationContext ctx = new ClassPathXmlApplicationContext(
 					new String[] { "injectApplicationContext.xml" });
 			{
-				// ×¢Èë¼¯ºÏÀàÐÍ
+				// ×¢ï¿½ë¼¯ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 				BeanA a1 = (BeanA) ctx.getBean("beanA1");
 
 				System.out.println("=======================");
@@ -159,7 +163,7 @@ public class Spring25Tester {
 				System.out.println("=======================");
 			}
 			{
-				// ¼¯ºÏºÏ²¢
+				// ï¿½ï¿½ï¿½ÏºÏ²ï¿½
 				BeanB b1 = (BeanB) ctx.getBean("BeanBInject1");
 				System.out.println("b1.getListp().size()="
 						+ b1.getListp().size());
@@ -168,7 +172,7 @@ public class Spring25Tester {
 						+ b2.getListp().size());
 			}
 			{
-				// Ç¿ÖÆÀàÐÍ×ª»»
+				// Ç¿ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½×ªï¿½ï¿½
 				BeanB b3 = (BeanB) ctx.getBean("BeanBInject3");
 				try {
 					Float f1 = (Float) b3.getMapp().get("aaa");
@@ -176,22 +180,24 @@ public class Spring25Tester {
 					System.out.println(f1 + f2);
 				} catch (Exception e) {
 					System.err.println("========================");
-					System.err.println("Ã»ÓÐÊ¹ÓÃSpringµÄÇ¿ÖÆÀàÐÍ×°»»ÅäÖÃ,ÊýÖµ¼ÆËãÒì³£......");
+					System.err
+							.println("Ã»ï¿½ï¿½Ê¹ï¿½ï¿½Springï¿½ï¿½Ç¿ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½×°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½,ï¿½ï¿½Öµï¿½ï¿½ï¿½ï¿½ï¿½ì³£......");
 					System.err.println("========================");
 				}
-				System.out.println("Ê¹ÓÃSpringµÄÇ¿ÖÆÀàÐÍ×°»»ÅäÖÃ,ÊýÖµ¼ÆËã³É¹¦£¬½á¹ûÈçÏÂ£º");
+				System.out
+						.println("Ê¹ï¿½ï¿½Springï¿½ï¿½Ç¿ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½×°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½,ï¿½ï¿½Öµï¿½ï¿½ï¿½ï¿½É¹ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Â£ï¿½");
 				System.out.println((b3.getFloatMap().get("aaa"))
 						+ (b3.getFloatMap().get("bbb")));
 			}
 			{
-				// Null µÄÅäÖÃ
+				// Null ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 				NullBean nb = (NullBean) ctx.getBean("nullbean");
 				System.out.println("nb.getNullValue()=" + nb.getNullValue());
 				System.out.println("nb.getEmptyStr()+NDot =" + nb.getEmptyStr()
 						+ "NDot");
 			}
 			{
-				// ·½·¨×¢Èëlookup
+				// ï¿½ï¿½ï¿½ï¿½×¢ï¿½ï¿½lookup
 				System.out.println(((BeanA) ctx.getBean("beana"))
 						.injectBeanBInstance().hashCode());
 				System.out.println(((BeanA) ctx.getBean("beana"))
@@ -201,7 +207,7 @@ public class Spring25Tester {
 						.injectBeanBInstance().hashCode());
 
 			}
-			System.out.println("====¹§Ï²Äú£¬È«²¿²âÊÔ³É¹¦À²£º)=====");
+			System.out.println("====ï¿½ï¿½Ï²ï¿½ï¿½È«ï¿½ï¿½ï¿½ï¿½ï¿½Ô³É¹ï¿½ï¿½ï¿½ï¿½ï¿½)=====");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -209,13 +215,14 @@ public class Spring25Tester {
 
 	/**
 	 * 
-	 * ¹¦ ÄÜ£º²âÊÔÑÓ³Ù¼ÓÔØºÍÒÀÀµÊµÀý»¯ ÕâÀïµÄ²âÊÔÖ÷Òª¿´ ´´½¨ApplicationContextÈÝÆ÷ÊµÀý
-	 * µÄÊ±ºòÅäÖÃbeanµÄÊµÀý»¯¹ý³Ì£¬Òª¹Û²ìÈÕÖ¾µÄÊµÀý´´½¨Ë³Ðò
+	 * ï¿½ï¿½ ï¿½Ü£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ó³Ù¼ï¿½ï¿½Øºï¿½ï¿½ï¿½ï¿½ï¿½Êµï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ä²ï¿½ï¿½ï¿½ï¿½ï¿½Òªï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ApplicationContextï¿½ï¿½ï¿½ï¿½Êµï¿½ï¿½
+	 * ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½beanï¿½ï¿½Êµï¿½ï¿½ï¿½Ì£ï¿½Òªï¿½Û²ï¿½ï¿½ï¿½Ö¾ï¿½ï¿½Êµï¿½ï¿½Ë³ï¿½ï¿½
 	 * 
-	 * <1> .µ±Egg bean Ã»ÓÐ¶Ô Chicken2 bean ÒÀÀµµÄÊ±ºòÊä³ö£º Create Chicken Instance......
-	 * Create Egg Instance...... »ñÈ¡ÑÓ³Ù¼ÓÔØÊµÀý-chicken2 Create Chicken Instance......
-	 * <2> .µ±Egg bean ¶Ô Chicken2 bean ÒÀÀµµÄÊ±ºòÊä³ö£º Create Chicken Instance......
-	 * Create Chicken Instance...... Create Egg Instance...... »ñÈ¡ÑÓ³Ù¼ÓÔØÊµÀý-chicken2
+	 * <1> .ï¿½ï¿½Egg bean Ã»ï¿½Ð¶ï¿½ Chicken2 bean ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Create Chicken
+	 * Instance...... Create Egg Instance...... ï¿½ï¿½È¡ï¿½Ó³Ù¼ï¿½ï¿½ï¿½Êµï¿½ï¿½-chicken2 Create
+	 * Chicken Instance...... <2> .ï¿½ï¿½Egg bean ï¿½ï¿½ Chicken2 bean ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	 * Create Chicken Instance...... Create Chicken Instance...... Create Egg
+	 * Instance...... ï¿½ï¿½È¡ï¿½Ó³Ù¼ï¿½ï¿½ï¿½Êµï¿½ï¿½-chicken2
 	 *<P>
 	 */
 	@Test
@@ -223,7 +230,7 @@ public class Spring25Tester {
 		try {
 			ApplicationContext ctx = new ClassPathXmlApplicationContext(
 					new String[] { "dependonApplicationContext.xml" });
-			System.out.println("»ñÈ¡ÑÓ³Ù¼ÓÔØÊµÀý-chicken2");
+			System.out.println("ï¿½ï¿½È¡ï¿½Ó³Ù¼ï¿½ï¿½ï¿½Êµï¿½ï¿½-chicken2");
 			Chicken c = (Chicken) ctx.getBean("chicken2");
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -232,7 +239,7 @@ public class Spring25Tester {
 
 	/**
 	 * 
-	 * ¹¦ ÄÜ£º×Ô¶¯×°Åä²âÊÔ
+	 * ï¿½ï¿½ ï¿½Ü£ï¿½ï¿½Ô¶ï¿½×°ï¿½ï¿½ï¿½ï¿½ï¿½
 	 * 
 	 *<P>
 	 */
@@ -247,12 +254,12 @@ public class Spring25Tester {
 					AutowireMainBean byNameAutowire = (AutowireMainBean) ctx
 							.getBean("byNameAutowire");
 					byNameAutowire.getAutowireBeanA().say(
-							"I'am Autowired byName£¡");
+							"I'am Autowired byNameï¿½ï¿½");
 				} catch (Exception e) {
 					System.err
 							.println("==============================================");
 					System.err
-							.println("¡¾byName£ºAutowireMainBean Ã»ÓÐ½øÐÐ ÒÀÀµ×¢Èë¼ì²é£¬AutowireMainBean×¢ÈëÊ§°Ü......¡¿");
+							.println("ï¿½ï¿½byNameï¿½ï¿½AutowireMainBean Ã»ï¿½Ð½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½×¢ï¿½ï¿½ï¿½é£¬AutowireMainBean×¢ï¿½ï¿½Ê§ï¿½ï¿½......ï¿½ï¿½");
 					System.err
 							.println("==============================================");
 				}
@@ -264,12 +271,12 @@ public class Spring25Tester {
 					AutowireMainBean byTypeAutowire = (AutowireMainBean) ctx
 							.getBean("byTypeAutowire");
 					byTypeAutowire.getAutowireBeanA().say(
-							"I'am Autowired byType£¡");
+							"I'am Autowired byTypeï¿½ï¿½");
 				} catch (Exception e) {
 					System.err
 							.println("==============================================");
 					System.err
-							.println("¡¾byType:AutowireMainBean Ã»ÓÐ½øÐÐ ÒÀÀµ×¢Èë¼ì²é£¬AutowireMainBean×¢ÈëÊ§°Ü......¡¿");
+							.println("ï¿½ï¿½byType:AutowireMainBean Ã»ï¿½Ð½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½×¢ï¿½ï¿½ï¿½é£¬AutowireMainBean×¢ï¿½ï¿½Ê§ï¿½ï¿½......ï¿½ï¿½");
 					System.err
 							.println("==============================================");
 				}
@@ -281,12 +288,12 @@ public class Spring25Tester {
 					AutowireMainBean byConstructorAutowire = (AutowireMainBean) ctx
 							.getBean("byConstructorAutowire");
 					byConstructorAutowire.getAutowireBeanA().say(
-							"I'am Autowired byConstructorAutowire£¡");
+							"I'am Autowired byConstructorAutowireï¿½ï¿½");
 				} catch (Exception e) {
 					System.err
 							.println("==============================================");
 					System.err
-							.println("¡¾byConstructorAutowire: AutowireMainBean Ã»ÓÐ½øÐÐ ÒÀÀµ×¢Èë¼ì²é£¬AutowireMainBean×¢ÈëÊ§°Ü......¡¿");
+							.println("ï¿½ï¿½byConstructorAutowire: AutowireMainBean Ã»ï¿½Ð½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½×¢ï¿½ï¿½ï¿½é£¬AutowireMainBean×¢ï¿½ï¿½Ê§ï¿½ï¿½......ï¿½ï¿½");
 					System.err
 							.println("==============================================");
 				}
@@ -298,17 +305,17 @@ public class Spring25Tester {
 					AutowireMainBean byAutodetectAutowire = (AutowireMainBean) ctx
 							.getBean("byAutodetectAutowire");
 					byAutodetectAutowire.getAutowireBeanA().say(
-							"I'am Autowired byAutodetectAutowire£¡");
+							"I'am Autowired byAutodetectAutowireï¿½ï¿½");
 				} catch (Exception e) {
 					System.err
 							.println("==============================================");
 					System.err
-							.println("¡¾byAutodetectAutowire: AutowireMainBean Ã»ÓÐ½øÐÐ ÒÀÀµ×¢Èë¼ì²é£¬AutowireMainBean×¢ÈëÊ§°Ü......¡¿");
+							.println("ï¿½ï¿½byAutodetectAutowire: AutowireMainBean Ã»ï¿½Ð½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½×¢ï¿½ï¿½ï¿½é£¬AutowireMainBean×¢ï¿½ï¿½Ê§ï¿½ï¿½......ï¿½ï¿½");
 					System.err
 							.println("==============================================");
 				}
 			}
-			// ¹Ø±Õctx
+			// ï¿½Ø±ï¿½ctx
 			((AbstractApplicationContext) ctx).registerShutdownHook();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -318,7 +325,7 @@ public class Spring25Tester {
 
 	/**
 	 * 
-	 * ¹¦ ÄÜ£º»ùÓÚ×¢½âµÄ×¢Èë²âÊÔ
+	 * ï¿½ï¿½ ï¿½Ü£ï¿½ï¿½ï¿½ï¿½ï¿½×¢ï¿½ï¿½ï¿½×¢ï¿½ï¿½ï¿½ï¿½ï¿½
 	 * 
 	 *<P>
 	 */
@@ -331,20 +338,20 @@ public class Spring25Tester {
 				Family f = (Family) ctx.getBean("family");
 
 				System.out.println("=====================");
-				System.out.println("¼ÒÍ¥Ãû³Æ£º" + f.getFname());
+				System.out.println("ï¿½ï¿½Í¥ï¿½ï¿½Æ£ï¿½" + f.getFname());
 				System.out.println("=====================");
-				System.out.println("¼ÒÍ¥³ÉÔ±£º");
+				System.out.println("ï¿½ï¿½Í¥ï¿½ï¿½Ô±ï¿½ï¿½");
 				Map<String, Member> members = f.getMembers();
 				Iterator it = members.keySet().iterator();
 				while (it.hasNext()) {
 					String mrole = (String) it.next();
-					System.out.println("¼ÒÍ¥½ÇÉ«: " + mrole);
+					System.out.println("ï¿½ï¿½Í¥ï¿½ï¿½É«: " + mrole);
 					Member m = (Member) members.get(mrole);
-					System.out.println("ÐÔ±ð: " + m.getMsex());
+					System.out.println("ï¿½Ô±ï¿½: " + m.getMsex());
 				}
 				System.out.println("=====================");
-				System.out.println("¼ÒÍ¥µØÖ·£º" + f.getAddress().getCountry() + ":"
-						+ f.getAddress().getCity());
+				System.out.println("ï¿½ï¿½Í¥ï¿½ï¿½Ö·ï¿½ï¿½" + f.getAddress().getCountry()
+						+ ":" + f.getAddress().getCity());
 			}
 
 		} catch (Exception e) {
@@ -354,7 +361,7 @@ public class Spring25Tester {
 
 	/**
 	 * 
-	 * ¹¦ ÄÜ£º»ùÓÚ×¢½âµÄ¡¾×Ô¶¨ÒåQualifier¡¿×¢Èë²âÊÔ
+	 * ï¿½ï¿½ ï¿½Ü£ï¿½ï¿½ï¿½ï¿½ï¿½×¢ï¿½ï¿½Ä¡ï¿½ï¿½Ô¶ï¿½ï¿½ï¿½Qualifierï¿½ï¿½×¢ï¿½ï¿½ï¿½ï¿½ï¿½
 	 * 
 	 *<P>
 	 */
@@ -373,7 +380,7 @@ public class Spring25Tester {
 
 	/**
 	 * 
-	 * ¹¦ ÄÜ£º»ùÓÚ ×¢½âºÍ×Ô¶¯É¨Ãè ×¢Èë²âÊÔ
+	 * ï¿½ï¿½ ï¿½Ü£ï¿½ï¿½ï¿½ï¿½ï¿½ ×¢ï¿½ï¿½ï¿½ï¿½Ô¶ï¿½É¨ï¿½ï¿½ ×¢ï¿½ï¿½ï¿½ï¿½ï¿½
 	 * 
 	 *<P>
 	 */
@@ -392,7 +399,7 @@ public class Spring25Tester {
 
 	/**
 	 * 
-	 * ¹¦ ÄÜ£º»ùÓÚ Bean ×÷ÓÃÓò xmlÅäÖÃ·½Ê½ ²âÊÔ
+	 * ï¿½ï¿½ ï¿½Ü£ï¿½ï¿½ï¿½ï¿½ï¿½ Bean ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ xmlï¿½ï¿½ï¿½Ã·ï¿½Ê½ ï¿½ï¿½ï¿½ï¿½
 	 * 
 	 *<P>
 	 */
@@ -402,8 +409,8 @@ public class Spring25Tester {
 			ApplicationContext ctx = new ClassPathXmlApplicationContext(
 					new String[] { "scopXmlApplicationContext.xml" });
 			{
-				// seter ×¢Èë prototypeÀàÐÍbean:
-				System.out.println("seter ×¢Èë prototypeÀàÐÍbean: ");
+				// seter ×¢ï¿½ï¿½ prototypeï¿½ï¿½ï¿½ï¿½bean:
+				System.out.println("seter ×¢ï¿½ï¿½ prototypeï¿½ï¿½ï¿½ï¿½bean: ");
 				UserManagerXML um = (UserManagerXML) ctx.getBean("userManager");
 				int u1hashcode = um.getUserInfo().hashCode();
 				System.out.println("u1hashcode=" + u1hashcode);
@@ -415,24 +422,26 @@ public class Spring25Tester {
 						+ (u1hashcode == u2hashcode));
 				if (u1hashcode == u2hashcode) {
 					System.out
-							.println("Á½¸öUserInfoµÄhashcode ÏàÍ¬£¬ËµÃ÷×¢ÈëµÄÍ¬Ò»¸öuserInfoÊµÀý£¬ÓëÆÚÍû²»Í¬£¬Ã»ÓÐ½â¾ö");
-					System.out.println("Singleton beansºÍprototype-beanµÄÒÀÀµÐèÇó");
+							.println("ï¿½ï¿½ï¿½ï¿½UserInfoï¿½ï¿½hashcode ï¿½ï¿½Í¬ï¿½ï¿½Ëµï¿½ï¿½×¢ï¿½ï¿½ï¿½Í¬Ò»ï¿½ï¿½userInfoÊµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í¬ï¿½ï¿½Ã»ï¿½Ð½ï¿½ï¿½");
+					System.out
+							.println("Singleton beansï¿½ï¿½prototype-beanï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½");
 				} else {
 					System.out
-							.println("Á½¸öUserInfoµÄhashcode ²»Í¬£¬ËµÃ÷×¢ÈëÁË²»Í¬µÄuserInfoÊµÀý£¬ÓëÆÚÍûÏà·û£¬½â¾öÁË");
-					System.out.println("Singleton beansºÍprototype-beanµÄÒÀÀµÐèÇó");
+							.println("ï¿½ï¿½ï¿½ï¿½UserInfoï¿½ï¿½hashcode ï¿½ï¿½Í¬ï¿½ï¿½Ëµï¿½ï¿½×¢ï¿½ï¿½ï¿½Ë²ï¿½Í¬ï¿½ï¿½userInfoÊµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½");
+					System.out
+							.println("Singleton beansï¿½ï¿½prototype-beanï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½");
 
 				}
 				System.out.println("==================================");
 				System.out.println("um.hashCode()==um2.hashCode()="
 						+ (um.hashCode() == um2.hashCode()));
 				System.out
-						.println("UserManagerXML ÊÇSingleton beans£¬UserInfoXML ÊÇprototype-bean");
+						.println("UserManagerXML ï¿½ï¿½Singleton beansï¿½ï¿½UserInfoXML ï¿½ï¿½prototype-bean");
 			}
 			{
-				// LookUp ·½·¨×¢Èë prototypeÀàÐÍbean:
+				// LookUp ï¿½ï¿½ï¿½ï¿½×¢ï¿½ï¿½ prototypeï¿½ï¿½ï¿½ï¿½bean:
 				System.out.println("=====================================");
-				System.out.println("LookUp ·½·¨×¢Èë prototypeÀàÐÍbean:");
+				System.out.println("LookUp ï¿½ï¿½ï¿½ï¿½×¢ï¿½ï¿½ prototypeï¿½ï¿½ï¿½ï¿½bean:");
 				UserManagerXML um = (UserManagerXML) ctx
 						.getBean("userManagerLookup");
 				um.setUserInfo(um.getNewUserInfo());
@@ -447,19 +456,21 @@ public class Spring25Tester {
 						+ (u1hashcode == u2hashcode));
 				if (u1hashcode == u2hashcode) {
 					System.out
-							.println("Á½¸öUserInfoµÄhashcode ÏàÍ¬£¬ËµÃ÷×¢ÈëµÄÍ¬Ò»¸öuserInfoÊµÀý£¬ÓëÆÚÍû²»Í¬£¬Ã»ÓÐ½â¾ö");
-					System.out.println("Singleton beansºÍprototype-beanµÄÒÀÀµÐèÇó");
+							.println("ï¿½ï¿½ï¿½ï¿½UserInfoï¿½ï¿½hashcode ï¿½ï¿½Í¬ï¿½ï¿½Ëµï¿½ï¿½×¢ï¿½ï¿½ï¿½Í¬Ò»ï¿½ï¿½userInfoÊµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í¬ï¿½ï¿½Ã»ï¿½Ð½ï¿½ï¿½");
+					System.out
+							.println("Singleton beansï¿½ï¿½prototype-beanï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½");
 				} else {
 					System.out
-							.println("Á½¸öUserInfoµÄhashcode ²»Í¬£¬ËµÃ÷×¢ÈëÁË²»Í¬µÄuserInfoÊµÀý£¬ÓëÆÚÍûÏà·û£¬½â¾öÁË");
-					System.out.println("Singleton beansºÍprototype-beanµÄÒÀÀµÐèÇó");
+							.println("ï¿½ï¿½ï¿½ï¿½UserInfoï¿½ï¿½hashcode ï¿½ï¿½Í¬ï¿½ï¿½Ëµï¿½ï¿½×¢ï¿½ï¿½ï¿½Ë²ï¿½Í¬ï¿½ï¿½userInfoÊµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½");
+					System.out
+							.println("Singleton beansï¿½ï¿½prototype-beanï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½");
 
 				}
 				System.out.println("==================================");
 				System.out.println("um.hashCode()==um2.hashCode()="
 						+ (um.hashCode() == um2.hashCode()));
 				System.out
-						.println("UserManagerXML ÊÇSingleton beans£¬UserInfoXML ÊÇprototype-bean");
+						.println("UserManagerXML ï¿½ï¿½Singleton beansï¿½ï¿½UserInfoXML ï¿½ï¿½prototype-bean");
 			}
 
 		} catch (Exception e) {
@@ -469,7 +480,7 @@ public class Spring25Tester {
 
 	/**
 	 * 
-	 * ¹¦ ÄÜ£º»ùÓÚ Bean ×÷ÓÃÓò ×¢ÊÍ·½Ê½ ²âÊÔ
+	 * ï¿½ï¿½ ï¿½Ü£ï¿½ï¿½ï¿½ï¿½ï¿½ Bean ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ×¢ï¿½Í·ï¿½Ê½ ï¿½ï¿½ï¿½ï¿½
 	 * 
 	 *<P>
 	 */
@@ -479,8 +490,8 @@ public class Spring25Tester {
 			ApplicationContext ctx = new ClassPathXmlApplicationContext(
 					new String[] { "scopApplicationContext.xml" });
 			{
-				// seter ×¢Èë prototypeÀàÐÍbean:
-				System.out.println("seter ×¢Èë prototypeÀàÐÍbean: ");
+				// seter ×¢ï¿½ï¿½ prototypeï¿½ï¿½ï¿½ï¿½bean:
+				System.out.println("seter ×¢ï¿½ï¿½ prototypeï¿½ï¿½ï¿½ï¿½bean: ");
 				UserManager um = (UserManager) ctx.getBean("userManager");
 				int u1hashcode = um.getUserInfo().hashCode();
 				System.out.println("u1hashcode=" + u1hashcode);
@@ -491,25 +502,27 @@ public class Spring25Tester {
 						+ (u1hashcode == u2hashcode));
 				if (u1hashcode == u2hashcode) {
 					System.out
-							.println("Á½¸öUserInfoµÄhashcode ÏàÍ¬£¬ËµÃ÷×¢ÈëµÄÍ¬Ò»¸öuserInfoÊµÀý£¬ÓëÆÚÍû²»Í¬£¬Ã»ÓÐ½â¾ö");
-					System.out.println("Singleton beansºÍprototype-beanµÄÒÀÀµÐèÇó");
+							.println("ï¿½ï¿½ï¿½ï¿½UserInfoï¿½ï¿½hashcode ï¿½ï¿½Í¬ï¿½ï¿½Ëµï¿½ï¿½×¢ï¿½ï¿½ï¿½Í¬Ò»ï¿½ï¿½userInfoÊµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í¬ï¿½ï¿½Ã»ï¿½Ð½ï¿½ï¿½");
+					System.out
+							.println("Singleton beansï¿½ï¿½prototype-beanï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½");
 				} else {
 					System.out
-							.println("Á½¸öUserInfoµÄhashcode ²»Í¬£¬ËµÃ÷×¢ÈëÁË²»Í¬µÄuserInfoÊµÀý£¬ÓëÆÚÍûÏà·û£¬½â¾öÁË");
-					System.out.println("Singleton beansºÍprototype-beanµÄÒÀÀµÐèÇó");
+							.println("ï¿½ï¿½ï¿½ï¿½UserInfoï¿½ï¿½hashcode ï¿½ï¿½Í¬ï¿½ï¿½Ëµï¿½ï¿½×¢ï¿½ï¿½ï¿½Ë²ï¿½Í¬ï¿½ï¿½userInfoÊµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½");
+					System.out
+							.println("Singleton beansï¿½ï¿½prototype-beanï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½");
 
 				}
 				System.out.println("==================================");
 				System.out.println("um.hashCode()==um2.hashCode()="
 						+ (um.hashCode() == um2.hashCode()));
-				System.out.println("UserManager ÊÇSingleton beans");
+				System.out.println("UserManager ï¿½ï¿½Singleton beans");
 			}
 
 			{
 
-				// LookUp ·½·¨×¢Èë prototypeÀàÐÍbean:
+				// LookUp ï¿½ï¿½ï¿½ï¿½×¢ï¿½ï¿½ prototypeï¿½ï¿½ï¿½ï¿½bean:
 				System.out.println("=====================================");
-				System.out.println("LookUp ·½·¨×¢Èë prototypeÀàÐÍbean:");
+				System.out.println("LookUp ï¿½ï¿½ï¿½ï¿½×¢ï¿½ï¿½ prototypeï¿½ï¿½ï¿½ï¿½bean:");
 				UserManager um = (UserManager) ctx.getBean("userManager");
 				um.setUserInfo(um.getNewUserInfo());
 				int u1hashcode = um.getUserInfo().hashCode();
@@ -522,19 +535,21 @@ public class Spring25Tester {
 						+ (u1hashcode == u2hashcode));
 				if (u1hashcode == u2hashcode) {
 					System.out
-							.println("Á½¸öUserInfoµÄhashcode ÏàÍ¬£¬ËµÃ÷×¢ÈëµÄÍ¬Ò»¸öuserInfoÊµÀý£¬ÓëÆÚÍû²»Í¬£¬Ã»ÓÐ½â¾ö");
-					System.out.println("Singleton beansºÍprototype-beanµÄÒÀÀµÐèÇó");
+							.println("ï¿½ï¿½ï¿½ï¿½UserInfoï¿½ï¿½hashcode ï¿½ï¿½Í¬ï¿½ï¿½Ëµï¿½ï¿½×¢ï¿½ï¿½ï¿½Í¬Ò»ï¿½ï¿½userInfoÊµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í¬ï¿½ï¿½Ã»ï¿½Ð½ï¿½ï¿½");
+					System.out
+							.println("Singleton beansï¿½ï¿½prototype-beanï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½");
 				} else {
 					System.out
-							.println("Á½¸öUserInfoµÄhashcode ²»Í¬£¬ËµÃ÷×¢ÈëÁË²»Í¬µÄuserInfoÊµÀý£¬ÓëÆÚÍûÏà·û£¬½â¾öÁË");
-					System.out.println("Singleton beansºÍprototype-beanµÄÒÀÀµÐèÇó");
+							.println("ï¿½ï¿½ï¿½ï¿½UserInfoï¿½ï¿½hashcode ï¿½ï¿½Í¬ï¿½ï¿½Ëµï¿½ï¿½×¢ï¿½ï¿½ï¿½Ë²ï¿½Í¬ï¿½ï¿½userInfoÊµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½");
+					System.out
+							.println("Singleton beansï¿½ï¿½prototype-beanï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½");
 
 				}
 				System.out.println("==================================");
 				System.out.println("um.hashCode()==um2.hashCode()="
 						+ (um.hashCode() == um2.hashCode()));
 				System.out
-						.println("UserManager ÊÇSingleton beans£¬UserInfo ÊÇprototype-bean");
+						.println("UserManager ï¿½ï¿½Singleton beansï¿½ï¿½UserInfo ï¿½ï¿½prototype-bean");
 			}
 
 		} catch (Exception e) {
@@ -544,7 +559,7 @@ public class Spring25Tester {
 
 	/**
 	 * 
-	 * ¹¦ ÄÜ£º¶ÔSpring¼¯³ÉQuartz²âÊÔ
+	 * ï¿½ï¿½ ï¿½Ü£ï¿½ï¿½ï¿½Springï¿½ï¿½ï¿½ï¿½Quartzï¿½ï¿½ï¿½ï¿½
 	 * 
 	 *<P>
 	 */
@@ -555,6 +570,32 @@ public class Spring25Tester {
 					new String[] { "applicationContext-quartz.xml" });
 			Thread.sleep(60000);
 			System.out.println("end");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * 
+	 * ï¿½ï¿½ ï¿½Ü£ï¿½ï¿½ï¿½ï¿½ï¿½×¢ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	 * 
+	 *<P>
+	 */
+	@Test
+	public void TransactionTest() {
+		try {
+			ApplicationContext ctx = new ClassPathXmlApplicationContext(
+					new String[] { "transactionalApplicationContext.xml" });
+			DBService dbs = (DBServiceImp) ctx.getBean("DBServiceImp");
+			Usertab user = new Usertab();
+			user.setId("666");
+			user.setName("NDot");
+			dbs.save(user);
+
+			List<Usertab> users = dbs.findAll();
+			for (Usertab use : users) {
+				System.out.println("UserName : " + use.getName());
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
