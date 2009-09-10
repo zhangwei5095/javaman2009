@@ -3,3 +3,13 @@
 2.http://bbs.actionscript3.cn
 3.http://www.xker.com/page/e2009/0522/72182.html
   Flex 与 J2EE
+4.http://ajava.org/opens/cytool/9924.html
+  各种java 技术群和资源
+5.JPOS
+  jPOS是一个开源(文挡需要收费)的财务交易Java库和框架，能够通过定制和扩展，实现任何特殊的财务交换操作，适合要求高可用性的关键性业务处理过程。
+
+   项目主页： http://www.jpos.org/ 
+   文档地址： http://www.jpos.org/products/proguide 
+   下载地址： http://www.jpos.org/download 
+   http://www.fileindexer.com/find/jpos-programming-guide
+   http://www.torrentreactor.net/find/jpos-programming-guide
