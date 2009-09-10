@@ -1,0 +1,247 @@
+GT-Grid 1.0 基础教程(一)
+
+[size=large][b]教程说明:[/b][/size]
+这是一个告诉大家如何快速的利用GT-Grid开发列表的基础教程.以后会推出"高级教程".
+查看[color=blue]其他教程[/color],以及最新版本信息,请[url="http://fins.javaeye.com/blog/214290"]点击这里[/url]
+
+
+[size=large][b]第一章: 从"纯客户端只读列表"开始[/b][/size]
+
+本章将演示如何开发出一个 纯客户端只读列表(数据已经在客户端存在,列表只是用来显示这些数据,没有CRUD功能).
+同时演示了如何使用设置一些属性,来达到个性化的需求. 
+
+虽然本章教程的内容未必能够满足你的需求, 但是它却是GT-Grid使用的基础,
+在你完全掌握该章的内容之前, 我并不建议你去接触后面的章节.
+
+另外可能有一部分朋友会觉得,这个教程写的太啰嗦了 有些地方太基础了.
+没错 我就是要啰嗦点 基础点.
+因为我假想的对象是 从来没接触过任何基于ajax技术的列表组件的人(但是有一定的js基础,而且知道json是啥).
+
+
+开始教程前, 请先建立一个"练习文件", 可以起名叫"mydemo1.html", 内容如下 : (建议编码为UTF-8,具体引入的文件路径请根据情况自己修改)
+[code="html"]
+
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta http-equiv="Pragma" content="no-cache" />
+<meta http-equiv="Expires" content="-1" />
+<meta http-equiv="Cache-Control" content="no-cache" />
+<title>GT-Grid 教程示例</title>
+
+<link rel="stylesheet" type="text/css" href="./gt_grid.css" />
+<script type="text/javascript" src="./gt_msg_cn.js"></script>
+<script type="text/javascript" src="./gt_grid_all.js"></script>
+<script type="text/javascript" >
+// 教程中的代码就写在这个区域里.
+
+
+</script>
+</head>
+
+<body>
+<!-- grid的容器. -->
+<div id="grid1_container" style="width:700px;height:300px">
+</div>
+
+ </body>
+</html>
+
+[/code]
+
+好了 让我开始 GT-Grid的启航之旅吧.
+
+[color=green]=========================================[/color]
+
+一个完整GT-Grid 由3部分组成:
+[b]1 数据.[/b]  
+数据必须为一个json数组, 数组中的每一项为一个 js对象/js数组.例如下面两种形式的数据都是可以的.(但是不能混合使用).
+数组中的每一项 代表 单条数据. 以下简称 record.
+
+假设有这样一组数据 (学生信息)
+[code="javascript"]
+
+var data1 = [
+   { no : 1 , name :'aaa', age : 12, gender : 'M' , english : 76.5 , math :92 },
+   { no : 2 , name :'bbb', age : 11, gender : 'F' , english : 89   , math :87 },
+   { no : 3 , name :'ccc', age : 13, gender : 'F' , english : 53   , math :62 }
+
+];
+
+var data2 = [
+   [ 1 , 'aaa',  12,  'M' , 76.5 , 92 ],
+   [ 2 , 'bbb',  11,  'F' , 89   , 87 ],
+   [ 3 , 'ccc',  13,  'F' , 53   , 62 ]
+]
+
+[/code]
+
+我更推荐使用第一种,虽然也许有人认为数组应该"速度更快,占用的内存更少,传输时占用的贷款更少....",
+但是这样的优势在实际使用中并不明显. 而且当和后台数据结合起来之后, 你会发现,
+绝大多数 json的第三方转换工具 都会将pojo map等转换成第一种形式的json数据.
+而且也更便于反向转换.
+
+当然 对于第2钟GT-Grid也是支持的, 稍后我会讲解. 目前本例以及我以后所写的其他教程 ,都将以第一种形式的数据作为示例.
+
+
+[color=green]=========================================[/color]
+
+[b]2 数据集(dataset)[/b]
+有了数据还不够, 因为GT-Grid未必就能理解这些数据, 你还需要对数据进行简单的描述.这个描述就是定义数据集.
+前面提到的 data1 对应的数据集 完整定义如下:
+
+[code="javascript"]
+var dsConfig= {
+	data : data1
+
+	fields :[
+		{name : 'no'     ,  type: 'int'     , index : 'no'      },
+		{name : 'name'   ,  type: 'string'  , index : 'name'    },
+		{name : 'age'    ,  type: 'int'     , index : 'age'     },
+		{name : 'gender' ,  type: 'string'  , index : 'gender'  },
+		{name : 'english',  type: 'float'   , index : 'english' },
+		{name : 'math'   ,  type: 'float'   , index : 'math'    }
+	]
+}
+[/code]
+data 指向 之前的数据.
+fields 是一个数组, 描述record各个字段的信息,类似数据库表中的列信息.
+
+[code="javascript"]
+name :  字段的名字 (虽然时name 但是性质和id类似, 在一个数据集内要保持唯一性)
+type :　字段的类型  ( 目前只支持 string ,int, float , 为什么没有date类型?因为我觉得没必要,以后我会找机会解释一下我的想法和建议) 
+index　: 字段对应的"record的属性名". 根据index,GT-Grid就可以知道这一列 对应的时record哪个属性的值.
+[/code]
+当 type 为 string 时, 可省略type设置.
+当 index 和 name 一致时, 可省略 index设置.
+所以 一个简化后的定义为:
+[code="javascript"]
+var dsConfig= {
+	data : data1 ,
+
+	fields :[
+		{name : 'no'     ,  type: 'int'    },
+		{name : 'name'      },
+		{name : 'age'    ,  type: 'int'    },
+		{name : 'gender'    },
+		{name : 'english',  type: 'float'  },
+		{name : 'math'   ,  type: 'float'  }
+	]
+};
+[/code]
+
+如果你的record时数组,而不是json-object (就是前面提到的 data2 ),
+那么 index 就应该为 0 ,1 ,2 ....等等, 用来表示该列对应record中的第几条数据.
+
+[color=green]=========================================[/color]
+
+[b]3 GT-Grid组件.[/b]
+第三部分就是定义并创建GT-Grid对象.创建GT-Grid对象的方法如下:
+[code="javascript"]
+var mygrid1 = new GT.Grid( { /*...一些配置信息...*/ }  );
+[/code]
+我个人比较习惯将 new GT.Grid的大段的参数单独声明. 一个简单的例子如下:
+[code="javascript"]
+var gridConfig={
+
+	id : "grid1",
+	
+	dataset : dsConfig ,
+
+	columns : colsConfig ,
+
+	container : 'grid1_container', 
+
+	toolbarPosition : 'bottom',
+
+	toolbarContent : 'state'
+
+};
+
+var mygrid=new GT.Grid( gridConfig );
+
+[/code]
+
+[code="javascript"]
+id : 每个列表组件都有一个id 该id在页面内唯一.
+dataset :列表对应的数据集
+columns　:　??? 这是什么 ??? 别急.
+container : 列表的容器的id. 列表最后是要显示在页面中某个位置.这个容器就是那个"位置",通常是一个div或者时td.
+toolbarPosition : 工具栏的位置. 可选值:'top'/'bottom'/null,  暂时不支持上下都显示.
+toolbarContent : 工具栏上要显示的东西, state表示的数据数量信息(分页信息),如共几条 共几页 当前是第几条等等.这个属性的其他用法暂时先不用管.
+[/code]
+回过头来我们说说那个 "columns : colsConfig ".
+columns 属性用来定义列表中各个列的信息. 本例中 columns 一个简单的定义如下
+(我们假设这些数据是学生的信息,所以我们用"学号")
+
+[code="javascript"]
+var colsConfig = [
+		{ id : 'no'     ,header : "学号" , fieldName : 'no'　   },
+		{ id : 'name'   ,header : "姓名" , fieldName : 'name'   },
+		{ id : 'age'    ,header : "年龄" , fieldName : 'age'    },
+		{ id : 'gender' ,header : "性别" , fieldName : 'gender' },
+		{ id : 'english' , header : "英语"  , fieldName : 'english'  },
+		{ id : 'math'    , header : "数学"  , fieldName : 'math' }
+];
+[/code]
+[code="javascript"]
+id : 列的唯一标识, 必须保证列表内唯一,建议整个页面唯一.
+header : 列表的表头显示的文字信息.
+fieldName : 列表的该列对应的 dataset中的列(字段).
+[/code]
+如果 fieldName 和 id一致 那么可以省略fieldName设置. 所以 上诉的配置简化后为.
+[code="javascript"]
+var colsConfig = [
+		{ id : 'no'      , header : "学号" },
+		{ id : 'name'    , header : "姓名" },
+		{ id : 'age'     , header : "年龄" },
+		{ id : 'gender'  , header : "性别" },
+		{ id : 'english' , header : "英语" },
+		{ id : 'math'    , header : "数学" }
+];
+
+[/code]
+
+( 关于grid和columns的更多属性设置请参考"GT-Grid高级教程".本教程不会涉及.)
+
+好了,到此 GT-Grid列表组件的三大部分就介绍完了. 在介绍的同时, 实际上我已经写出了第一个示例的代码.
+
+不过有了上面的代码还不够. 因为上面的代码相当于只是"定义除了这个 列表组件.
+并没有真正的在页面中创建这个列表.
+要想创建列表需要执行下面的语句.
+[code="javascript"]
+GT.Utils.onLoad( function(){
+	mygrid.render();
+} );   //mygrid为之前创建的对象,此处也可以传入grid的id.
+[/code]
+("这条语句到底时做什么的?是否还有其他方式到达同样目的?" 本教程不会讲解)
+
+
+[color=green]=========================================[/color]
+
+现在 大家把上面的代码 整理一下, 按照下列顺序, 加到 mydemo1.html 里, 运行一下吧.
+[code="javascript"]
+var data1 ...
+var dsConfig ....
+var colsConfig ...
+var gridConfig ....
+var mygrid=new GT.Grid( gridConfig );
+GT.Utils.onLoad( function(){
+	mygrid.render();
+} );
+[/code]
+
+如果一切顺利 , 你应该可以见到一个 纯客户端只读列表.	它具有的功能很简单 :　
+固定表头
+可调整列宽
+单击列表头排序
+可调整列的相对位置(按ctrl不放,拖动列表头)
+
+
+下一章 我将告诉大家如何 对列的扩展和显示效果的自定义.
+
+
+[color=green]=========================================[/color]
+
+最后的成果图:
+[img]http://fins.javaeye.com/upload/picture/pic/17848/55a9bb78-0dac-3cfd-9099-461863f2d063.jpg[/img]

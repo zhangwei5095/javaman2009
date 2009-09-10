@@ -1,0 +1,224 @@
+GT-Grid 1.0 基础教程(十)
+
+[size=large][b]教程说明:[/b][/size]
+这是一个告诉大家如何快速的利用GT-Grid开发列表的基础教程.以后会推出"高级教程".
+查看[color=blue]其他教程[/color],以及最新版本信息,请[url="http://fins.javaeye.com/blog/214290"]点击这里[/url]
+
+
+[size=large][b]第十章: 事件[/b][/size]
+
+这一章将讲解一下 GT-Grid中的一些关键的 常用的事件机制.
+本章对应示例文件: "mydemo10.html".
+
+
+为grid加入事件,只需要在 gird的定义中写入GT-Grid所支持的事件即可.
+如 : 
+
+[code="javascript"]
+var gridConfig={
+	/* ... 略去其他属性设置 ...*/
+	
+	afterSelectRow :  function(record ,row, rowNo,grid){
+		// ... ...
+	}
+}
+[/code]
+
+GT-Grid本身支持很多事件, 但是其中并不是所有事件都是常用或者重要的. 本章将结合示例,挑选几个常用的事件进行讲解.
+更多的事件,请查阅"参考指南".
+
+
+在正式讲解"事件"之前,先让我们来了解一下 GT-Grid创建并显示一个列表的大致步骤:
+
+1 根据定义,创建列表的外观(外框,布局)
+2 创建列表的各个部件(表头,工具栏等等)
+
+3 第2步完成后, 去异步的加载数据
+4 第3步完成后, 创建列表数据区,并显示
+
+
+在列表创建之后, 再对列表执行 刷新 翻页 等数据操作时, 实际上执行的只是第3 4步.
+
+
+在明白上面的几个步骤之后,我们来看看今天要讲解的事件:
+注意:
+下列所有名为beforeXXXX的事件,都是在发生XXXX动作之前被调用, 如果该事件函数的返回值为false, 那么就可以阻止XXXX动作的发生.
+
+
+[code="javascript"]
+onComplete : function(grid) 
+该事件在第4步完成之后调用,唯一参数就是 grid对象本身.
+
+
+beforeRefresh : function(grid) 
+该事件在第3步完成之后, 第4步之前调用,唯一参数就是 grid对象本身.
+
+
+beforeLoad : function(reqParam,grid)  
+该事件在第3步完成之前(从服务端加载数据之前)
+参数reqParam为Gt-Grid准备传递给服务端的json对象, 大家可以根据需求来改动里面的指. 最后一个参数是 grid对象本身.
+
+
+beforeSave : function(reqParam,grid)  
+该事件在点击保存按钮之后, 数据提交到服务端之前被执行.
+参数reqParam为Gt-Grid准备传递给服务端的json对象, 大家可以根据需求来改动里面的指. 最后一个参数是 grid对象本身.
+
+
+beforeSelectRow : function(record ,row, rowNo,grid)  
+该事件在选中某一行的之前触发(点击某一行,但是GT-Grid还没有把该行标记为选中行)
+record 为欲选中的行对应的记录, row为欲选中的行(tr)对象, rowNo为行号, 最后一个参数是 grid对象本身.
+
+afterSelectRow : function(record ,row, rowNo,grid)  
+该事件在选中某一行的之后触发(点击某一行,且GT-Grid已经把该行标记为选中行)
+record 为刚刚选中的行对应的记录, row为刚刚选中的行(tr)对象, rowNo为行号, 最后一个参数是 grid对象本身.
+
+
+onClickCell : function(value,record,cell,row,colNo,rowNo,columnObj,grid,event) 
+该事件在点击列表区的单元格时触发
+点击的单元格对应的记录值, 点击的单元格所在行对应的记录, 点击的单元格(td)对象, 点击的单元格所在的行(tr)对象, 点击的单元格对应的列定义,  
+grid对象本身, 点击动作对应的浏览器事件对象
+
+onSelectCell : function(value,record,cell,row,colNo,rowNo,columnObj,grid,event) 
+该事件在选中单元格之后触发(如果通过鼠标点击选中,那么会发生在onCLickCell事件之后)
+点击的单元格对应的记录值, 点击的单元格所在行对应的记录, 点击的单元格(td)对象, 点击的单元格所在的行(tr)对象, 点击的单元格对应的列定义,  
+grid对象本身, 点击动作对应的浏览器事件对象
+
+onDblClickCell : function(value,record,cell,row,rowNo,columnObj,grid,event) 
+该事件在双击击列表区的单元格时触发
+双击的单元格对应的记录值, 双击的单元格所在行对应的记录, 双击的单元格(td)对象, 双击的单元格所在的行(tr)对象, 点击的单元格对应的列定义,  
+grid对象本身, 双击动作对应的浏览器事件对象
+
+
+beforeEdit : function(value,record,columnObj,grid) 
+该事件在编辑单元格之前触发.(点击某个可编辑单元格,进入编辑状态之前)
+value 为欲编辑的值 , record 为欲编辑的值所在的记录, columnObj为欲编辑的列对应的列定义, 最后一个参数是 grid对象本身.
+
+
+beforeDelete : function(record,row,grid) 
+该事件在删除记录之前触发.
+record 为欲删除的记录,row为删除的记录所在的行, 最后一个参数是 grid对象本身.
+
+
+[/code]
+
+
+对于上面提到的事件, 仅仅有这些简短的文字说明,也许大家无法完全理解, 
+建议大家可以动手试一试, 为grid指定上述事件, 然后在事件里进行 alert ,好好体会一下这些事件触发的时机.
+
+
+
+[color=green]=========================================[/color]
+
+
+
+
+下面将结合一个示例,来为大家演示如何利用事件来强化列表.
+我们假设这样一个场景: 选中列表中的某一行,然后将这一行对应的记录添加到列表下方的一个表单内.
+
+首先我们在列表的下方加入一个极其简单的form:
+[code="html"]
+<form>
+学 号 : <input type="text" id="no" name="no" /> <br/>
+姓 名 : <input type="text" id="name" name="name" /> <br/>
+年 龄 : <input type="text" id="age" name="age" /> <br/>
+性 别 : <input type="text" id="gender" name="gender" /> <br/>
+英 语 : <input type="text" id="english" name="english" /> <br/>
+数 学 : <input type="text" id="math" name="math" /> <br/>
+总成绩 : <input type="text" id="total" name="total" />
+</form>
+[/code]
+
+然后为列表指定 afterSelectRow事件.
+
+[code="javascript"]
+var gridConfig={
+	/* ... 略去其他属性设置 ...*/
+	
+	afterSelectRow : function(record ,row, rowNo,grid){
+		for (var k in record) {
+			var field=GT.$(k);
+			if (field) {
+				field.value=record[k];
+			}
+		}
+	}
+}
+[/code]
+
+运行一下就可以看到效果了. afterSelectRow 对应函数内的具体代码大家不必关注.
+大家要在意的是 这个事件触发的时机 ---- 选中某行之后.
+以及 事件的参数 : record ---- 选中行对应的记录.
+
+合理的使用该函数,可以比较轻松的实现主从表 列表与其他组件联动等效果.
+
+
+
+[color=green]=========================================[/color]
+
+
+
+
+下面我们再举一个例子. 假设这样一个场景: 在编辑数据时,对于性别未知的同学,我们不允许编辑其数据.
+那么我们可以利用 beforeXXXX 类事件的拦截机制来实现.
+
+
+[code="javascript"]
+var gridConfig={
+	/* ... 略去其他属性设置 ...*/
+	
+	beforeEdit : function(value,record,columnObj,grid){
+		if ('U'==record['gender']){
+			return false;
+		}
+	},
+	beforeDelete : function(record,row,grid){
+		if ('U'==record['gender']){
+			return false;
+		}
+	}
+}
+[/code]
+
+现在运行一下示例, 在点击 性别为"未知"的学生时, 我们无法进入编辑状态,也无法删除之.
+
+
+
+
+[color=green]=========================================[/color]
+
+
+
+在诸多事件中, beforeLoad 和 beforeSave.这两个事件需要特别说一下.
+之所以要特别提一下它们,是因为这两个事件处在 客户端与服务端通讯的关键路径上.
+它们的第一个参数就是 GT-Grid要发送给服务端的数据.
+开发人员可以在这两个事件中, 对提交的数据进行个性化处理(改变/增加/删除提交的数据)
+同时也可以利用return false 来阻止load/save操作, 
+甚至也可以在这两个事件里alert出提交的数据内容,来帮助自己调试程序.
+
+在这里只举一个简单的例子,
+
+[code="javascript"]
+var gridConfig={
+	/* ... 略去其他属性设置 ...*/
+	beforeSave : function(reqParam,grid){
+		return confirm("您确定要提交如下数据到 "+grid.saveURL + " 吗?\n "+GT.$json(reqParam,true)+"\n");
+	}
+}
+[/code]
+这个示例中, 用户在点击"save"按钮时,将会弹出提示信息,询问用户确实要提交数据吗,
+点击确定 将会提交, 点击取消 将什么都不做.
+
+代码 :　GT.$json(reqParam,true)
+用来生成　提交参数的JSON串(第二个参数为是否是格式化输出), 可用来实现对提交数据的监控.
+
+
+
+[color=green]=========================================[/color]
+
+
+
+
+关于GT-Grid的事件就先讲到这里, 事件其实是个很灵活的机制, 只要合理的利用,并且发挥自己的想象力, 可以扩展出很多GT-Grid本身不具备的功能.
+好了 本章就暂时说这些吧. 下一章见.
+
+

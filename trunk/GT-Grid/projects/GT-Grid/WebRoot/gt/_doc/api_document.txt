@@ -1,0 +1,299 @@
+------------------------------------------------
+GT-Grid  API 文档 ---- 超级简陋版
+
+(完善进行中......)
+
+
+======== 基础函数 =========
+
+GT.$grid(idOrObj)	根据id取得一个grid对象. 
+
+var mygrid = new GT.Grid( config );  创建列表对象 config为grid的定义
+
+mygrid.render() 在页面内生成列表. 一定要在页面onload之后调用.
+
+  或者直接使用下面的语句.
+GT.Utils.onLoad( function(){
+	mygrid.render();
+} );
+
+======== Dataset的定义 =========
+
+data			dataset里的数据集(数组),使用远程数据加载时,无需定义.
+fields			是一个数组, 描述record各个字段的信息,类似数据库表中的列信息.
+uniqueField		{s/i}	数据记录中,用来表示"唯一性"的字段
+recordType		{s}	记录的类型,目前只支持两种: object,array
+
+
+======== Dataset的字段(field)定义  =========
+
+name	:  {s}  字段的名字 (虽然时name 但是性质和id类似, 在一个数据集内要保持唯一性)
+type	:　{s}  字段的类型  ( 目前只支持 string ,int, float , 为什么没有date类型?因为我觉得没必要,以后我会找机会解释一下我的想法和建议) 
+index　	:  {s}  字段对应的"record的属性名". 根据index,GT-Grid就可以知道这一列 对应的时record哪个属性的值.
+
+
+======== GT.Grid 的定义 =========
+
+
+id			{s}	列表id
+width			{i/s}	列表宽度 支持%
+height			{i/s}	列表高度 支持%
+container		{s/dom}	列表的容器的id. 列表最后是要显示在页面中某个位置.这个容器就是那个"位置",通常是一个div或者时td.
+replaceContainer	{b}	是否用列表代替容器元素
+customHead		{s/dom} 自定义表头对应的table的id或对象,或table的HTML代码
+
+columns			{a}数组.	列定义
+
+dataset			{o} 列表对应的数据集
+
+loadURL			{s}	读取数据的url
+saveURL			{s}	提交数据的url
+
+language		{s}	默认语言
+skin			{s}	默认皮肤
+
+toolbarPosition		{s}	工具栏的位置. 可选值:'top'/'bottom'/null,  暂时不支持上下都显示.
+toolbarContent		{s}	具栏上要显示的东西. state表示的数据数量信息(分页信息),如共几条 共几页 当前是第几条等等..
+				toolbarContent 默认= "nav | goto | pagesize | reload | add del save | print | filter chart | state" ,
+
+resizable		{b}	是否可手动改变整个列表区域的大小( 默认: false)
+minWidth		{i}	可手动改变大小时,最小宽度
+minHeight		{i}	可手动改变大小时,最小高度
+showIndexColumn		{b}	是否显示索引列
+stripeRows		{b}	是否交替显示行颜色
+lightOverRow		{b}	是否开启行的鼠标悬停指示
+defaultRecord		{o/a}	默认的记录样板,新增记录时,将按此样板新增.
+
+transparentMask		{b}	是否显示全透明的遮罩 (默认: false )
+
+clickStartEdit		{b}	是否为"点击单元格直接进入编辑状态"
+reloadAfterSave		{b}	提交数据后是否自动刷新列表
+recountAfterSave	{b}	提交数据后是否清空总记录数(以便后台重新统计总记录数)
+
+showIndexColumn		{b}	是否显示索引列,就是用来标识当前页行号的列.
+
+showGridMenu		{b}	是否开启主菜单
+allowCustomSkin		{b}	是否开启主菜单上的皮肤选择选项
+allowFreeze		{b}	是否开启主菜单上的冻结列选项
+allowHide		{b}	是否开启主菜单上的隐藏列选项
+allowGroup		{b}	是否开启主菜单上的列编组选项
+
+selectRowByCheck : false 
+submitUpdatedFields : false
+cleanContent
+setContent( contentData )
+
+======= GT.Grid的列(column)定义 =========
+
+id			{s}		列对象的id
+width			{i}		列的宽度(目前不支持%)
+header			{s}		列的标题
+fieldName : null,	{s}		列对应的 Dataset中字段(field)的名字
+
+align : 'left' ,	{s}		列数据单元格水平对齐方式, 可选值: left(默认) center right
+hdAlign : 'left' ,	{s}		列表头水平对齐方式, 可选值: left(默认) center right
+
+frozen			{b}		列是否被冻结
+hidden			{b}		列是否被隐藏
+sortOrder : null,	{s}		列的排序状态
+
+sortable		{b}		列是否可排序
+moveable		{b}		列是否可手动移动
+resizable		{b}		列是否可手动调节列宽
+hideable		{b}		列是否可隐藏
+frozenable		{b}		列是否可冻结
+groupable		{b}		列是否可进行编组
+filterable		{b}		列是否可参与过滤
+printable		{b}		列是否可打印
+editable		{b}		列是否可编辑
+
+toolTip			{b}		列数据是否显示toopTip
+
+minWidth		{i}		列的最小宽度
+styleClass : null,	{s}		列的数据单元格的style className
+emptyText		{s}		当该列对应的数据不纯在时,默认显示的内容
+
+hdRenderer		function(header,cobj)			列表头的渲染器
+renderer		function(value ,record,columnObj,grid,colNo,rowNo)	单元格渲染器
+editor			{o}		对应的编辑器定义 ,如 { type ... , validRule... getDisplayValue... ,} 见例子
+filterField		{o}		过滤时使用的过滤器
+
+
+
+======== GT.Grid 的方法 =========
+
+getDeletedRecords	function()		取得所有删除的数据
+getUpdatedRecords	function()		取得所有更新过的数据
+getInsertedRecords	function()		取得所有新增的数据
+
+
+setSize			function(newWidth,newHeight)	设置单元格属性
+refresh			function()			重新生成列表,但是数据并不重新载入
+reload			function(data)			重新载入数据,并重新生成列表
+query			function(params)
+
+
+getColumn		function(colNoIdTd)	根据单元格或column对象id 取得column对象
+getRecord		function( rowNoTdTr)	根据行号 或 单元格 或 tr 取得数据记录
+
+getPageInfo		function() 返回分页信息 数据结构:{ pageSize : 20, pageNum : 0, totalRowNum :0,totalPageNum : 0, startRowNum :0, endRowNum :20 }
+
+insert			function(record, startEdit ) 添加一条记录 , record为要添加的记录,如果没有指定或为null,那么将添加defaultRecord; startEdit,添加后是否自动开始编辑该行,默认为true.
+
+
+
+======== GT.Grid 的事件/回调/钩子函数 =========
+
+onClickCell		function(value, record , cell, row,  colNO, rowNO,columnObj,grid)	钩子:在选中某单元格时调用,返回false,则中止选中行为
+onDblClickCell		function(value, record , cell, row,  colNO, rowNO,columnObj,grid)	钩子:双击单元格时调用
+onClickHead		function(event,headCell,colObj,grid)	钩子:点击列表头
+
+onComplete		function()		钩子:列表生成后调用
+
+onShow			function()		列表由隐藏状态到显示状态时调用(需要开发人员手动调用,且必须调用)
+onResize		function()		钩子:列表大小发生变化时调用
+
+onMouseMove		function(event,grid)	鼠标在列表数据区移动时调用的函数.	
+beforeSelectRow		function(record ,row, rowNo, grid)	钩子:在选中某行前调用,返回false,则中止选中行为
+afterSelectRow :	钩子:选中某行之后调用
+
+beforeEdit		function()			钩子:编辑单元格前调用(虽然无参数,但是可与 activeCell activeRecord交互)
+afterEdit		function()			钩子:编辑单元格前调用(虽然无参数,但是可与 activeCell activeRecord交互)
+beforeSave		function(requestParameter)	钩子:保存数据前前调用 返回false,则中止save  参数为提交的所有参数组成的json对象,结构后面说明
+beforeLoad		function(requestParameter)	钩子:读取数据前调用 返回false,则中止load  参数为提交的所有参数组成的json对象,结构后面说明
+beforeGotoPage
+
+beforeInsert		function(record)			钩子:添加数据前调用 返回false,则中止insert  参数为新增的记录
+afterInsert :		钩子:添加数据后调用	
+
+beforeUpdate		function(record,fieldName,newValue)	钩子:修改数据前调用 返回false,则中止update  参数为编辑的记录,编辑的字段,新值
+afterUpdate :		钩子:修改数据后调用
+
+beforeDelete		function(record)			钩子:删除数据前调用 返回false,则中止del  参数为删除的记录
+afterDelete :		钩子:删除数据后调用
+
+onUpdateRecord :	钩子:在记录发生改变时调用
+
+
+saveResponseHandler
+loadResponseHandler
+
+
+======== GT.Grid 的属性  =========
+
+activeCell		{dom}	只读,当前(最后一次)选中的单元格(td对象)
+activeColumn		{o}	只读,当前(最后一次)选中的列对象
+activeRow		{dom}	只读,当前(最后一次)选中的行
+activeRecord		{o/a}	只读,当前(最后一次)选中的行对应的数据记录
+
+selectedRows		{a}	所有选中的行
+columnList		{a}	所有列对象的数组
+columnMap		{m}	所有列对象集合,key-value形式,key为column的id
+
+
+
+
+======= GT.Grid 类方法 (类似静态方法)=========
+
+findGridByElement		function(obj)	根据一个td或tr取得其所属于的列表对象
+
+isSelectedRow			function(row)	判断某一行(tr) 是否被选中
+
+getAllRows			function(grid)	 取得列表的所有tr
+
+render				function(grid)		渲染(生成列表)	参数是列表对象或其id.
+
+
+
+
+======= GT.Grid 数据传输格式说明 =========
+Gt-Grid 与后台进行数据交互 使用的都是 json串 (序列化后的json对象)
+
+==========================
+load操作 客户端提交的json串:
+[code="javascript"]
+{
+	action	 : 'load',	// 执行的操作类型,load表示是加载数据
+
+	// 分页信息
+	pageInfo : {
+		pageSize	: 20 ,  // 每页显示条数. 这个值决定于 你创建grid时的设置.
+		totalRowNum	: 0  ,	// 总记录数. 这个值在第一次载入列表时 为 0 ,以后是什么值 取决于服务端返回的值.
+		startRowNum	: 1,	// 开始行号. 第一次载入列表或是查看列表的首页时,会传入1,(注意表示"开始行号"的数字是从1开始.
+		endRowNum	: (startRowNum+pageSize-1)  // 结束行号.这个值会在客户端计算好之后发给服务端.
+	},
+
+	// 排序信息
+	sortInfo : [
+			{ 
+				columnId : "排序的列id" , 
+				fieldName : "排序的列对应的dataset中的field字段名" ,
+				sortOrder : "asc"  // 排序的顺序状态 : 升序"asc"  降序"desc"  默认"defaultsort"
+			}
+		],
+
+	// 过滤信息
+	filterInfo : [
+			{ 
+				columnId : "过滤的列id" , 
+				fieldName : "过滤的列对应的dataset中的field字段名" ,
+				logic : "过滤的逻辑", // 可选: equal notEqual less great lessEqual greatEqual like startWith endWith
+				value : "过滤的值"
+			}
+		]
+}
+[/code]
+
+
+load操作 服务端返回的json串: (data必须,其他可选)
+[code="javascript"]
+	{
+		pageInfo : {
+			totalRowNum : 3
+		},
+
+		data : [
+			/* 以下为具体传输的数据示例 */
+		   { no : 1 , name :'aaa', age : 12, gender : 'M' , english : 76.5 , math :92 },
+		   { no : 2 , name :'bbb', age : 11, gender : 'F' , english : 89   , math :87 },
+		   { no : 3 , name :'ccc', age : 13, gender : 'F' , english : 53   , math :62 }
+		],
+
+		exception : "...异常信息..."
+
+	}
+[/code]
+
+
+
+==========================
+save操作 客户端提交的json串:
+{
+	action	 : 'save',	// 执行的操作.保存数据的操作为 save.
+
+	insertedRecords : [
+		/* ... 新增的记录. 是一个数组,数组的每个元素为一条记录(json-object) 下同... */
+		 { no : 51 , name :'zxcx', age : 12, gender : 'M' , english : 26.5 , math :92 },
+		 ... ...
+	
+	],
+	updatedRecords : [
+		/* ... 修改的记录 ... */
+		{ no : 3 , name :'ccc', age : 12, gender : 'F' , english : 53   , math :62 },
+		 ... ...
+	],
+	deletedRecords : [
+		/* ... 删除的记录 ... */
+		{ no : 2 , name :'bbb', age : 11, gender : 'F' , english : 89   , math :87 },
+		... ...
+
+	]
+}
+
+
+
+save操作 服务端返回的json串:
+{
+	success : true  , /* true/false */
+	exception : "...异常信息..."
+}

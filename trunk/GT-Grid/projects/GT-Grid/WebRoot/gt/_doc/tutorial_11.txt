@@ -1,0 +1,199 @@
+GT-Grid 1.0 基础教程(十一)
+
+[size=large][b]教程说明:[/b][/size]
+这是一个告诉大家如何快速的利用GT-Grid开发列表的基础教程.以后会推出"高级教程".
+查看[color=blue]其他教程[/color],以及最新版本信息,请[url="http://fins.javaeye.com/blog/214290"]点击这里[/url]
+
+
+[size=large][b]第十一章: 工具栏与列表菜单[/b][/size]
+
+
+在前几章,我们或多或少的接触到了一些工具栏的知识.
+例如 对  toolbarContent toolbarPosition 的使用.
+
+这一章, 我们将对工具栏与列表菜单做更全面的介绍. 本章示例文件"mydemo11.html"
+
+
+
+[color=green]=========================================[/color]
+
+
+
+
+首先,我们回顾一下toolbarPosition 和 toolbarContent 的作用:
+
+[code="javascript"]
+toolbarPosition : 工具栏的位置. 可选值:'top'/'bottom'/null,  暂时不支持上下都显示.
+toolbarContent : 设置工具栏上要显示的工具按钮,以及相对位置,各个按钮之间用空格间隔. 例如  toolbarContent : 'nav | state' .
+[/code]
+toolbarPosition 无需多言,在这里再详细说一下toolbarContent.
+toolbarContent 的值是一个字符串, 该字符串允许的内容如下:
+
+[code="javascript"]
+|(竖线) : 标示"按钮组"(若干个按钮组成的功能相近的组,开发者可以自由定义) 之间的分隔符
+nav	导航按钮, 包括 "首页 前一页 后一页 末页"  四个按钮 
+goto	页面跳转按钮, 包括 输入目标页号的区域 和一个跳转的按钮
+pagesize	改变每页记录条数的下拉框
+reload	刷新按钮
+add	"+"添加记录
+del	"-"删除记录
+save	保存变更的按钮
+print	打印按钮
+filter	过滤按钮
+chart	柱状图表按钮
+state	显示数据的数量信息(分页信息),如共几条 共几页 当前是第几条等等
+[/code]
+
+各个关键字之间用空格分割, 各个关键字的位置决定了各个元素的相对位置,开发人员可以自行设置.
+注意工具栏中的"pagesize" 要与 grid的pageSizeList属性配合使用. (详见教程第三章)
+
+
+其中"过滤"和"图表"两项再具体说一下.
+
+
+
+[color=green]=========================================[/color]
+
+
+
+
+"过滤"是针对列进行的,而且各个过滤条件是and的关系.
+如果不希望某列参与过滤, 那么只需在column定义中 指定 filterable 属性为false即可 (默认是true)
+[code="javascript"]
+//某列定义
+{	
+	 /* ... 略去其他属性设置 ...*/
+	filterable : true ,	//是否允许该列参与过滤
+}
+[/code]
+过滤值输入框(填写过滤值的地方),默认是一个普通的input-text框,如果某列需要使用其他输入框,那么可以在该列的定义中,设置 filterField 属性:
+
+[code="javascript"]
+//某列定义
+{	
+	filterField :　GT.U.createSelectHTML( {'0': '未知' ,'1':'男', '2':'女'} )
+}
+[/code]
+filterField 属性的值为合法的 HTML字符串 , 该字符串为"列需要使用的过滤输入框"的html代码.
+(注: 该属性以后会进一步强化, 支持dom对象等)
+
+
+在"过滤"对话框中, 选择某一列,点击"添加条件" 然后在新增的条目中选择 条件关系 和条件值 即可.
+
+默认的过滤方式是客户端的过滤. 关于服务端过滤, 以及过滤的具体特性和用法, 以后会单独编写一个章节来介绍.
+
+
+
+[color=green]=========================================[/color]
+
+
+
+
+
+注意: GT-Grid 1.0里的图表功能目前还很简单,功能性和实用性都不是很强.
+以后版本会做加强和变更, 如果目前不需要, 可以略过此小节(下一行 至 分割线).
+
+
+欲使用图表功能, 需引入下面的js.
+[code="html"]
+<script type="text/javascript" src="./flashchart/fusioncharts/FusionCharts.js"></script>
+[/code]
+
+同时还要 设置 grid的 GTGridPath 属性, 该属性为 GT-Grid组件的代码所在的路径.(可以是绝对路径,也可以是相对于当前页面的相对路径) 
+示例中, 使用的是相对路径 : 	
+[code="javascript"]
+var gridConfig={
+	/* ... 略去其他属性设置 ...*/
+	
+	GTGridPath : '../../gt-grid',
+}
+[/code]
+
+
+"图表"功能会用一个柱状图显示选中记录的字段值(某些列的值). 如果希望记录的某列显示在图表里,那么只需在column定义中 指定下列属性即可:
+[code="javascript"]
+//某列定义
+{	
+	 /* ... 略去其他属性设置 ...*/
+	inChart : true ,	// 是否出现在图表里
+	chartColor : '66eeaa',	// 出现在图表里时 ,柱状图的颜色(不带#号)
+
+	chartCaption : '{@} 的成绩' , //设置图表的标题. 该属性只需设置在"要作为图表标题"的列上, 其中"{@}" 代表的是选中记录的该列的值.
+
+}
+[/code]
+
+其中 chartCaption ,在补充说明一下. 如果将 chartCaption 设置在 学生姓名列上, 然后 值为 '{@} 的成绩',
+那么在 "张三"的成绩图表时, 图表的标题就会是 "张三的成绩", 也就是说,那个'{@}'会被替换为 当前记录的"学生姓名".
+
+
+
+
+[color=green]=========================================[/color]
+
+
+
+
+大家在示例中还可以看到一个"列表菜单"的按钮,它类似windows的开始菜单按钮,总是出现在工具栏的最左边.
+这个按钮的显示与否 是通过 grid的  showGridMenu 属性决定: (默认是false)
+
+[code="javascript"]
+var gridConfig={
+	/* ... 略去其他属性设置 ...*/
+	
+	showGridMenu : true 
+}
+[/code]
+
+此时,该菜单上只有一个版本信息, 并没有其他的条目, 显示其他菜单条目需要下列属性:(默认是true)
+
+[code="javascript"]
+var gridConfig={
+	/* ... 略去其他属性设置 ...*/
+	
+	showGridMenu	: true ,
+	allowCustomSkin	: true ,	//是否开启主菜单上的皮肤选择选项
+	allowGroup	: true ,	//是否开启主菜单上的列编组选项
+	allowFreeze	: true ,	//是否开启主菜单上的冻结列选项
+	allowHide	: true ,	//是否开启主菜单上的隐藏列选项
+
+}
+[/code]
+
+目前菜单上的这些条目暂时不允许调整位置,也不允许添加自定义的条目.
+
+
+如果开启了皮肤选择功能, 页面内还要引入皮肤相关的css, 而且这些css要放到 GT-Grid的主css后面, 示例:
+[code="html"]
+<link rel="stylesheet" type="text/css" href="./gt_grid.css" />
+<link rel="stylesheet" type="text/css" href="./skin/china/skinstyle.css" />
+<link rel="stylesheet" type="text/css" href="./skin/vista/skinstyle.css" />
+<link rel="stylesheet" type="text/css" href="./skin/mac/skinstyle.css" />
+[/code]
+
+
+冻结列 隐藏列 列编组 三个功能项都是针对列的, 如果开发人员不希望某列具备该功能,则只需在column定义中 指定下列属性为false即可 (默认是true)
+
+
+[code="javascript"]
+//某列定义
+ {	
+	 /* ... 略去其他属性设置 ...*/
+ 	groupable : true,	//是否允许对该列进行编组
+	frozenable : true,	//是否允许冻结该列
+	hideable : true,	//是否允许隐藏该列
+}
+[/code]
+
+
+
+
+[color=green]=========================================[/color]
+
+
+
+
+本章对列表的工具栏和列表菜单的使用 做了进一步的介绍. 我想没有本章内容, 大家通过前几章的示例多少也能理解这些知识点.
+这一章就算做对相关知识的一个回顾和总结吧. 我们下一章再见.
+
+
