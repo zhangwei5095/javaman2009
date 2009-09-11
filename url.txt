@@ -3,6 +3,7 @@
 2.http://bbs.actionscript3.cn
 3.http://www.xker.com/page/e2009/0522/72182.html
   Flex 与 J2EE
+  http://opensource.adobe.com/wiki/display/blazeds/Installation+Guide
 4.http://ajava.org/opens/cytool/9924.html
   各种java 技术群和资源
 5.JPOS
@@ -13,3 +14,4 @@
    下载地址： http://www.jpos.org/download 
    http://www.fileindexer.com/find/jpos-programming-guide
    http://www.torrentreactor.net/find/jpos-programming-guide
+   
