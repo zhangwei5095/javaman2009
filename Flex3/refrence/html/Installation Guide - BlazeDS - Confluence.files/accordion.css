@@ -1,0 +1,15 @@
+#accordionlist {
+	BORDER-TOP-WIDTH: 0px; PADDING-RIGHT: 0px; PADDING-LEFT: 0px; BORDER-LEFT-WIDTH: 0px; BORDER-BOTTOM-WIDTH: 0px; PADDING-BOTTOM: 0px; MARGIN: 0px; WIDTH: 350px; PADDING-TOP: 0px; FONT-FAMILY: arial, helvetica, sans-serif; HEIGHT: auto; BACKGROUND-COLOR: #e4e6ec; BORDER-RIGHT-WIDTH: 0px
+}
+#accordionlist P {
+	PADDING-RIGHT: 10px; PADDING-LEFT: 10px; FONT-WEIGHT: normal; FONT-SIZE: 11px; PADDING-BOTTOM: 10px; MARGIN: 0px; OVERFLOW: hidden; COLOR: #000000; BORDER-TOP-STYLE: none; PADDING-TOP: 10px; FONT-FAMILY: arial, helvetica, sans-serif; BORDER-RIGHT-STYLE: none; BORDER-LEFT-STYLE: none; BACKGROUND-COLOR: #e4e6ec; TEXT-DECORATION: none; BORDER-BOTTOM-STYLE: none
+}
+#accordionlist H3 {
+	PADDING-RIGHT: 5px; MARGIN-TOP: 0px; DISPLAY: block; PADDING-LEFT: 5px; FONT-WEIGHT: bold; FONT-SIZE: 12px; MARGIN-BOTTOM: 0px; PADDING-BOTTOM: 5px; CURSOR: pointer; COLOR: white; PADDING-TOP: 5px; BORDER-BOTTOM: white 1px solid; BACKGROUND-COLOR: #8c95ab; TEXT-DECORATION: none
+}
+#accordionlist H3:hover {
+	COLOR: #000000
+}
+#accordionlist H3.selected {
+	COLOR: white; BACKGROUND-COLOR: #8c95ab
+}
