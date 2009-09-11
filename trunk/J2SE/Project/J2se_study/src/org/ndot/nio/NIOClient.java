@@ -17,40 +17,38 @@ public class NIOClient {
 	public static void main(String[] args) {
 
 		try {
-
-			SocketChannel sc = SocketChannel.open();
+			InetSocketAddress isa = new InetSocketAddress("127.0.0.1", 8989);
+			// 调用open静态方法创建连接到指定主机的SocketChannel
+			SocketChannel sc = SocketChannel.open(isa);
 			ByteBuffer buffer = ByteBuffer.allocate(1024);
 			Selector se = Selector.open();
 			buffer.put("12355555".getBytes());
 			buffer.flip();
 			sc.configureBlocking(false);
-			sc.register(se, SelectionKey.OP_CONNECT | SelectionKey.OP_READ
-					| SelectionKey.OP_WRITE);
-			sc.connect(new InetSocketAddress("127.0.0.1", 8989));
-			while (!sc.finishConnect())
-				sc.write(buffer);
-		    	Thread.sleep(10000);
-			int sum = 0;
-			while (sum < 1) {
-				sum = se.select();
+			sc.register(se, SelectionKey.OP_READ);
+			sc.write(buffer);
+			while (se.select()< 0) {
 				Set<SelectionKey> set = se.selectedKeys();
-				System.out.println("大小是:" + set.size());
 				for (SelectionKey key : set) {
 					int ops = key.readyOps();
 					if ((ops & SelectionKey.OP_CONNECT) == SelectionKey.OP_CONNECT) {
-						sc.write(buffer);
 						System.out.println("连接成功");
+						sc.register(se, SelectionKey.OP_WRITE);
 					}
 					if ((ops & SelectionKey.OP_READ) == SelectionKey.OP_READ) {
 						System.out.println(" 收到东西");
 						sc.read(buffer);
 						buffer.flip();
-						System.out
-								.println("收到的是:"
+						System.out.println("收到的是:"
 										+ new String(buffer.array(), 0, buffer
 												.limit()));
+						sc.register(se, SelectionKey.OP_WRITE);
+					}
+					if ((ops & SelectionKey.OP_WRITE) == SelectionKey.OP_WRITE) {
+						buffer.put("NDotaaa".getBytes());
 						sc.write(buffer);
 					}
+					
 				}
 				se.selectedKeys().clear();
 			}
