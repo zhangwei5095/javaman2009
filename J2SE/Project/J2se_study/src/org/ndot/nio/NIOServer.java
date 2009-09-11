@@ -71,7 +71,7 @@ public class NIOServer {
 						rspBuf.flip();
 						channel.write(rspBuf);
 						key.cancel();
-						channel.close();
+//						channel.close();
 					}
 				}
 

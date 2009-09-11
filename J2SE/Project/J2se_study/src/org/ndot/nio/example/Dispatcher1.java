@@ -1,4 +1,5 @@
 package org.ndot.nio.example;
+
 /*
  * @(#)Dispatcher1.java	1.2 04/07/26
  * 
@@ -42,44 +43,47 @@ import java.util.*;
 /**
  * A single-threaded dispatcher.
  * <P>
- * When a SelectionKey is ready, it dispatches the job in this
- * thread.
- *
+ * When a SelectionKey is ready, it dispatches the job in this thread.
+ * 
  * @author Mark Reinhold
  * @author Brad R. Wetmore
  * @version 1.2, 04/07/26
  */
 class Dispatcher1 implements Dispatcher {
 
-    private Selector sel;
+	private Selector sel;
 
-    Dispatcher1() throws IOException {
-	sel = Selector.open();
-    }
-
-    // Doesn't really need to be runnable
-    public void run() {
-	for (;;) {
-	    try {
-		dispatch();
-	    } catch (IOException x) {
-		x.printStackTrace();
-	    }
+	Dispatcher1() throws IOException {
+		sel = Selector.open();
 	}
-    }
 
-    private void dispatch() throws IOException {
-	sel.select();
-	for (Iterator i = sel.selectedKeys().iterator(); i.hasNext(); ) {
-	    SelectionKey sk = (SelectionKey)i.next();
-	    i.remove();
-	    Handler h = (Handler)sk.attachment();
-	    h.handle(sk);
+	// Doesn't really need to be runnable
+	public void run() {
+		for (;;) {
+			try {
+				dispatch();
+			} catch (IOException x) {
+				x.printStackTrace();
+			}
+		}
 	}
-    }
 
-    public void register(SelectableChannel ch, int ops, Handler h)
-	    throws IOException {
-	ch.register(sel, ops, h);
-    }
+	@SuppressWarnings("unchecked")
+	private void dispatch() throws IOException {
+		// 选择一组键，其相应的通道已为 I/O 操作准备就绪。
+		// 执行处于阻塞模式,
+		// 仅在至少选择一个通道、调用此选择器的 wakeup 方法，或者当前的线程已中断（以先到者为准）后此方法才返回
+		sel.select();
+		for (Iterator i = sel.selectedKeys().iterator(); i.hasNext();) {
+			SelectionKey sk = (SelectionKey) i.next();
+			i.remove();
+			Handler h = (Handler) sk.attachment();
+			h.handle(sk);
+		}
+	}
+
+	public void register(SelectableChannel ch, int ops, Handler h)
+			throws IOException {
+		ch.register(sel, ops, h);
+	}
 }
