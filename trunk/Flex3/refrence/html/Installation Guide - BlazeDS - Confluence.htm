@@ -1,0 +1,1108 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3c.org/TR/1999/REC-html401-19991224/loose.dtd">
+<!-- saved from url=(0067)http://opensource.adobe.com/wiki/display/blazeds/Installation+Guide -->
+<HTML><HEAD><TITLE>Installation Guide - BlazeDS - Confluence</TITLE>
+<META http-equiv=Content-Type content="text/html; charset=utf-8">
+<SCRIPT language=javascript>
+        var contextPath = '/wiki';
+        var i18n = [];
+    </SCRIPT>
+<LINK href="Installation Guide - BlazeDS - Confluence.files/main-action.css" 
+type=text/css rel=stylesheet>
+<META content=1252684546516 name=confluence-request-time><LINK 
+href="/wiki/images/icons/favicon.ico" rel="shortcut icon"><LINK 
+href="/wiki/images/icons/favicon.png" type=image/png rel=icon>
+<SCRIPT src="Installation Guide - BlazeDS - Confluence.files/effects.js" 
+type=text/javascript></SCRIPT>
+<LINK href="Installation Guide - BlazeDS - Confluence.files/home-style.css" 
+type=text/css rel=stylesheet><LINK 
+href="Installation Guide - BlazeDS - Confluence.files/layout.css" type=text/css 
+rel=stylesheet><LINK 
+href="Installation Guide - BlazeDS - Confluence.files/accordion.css" 
+rel=stylesheet>
+<SCRIPT src="Installation Guide - BlazeDS - Confluence.files/jquery.js" 
+type=text/javascript></SCRIPT>
+
+<SCRIPT src="Installation Guide - BlazeDS - Confluence.files/chili-1.7.pack.js" 
+type=text/javascript></SCRIPT>
+
+<SCRIPT src="Installation Guide - BlazeDS - Confluence.files/jquery.easing.js" 
+type=text/javascript></SCRIPT>
+
+<SCRIPT 
+src="Installation Guide - BlazeDS - Confluence.files/jquery.accordion.js" 
+type=text/javascript></SCRIPT>
+
+<SCRIPT type=text/javascript>
+	jQuery().ready(function(){
+		// simple Accordion
+		jQuery('#accordionlist').Accordion();
+
+				// bind to change event of select to control first and seconds accordion
+		// similar to tab's plugin triggerTab(), without an extra method
+		jQuery('#switch select').change(function() {
+			jQuery('#accordionlist').activate( this.selectedIndex-1 );
+		});
+		jQuery('#close').click(function() {
+			jQuery('#accordionlist').activate(-1);
+		});
+		jQuery('#switch2').change(function() {
+			jQuery('#accordionlist').activate(this.value);
+		});
+
+	});
+	</SCRIPT>
+
+<SCRIPT src="Installation Guide - BlazeDS - Confluence.files/javascript.js" 
+type=text/javascript></SCRIPT>
+
+<META content="MSHTML 6.00.2900.3603" name=GENERATOR></HEAD>
+<BODY onload=placeFocus()>
+<SCRIPT type=text/javascript>
+        function hideMessage(messageId)
+        {
+            var message = document.getElementById(messageId)
+            message.style.display = "none";
+            setCookie(messageId, true);
+        }
+    </SCRIPT>
+
+<DIV id=PageContent 
+style="MARGIN-TOP: 0px; MARGIN-BOTTOM: 0px; PADDING-BOTTOM: 0px; BACKGROUND-COLOR: #191e2b">
+<DIV id=main>
+<DIV id=header>
+<DIV id=header-top>
+<DIV id=header-top-left><IMG height=80 
+src="Installation Guide - BlazeDS - Confluence.files/logo_adobe.gif" width=52> 
+</DIV>
+<DIV id=header-top-middle>
+<DIV id=headertitle><SPAN class=adobetitle-red><A 
+href="http://opensource.adobe.com/wiki/display/site/Home">Adobe <FONT 
+color=#ffffff>Open Source</FONT></A></SPAN></DIV></DIV>
+<DIV id=header-top-right>
+<DIV id=header-top-right-links><SPAN class=whitelinedlinks><A 
+style="COLOR: #ffffff" href="http://www.adobe.com/" target=_blank>Adobe.com 
+Home</A> <SPAN class=whitepipe>|</SPAN> <A style="COLOR: #ffffff" 
+href="http://www.adobe.com/devnet/" target=_blank>Developer 
+Connection</A></SPAN> </DIV>
+<DIV id=header-top-right-search>
+<FORM style="MARGIN-BOTTOM: 0px" name=supportform 
+onsubmit="return validateSearchForm('supportform', 'term');" 
+action=http://community.adobe.com/help/search.html method=get target=_top><!--input type="hidden" value="support" name="restrict"--><!--input type="hidden" name="link"--><!--input type="hidden" value="en_us" name="loc"--><INPUT 
+type=hidden value=opensource name=sitesection> <SPAN class=searchfield><INPUT 
+id=q style="POSITION: relative; TOP: -8px" name=q width="189">&nbsp; <INPUT 
+class=submit type=image height=24 alt=Go width=35 
+src="Installation Guide - BlazeDS - Confluence.files/go_btn.gif" name=go> 
+</SPAN></FORM></DIV></DIV></DIV>
+<DIV id=header-bottom>
+<DIV id=header-bottom-left><SPAN class=topmainlinks><A 
+onmouseover="this.style.color='#000000'" style="COLOR: #ffffff" 
+onmouseout="this.style.color='#FFFFFF'" 
+href="http://www.adobe.com/go/opensource_gnav_home">Home</A></SPAN>&nbsp;&nbsp; 
+&nbsp; <SPAN class=topmainlinks><A onmouseover="this.style.color='#000000'" 
+style="COLOR: #ffffff" onmouseout="this.style.color='#FFFFFF'" 
+href="http://www.adobe.com/go/opensource_gnav_projects">Projects</A></SPAN>&nbsp;&nbsp; 
+&nbsp; <SPAN class=topmainlinks><A onmouseover="this.style.color='#000000'" 
+style="COLOR: #ffffff" onmouseout="this.style.color='#FFFFFF'" 
+href="http://www.adobe.com/go/opensource_gnav_source">Source</A></SPAN>&nbsp;&nbsp; 
+&nbsp; <SPAN class=topmainlinks><A onmouseover="this.style.color='#000000'" 
+style="COLOR: #ffffff" onmouseout="this.style.color='#FFFFFF'" 
+href="http://www.adobe.com/go/opensource_gnav_documentation">Documentation</A></SPAN>&nbsp;&nbsp; 
+&nbsp; <SPAN class=topmainlinks><A onmouseover="this.style.color='#000000'" 
+style="COLOR: #ffffff" onmouseout="this.style.color='#FFFFFF'" 
+href="http://www.adobe.com/go/opensource_gnav_forums">Forums</A></SPAN>&nbsp;&nbsp;&nbsp; 
+<SPAN class=topmainlinks><A onmouseover="this.style.color='#000000'" 
+style="COLOR: #ffffff" onmouseout="this.style.color='#FFFFFF'" 
+href="http://www.adobe.com/go/opensource_gnav_about">About</A></SPAN> </DIV>
+<DIV id=header-bottom-right><SPAN 
+class="whitelinedlinks topheader adobetitle-white">Welcome Guest | <A 
+style="COLOR: #ffffff" 
+href="https://www.adobe.com/cfusion/entitlement/index.cfm?e=ca&amp;returnurl=http%3A%2F%2Fopensource.adobe.com%2Fwiki%2Fdisplay%2Fblazeds%2FInstallation%2BGuide&amp;os_destination=%2Fdisplay%2Fblazeds%2FInstallation%2BGuide">Sign 
+In</A></SPAN> </DIV></DIV></DIV><!--
+    Root decorator: all decisions about how a page is to be decorated via the
+                    inline decoration begins here.
+--><!--
+    Switch based upon the context. However, for now, just delegate to a decorator
+    identified directly by the context.
+-->
+<DIV id=content-top>
+<DIV id=content-top-left-corner><!--img src="/wiki/download/resources/com.adobe.developer.confluence:theme/images/curve_top_left.gif" width="15" height="20" /--></DIV>
+<DIV id=content-top-middle></DIV>
+<DIV id=content-top-right-corner><!--img src="/wiki/download/resources/com.adobe.developer.confluence:theme/images/curve_top_right.gif" width="16" height="20" /--></DIV></DIV>
+<DIV id=content-middle><!--link rel="stylesheet" href="/wiki/download/resources/com.adobe.developer.confluence:theme/css/page-style.css" type="text/css" /-->
+<DIV class=wiki-content><!-- wiki content -->
+<TABLE class=sectionMacro cellSpacing=0 cellPadding=5 width="100%" border=0>
+  <TBODY>
+  <TR>
+    <TD class=confluenceTd vAlign=top width="80%">
+      <H1><A name=InstallationGuide-BlazeDSInstallationGuide></A>BlazeDS 
+      Installation Guide</H1>
+      <P><B>Contents</B></P>
+      <STYLE type=text/css>DIV.rbtoc1226851947159 {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: 0px; MARGIN-LEFT: 0px; PADDING-TOP: 0px
+}
+DIV.rbtoc1226851947159 UL {
+	MARGIN-LEFT: 0px; LIST-STYLE-TYPE: none
+}
+DIV.rbtoc1226851947159 LI {
+	PADDING-LEFT: 0px; MARGIN-LEFT: 0px
+}
+</STYLE>
+
+      <DIV class=rbtoc1226851947159>
+      <UL>
+        <LI><A 
+        href="http://opensource.adobe.com/wiki/display/blazeds/Installation+Guide#InstallationGuide-BlazeDSInstallationGuide">BlazeDS 
+        Installation Guide</A> 
+        <UL>
+          <UL>
+            <LI><A 
+            href="http://opensource.adobe.com/wiki/display/blazeds/Installation+Guide#InstallationGuide-InstallingBlazeDSwithintegratedApacheTomcatapplicationserver">Installing 
+            BlazeDS with integrated Apache Tomcat application server</A> 
+            <LI><A 
+            href="http://opensource.adobe.com/wiki/display/blazeds/Installation+Guide#InstallationGuide-InstallingBlazeDSwithJ2EEwebapplications">Installing 
+            BlazeDS with J2EE web applications</A> 
+            <LI><A 
+            href="http://opensource.adobe.com/wiki/display/blazeds/Installation+Guide#InstallationGuide-Additionalserverspecificconfiguration">Additional 
+            server-specific configuration</A> 
+            <LI><A 
+            href="http://opensource.adobe.com/wiki/display/blazeds/Installation+Guide#InstallationGuide-IntegratingBlazeDSwithaColdFusion8installation">Integrating 
+            BlazeDS with a ColdFusion 8 installation</A> 
+            <LI><A 
+            href="http://opensource.adobe.com/wiki/display/blazeds/Installation+Guide#InstallationGuide-UpgradingBlazeDS3toversion3.2">Upgrading 
+            BlazeDS 3 to version 3.2</A> </LI></UL></UL></LI></UL></DIV>
+      <P>BlazeDS runs in a J2EE web application and is available in ZIP files 
+      for the following configurations:</P>
+      <UL>
+        <LI>BlazeDS with integrated Apache Tomcat application server 
+        <LI>BlazeDS web applications </LI></UL>
+      <P>BlazeDS runs on the following platforms:</P>
+      <UL>
+        <LI>Windows 
+        <LI>Linux 
+        <LI>Solaris </LI></UL>
+      <P>These installation instructions refer to root directory where you unzip 
+      the BlazeDS ZIP file as install_root.</P>
+      <P>BlazeDS includes the following Web Application Archive (WAR) files:</P>
+      <UL>
+        <LI>blazeds.war - The primary BlazeDS WAR file: use this as a starting 
+        point for building your BlazeDS application. 
+        <LI>samples.war - Sample BlazeDS applications. 
+        <LI>ds-console.war - Simple monitoring application for BlazeDS 
+        deployments. </LI></UL>
+      <P>Each WAR file is a separate, stand-alone web application. If you are 
+      using the J2EE web application option, you must have an existing J2EE 
+      application server or servlet container available and understand web 
+      application deployment. If you do not have an existing J2EE server or are 
+      not familiar with WAR file deployment, use the integrated Tomcat 
+      configuration to get started.<BR>BlazeDS with integrated Tomcat</P>
+      <H3><A 
+      name=InstallationGuide-InstallingBlazeDSwithintegratedApacheTomcatapplicationserver></A>Installing 
+      BlazeDS with integrated Apache Tomcat application server</H3>
+      <P>The BlazeDS with integrated Tomcat ZIP file contains the following 
+      files and directories under the installation root:</P>
+      <UL>
+        <LI>readme.htm - Contains an overview of important information. 
+        <LI>blazeds.war - BlazeDS web application, used as a starting point for 
+        new applications. 
+        <LI>samples.war - BlazeDS sample applications. 
+        <LI>ds-console.war - Simple monitoring application for BlazeDS 
+        deployments. 
+        <LI>license.txt - Contains license information. 
+        <LI>/tomcat - Contains an installation of Apache Tomcat that includes 
+        blazeds, samples, and ds-console web applications expanded and deployed 
+        in the default server. 
+        <LI>/resources - Contains Flex SDK source code, fully commented 
+        configuration files, as well as directories and files used for security, 
+        clustering, Flex Ajax Bridge and manually creating HTML wrappers. Flash 
+        Player installers are in the Flex SDK ZIP file. </LI></UL>
+      <H4><A 
+      name=InstallationGuide-ToinstallBlazeDSintheintegratedTomcatconfiguration%3A></A>To 
+      install BlazeDS in the integrated Tomcat configuration:</H4>
+      <OL>
+        <LI>Read the BlazeDS <A 
+        href="http://opensource.adobe.com/wiki/display/blazeds/Release+Notes" 
+        rel=nofollow>Release Notes</A> for known issues and any late-breaking 
+        information. 
+        <LI>Unzip the ZIP file to a local directory on your file system. 
+        <LI>Make sure that the machine you are installing on has a Java 
+        Development Kit (JDK) installed and a JAVA_HOME environment variable. 
+        <LI>To start BlazeDS on Microssoft Windows, open a command window, 
+        navigate to install_root/tomcat/bin, and enter the catalina start 
+        command. On OS X, UNIX, and Linux, enter ./catalina start. Optionally, 
+        on Windows you can navigate to the install_root/tomcat/bin in Windows 
+        Explorer and double-click the startup.bat icon. </LI></OL>
+      <H4><A 
+      name=InstallationGuide-RunningtheTestDrivewiththeintegratedTomcatinstall></A>Running 
+      the Test Drive with the integrated Tomcat install</H4>
+      <P>In addition to the BlazeDS WAR file, the BlazeDS download includes a 
+      version of Tomcat (6.0.14) with a series of web applications fully 
+      configured with BlazeDS. To run the test drive after downloading and 
+      expanding the integrated Tomcat install:</P>
+      <OL>
+        <LI>Start Tomcat (startup.bat or startup.sh in /blazeds/tomcat/bin). 
+        <LI>The BlazeDS sample applications use an HSQLDB database that is 
+        installed in the install_root/sampledb directory. To start the sample 
+        database: 
+        <UL>
+          <LI>Open a command prompt and go to the install_root/sampledb 
+          directory. 
+          <LI>Run startdb.bat (Windows) or startdb.sh (Unix-based systems). 
+        </LI></UL>
+        <LI>Open a browser and access the samples home 
+        page:<BR>http://localhost:8400/samples/ 
+        <LI>Take the test drive! </LI></OL>
+      <H3><A 
+      name=InstallationGuide-InstallingBlazeDSwithJ2EEwebapplications></A>Installing 
+      BlazeDS with J2EE web applications</H3>
+      <P>The BlazeDS J2EE web application option installs the following files 
+      and directories under the installation root:</P>
+      <UL>
+        <LI>readme.htm - Contains an overview of important information. 
+        <LI>blazeds.war - BlazeDS web application, used as a starting point for 
+        new applications. 
+        <LI>samples.war - BlazeDS sample applications. 
+        <LI>ds-console.war - Simple monitoring application for BlazeDS 
+        deployments. 
+        <LI>license.txt - Contains license information. 
+        <LI>/resources - Contains Flex SDK source code, fully commented 
+        configuration files, as well as directories and files used for security, 
+        clustering, Flex-Ajax Bridge and manually creating HTML wrappers. Flash 
+        Player installers are in the Flex SDK ZIP file. </LI></UL>
+      <H4><A 
+      name=InstallationGuide-ToinstallBlazeDSasaJ2EEwebapplication%3A></A>To 
+      install BlazeDS as a J2EE web application:</H4>
+      <OL>
+        <LI>Read the BlazeDS <A 
+        href="http://opensource.adobe.com/wiki/display/blazeds/Release+Notes" 
+        rel=nofollow>Release Notes</A> for known issues and any late-breaking 
+        information. 
+        <LI>Unzip the BlazeDS ZIP file. 
+        <LI>Deploy the blazeds, samples, and ds-console web applications by 
+        using your application-server-specific deployment method. For example, 
+        for Tomcat, copy the WAR files to the webapps directory and restart the 
+        server. 
+        <LI>The BlazeDS sample applications use an HSQLDB database that is 
+        installed in the install_root/sampledb directory. To start the sample 
+        database: 
+        <UL>
+          <LI>Open a command prompt and go to the install_root/sampledb 
+          directory. 
+          <LI>Run startdb.bat (Windows) or startdb.sh (Unix-based systems). 
+        </LI></UL>
+        <LI>Perform additional application-server specific configuration, as 
+        described in Additional server-specific configuration. </LI></OL>
+      <H4><A 
+      name=InstallationGuide-RunningtheTestDrivewiththeintegratedTomcatinstall></A>Running 
+      the Test Drive with the integrated Tomcat install</H4>
+      <P>In addition to the BlazeDS WAR file, the BlazeDS download includes a 
+      series of web applications fully configured with BlazeDS. To run the test 
+      drive after the install:</P>
+      <OL>
+        <LI>Start your application server. 
+        <LI>The BlazeDS sample applications use an HSQLDB database that is 
+        installed in the install_root/sampledb directory. To start the sample 
+        database: 
+        <UL>
+          <LI>Open a command prompt and go to the install_root/sampledb 
+          directory. 
+          <LI>Run startdb.bat (Windows) or startdb.sh (Unix-based systems). 
+        </LI></UL>
+        <LI>Open a browser window. 
+        <LI>Access the samples home page by opening the following URL in a 
+        browser (the host name and port number of the deployed war file depends 
+        on the configuration of your web 
+        application):<BR>http://hostName:portNumber/samples/ 
+        <LI>Take the test drive! </LI></OL>
+      <H3><A 
+      name=InstallationGuide-Additionalserverspecificconfiguration></A>Additional 
+      server-specific configuration</H3>
+      <P>You may need to perform additional configuration steps for the 
+      following application servers:</P>
+      <UL>
+        <LI>Tomcat 6 
+        <LI>WebSphere 6 
+        <LI>JBoss 
+        <LI>Running from a compressed WAR 
+        <LI>Integrating BlazeDS with a ColdFusion 8 installation </LI></UL>
+      <H4><A name=InstallationGuide-Tomcat></A>Tomcat</H4>
+      <P>To use BlazeDS with Tomcat, follow these steps after deploying the 
+      BlazeDS WAR files. These steps are not necessary for the integrated Tomcat 
+      installation.</P>
+      <OL>
+        <LI>Increase the maximum memory to at least 512MB. This is achieved by 
+        specifying the maximum heap size for the JVM in the JAVA_OPTS variable: 
+        -Xmx512m 
+        <LI>(Optional) To enable custom authentication, locate the Tomcat 
+        security resource libraries under 
+        install_root/resources/security/tomcat. 
+        <OL>
+          <LI>Put flex-tomcat-common.jar in tomcat/lib/blazeds. 
+          <LI>Place flex-tomcat-server.jar in tomcat/lib/blazeds. 
+          <LI>Edit the catalina.properties file which can be found in the 
+          tomcat/conf directory. Find the common.loader property and add the 
+          following path to the end of the list: 
+          ${catalina.home}/lib/blazeds/*.jar 
+          <LI>Add &lt;Valve className="flex.messaging.security.TomcatValve"/&gt; 
+          tag to the Context descriptors. For example, for the BlazeDS samples 
+          WAR:<BR>&lt;Context path="/samples" 
+          docBase="${catalina.home}/webapps/samples" debug="0"&gt;<BR>&lt;Valve 
+          className="flex.messaging.security.TomcatValve"/&gt;<BR>&lt;/Context&gt;<BR>You 
+          will now be authenticated against the current Tomcat realm. Usually, 
+          the default for this authentication stores user information in 
+          conf/tomcat-users.xml. See the Tomcat documentation for more 
+          information on realms. See the documentation for more information on 
+          BlazeDS custom authentication. 
+          <LI>You may also need to update the active &lt;login-command&gt; in 
+          /WEB-INF/flex/services-config.xml<BR>in each deployment of a BlazeDS 
+          WAR file. For Tomcat, ensure that the TomcatLoginCommand is active in 
+          the &lt;security&gt; section:<BR>&lt;security&gt;<BR>&lt;login-command 
+          class="flex.messaging.security.TomcatLoginCommand" server="Tomcat" 
+          /&gt;<BR>... </LI></OL>
+        <LI>(Optional) To use the JMSAdapter with the Message Service, you must 
+        install and configure a JMS provider (such as activeMQ or openJMS) for 
+        use with Tomcat. 
+        <LI>Restart Tomcat. </LI></OL>
+      <H5><A 
+      name=InstallationGuide-ConfiguringActiveMQ4.1.1withTomcat6.0.x></A>Configuring 
+      ActiveMQ 4.1.1 with Tomcat 6.0.x</H5>
+      <P>These instructions create a configuration that matches what is 
+      distributed with BlazeDS. You should be able to integrate Apache ActiveMQ 
+      4.1.1 with earlier versions of Tomcat and you should also be able to 
+      integrate newer versions of ActiveMQ with Tomcat 6.0.x, but none of these 
+      configurations have been tested. These instructions require that you have 
+      a valid Apache Ant installation.</P>
+      <P>Complete the following steps to integrate ActiveMQ with your own 
+      installation of Tomcat 6.0.x:</P>
+      <OL>
+        <LI>Download ActiveMQ 4.1.1 from <A href="http://activemq.apache.org/" 
+        rel=nofollow>http://activemq.apache.org/</A>. 
+        <LI>Download and install the ActiveMQ distribution following the 
+        instructions provided on the ActiveMQ website. 
+        <LI>ActiveMQ ships with an example that contains the JAR files and 
+        configuration settings that work with a web application deployment. 
+        Build the example by opening a command prompt, changing to the 
+        activemq_root/example directory and running the following command to 
+        build the example:<BR>ant war 
+        <LI>In the tomcat_root/lib directory, create a new directory called 
+        activemq4.1.1. Copy the contents of the 
+        activemq_root/example/target/activemq-web/WEB-INF/lib directory to this 
+        new directory. 
+        <LI>Open the catalina.properties file from the tomcat_install/conf 
+        directory in a text editor. Modify the common.loader property by adding 
+        the following to the list of comma-seperated 
+        paths:<BR>${catalina.home}/lib/activemq4.1.1/*.jar 
+        <LI>Modify your BlazeDS web application to start an ActiveMQ message 
+        broker when the web application starts. To do this, open the 
+        WEB-INF/web.xml file for your web application in a text editor. Add the 
+        following context-param and listener elements. Make sure you put them in 
+        the correct location within the web.xml. The order of these must match 
+        the web-app dtd. 
+        <DIV class="preformatted panel" 
+        style="BORDER-TOP-WIDTH: 1px; BORDER-LEFT-WIDTH: 1px; BORDER-BOTTOM-WIDTH: 1px; BORDER-RIGHT-WIDTH: 1px">
+        <DIV class="preformattedContent panelContent"><PRE>&lt;context-param&gt;
+    &lt;param-name&gt;brokerURI&lt;/param-name&gt;
+
+    &lt;param-value&gt;/WEB-INF/activemq.xml&lt;/param-value&gt;
+&lt;/context-param&gt;
+
+&lt;listener&gt;
+    &lt;listener-class&gt;org.apache.activemq.web.SpringBrokerContextListener&lt;/listener-class&gt;
+&lt;/listener&gt;
+</PRE></DIV></DIV>
+        <LI>In the WEB-INF directory of your web application create a new file 
+        called activemq.xml. Open the file in a text editor and add the 
+        following text: 
+        <DIV class="preformatted panel" 
+        style="BORDER-TOP-WIDTH: 1px; BORDER-LEFT-WIDTH: 1px; BORDER-BOTTOM-WIDTH: 1px; BORDER-RIGHT-WIDTH: 1px">
+        <DIV class="preformattedContent panelContent"><PRE>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;beans&gt;
+	&lt;broker useJmx="true" persistent="false" xmlns="http://activemq.org/config/1.0" brokerName="myBroker"&gt;
+
+		&lt;transportConnectors&gt;
+			&lt;transportConnector name="default" uri="tcp://localhost:61716"/&gt;
+		&lt;/transportConnectors&gt;
+	&lt;/broker&gt;
+&lt;/beans&gt;
+</PRE></DIV></DIV>
+        <P>This starts an ActiveMQ message broker with a broker name of myBroker 
+        listening for requests on the localhost network interface at port 
+        61716.</P>
+        <LI>Add the ActiveMQ connection factories and any JMS Topics and Queues 
+        you want to use to JNDI. The easiest way to do this in Tomcat 6.0.x is 
+        to create a context file for your web application and put the settings 
+        in there. To do this, create a new file in the 
+        tomcat_install/conf/Catalina/localhost directory. If the 
+        Catalina/localhost directory does not exit already create it now. The 
+        new file that you create should have the same name as the web 
+        application with a .xml extension. For example, if your BlazeDS web 
+        application is named samples the Tomcat context file should be named 
+        samples.xml. For more information on context files, refer to your Tomcat 
+        documentation. Once you have created the file, open it in a text editor. 
+        Add the following contents to the file, replacing the example topic and 
+        queue shown here with your own topics and queues: 
+        <DIV class="preformatted panel" 
+        style="BORDER-TOP-WIDTH: 1px; BORDER-LEFT-WIDTH: 1px; BORDER-BOTTOM-WIDTH: 1px; BORDER-RIGHT-WIDTH: 1px">
+        <DIV class="preformattedContent panelContent"><PRE>&lt;Context privileged="true" antiResourceLocking="false" antiJARLocking="false" reloadable="true"&gt;
+
+    &lt;Resource name="jms/flex/TopicConnectionFactory"
+                type="org.apache.activemq.ActiveMQConnectionFactory"
+                description="JMS Connection Factory"
+                factory="org.apache.activemq.jndi.JNDIReferenceFactory"
+                brokerURL="tcp://localhost:61716"
+
+                brokerName="myBroker"/&gt;
+ 	&lt;Resource name="jms/topic/flex/simpletopic"
+                type="org.apache.activemq.command.ActiveMQTopic"
+                description="my Topic"
+
+                factory="org.apache.activemq.jndi.JNDIReferenceFactory"
+                physicalName="FlexTopic"/&gt;
+	&lt;Resource name="jms/flex/QueueConnectionFactory"
+                type="org.apache.activemq.ActiveMQConnectionFactory"
+
+                description="JMS Connection Factory"
+                factory="org.apache.activemq.jndi.JNDIReferenceFactory"
+                brokerURL="tcp://localhost:61716"
+                brokerName="myBroker"/&gt;
+
+    &lt;Resource name="jms/queue/flex/simplequeue"
+                type="org.apache.activemq.command.ActiveMQQueue"
+                description="my Queue"
+                factory="org.apache.activemq.jndi.JNDIReferenceFactory"
+                physicalName="FlexQueue"/&gt;                
+    &lt;Valve className="flex.messaging.security.TomcatValve"/&gt;
+
+&lt;/Context&gt;
+</PRE></DIV></DIV>
+        <LI>Start your Tomcat server. The ActiveMQ message broker should start 
+        listening for messages on port 61716 and you should be able to send 
+        messages to and receive message from the JMS topics and queues you have 
+        configured. For more information about configuring and using ActiveMQ, 
+        please refer to the ActiveMQ documentation which is available on <A 
+        href="http://activemq.apache.org/" 
+        rel=nofollow>http://activemq.apache.org/</A>. </LI></OL>
+      <H4><A name=InstallationGuide-WebSphere></A>WebSphere</H4>
+      <P>(Optional) To enable custom authentication, open the WebSphere 
+      Administrator and configure a custom user registry using the files under 
+      install_root/resources/security/websphere/ as usersFile and groupsFile 
+      custom properties.</P>
+      <H4><A name=InstallationGuide-JBoss></A>JBoss</H4>
+      <P>(Optional) To enable custom authentication, you must perform the 
+      following configuration steps:</P>
+      <OL>
+        <LI>Put install_root/resources/security/tomcat/flex-tomcat-common.jar 
+        and install_root/resources/security/tomcat/flex-tomcat-server.jar in the 
+        jboss_root/server/default/lib folder. 
+        <LI>Add &lt;Valve className="flex.messaging.security.TomcatValve"/&gt; 
+        tag to the Context descriptors. 
+        <LI>Restart JBoss. </LI></OL>
+      <P>This configuration provides authentication against the current JBoss 
+      realm. Usually, the default for this authentication stores user 
+      information in jboss_root/server/default/conf/users.properties and roles 
+      information in jboss_root/server/default/conf/roles.properties. For more 
+      information on realms, see the JBoss documentation. For more information 
+      on BlazeDS custom authentication, see the BlazeDS documentation and 
+      information in the install_root/resources/security directory.<BR>Running 
+      from a compressed WAR</P>
+      <P>To run BlazeDS from a compressed WAR file, perform the following 
+      steps:</P>
+      <OL>
+        <LI>Expand the flex.war file using winzip or the JAR utility. 
+        <LI>Create your application, including SWF files, ActionScript files, 
+        configuration settings and HTML wrappers.<BR>Note: For more information 
+        on compiling SWF files and creating HTML wrappers, see the BlazeDS 
+        documentation. 
+        <LI>Create a compressed WAR file from the expanded web application 
+        structure. 
+        <LI>Deploy the compressed WAR file.<BR>Note that many samples 
+        applications in samples.war use HSQLDB which will not function within a 
+        compressed web application. It is therefore advised to deploy samples as 
+        an uncompressed war.<BR>Note that when running BlazeDS from a compressed 
+        WAR file some features, such as clustering are not available. </LI></OL>
+      <H3><A 
+      name=InstallationGuide-IntegratingBlazeDSwithaColdFusion8installation></A>Integrating 
+      BlazeDS with a ColdFusion 8 installation</H3>
+      <P>ColdFusion 8 comes either with an integrated LiveCycle Data Services ES 
+      installation or without one. The way you integrate BlazeDS with ColdFusion 
+      8 depends on your version of ColdFusion. </P>
+      <P>If you have ColdFusion 8 installed with LiveCycle Data Services ES, you 
+      must perform both of the following procedures. If you have ColdFusion 8 
+      without LiveCycle Data Services ES, you only have to perform the second 
+      procedure.</P>
+      <P><B>To integrate BlazeDS with ColdFusion 8 with integrated LiveCycle 
+      Data Services ES installation, perform these steps and perform the next 
+      procedure:</B></P>
+      <OL>
+        <LI>Shut down ColdFusion. 
+        <LI>Move the contents of the ColdFusion8/wwwroot/WEB-INF/flex directory 
+        to a backup location so that the flex directory is now empty. 
+        <LI>Edit ColdFusion8/WEB-INF/web.xml: 
+        <UL>
+          <LI>Comment out/remove the definitions of FlexMxmlServlet and 
+          FlexInternalServlet servlets. 
+          <LI>Comment out/remove the servlet mapping for FlexMxmlServlet and 
+          FlexInternalServlet. 
+          <LI>Comment out/remove the taglig definition for the FlexTagLib tag 
+          library. </LI></UL></LI></OL>
+      <P><B>Complete the following instructions for all versions of 
+      ColdFusion.</B></P>
+      <OL>
+        <LI>If you have not already done so, shut down ColdFusion. 
+        <LI>Unzip blazeds.war in to a temporary directory (In this example 
+        c:\temp\BlazeDS). 
+        <LI>Move aside the following jar files from ColdFusion8/lib: 
+        <UL>
+          <LI>flex-messaging.jar 
+          <LI>flex-messaging-common.jar 
+          <LI>flex-messaging-opt.jar 
+          <LI>flex-messaging-req.jar </LI></UL>
+        <LI>Copy the following jar files from c:\temp\BlazeDS\WEB-INF\lib to 
+        ColdFusion8/lib: 
+        <UL>
+          <LI>flex-messaging-common.jar 
+          <LI>flex-messaging-core.jar 
+          <LI>flex-messaging-opt.jar 
+          <LI>flex-messaging-proxy.jar 
+          <LI>flex-messaging-remoting.jar </LI></UL>
+        <LI>Create a new directory (create the WEB-INF/flex directory if 
+        needed):<BR>ColdFusion8/wwwroot/WEB-INF/flex/jars 
+        <LI>Copy the following jar files from c:\temp\BlazeDS\WEB-INF\lib to 
+        ColdFusion8/wwwroot/WEB-INF/flex/jars: 
+        <UL>
+          <LI>concurrent.jar 
+          <LI>cfgatewayadapter </LI></UL>
+        <LI>Set up the configuration files for BlazeDS. You can copy the set of 
+        configuration files from the BlazeDS ZIP file (not the WAR file). Copy 
+        the following files in resources/ColdFusion to 
+        ColdFusion8/wwwroot/WEB-INF/flex: 
+        <UL>
+          <LI>services-config.xml 
+          <LI>messaging-config.xml 
+          <LI>proxy-config.xml 
+          <LI>remoting-config.xml </LI></UL>
+        <LI>(Optional) You can continue to use the configuration files from your 
+        integrated LiveCycle Data Services ES installation by performing the 
+        following procedure: 
+        <OL>
+          <LI>Copy services-config.xml, messaging-config.xml, proxy-config.xml, 
+          and remoting-config.xml from the WEB-INF/flex directory you moved 
+          aside earlier back to ColdFusion8/wwwroot/WEB-INF/flex. 
+          <LI>Remove from the following line from the services-config.xml 
+          file:<BR>&lt;service-include file-path="data-management-config.xml" 
+          /&gt; 
+          <LI>Remove the &lt;channel-definition&gt; from the services-config.xml 
+          file for the ColdFusion-specific RTMP channel (if not commented out) 
+          and remove the java-http and java-secure-http channel definitions. 
+          </LI></OL>
+        <LI>Uncomment the java-amf, java-secure-amf and java-polling-amf 
+        channels. Do not include the java-rtmp channel definition. 
+        <LI>Edit the proxy-config.xml file and change the lines:<BR>&lt;channel 
+        ref="java-http"/&gt;<BR>&lt;!-- &lt;channel ref="java-amf"/&gt; 
+        --&gt;<BR>to the following text:<BR>&lt;channel ref="java-amf"/&gt; 
+        <LI>Restart ColdFusion. </LI></OL>
+      <H3><A name=InstallationGuide-UpgradingBlazeDS3toversion3.2></A>Upgrading 
+      BlazeDS 3 to version 3.2</H3>
+      <P>BlazeDS 3.2 ships with an empty web application called blazeds.war. You 
+      likely used the blazeds.war from version 3 as the basis for the web 
+      application that you want to upgrade. You are going to use the blazeds.war 
+      from version 3.2 as the basis of your upgraded version 3 web 
+      application.</P>
+      <P>The following procedure describes how to upgrade an existing 
+      installation of BlazeDS 3 to BlazeDS 3.2:</P>
+      <OL>
+        <LI>Install BlazeDS 3.2. 
+        <LI>Create a backup copy of your existing version 3 web application. As 
+        part of this procedure, you copy assets from the backup copy to the new 
+        BlazeDS 3.2 web application. 
+        <LI>Uninstall your existing BlazeDS 3 web application from your 
+        application server. The steps to do this uninstall are based on your 
+        application server. For more information, see the documentation for your 
+        application server. 
+        <LI>Expand the empty blazeds.war file installed with version 3.2. If you 
+        are starting with a packaged blazeds.war, you will need to expand it to 
+        a directory and then repackage it when you are finished. 
+        <LI>Copy the assets from your existing version 3 web application to the 
+        empty BlazeDS 3.2 web application. Copy all image, font, SWF, Java, and 
+        JAR and other files required by your application.<BR><B>Note:</B> Do not 
+        copy any configuration files from the WEB-INF/flex directory of your 
+        existing version 3 web application. 
+        <LI>Merge the configuration files from the WEB-INF/flex directory of 
+        your existing version 3 web application to the configuration files in 
+        the WEB-INF/flex directory of the new BlazeDS 3.2 web application. To 
+        perform this merge, copy and paste your destination, channel, endpoint, 
+        and other definitions from the version 3 configuration files to the 
+        version 3.2 configuration files.<BR><B>Note:</B> Because configuration 
+        files can contain new configuration properties, or change the default 
+        values of existing properties, do not overwrite the version 3.2 
+        configuration files with the version 3 configuration files. Instead, 
+        always merge your custom settings into the version 3.2 configuration 
+        files. 
+        <LI>(Optional) If you deploy a compressed or packaged web application, 
+        repackage the web application. 
+        <LI>Deploy the new web application on your application server. 
+    </LI></OL></TD>
+    <TD class=confluenceTd vAlign=top width="20%">
+      <TABLE>
+        <DIV class=quick-links>
+        <DIV 
+        style="PADDING-RIGHT: 3px; PADDING-LEFT: 3px; PADDING-BOTTOM: 3px; MARGIN: 0px auto; WIDTH: 180px; PADDING-TOP: 3px">
+        <DIV class="sidenavlinks sidenavtitle-page">BlazeDS</DIV>
+        <DIV class=sidenavlinks><SPAN class=blueboldlinks><A 
+        href="http://opensource.adobe.com/wiki/display/blazeds/BlazeDS">Home</A> 
+        </SPAN><BR><SPAN class=blueboldlinks><A 
+        href="http://opensource.adobe.com/wiki/display/blazeds/Overview">Overview</A> 
+        </SPAN><BR><SPAN class=blueboldlinks><A 
+        href="http://opensource.adobe.com/wiki/display/blazeds/About">About</A> 
+        </SPAN><BR><SPAN class=blueboldlinks><A 
+        href="http://opensource.adobe.com/wiki/display/blazeds/Bugbase">Bug 
+        Database</A> </SPAN><BR><SPAN class=blueboldlinks><A 
+        href="http://opensource.adobe.com/wiki/display/blazeds/Submitting+a+Patch">Submitting 
+        a Patch</A> </SPAN><BR><SPAN class=blueboldlinks><A 
+        href="http://opensource.adobe.com/wiki/display/blazeds/Forums">Forums</A> 
+        </SPAN><BR><SPAN class=blueboldlinks><A 
+        href="http://opensource.adobe.com/wiki/display/blazeds/Downloads">Downloads</A> 
+        </SPAN><BR><SPAN class=blueboldlinks><A 
+        href="http://opensource.adobe.com/wiki/display/blazeds/Source">Source</A> 
+        </SPAN><BR><SPAN class=blueboldlinks><A 
+        href="http://opensource.adobe.com/wiki/display/blazeds/Developer+Documentation">Developer 
+        Documentation</A> </SPAN><BR><SPAN class=blueboldlinks><A 
+        href="http://opensource.adobe.com/wiki/display/blazeds/FAQ">FAQ</A> 
+        </SPAN><BR><SPAN class=blueboldlinks><A 
+        href="http://opensource.adobe.com/wiki/display/blazeds/License">License</A> 
+        </SPAN><BR></DIV></DIV></DIV>
+        <TBODY></TBODY></TABLE>
+      <TABLE>
+        <DIV class=quick-links>
+        <DIV 
+        style="PADDING-RIGHT: 3px; PADDING-LEFT: 3px; PADDING-BOTTOM: 3px; MARGIN: 0px auto; WIDTH: 180px; PADDING-TOP: 3px">
+        <DIV class="sidenavlinks sidenavtitle-page">Related Projects</DIV>
+        <DIV class=sidenavlinks><SPAN class=blueboldlinks><A 
+        href="http://opensource.adobe.com/wiki/display/cairngorm/Cairngorm">Cairngorm</A> 
+        </SPAN><BR><SPAN class=blueboldlinks><A 
+        href="http://opensource.adobe.com/wiki/display/flexsdk/Flex+SDK">Flex 
+        SDK</A> </SPAN><BR><SPAN class=blueboldlinks><A 
+        href="http://opensource.adobe.com/wiki/display/blazeds/"></A></SPAN><BR><SPAN 
+        class=blueboldlinks><A 
+        href="http://opensource.adobe.com/wiki/display/site/Projects">More Open 
+        Source Projects ›</A> </SPAN><BR></DIV></DIV></DIV>
+        <TBODY></TBODY></TABLE></TD></TR></TBODY></TABLE></DIV><!--
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+         xmlns:dc="http://purl.org/dc/elements/1.1/"
+         xmlns:trackback="http://madskills.com/public/xml/rss/module/trackback/">
+<rdf:Description
+    rdf:about="http://opensource.adobe.com/wiki/display/blazeds/Installation+Guide"
+    dc:identifier="http://opensource.adobe.com/wiki/display/blazeds/Installation+Guide"
+    dc:title="Installation Guide"
+    trackback:ping="http://opensource.adobe.com/wiki/rpc/trackback/1737298"/>
+</rdf:RDF>
+--><!--
+    Root decorator: all decisions about how a page is to be decorated via the
+                    inline decoration begins here.
+--><!--
+    Switch based upon the context. However, for now, just delegate to a decorator
+    identified directly by the context.
+-->
+<DIV class=wiki-content style="MARGIN-RIGHT: 10px">
+<P style="CLEAR: both"><!-- comments should always display underneath the content. we should have a 'clear:both' here just in case there are floats or aligned images in the content -->
+<DIV class=tabletitle 
+style="BORDER-TOP-WIDTH: 0px; BORDER-LEFT-WIDTH: 0px; BORDER-BOTTOM-WIDTH: 0px; BORDER-RIGHT-WIDTH: 0px"><A 
+name=comments>Comments</A> <SPAN class=smalltext>&nbsp;(<A 
+href="http://opensource.adobe.com/wiki/display/blazeds/Installation+Guide?showComments=false">Hide 
+Comments</A>)</SPAN> </DIV>
+<DIV 
+style="PADDING-RIGHT: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: 0px; PADDING-TOP: 0px"><A 
+name=comment-4489493></A>
+<DIV class=commentBox>
+<DIV class=commentblock>
+<P>The documentation says that you should go to <A 
+href="http://localhost:8400/blazeds-samples/" 
+rel=nofollow>http://localhost:8400/blazeds-samples/</A> to view the samples. The 
+sample deployed war file is <A href="http://localhost:8400/samples/" 
+rel=nofollow>http://localhost:8400/samples/</A> and on your own installation of 
+tomcat it should be <A href="http://localhost:8080/samples/" 
+rel=nofollow>http://localhost:8080/samples/</A> by default. </P>
+<P>Wade Arnold</P></DIV>
+<DIV class=smallfont style="WIDTH: 98%; COLOR: #666666" align=left><IMG 
+height=16 src="Installation Guide - BlazeDS - Confluence.files/comment_16.gif" 
+width=16 align=absMiddle border=0> Posted by <A 
+href="http://opensource.adobe.com/wiki/display/~wadearnold">Wade Arnold</A> at 
+<A 
+href="http://opensource.adobe.com/wiki/display/blazeds/Installation+Guide?focusedCommentId=4489493#comment-4489493">Mar 
+01, 2008 10:39</A> </DIV><!--
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+         xmlns:dc="http://purl.org/dc/elements/1.1/"
+         xmlns:trackback="http://madskills.com/public/xml/rss/module/trackback/">
+<rdf:Description
+    rdf:about="http://opensource.adobe.com/wiki/display/blazeds/Installation+Guide?focusedCommentId=4489493#comment-4489493"
+    dc:identifier="http://opensource.adobe.com/wiki/display/blazeds/Installation+Guide?focusedCommentId=4489493#comment-4489493"
+    dc:title="$comment.title"
+    trackback:ping="http://opensource.adobe.com/wiki/rpc/trackback/4489493"/>
+</rdf:RDF>
+--></DIV></DIV>
+<DIV 
+style="PADDING-RIGHT: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: 0px; PADDING-TOP: 0px"><A 
+name=comment-3867710></A>
+<DIV class=commentBox>
+<DIV class=commentblock>
+<P>RE: Integrating BlazeDS with a ColdFusion 8 installation</P>
+<P>Step<BR>5./8./13. Restart ColdFusion. Doh! (a nudge is the same as a wink to 
+a blind man... know what I mean? nudge, nudge, wink, wink)</P>
+<P>7. "Copy the following files in resources/ColdFusion to 
+ColdFusion8/wwwroot/WEB-INF/flex:"<BR>Should be: "Copy the following files in 
+/WEB-INF/flex to ColdFusion8/wwwroot/WEB-INF/flex:"</P>
+<P>Darin Kohles</P></DIV>
+<DIV class=smallfont style="WIDTH: 98%; COLOR: #666666" align=left><IMG 
+height=16 src="Installation Guide - BlazeDS - Confluence.files/comment_16.gif" 
+width=16 align=absMiddle border=0> Posted by <A 
+href="http://opensource.adobe.com/wiki/display/~ur_dtrain">Darin Kohles</A> at 
+Mar 05, 2008 22:42Updated by <B><A 
+href="http://opensource.adobe.com/wiki/display/~ur_dtrain">Darin Kohles</A> 
+</B></DIV><!--
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+         xmlns:dc="http://purl.org/dc/elements/1.1/"
+         xmlns:trackback="http://madskills.com/public/xml/rss/module/trackback/">
+<rdf:Description
+    rdf:about="http://opensource.adobe.com/wiki/display/blazeds/Installation+Guide?focusedCommentId=3867710#comment-3867710"
+    dc:identifier="http://opensource.adobe.com/wiki/display/blazeds/Installation+Guide?focusedCommentId=3867710#comment-3867710"
+    dc:title="$comment.title"
+    trackback:ping="http://opensource.adobe.com/wiki/rpc/trackback/3867710"/>
+</rdf:RDF>
+--></DIV></DIV>
+<DIV 
+style="PADDING-RIGHT: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: 0px; PADDING-TOP: 0px"><A 
+name=comment-5865481></A>
+<DIV class=commentBox>
+<DIV class=commentblock>
+<P>Blaze DS does work on Mac OS X too</P></DIV>
+<DIV class=smallfont style="WIDTH: 98%; COLOR: #666666" align=left><IMG 
+height=16 src="Installation Guide - BlazeDS - Confluence.files/comment_16.gif" 
+width=16 align=absMiddle border=0> Posted by Anonymous at <A 
+href="http://opensource.adobe.com/wiki/display/blazeds/Installation+Guide?focusedCommentId=5865481#comment-5865481">Mar 
+07, 2008 07:42</A> </DIV><!--
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+         xmlns:dc="http://purl.org/dc/elements/1.1/"
+         xmlns:trackback="http://madskills.com/public/xml/rss/module/trackback/">
+<rdf:Description
+    rdf:about="http://opensource.adobe.com/wiki/display/blazeds/Installation+Guide?focusedCommentId=5865481#comment-5865481"
+    dc:identifier="http://opensource.adobe.com/wiki/display/blazeds/Installation+Guide?focusedCommentId=5865481#comment-5865481"
+    dc:title="$comment.title"
+    trackback:ping="http://opensource.adobe.com/wiki/rpc/trackback/5865481"/>
+</rdf:RDF>
+--></DIV></DIV>
+<DIV 
+style="PADDING-RIGHT: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: 0px; PADDING-TOP: 0px"><A 
+name=comment-5865491></A>
+<DIV class=commentBox>
+<DIV class=commentblock>
+<P>^^ Sure does! To add to that comment on OS X, make sure that when you try and 
+run Tomcat with the integrated install you use the sytax "./catalina start.sh". 
+This also applies to starting the DB with "./startdb.sh" Dunno why you need to 
+add the current directory pathing but it works...<BR>You can also point to <A 
+href="http://localhost:8400/" rel=nofollow>http://localhost:8400/</A> to view 
+admin/templates/samples directories.</P></DIV>
+<DIV class=smallfont style="WIDTH: 98%; COLOR: #666666" align=left><IMG 
+height=16 src="Installation Guide - BlazeDS - Confluence.files/comment_16.gif" 
+width=16 align=absMiddle border=0> Posted by <A 
+href="http://opensource.adobe.com/wiki/display/~john+pencola">John Pencola</A> 
+at <A 
+href="http://opensource.adobe.com/wiki/display/blazeds/Installation+Guide?focusedCommentId=5865491#comment-5865491">Mar 
+07, 2008 09:17</A> </DIV><!--
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+         xmlns:dc="http://purl.org/dc/elements/1.1/"
+         xmlns:trackback="http://madskills.com/public/xml/rss/module/trackback/">
+<rdf:Description
+    rdf:about="http://opensource.adobe.com/wiki/display/blazeds/Installation+Guide?focusedCommentId=5865491#comment-5865491"
+    dc:identifier="http://opensource.adobe.com/wiki/display/blazeds/Installation+Guide?focusedCommentId=5865491#comment-5865491"
+    dc:title="$comment.title"
+    trackback:ping="http://opensource.adobe.com/wiki/rpc/trackback/5865491"/>
+</rdf:RDF>
+--></DIV></DIV>
+<DIV 
+style="PADDING-RIGHT: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: 0px; PADDING-TOP: 0px"><A 
+name=comment-5865800></A>
+<DIV class=commentBox>
+<DIV class=commentblock>
+<P>Type: The line "BlazeDS with integrated Tomcat" obviously wants to be 
+formatted as a major heading in this article.</P></DIV>
+<DIV class=smallfont style="WIDTH: 98%; COLOR: #666666" align=left><IMG 
+height=16 src="Installation Guide - BlazeDS - Confluence.files/comment_16.gif" 
+width=16 align=absMiddle border=0> Posted by <A 
+href="http://opensource.adobe.com/wiki/display/~douglas+mccarroll">Douglas 
+McCarroll</A> at <A 
+href="http://opensource.adobe.com/wiki/display/blazeds/Installation+Guide?focusedCommentId=5865800#comment-5865800">Mar 
+26, 2008 06:39</A> </DIV><!--
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+         xmlns:dc="http://purl.org/dc/elements/1.1/"
+         xmlns:trackback="http://madskills.com/public/xml/rss/module/trackback/">
+<rdf:Description
+    rdf:about="http://opensource.adobe.com/wiki/display/blazeds/Installation+Guide?focusedCommentId=5865800#comment-5865800"
+    dc:identifier="http://opensource.adobe.com/wiki/display/blazeds/Installation+Guide?focusedCommentId=5865800#comment-5865800"
+    dc:title="$comment.title"
+    trackback:ping="http://opensource.adobe.com/wiki/rpc/trackback/5865800"/>
+</rdf:RDF>
+--></DIV></DIV>
+<DIV 
+style="PADDING-RIGHT: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: 0px; PADDING-TOP: 0px"><A 
+name=comment-7176212></A>
+<DIV class=commentBox>
+<DIV class=commentblock>
+<P>regarding the OSX startup syntax, I navigated to /tomcat/bin and used 
+./ctalina.sh start</P></DIV>
+<DIV class=smallfont style="WIDTH: 98%; COLOR: #666666" align=left><IMG 
+height=16 src="Installation Guide - BlazeDS - Confluence.files/comment_16.gif" 
+width=16 align=absMiddle border=0> Posted by <A 
+href="http://opensource.adobe.com/wiki/display/~stoem">Stefan Richter</A> at <A 
+href="http://opensource.adobe.com/wiki/display/blazeds/Installation+Guide?focusedCommentId=7176212#comment-7176212">Apr 
+15, 2008 07:13</A> </DIV><!--
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+         xmlns:dc="http://purl.org/dc/elements/1.1/"
+         xmlns:trackback="http://madskills.com/public/xml/rss/module/trackback/">
+<rdf:Description
+    rdf:about="http://opensource.adobe.com/wiki/display/blazeds/Installation+Guide?focusedCommentId=7176212#comment-7176212"
+    dc:identifier="http://opensource.adobe.com/wiki/display/blazeds/Installation+Guide?focusedCommentId=7176212#comment-7176212"
+    dc:title="$comment.title"
+    trackback:ping="http://opensource.adobe.com/wiki/rpc/trackback/7176212"/>
+</rdf:RDF>
+--></DIV></DIV>
+<DIV 
+style="PADDING-RIGHT: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: 0px; PADDING-TOP: 0px"><A 
+name=comment-7176213></A>
+<DIV class=commentBox>
+<DIV class=commentblock>
+<P>sorry that's meant to read ./catalina.sh start</P></DIV>
+<DIV class=smallfont style="WIDTH: 98%; COLOR: #666666" align=left><IMG 
+height=16 src="Installation Guide - BlazeDS - Confluence.files/comment_16.gif" 
+width=16 align=absMiddle border=0> Posted by <A 
+href="http://opensource.adobe.com/wiki/display/~stoem">Stefan Richter</A> at <A 
+href="http://opensource.adobe.com/wiki/display/blazeds/Installation+Guide?focusedCommentId=7176213#comment-7176213">Apr 
+15, 2008 07:14</A> </DIV><!--
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+         xmlns:dc="http://purl.org/dc/elements/1.1/"
+         xmlns:trackback="http://madskills.com/public/xml/rss/module/trackback/">
+<rdf:Description
+    rdf:about="http://opensource.adobe.com/wiki/display/blazeds/Installation+Guide?focusedCommentId=7176213#comment-7176213"
+    dc:identifier="http://opensource.adobe.com/wiki/display/blazeds/Installation+Guide?focusedCommentId=7176213#comment-7176213"
+    dc:title="$comment.title"
+    trackback:ping="http://opensource.adobe.com/wiki/rpc/trackback/7176213"/>
+</rdf:RDF>
+--></DIV></DIV>
+<DIV 
+style="PADDING-RIGHT: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: 0px; PADDING-TOP: 0px"><A 
+name=comment-7274596></A>
+<DIV class=commentBox>
+<DIV class=commentblock>
+<P>Normally if i follow the step to "integrate BlazeDS with CF8" but with CFMX 
+7.0.2 it should work ? Do the server need to be a J2EE one ? Okay, i tried but 
+failed... i suppose i'm doing something wrong.</P></DIV>
+<DIV class=smallfont style="WIDTH: 98%; COLOR: #666666" align=left><IMG 
+height=16 src="Installation Guide - BlazeDS - Confluence.files/comment_16.gif" 
+width=16 align=absMiddle border=0> Posted by <A 
+href="http://opensource.adobe.com/wiki/display/~fitzchev">Cyril Hanquez</A> at 
+<A 
+href="http://opensource.adobe.com/wiki/display/blazeds/Installation+Guide?focusedCommentId=7274596#comment-7274596">Apr 
+21, 2008 07:00</A> </DIV><!--
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+         xmlns:dc="http://purl.org/dc/elements/1.1/"
+         xmlns:trackback="http://madskills.com/public/xml/rss/module/trackback/">
+<rdf:Description
+    rdf:about="http://opensource.adobe.com/wiki/display/blazeds/Installation+Guide?focusedCommentId=7274596#comment-7274596"
+    dc:identifier="http://opensource.adobe.com/wiki/display/blazeds/Installation+Guide?focusedCommentId=7274596#comment-7274596"
+    dc:title="$comment.title"
+    trackback:ping="http://opensource.adobe.com/wiki/rpc/trackback/7274596"/>
+</rdf:RDF>
+--></DIV></DIV>
+<DIV 
+style="PADDING-RIGHT: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: 0px; PADDING-TOP: 0px"><A 
+name=comment-20611087></A>
+<DIV class=commentBox>
+<DIV class=commentblock>
+<P>Step 4 above says to do the following:<BR>To start BlazeDS, open a command 
+window, navigate to install_root/tomcat/bin, and enter the catalina start 
+command. On UNIX and Linux, enter ./catalina start. Optionally, on Windows you 
+can navigate to the install_root/tomcat/bin in Windows Explorer and double-click 
+the catalina.bat icon.</P>
+<P>This step did not work for me. Instead I found that I have to double-click 
+the startup.bat file instead of the catalina.bat file.</P></DIV>
+<DIV class=smallfont style="WIDTH: 98%; COLOR: #666666" align=left><IMG 
+height=16 src="Installation Guide - BlazeDS - Confluence.files/comment_16.gif" 
+width=16 align=absMiddle border=0> Posted by <A 
+href="http://opensource.adobe.com/wiki/display/~bclover">Bryan Clover</A> at <A 
+href="http://opensource.adobe.com/wiki/display/blazeds/Installation+Guide?focusedCommentId=20611087#comment-20611087">Oct 
+07, 2008 08:28</A> </DIV><!--
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+         xmlns:dc="http://purl.org/dc/elements/1.1/"
+         xmlns:trackback="http://madskills.com/public/xml/rss/module/trackback/">
+<rdf:Description
+    rdf:about="http://opensource.adobe.com/wiki/display/blazeds/Installation+Guide?focusedCommentId=20611087#comment-20611087"
+    dc:identifier="http://opensource.adobe.com/wiki/display/blazeds/Installation+Guide?focusedCommentId=20611087#comment-20611087"
+    dc:title="$comment.title"
+    trackback:ping="http://opensource.adobe.com/wiki/rpc/trackback/20611087"/>
+</rdf:RDF>
+--></DIV></DIV>
+<DIV 
+style="PADDING-RIGHT: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: 0px; PADDING-TOP: 0px"><A 
+name=comment-23855201></A>
+<DIV class=commentBox>
+<DIV class=commentblock>
+<P>Installation instructions updated for Blaze 3.2 and should address these 
+issues.</P></DIV>
+<DIV class=smallfont style="WIDTH: 98%; COLOR: #666666" align=left><IMG 
+height=16 src="Installation Guide - BlazeDS - Confluence.files/comment_16.gif" 
+width=16 align=absMiddle border=0> Posted by <A 
+href="http://opensource.adobe.com/wiki/display/~smgilson">Stephen Gilson</A> at 
+<A 
+href="http://opensource.adobe.com/wiki/display/blazeds/Installation+Guide?focusedCommentId=23855201#comment-23855201">Nov 
+16, 2008 08:09</A> </DIV><!--
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+         xmlns:dc="http://purl.org/dc/elements/1.1/"
+         xmlns:trackback="http://madskills.com/public/xml/rss/module/trackback/">
+<rdf:Description
+    rdf:about="http://opensource.adobe.com/wiki/display/blazeds/Installation+Guide?focusedCommentId=23855201#comment-23855201"
+    dc:identifier="http://opensource.adobe.com/wiki/display/blazeds/Installation+Guide?focusedCommentId=23855201#comment-23855201"
+    dc:title="$comment.title"
+    trackback:ping="http://opensource.adobe.com/wiki/rpc/trackback/23855201"/>
+</rdf:RDF>
+--></DIV></DIV>
+<DIV 
+style="PADDING-RIGHT: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: 0px; PADDING-TOP: 0px"><A 
+name=comment-24445156></A>
+<DIV class=commentBox>
+<DIV class=commentblock>
+<P>As of 11/26/08, the contents of the 3.2 distributions available on the 
+Release Builds page don't entirely agree with these instructions.</P>
+<P>The 3.2 binary distribution, <A 
+href="http://flexorg.wip3.adobe.com/blazeds/3.0.x/milestone/3978/blazeds-bin-3.2.0.3978.zip" 
+rel=nofollow>http://flexorg.wip3.adobe.com/blazeds/3.0.x/milestone/3978/blazeds-bin-3.2.0.3978.zip</A> 
+, does NOT contain samples.war, ds-console.war, or sampledb. It only contains 
+blazeds.war. To run the test drive, these are needed.</P>
+<P>However, these are included in the turnkey zip file, <A 
+href="http://flexorg.wip3.adobe.com/blazeds/3.0.x/milestone/3978/blazeds-turnkey-3.2.0.3978.zip" 
+rel=nofollow>http://flexorg.wip3.adobe.com/blazeds/3.0.x/milestone/3978/blazeds-turnkey-3.2.0.3978.zip</A> 
+.</P></DIV>
+<DIV class=smallfont style="WIDTH: 98%; COLOR: #666666" align=left><IMG 
+height=16 src="Installation Guide - BlazeDS - Confluence.files/comment_16.gif" 
+width=16 align=absMiddle border=0> Posted by <A 
+href="http://opensource.adobe.com/wiki/display/~mvalentiner">Michael 
+Valentiner</A> at <A 
+href="http://opensource.adobe.com/wiki/display/blazeds/Installation+Guide?focusedCommentId=24445156#comment-24445156">Nov 
+26, 2008 14:32</A> </DIV><!--
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+         xmlns:dc="http://purl.org/dc/elements/1.1/"
+         xmlns:trackback="http://madskills.com/public/xml/rss/module/trackback/">
+<rdf:Description
+    rdf:about="http://opensource.adobe.com/wiki/display/blazeds/Installation+Guide?focusedCommentId=24445156#comment-24445156"
+    dc:identifier="http://opensource.adobe.com/wiki/display/blazeds/Installation+Guide?focusedCommentId=24445156#comment-24445156"
+    dc:title="$comment.title"
+    trackback:ping="http://opensource.adobe.com/wiki/rpc/trackback/24445156"/>
+</rdf:RDF>
+--></DIV></DIV>
+<DIV 
+style="PADDING-RIGHT: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: 0px; PADDING-TOP: 0px"><A 
+name=comment-34177700></A>
+<DIV class=commentBox>
+<DIV class=commentblock>
+<P>Hi, does anyone know BlazeDS can run on Weblogic app. server !?</P></DIV>
+<DIV class=smallfont style="WIDTH: 98%; COLOR: #666666" align=left><IMG 
+height=16 src="Installation Guide - BlazeDS - Confluence.files/comment_16.gif" 
+width=16 align=absMiddle border=0> Posted by <A 
+href="http://opensource.adobe.com/wiki/display/~ponycx113">Ka Kin Ma</A> at <A 
+href="http://opensource.adobe.com/wiki/display/blazeds/Installation+Guide?focusedCommentId=34177700#comment-34177700">Aug 
+14, 2009 00:37</A> </DIV><!--
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+         xmlns:dc="http://purl.org/dc/elements/1.1/"
+         xmlns:trackback="http://madskills.com/public/xml/rss/module/trackback/">
+<rdf:Description
+    rdf:about="http://opensource.adobe.com/wiki/display/blazeds/Installation+Guide?focusedCommentId=34177700#comment-34177700"
+    dc:identifier="http://opensource.adobe.com/wiki/display/blazeds/Installation+Guide?focusedCommentId=34177700#comment-34177700"
+    dc:title="$comment.title"
+    trackback:ping="http://opensource.adobe.com/wiki/rpc/trackback/34177700"/>
+</rdf:RDF>
+--></DIV></DIV></DIV></DIV>
+<DIV id=content-bottom>
+<DIV id=content-bottom-left-corner><!--img src="/wiki/download/resources/com.adobe.developer.confluence:theme/images/curve_bottom_left.gif" width="15" height="20" /--></DIV>
+<DIV id=content-bottom-middle> </DIV>
+<DIV id=content-bottom-right-corner><!--img src="/wiki/download/resources/com.adobe.developer.confluence:theme/images/curve_bottom_right.gif" width="16" height="20" /--></DIV></DIV></DIV></DIV>&nbsp; 
+<!--script type='text/javascript' src='http://getfirebug.com/releases/lite/1.2/firebug-lite-compressed.js'></script-->
+<DIV id=footer>
+<DIV class=smalltext id=poweredby>Last Modified: 2008-11-16 08:12:26.0 
+<BR>Powered by <A class=smalltext 
+href="http://www.atlassian.com/software/confluence">Atlassian Confluence</A> 
+2.7.1, the <A class=smalltext 
+href="http://www.atlassian.com/software/confluence">Enterprise Wiki</A>. 
+<BR></DIV>
+<P><SPAN class=footerlinks><A onmouseover="this.style.color='#000000'" 
+style="COLOR: rgb(255,255,255)" onmouseout="this.style.color='#FFFFFF'" 
+href="http://www.adobe.com/aboutadobe/" target=_blank>Company</A> <SPAN 
+class=footerpipe>|</SPAN> <SPAN class=footerlinks><A 
+onmouseover="this.style.color='#000000'" style="COLOR: rgb(255,255,255)" 
+onmouseout="this.style.color='#FFFFFF'" 
+href="http://www.adobe.com/misc/privacy.html" target=_blank>Online Privacy 
+Policy</A> </SPAN><SPAN class=footerpipe>|</SPAN> <SPAN class=footerlinks><A 
+onmouseover="this.style.color='#000000'" style="COLOR: rgb(255,255,255)" 
+onmouseout="this.style.color='#FFFFFF'" 
+href="http://www.adobe.com/misc/copyright.html" target=_blank>Terms of Use</A> 
+</SPAN><SPAN class=footerpipe>|</SPAN> <SPAN class=footerlinks><A 
+onmouseover="this.style.color='#000000'" style="COLOR: rgb(255,255,255)" 
+onmouseout="this.style.color='#FFFFFF'" 
+href="http://www.adobe.com/aboutadobe/contact.html" target=_blank>Contact Us</A> 
+</SPAN><SPAN class=footerpipe>|</SPAN> <SPAN class=footerlinks><A 
+onmouseover="this.style.color='#000000'" style="COLOR: rgb(255,255,255)" 
+onmouseout="this.style.color='#FFFFFF'" 
+href="http://www.adobe.com/help/accessibility.html" 
+target=_blank>Accessibility</A> </SPAN><SPAN class=footerpipe>|</SPAN> <SPAN 
+class=footerlinks><A onmouseover="this.style.color='#000000'" 
+style="COLOR: rgb(255,255,255)" onmouseout="this.style.color='#FFFFFF'" 
+href="http://www.adobe.com/aboutadobe/antipiracy/" target=_blank>Report 
+Piracy</A> </SPAN><SPAN class=footerpipe>|</SPAN> <SPAN class=footerlinks><A 
+onmouseover="this.style.color='#000000'" style="COLOR: rgb(255,255,255)" 
+onmouseout="this.style.color='#FFFFFF'" 
+href="http://www.adobe.com/misc/agreement.html" target=_blank>Permissions &amp; 
+Trademarks</A> </SPAN>
+<P class=footercopyright>Copyright @ 2008 Adobe Systems Incorporated.<BR>Use of 
+this website signifies your agreement to the Terms of Use and Online Privacy 
+Policy.<BR>Search powered by Google </P></DIV><!-- delay the loading of large javascript files to the end so that they don't interfere with the loading of page content --><SPAN 
+style="DISPLAY: none"></SPAN><!-- Omniture SiteCatalyst code for opensource.adobe.com $revision 1.0
+SiteCatalyst code version: G.9.
+Copyright 2002 Omniture, Inc. More info available at
+http://www.omniture.com -->
+<SCRIPT language=JavaScript 
+type=text/javascript><!--
+var s_code=' '//--></SCRIPT>
+
+<SCRIPT language=JavaScript 
+src="Installation Guide - BlazeDS - Confluence.files/omniture_s_code.js" 
+type=text/javascript></SCRIPT>
+
+<SCRIPT language=JavaScript type=text/javascript><!--
+var s_accountName;
+var s_channel;
+var s_docHost = window.location.hostname.toLowerCase();
+// Specify Report Suite (auto-switch between Dev/Stage and Live Site)
+if ((s_docHost.indexOf("stage.") != -1) || (s_docHost.indexOf("corp.")
+!= -1)) {
+  s_accountName="mxadobetest"; // Dev/QA Site
+}
+else {
+  s_accountName="mxmacromedia"; // Production Site
+}
+
+// Specify Channel
+s_channel="opensource.adobe.com";
+
+// Specify pageName (Discard query string)
+var s_docURL = document.URL.toLowerCase();
+if (s_docURL.indexOf(';') != -1)
+  s_docURL=s_docURL.substring(0,s_docURL.indexOf(';'));
+if (s_docURL.indexOf('?') != -1)
+  s_docURL=s_docURL.substring(0,s_docURL.indexOf('?'));
+var s_pageName=s_docURL;
+
+var s_wd=window,s_tm=new Date;if(s_code!=' '){s_code=s_dc(
+s_accountName);if(s_code)document.write(s_code)}
+function sendAnalyticsEvent(str){var
+ns=s_accountName;if(str!=null)ns+=","+str;void(s_gs(ns));}
+//--></SCRIPT>
+<NOSCRIPT><IMG height=1 alt="" 
+src="Installation Guide - BlazeDS - Confluence.files/F.gif" width=1 
+border=0></NOSCRIPT><!--/DO NOT
+REMOVE/--> <!-- End SiteCatalyst code version: G.9. -->&nbsp; </SPAN></BODY></HTML>

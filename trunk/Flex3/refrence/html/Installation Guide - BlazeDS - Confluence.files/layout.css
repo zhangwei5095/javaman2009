@@ -1,0 +1,90 @@
+#main {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: 0px; MARGIN: 0px auto; WIDTH: 996px; PADDING-TOP: 0px; BACKGROUND-COLOR: #ffffff
+}
+#header {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; BACKGROUND-IMAGE: url(../images/header_background.jpg); PADDING-BOTTOM: 0px; MARGIN: 0px auto; COLOR: #ffffff; PADDING-TOP: 0px; HEIGHT: 135px
+}
+#header-top {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: 0px; PADDING-TOP: 0px; POSITION: relative; HEIGHT: 80px
+}
+#header-top-left {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; LEFT: 0px; PADDING-BOTTOM: 0px; WIDTH: 66px; PADDING-TOP: 0px; POSITION: absolute; HEIGHT: 100%
+}
+#header-top-middle {
+	LEFT: 66px; WIDTH: 645px; POSITION: absolute; HEIGHT: 100%
+}
+#headertitle {
+	OVERFLOW: visible; BOTTOM: 6px; LINE-HEIGHT: 3em; POSITION: absolute
+}
+#header-top-right {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; RIGHT: 0px; PADDING-BOTTOM: 0px; WIDTH: 284px; PADDING-TOP: 0px; POSITION: absolute; HEIGHT: 100%
+}
+#header-top-right-links {
+	RIGHT: 0px; POSITION: absolute; TOP: 28px
+}
+#header-top-right-search {
+	RIGHT: 0px; BOTTOM: 0px; POSITION: absolute
+}
+#header-bottom {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: 0px; PADDING-TOP: 20px; POSITION: relative
+}
+#header-bottom-left {
+	LEFT: 0px; POSITION: absolute; TEXT-ALIGN: left
+}
+#header-bottom-right {
+	RIGHT: 0px; POSITION: absolute
+}
+#conf-nav-bar {
+	OVERFLOW: hidden; WIDTH: 100%; PADDING-TOP: 5px; POSITION: relative; BACKGROUND-COLOR: #191e2b
+}
+#conf-nav-bar-left {
+	PADDING-RIGHT: 10px; PADDING-LEFT: 0px; FLOAT: left; PADDING-BOTTOM: 0px; PADDING-TOP: 6px
+}
+#conf-nav-bar-right {
+	FLOAT: right; PADDING-TOP: 4px
+}
+#content-top {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: 0px; WIDTH: 100%; PADDING-TOP: 0px; POSITION: relative; HEIGHT: 20px
+}
+#content-top-left-corner {
+	BACKGROUND: url(../images/curve_top_left.gif) #ffffff no-repeat; LEFT: 0px; WIDTH: 15px; POSITION: absolute; HEIGHT: 100%
+}
+#content-top-middle {
+	LEFT: 15px; WIDTH: 965px; POSITION: absolute; HEIGHT: 100%; BACKGROUND-COLOR: #ffffff
+}
+#content-top-right-corner {
+	RIGHT: 0px; BACKGROUND: url(../images/curve_top_right.gif) #ffffff no-repeat; WIDTH: 16px; POSITION: absolute; HEIGHT: 100%
+}
+#content-middle {
+	PADDING-RIGHT: 5px; PADDING-LEFT: 5px; PADDING-BOTTOM: 0px; OVERFLOW: hidden; WIDTH: 986px; PADDING-TOP: 0px; BACKGROUND-COLOR: #ffffff
+}
+#content-bottom {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: 0px; WIDTH: 100%; PADDING-TOP: 0px; POSITION: relative; HEIGHT: 20px
+}
+#content-bottom-left-corner {
+	BACKGROUND: url(../images/curve_bottom_left.gif) #ffffff no-repeat; LEFT: 0px; WIDTH: 15px; POSITION: absolute; HEIGHT: 100%
+}
+#content-bottom-middle {
+	LEFT: 15px; WIDTH: 965px; POSITION: absolute; HEIGHT: 100%; BACKGROUND-COLOR: #ffffff
+}
+#content-bottom-right-corner {
+	RIGHT: 0px; BACKGROUND: url(../images/curve_bottom_right.gif) #ffffff no-repeat; WIDTH: 16px; POSITION: absolute; HEIGHT: 100%
+}
+#footer {
+	MARGIN: 0px auto; WIDTH: 995px; POSITION: relative; BACKGROUND-COLOR: #191e2b; TEXT-ALIGN: left
+}
+#space-blog-posts {
+	PADDING-RIGHT: 10px; PADDING-LEFT: 10px; FLOAT: left; PADDING-BOTTOM: 10px; WIDTH: 750px; PADDING-TOP: 10px
+}
+#space-blog-posts-calendar {
+	PADDING-RIGHT: 20px; FLOAT: right; VERTICAL-ALIGN: top
+}
+#infoPanel {
+	FLOAT: right; VERTICAL-ALIGN: top; WIDTH: 190px
+}
+#editBox {
+	FLOAT: left; OVERFLOW: hidden; WIDTH: 780px
+}
+#blogpost {
+	PADDING-RIGHT: 18px; PADDING-LEFT: 18px; MARGIN-BOTTOM: 5px; PADDING-BOTTOM: 18px; PADDING-TOP: 18px
+}
