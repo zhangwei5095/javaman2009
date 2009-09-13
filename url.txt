@@ -1,9 +1,19 @@
 1. http://blog.csdn.net/surpaimb/archive/2008/04/08/2264171.aspx
    Flex Builder 3.0 For Eclipse 3.3 安装方法
 2.http://bbs.actionscript3.cn
-3.http://www.xker.com/page/e2009/0522/72182.html
-  Flex 与 J2EE
+3. http://opensource.adobe.com/wiki/display/site/Home
+
+   http://livedocs.adobe.com/blazeds/1/blazeds_devguide/
+
+   Flex 与 J2EE
+   http://www.xker.com/page/e2009/0522/72182.html
+ 
   http://opensource.adobe.com/wiki/display/blazeds/Installation+Guide
+ 
+  cairngorm flex MVC For Eclipse
+  http://download.macromedia.com/pub/opensource/cairngorm/plugin/ 
+
+ 
 4.http://ajava.org/opens/cytool/9924.html
   各种java 技术群和资源
 5.JPOS
