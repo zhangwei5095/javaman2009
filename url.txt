@@ -27,4 +27,7 @@
    下载地址： http://www.jpos.org/download 
    http://www.fileindexer.com/find/jpos-programming-guide
    http://www.torrentreactor.net/find/jpos-programming-guide
+
+6.Spring相关下载
+  http://www.springsource.com/download/community?sid=97412
    
