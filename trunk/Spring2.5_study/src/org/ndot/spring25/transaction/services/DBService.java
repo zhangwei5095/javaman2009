@@ -5,29 +5,29 @@ import java.util.List;
 import org.ndot.spring25.transaction.pojo.Usertab;
 
 /**
- * ã€å°èš‚èšå­¦å ‚ ä¹‹ J2EEã€‘
+ * ¡¾Ğ¡ÂìÒÏÑ§ÌÃ Ö® J2EE¡¿
  * 
  *<P>
  * 
- * é¡¹ç›®åç§°ï¼šSpring2.5_study
+ * ÏîÄ¿Ãû³Æ£ºSpring2.5_study
  * 
  *<P>
  * 
- * æ–‡ä»¶åï¼š DBService.java
+ * ÎÄ¼şÃû£º DBService.java
  * 
  *<P>
  * 
- * åŠŸ èƒ½:
+ * ¹¦ ÄÜ:
  * 
  * 
  *<P>
  * 
  * 
- * ä½œ è€…: SunJincheng
+ * ×÷ Õß: SunJincheng
  * 
  *<P>
  * 
- * åˆ›å»ºæ—¶é—´: 2009-9-10
+ * ´´½¨Ê±¼ä: 2009-9-10
  * 
  */
 public interface DBService {

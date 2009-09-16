@@ -12,29 +12,29 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
- * ã€å°èš‚èšå­¦å ‚ ä¹‹ J2EEã€‘
+ * ¡¾Ğ¡ÂìÒÏÑ§ÌÃ Ö® J2EE¡¿
  * 
  *<P>
  * 
- * é¡¹ç›®åç§°ï¼šSpring2.5_study
+ * ÏîÄ¿Ãû³Æ£ºSpring2.5_study
  * 
  *<P>
  * 
- * æ–‡ä»¶åï¼š DBService.java
+ * ÎÄ¼şÃû£º DBService.java
  * 
  *<P>
  * 
- * åŠŸ èƒ½:è¦è¿›è¡Œäº‹ç‰©æ§åˆ¶çš„ æœåŠ¡ç±»
+ * ¹¦ ÄÜ:Òª½øĞĞÊÂÎï¿ØÖÆµÄ ·şÎñÀà
  * 
  * 
  *<P>
  * 
  * 
- * ä½œ è€…: SunJincheng
+ * ×÷ Õß: SunJincheng
  * 
  *<P>
  * 
- * åˆ›å»ºæ—¶é—´: 2009-9-10
+ * ´´½¨Ê±¼ä: 2009-9-10
  * 
  */
 @Service
@@ -53,13 +53,13 @@ public class DBServiceImp implements DBService {
 
 	public void save(Usertab transientInstance) {
 		this.userDao.save(transientInstance);
-		System.out.println("ä¿å­˜å¯¹è±¡.....");
+		System.out.println("±£´æ¶ÔÏó.....");
 		throw new RuntimeException();
 	}
 
 	public void delete(Usertab persistentInstance) {
 		this.delete(persistentInstance);
-		System.out.println("åˆ é™¤å¯¹è±¡.....");
+		System.out.println("É¾³ı¶ÔÏó.....");
 		throw new RuntimeException();
 	}
 
