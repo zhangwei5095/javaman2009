@@ -11,10 +11,8 @@
     http://www.springframework.org/schema/aop/spring-aop-2.5.xsd      
     http://www.springframework.org/schema/tx      
     http://www.springframework.org/schema/tx/spring-tx-2.5.xsd">   
-    <context:annotation-config />   
+    <context:component-scan base-package="org.ndot.spring25.aop.annotation"/> 
     <aop:aspectj-autoproxy />   
-    <bean id="aspects" class="org.ndot.spring25.aop.annotation.MyAspect"/>   
-    <bean id="helloWorld" class="org.ndot.spring25.aop.annotation.HelloWorld"/>   
 </beans>  
 
 
