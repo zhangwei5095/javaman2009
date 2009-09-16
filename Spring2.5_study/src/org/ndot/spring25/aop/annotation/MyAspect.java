@@ -5,8 +5,10 @@ import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.AfterThrowing;
 import org.aspectj.lang.annotation.Around;
+import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
+import org.springframework.stereotype.Component;
 
 /**
  * 【小蚂蚁学堂 之 J2EE】
@@ -34,34 +36,36 @@ import org.aspectj.lang.annotation.Pointcut;
  * 创建时间: 2009-9-16
  * 
  */
+@Aspect
+@Component
 public class MyAspect {
 	// execution最常用,可以通过 & || !进行切入点表达式的连接   
     // 可是是表达式，可以通过切入点标识重用表达式   
-    @Pointcut("execution(public void test.HelloWorld.sayHello(String))")   
+    @Pointcut("execution(public void org.ndot.spring25.aop.annotation.HelloWorld.sayHello*(String))")   
     public void helloworld() {   
     }   
   
-    @Before("execution(public void test.HelloWorld.sayHello(String))")   
+    @Before("execution(public void org.ndot.spring25.aop.annotation.HelloWorld.sayHello*(..))")   
     public void beforeSayHello() {   
-        System.out.println("before sayHello");   
+        System.out.println("before sayHello*");   
     }   
   
     @After("helloworld()")   
     public void afterSayHello() {   
-        System.out.println("after sayHello");   
+        System.out.println("after sayHello*");   
     }   
   
-    @AfterThrowing("test.AspectS.helloworld()")   
+    @AfterThrowing("org.ndot.spring25.aop.annotation.MyAspect.helloworld()")   
     public void exceptionSayHello() {   
         System.out.println("throw runtime exception");   
     }   
   
-    @AfterReturning("test.AspectS.helloworld()")   
+    @AfterReturning("org.ndot.spring25.aop.annotation.MyAspect.helloworld()")   
     public void returnSayHello() {   
         System.out.println("method has returned");   
     }   
   
-    @Around("test.AspectS.helloworld()")   
+    @Around("org.ndot.spring25.aop.annotation.MyAspect.helloworld()")   
     public Object aroundSayHello(ProceedingJoinPoint pjp) {   
         Object obj = null;   
         try {   
