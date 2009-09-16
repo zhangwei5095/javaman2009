@@ -1,7 +1,5 @@
 package org.ndot.spring25.aop.annotation;
 
-import org.ndot.spring25.aop.xml.AService;
-import org.ndot.spring25.aop.xml.BServiceImpl;
 import org.springframework.test.AbstractDependencyInjectionSpringContextTests;
 
 /**
@@ -55,7 +53,7 @@ public class AOPTest extends AbstractDependencyInjectionSpringContextTests {
 	public void testCall()
 	{
 		System.out.println("SpringTest JUnit test");
-		helloWorld.sayHello("NDot");
+		//helloWorld.sayHello("NDot");
 	}
 
 	/**
