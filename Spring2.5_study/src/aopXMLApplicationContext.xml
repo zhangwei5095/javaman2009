@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="
+	http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd
+	http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd">
+	<!-- 打开AOP功能支持 -->
+	<aop:aspectj-autoproxy/>
+    <!--start  配置切面 start -->
+   <bean id="aspectBean" class="org.ndot.spring25.aop.xml.TestAspect" /> 
+   <aop:config>   
+        <aop:aspect id="TestAspect" ref="aspectBean">   
+            <!--配置org.ndot.spring25.aop.xml包下所有类或接口的所有方法-->   
+            <aop:pointcut id="businessService"  
+                expression="execution(* org.ndot.spring25.aop.xml.*.*(..))" />   
+            <aop:before pointcut-ref="businessService" method="doBefore"/>   
+            <aop:after pointcut-ref="businessService" method="doAfter"/>   
+            <aop:around pointcut-ref="businessService" method="doAround"/>   
+            <aop:after-throwing pointcut-ref="businessService" method="doThrowing" throwing="ex"/>   
+        </aop:aspect>   
+    </aop:config>   
+    <!--end  配置切面 end -->
+    <!--start 配置需要AOP拦截的服务Bean  start-->
+    <bean id="aService" class="org.ndot.spring25.aop.xml.AServiceImpl"></bean>   
+    <bean id="bService" class="org.ndot.spring25.aop.xml.BServiceImpl"></bean>  
+    <!--end 配置需要AOP拦截的服务Bean  end-->
+</beans>
