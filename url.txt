@@ -12,6 +12,9 @@
  
   cairngorm flex MVC For Eclipse
   http://download.macromedia.com/pub/opensource/cairngorm/plugin/ 
+  
+  Spring+flex
+  http://www.springsource.org/spring-flex
 
  
 4.http://ajava.org/opens/cytool/9924.html
