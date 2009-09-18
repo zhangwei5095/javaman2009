@@ -11,7 +11,7 @@ import com.nasoft.PackagerFactory;
 import com.nasoft.iso.ISOUtil;
 
 public class ISO8583Tester {
-	private String isoset = "d:/xml/isoset3.xml";
+	private String isoset = "d:/xml/isoset_all.xml";
 	private String node = "D:/xml/node.xml";
 
 	@Before
@@ -39,14 +39,14 @@ public class ISO8583Tester {
 
 	@Test
 	public void testPack() {
-		String data = "d:/data4.xml";
+		String data = "d:/xml/core_data.xml";
 		try {
 			File file1 = new File(data);
 			FileInputStream fin1 = new FileInputStream(file1);
 			byte[] b1 = new byte[(int) file1.length()];
 			fin1.read(b1);
 			fin1.close();
-			byte[] packe = PackUnpackHelper.pack("C003", new String(b1));
+			byte[] packe = PackUnpackHelper.pack("C002", new String(b1));
 			System.out
 					.println("###" + ISOUtil.byte2HexStr(packe, packe.length));
 		} catch (Exception e) {

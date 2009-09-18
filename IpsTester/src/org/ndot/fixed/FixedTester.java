@@ -1,5 +1,18 @@
 package org.ndot.fixed;
-
+/**
+ * 【小蚂蚁学堂 之 J2EE】
+ * 
+ * 项目名称：IPSNBComm
+ * 
+ * 文件名： TestMain.java
+ * 
+ * 功 能:
+ * 
+ * 作 者: 孙金城
+ * 
+ * 创建时间: 2009-9-16
+ * 
+ */
 import java.io.File;
 import java.io.FileInputStream;
 
@@ -46,13 +59,21 @@ public class FixedTester {
 		}
 	}
 
+	public void sendReportToCBS() {
+		try {
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
 	/**
 	 * 测试 固定报文 组包
 	 */
 	@Test
 	public void TestPack() {
 		try {
-			String data = "d:/xml/data.xml";
+			String data = "d:/xml/ndotdata.xml";
 			String nodeId = "C028";
 			String reqRsp = "rsp";
 			File file2 = new File(data);
