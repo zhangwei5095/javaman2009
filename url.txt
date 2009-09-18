@@ -33,4 +33,9 @@
   
 7保护眼睛的颜色
  http://hi.baidu.com/workmate2009/blog/item/e7e2fede841640a8cc116665.html
+ 
+8.java 开源项目集合
+ http://www.open-open.com/
+ http://www.opensourceproject.org.cn/
+ http://www.cnblogs.com/shanyou/category/32025.html
    
