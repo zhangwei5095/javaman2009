@@ -1,7 +1,14 @@
 1. http://blog.csdn.net/surpaimb/archive/2008/04/08/2264171.aspx
    Flex Builder 3.0 For Eclipse 3.3 安装方法
 2.http://bbs.actionscript3.cn
-3. http://opensource.adobe.com/wiki/display/site/Home
+3. Flex 学习路线：
+  控件篇
+  http://www.k-zone.cn/zblog/post/adobe-flex-air-traing-diagrams-data-1.html
+  数据篇
+  http://www.k-zone.cn/zblog/post/adobe-flex-air-traing-diagrams-data-2.html
+
+  
+http://opensource.adobe.com/wiki/display/site/Home
 
    http://livedocs.adobe.com/blazeds/1/blazeds_devguide/
 
@@ -15,6 +22,21 @@
   
   Spring+flex
   http://www.springsource.org/spring-flex
+ 论坛 ：http://www.airia.cn/
+ Flex资源开发集合：       http://bbs.airia.cn/FLEX/thread-2768-1-1.aspx
+ 学习站点类别：http://blog.163.com/jmd911/blog/static/4526541320088811721553/
+ 
+各种案例：http://www.airia.cn/FLEX_Apply/
+    监控案例：
+    http://examples.adobe.com/flex3/devnet/networkmonitor/main.html
+格式化插件：
+ http://sourceforge.net/projects/flexformatter/
+Eclipse update sit：
+http://flexformatter.googlecode.com/svn/trunk/FlexFormatter/FlexPrettyPrintCommandUpdateSite
+开发参考：
+http://www.javaeye.com/news/5038-recommended-60-flex-development-reference-site
+
+BlazeDS+JMS：http://www.ejunnet.com/index.php/archives/252
 
  
 4.http://ajava.org/opens/cytool/9924.html
