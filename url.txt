@@ -8,7 +8,7 @@
   http://www.k-zone.cn/zblog/post/adobe-flex-air-traing-diagrams-data-2.html
 
   
-http://opensource.adobe.com/wiki/display/site/Home
+    http://opensource.adobe.com/wiki/display/site/Home
 
    http://livedocs.adobe.com/blazeds/1/blazeds_devguide/
 
@@ -37,6 +37,9 @@ http://flexformatter.googlecode.com/svn/trunk/FlexFormatter/FlexPrettyPrintComma
 http://www.javaeye.com/news/5038-recommended-60-flex-development-reference-site
 
 BlazeDS+JMS£ºhttp://www.ejunnet.com/index.php/archives/252
+FlexÍøÕ¾»ýÄ¾ÔÚÏß£º
+http://ijimu.cn/index
+user£ºipsman@163.com javaman
 
  
 4.http://ajava.org/opens/cytool/9924.html
