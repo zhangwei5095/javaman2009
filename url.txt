@@ -44,6 +44,9 @@ user：ipsman@163.com javaman
 flex 网站 1歌1歌
 http://www.1g1g.com/#143858
 
+Cairngorm 介绍：
+http://hideto.javaeye.com/blog/109149
+
  
 4.http://ajava.org/opens/cytool/9924.html
   各种java 技术群和资源
