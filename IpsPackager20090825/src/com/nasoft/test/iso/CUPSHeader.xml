@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<header>
+		<HeaderLength type="int">46</HeaderLength>
+		<Version type="hex">01</Version>
+		<TotalLength>0482</TotalLength>
+		<DestID>0001000001020000   </DestID>
+		<SourceID>01020000   </SourceID>
+		<Reserved>000</Reserved>
+		<BatchNumber type="int">48</BatchNumber>
+		<TransInfo>00000000</TransInfo>
+		<UserInfo type="hex">30</UserInfo>
+		<RejectCode>00000</RejectCode>
+</header>
