@@ -1,1 +1,0 @@
-<header><HeaderLength type="int">46</HeaderLength><Version type="hex">01</Version><TotalLength>0482</TotalLength><DestID>00010000   </DestID><SourceID>01020000   </SourceID><Reserved>000</Reserved><BatchNumber type="int">0</BatchNumber><TransInfo>00000000</TransInfo><UserInfo type="hex">00</UserInfo><RejectCode>00000</RejectCode></header>
