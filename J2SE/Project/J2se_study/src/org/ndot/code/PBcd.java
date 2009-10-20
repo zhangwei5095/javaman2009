@@ -31,6 +31,7 @@ import java.io.ByteArrayOutputStream;
 public class PBcd {
 	public static void main(String[] args) {
 		  byte[] bcd = str2cbcd("01234567897658935260");
+		  System.out.println(bcd.length);
 		  for (int i = 0; i < bcd.length; i++) {
 		   System.out.println(bcd[i]);
 		  }
