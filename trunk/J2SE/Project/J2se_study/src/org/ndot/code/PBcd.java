@@ -3,6 +3,8 @@ package org.ndot.code;
 import java.io.ByteArrayOutputStream;
 import java.util.Arrays;
 
+import org.ndot.ISOUtil;
+
 /**
  * °æ–°¬Ï“œ—ßÃ√ ÷Æ J2EE°ø
  * 
@@ -32,22 +34,24 @@ import java.util.Arrays;
 public class PBcd {
 	public static void main(String[] args) {
 		String asc = "00601000152566210210331700002870   00000000000000006952120120401000000000010100C221030121000006018    02000152586210210331700002870   00000000000000006962120120401000000000000100D221030121000006018    03000152676210210331700002870   00000000000000006972120120401000000000000100D221030121000006018    04000152696210210331700002870   00000000000000006942120120401000000000000300C221030121000006018    05000152716210210331700002870   00000000000000006902120120401000000000000400C221030121000006018    06000152806210210331700002870   00000000000000006912120120401000000000000100D221030121000006018    ";
-		
+//		asc = asc.replace(" ", "0");
 //		byte[] bcd = asc2cbcd(asc);
-//		System.out.println(bcd.length);
-//		for (int i = 0; i < bcd.length; i++) {
-//			System.out.println(bcd[i]);
-//		}
+//		System.out.println("asc_length:"+asc.length());
+//		System.out.println("asc_data:\n"+asc);
+//		System.out.println("bcd_length:"+bcd.length);
+//		System.out.println("NDot--bcd hex:\n"+ISOUtil.byte2HexStr(bcd, bcd.length));
 //		System.out.println(cbcd2asc(bcd));
-//		asc="    ";
 		
-		System.out.println("asc_length:"+asc.length());
 		
-		System.out.println("Asc is:\n"+asc);
-		byte[] bcdbyte = str2bcd(asc, false);
+		
+		
+		
+		byte[] bcdbyte = str2bcd(asc, true);
 		System.out.println("bcdByte_length:"+bcdbyte.length);
-		String b2asc = bcd2str(bcdbyte, 0, bcdbyte.length*2, false);
+		System.out.println("bcd hex:\n"+ISOUtil.byte2HexStr(bcdbyte, bcdbyte.length));
 		
+		String b2asc = bcd2str(bcdbyte, 0, bcdbyte.length*2, true);
+		System.out.println("asc_data:\n"+asc);
 		System.out.println("b2asc is:\n"+b2asc);
 	}
 
