@@ -1,1 +1,14 @@
 1.查看版本号：oslevel -r
+2.要显示您系统上的处理器数量： lscfg | grep proc  或者  prtconf |grep proc
+3.要显示系统上的硬盘数量：  lspv 
+4.确定芯片类型、系统名称、节点名称、型号，等等
+uname 命令可以提供关于系统的详细信息。 
+uname -p  显示系统的芯片类型。例如，PowerPC。 
+uname -r  显示操作系统的版本号。 
+uname -s  显示系统名称。例如，AIX。 
+uname -n  显示节点名称。  
+uname -a  显示系统名称、节点名称、版本、计算机 ID。 
+uname -M  显示系统型号名称。例如，IBM, 9114-275。 
+uname -v  显示操作系统版本。 
+uname -m  显示运行系统的硬件的计算机 ID 编号。 
+uname -u  显示系统 ID 编号。  
