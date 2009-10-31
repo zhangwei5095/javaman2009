@@ -11,4 +11,5 @@ uname -a  显示系统名称、节点名称、版本、计算机 ID。
 uname -M  显示系统型号名称。例如，IBM, 9114-275。 
 uname -v  显示操作系统版本。 
 uname -m  显示运行系统的硬件的计算机 ID 编号。 
-uname -u  显示系统 ID 编号。  
+uname -u  显示系统 ID 编号。
+5.查看内存 topas  
