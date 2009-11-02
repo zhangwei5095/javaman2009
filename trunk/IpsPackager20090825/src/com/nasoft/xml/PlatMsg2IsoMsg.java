@@ -52,7 +52,7 @@ public class PlatMsg2IsoMsg extends DefaultHandler
     super();
     try
     {
-    	reader = ISOUtil.genXmlReader();
+      reader = ISOUtil.genXmlReader();
       reader.setFeature("http://xml.org/sax/features/validation", false);
       reader.setContentHandler(this);
       reader.setErrorHandler(this);

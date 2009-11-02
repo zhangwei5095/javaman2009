@@ -49,6 +49,7 @@
 
 package com.nasoft.iso;
 
+import java.io.ByteArrayOutputStream;
 import java.util.Arrays;
 import java.util.BitSet;
 import java.util.StringTokenizer;
@@ -332,6 +333,7 @@ public class ISOUtil {
 		try {
 			byte[] ebcByte = new byte[len];
 			System.arraycopy(e, offset, ebcByte, 0, len);
+			System.out.println(ISOUtil.byte2HexNoSpaceStr(ebcByte, len));
 			byte[] a = EBCaASCtransfer.pub_base_EBCtoASC(ebcByte, len);
 			return a;
 		} catch (Exception ex) {
@@ -1507,6 +1509,91 @@ public class ISOUtil {
 			ret[i] = uniteBytes(tmp[i * 2], tmp[i * 2 + 1]);
 		}
 		return ret;
+	}
+
+	/**
+	 * 
+	 * <p>
+	 * 功能:字符串转为BCD码
+	 * 
+	 * <p>
+	 * 
+	 * @param asc
+	 *            字符串
+	 * @return BCD码 作者:孙金城
+	 *         <p>
+	 */
+	public static byte[] str2cbcd(String asc, boolean padLeft, boolean fPadded,
+			byte[] bcd, int offset) {
+		// 原数据的长度
+		if (padLeft && !fPadded) {//左补 0
+			asc = ((asc.length() % 2) > 0 ) ? "0" + asc : asc;
+		}
+		if (!padLeft && !fPadded) {//右补 0
+			asc = ((asc.length() % 2) > 0) ?  asc : asc +"0";
+		}
+		if (!padLeft && fPadded) {//右补 F
+			asc = ((asc.length() % 2) > 0) ?  asc : asc +"F";
+		}
+		if (padLeft && fPadded) {//左补 F
+			asc = ((asc.length() % 2) > 0) ? "F" + asc : asc ;
+		}
+		// 原数据
+		byte bOriginalData[] = new byte[asc.length()];
+		// 将字符串数据转换成字节数据
+		bOriginalData = asc.getBytes();
+		int sH, sL;
+		for (int p = 0; p < asc.length() / 2; p++) {
+
+			if ((bOriginalData[2 * p] >= 'a') && (bOriginalData[2 * p] <= 'f')) {
+				sH = bOriginalData[2 * p] - 'a' + 10;
+			} else if ((bOriginalData[2 * p] >= 'A')
+					&& (bOriginalData[2 * p] <= 'F')) {
+				sH = bOriginalData[2 * p] - 'A' + 10;
+			} else {
+				sH = bOriginalData[2 * p] & 0x0f;
+			}
+
+			if ((bOriginalData[2 * p + 1] >= 'a')
+					&& (bOriginalData[2 * p + 1] <= 'f')) {
+				sL = bOriginalData[2 * p + 1] - 'a' + 10;
+			} else if ((bOriginalData[2 * p + 1] >= 'A')
+					&& (bOriginalData[2 * p + 1] <= 'F')) {
+				sL = bOriginalData[2 * p + 1] - 'A' + 10;
+			} else {
+				sL = bOriginalData[2 * p + 1] & 0x0f;
+			}
+			bcd[p + offset] = (byte) ((sH << 4) + sL);
+		}
+		return bcd;
+	}
+
+	/**
+	 * 
+	 * <p>
+	 * 功能: BCD码串转化为字符串
+	 * <p>
+	 * 
+	 * @param bytes
+	 *            BCD码
+	 * @return ASC 串 作者:孙金城
+	 *         <p>
+	 */
+	public static String cbcd2str(byte[] bytes, int offset, int len,
+			boolean leftpad,boolean rpaded) {
+		char temp[] = new char[len*2], val;
+		int end = len + offset;
+
+		for (int i = offset; i < end; i++) {
+			val = (char) (((bytes[i] & 0xf0) >> 4) & 0x0f);
+			temp[(i - offset) * 2] = (char) (val > 9 ? val + 'A' - 10
+					: val + '0');
+
+			val = (char) (bytes[i] & 0x0f);
+			temp[(i - offset) * 2 + 1] = (char) (val > 9 ? val + 'A' - 10
+					: val + '0');
+		}
+		return new String(temp);
 	}
 
 }

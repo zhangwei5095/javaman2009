@@ -55,7 +55,7 @@ public class FixedPackager extends ISOBasePackager {
 							len += b.length;
 							v.addElement(b);
 						} catch (ISOException e) {
-//							log.writeLog("error packing field " + i);
+							// log.writeLog("error packing field " + i);
 							// evt.addMessage("error packing field " + i);
 							// evt.addMessage(c);
 							// evt.addMessage(e);
@@ -116,7 +116,6 @@ public class FixedPackager extends ISOBasePackager {
 	public int unpack(ISOComponent m, byte[] b) throws ISOException {
 		// LogEvent evt = new LogEvent(this, "unpack");
 		// TestLog log=TestLog.getNewInstance();
-		System.out.println(new String(b));
 		int consumed = 0;
 		try {
 			if (m.getComposite() != m)
@@ -167,11 +166,7 @@ public class FixedPackager extends ISOBasePackager {
 					}
 
 				} catch (ISOException e) {
-					// log.writeLog("error unpacking field " +
-					// Integer.parseInt(bitMapArray[i]));
-					e.printStackTrace();
-					// evt.addMessage(e);
-					throw e;// NDot C029拆包出错返回前面内容
+					throw new ISOException(e.getMessage());// NDot 拆包出错返回前面内容
 				}
 			}
 

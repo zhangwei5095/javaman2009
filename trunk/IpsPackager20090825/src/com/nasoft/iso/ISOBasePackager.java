@@ -260,7 +260,8 @@ public abstract class ISOBasePackager implements ISOPackager, LogSource {
 				try {
 					if ((bmap == null || bmap.get(i)) && fld[i] != null) {
 						ISOComponent c = fld[i].createComponent(i);
-						consumed += fld[i].unpack(c, b, consumed);
+						int ofs=fld[i].unpack(c, b, consumed);
+						consumed += ofs;//fld[i].unpack(c, b, consumed);
 						// log.writeLog("filed["+i+"]="+c.getValue());
 						// if (logger != null) {
 						// evt.addMessage ("<unpack fld=\"" + i

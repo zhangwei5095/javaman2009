@@ -101,7 +101,7 @@ public class EBCaASCtransfer {
 	/** LFQ int EBC_str_len; 输入的EBCDIC码字符串的长度 * */
 	public static byte[] pub_base_EBCtoASC(byte[] in_EBC_str, int EBC_str_len) throws Exception{
 //		byte[] out_ASC_str = new byte[51920];
-		byte[] out_ASC_str = new byte[EBC_str_len*4];
+		byte[] out_ASC_str = new byte[EBC_str_len*5];
 		int in_EBC_str_position, out_ASC_str_position = 0;
 		byte EBC_byte_value;
 		int EBC_byte_value_int;
@@ -112,6 +112,7 @@ public class EBCaASCtransfer {
 		for (in_EBC_str_position = 0; in_EBC_str_position < EBC_str_len; in_EBC_str_position++) {
 			EBC_byte_value = in_EBC_str[in_EBC_str_position] ;
 			EBC_byte_value_int = (int)EBC_byte_value & 0xFF;
+			
 			/* 转换输入的EBCDIC汉字双字节字符 */
 			if (EBC_CHINESE_FLAG_START(EBC_byte_value)) {
 				EBC_byte_value = in_EBC_str[++in_EBC_str_position];
@@ -928,11 +929,11 @@ public class EBCaASCtransfer {
 //		System.out.println("sss我我我ssss = : "+b.length);
 //		System.out.println(com.nasoft.iso.ISOUtil.byte2HexNoSpaceStr(b, b.length));
 		
-		String f="sss我s我我sss";
+		String f="sss我s我我";
 		byte[] d = f.getBytes();	
 		byte[] h = EBCaASCtransfer.pub_base_ASCtoEBC(d, d.length);
 		
-		System.out.println("sss我s我我ssss= "+h.length);
+		System.out.println("sss我s我我= "+h.length);
 		System.out.println(com.nasoft.iso.ISOUtil.byte2HexStr(h, h.length));
 		byte[] g = EBCaASCtransfer.pub_base_EBCtoASC(h, h.length);
 		System.out.println(g.length+":"+new String(g).trim());
