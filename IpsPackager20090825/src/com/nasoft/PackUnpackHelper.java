@@ -26,9 +26,11 @@ public class PackUnpackHelper {
 		}
 		if (PackagerFactory.getIsoPackagerBySysID(nodeId) != null) {
 			PlatMsg2IsoMsg convert = new PlatMsg2IsoMsg();
-			//			
+			//	
+			System.out.println("start-->"+System.currentTimeMillis());
 			BaseHeader header = (BaseHeader)(PackagerFactory
 					.getHeaderPackagerBySysID(nodeId)).clone();
+			System.out.println("end-->"+System.currentTimeMillis());
 			convert.setHeader(header);
 			//将平台的128域报文<root><BFX type="Z">Y</BFX><root>，转换为 ISO报文格式<isomsg><field id="X" value="Y" type="Z"/></isomsg>
 			xml = convert.transform(xml);
@@ -185,7 +187,7 @@ public class PackUnpackHelper {
 				byte[] data = new byte[len];
 				System.arraycopy(h, 0, data, 0, header.getLength());
 				System.arraycopy(body, 0, data, h.length, body.length);
-				log.writeLog("data=" + ISOUtil.byte2HexStr(data, data.length));
+				log.writeLog("data:\n" + ISOUtil.byte2HexStr(data, data.length));
 				log.writeLog("end pack--------------------------");
 				return data;
 			}

@@ -117,7 +117,7 @@ public class XMLPackager extends DefaultHandler implements ISOPackager,
     stk = new Stack();
     try
     {
-    	reader = ISOUtil.genXmlReader();
+      reader = ISOUtil.genXmlReader();
       reader.setFeature("http://xml.org/sax/features/validation", false);
       reader.setContentHandler(this);
       reader.setErrorHandler(this);
