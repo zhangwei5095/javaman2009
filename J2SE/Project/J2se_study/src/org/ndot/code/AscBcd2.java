@@ -40,16 +40,16 @@ public class AscBcd2 {
 	 */
 	public static void main(String[] args) {
 		/**/
-		String sTestData = "FAWGGx0RaGAAAtsHOAAANgiAAAAPogHgAAn0tGoAACUfEsAAIlVNQAAAns1aAACYDoigABHKuzgAAGwUkYAATGkUoAAIxFvQAAEpDwxAAAPgB3AABIJ7wgAAEUxIYAARAZ70AAIxTV2AAAWKXDAAAlBwSgABTp2OwAAKBJ2oAAQeOdAAAAEBGmAAEIkpMAACABfjAAAAkbU=";
+		String sTestData = "kfldsfjdlsfjwdjkfdjskalkdfkdlsakdkjfdslfakdfkdsa";
 //		sTestData = "11 =   4   5 1";
 		byte bBCD[] = new byte[(sTestData.length() + 1) / 2];
 
-		bBCD = str2Bcd(sTestData);
+//		bBCD = str2Bcd(sTestData);
 		String hexBcd = ISOUtil.byte2HexStr(bBCD, bBCD.length);
 		System.out.println("hexBcd is :" + hexBcd);
-		// bBCD=str2cbcd(sTestData,true,bBCD,0);
-		String str = bcd2Str(bBCD);
-		// String str=cbcd2str(bBCD,0,bBCD.length*2,true);
+		 bBCD=str2cbcd(sTestData,true,bBCD,0);
+//		String str = bcd2Str(bBCD);
+		 String str=cbcd2str(bBCD,0,bBCD.length*2,true);
 		System.out.println("原数据:" + sTestData);
 		System.out.println("结     果:" + str);
 
