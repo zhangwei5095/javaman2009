@@ -79,7 +79,13 @@ public class BaseHeader extends DefaultHandler implements ISOHeader {
 
 	protected byte[] header;
 
-	protected Stack stk;
+	protected ThreadLocal<Stack> stk = new ThreadLocal<Stack>() {
+		@Override
+		protected Stack initialValue() {
+			return new Stack();
+		}
+
+	};
 
 	// private XMLReader reader = null;
 
@@ -115,7 +121,7 @@ public class BaseHeader extends DefaultHandler implements ISOHeader {
 			return value;
 		}
 
-		public void setValue(BaseHeader bh,byte[] value) {
+		public void setValue(BaseHeader bh, byte[] value) {
 			if (value != null) {
 				System.arraycopy(value, 0, bh.header, StartPos,
 						value.length > Len ? Len : value.length);
@@ -330,7 +336,6 @@ public class BaseHeader extends DefaultHandler implements ISOHeader {
 		this.LENGTH = len;
 		/*
 		 * HF begin with 1
-		 * 
 		 */
 		for (int i = 0; i < tmpMap.size(); i++) {
 			HeaderField hf = (HeaderField) tmpMap.get(String.valueOf(i + 1));
@@ -406,7 +411,8 @@ public class BaseHeader extends DefaultHandler implements ISOHeader {
 			reader.setFeature("http://xml.org/sax/features/validation", false);
 			reader.setContentHandler(this);
 			reader.setErrorHandler(this);
-			stk = new Stack();
+			//20091106
+//			stk = new Stack();
 
 			InputSource input = new InputSource(new ByteArrayInputStream(xml
 					.getBytes()));
@@ -456,11 +462,11 @@ public class BaseHeader extends DefaultHandler implements ISOHeader {
 					}
 				} else if ("binary".equals(hf.Type)) {
 					sb.append(" type=\"binary\">");
-					sb.append(ISOUtil.byte2HexStr(hf.getValue(this),
-							hf.getValue(this).length));
+					sb.append(ISOUtil.byte2HexStr(hf.getValue(this), hf
+							.getValue(this).length));
 					if (hf.idenFlag != null && "1".equals(hf.idenFlag)) {
-						this.idenStr += ISOUtil.byte2HexStr(hf.getValue(this), hf
-								.getValue(this).length);
+						this.idenStr += ISOUtil.byte2HexStr(hf.getValue(this),
+								hf.getValue(this).length);
 					}
 				} else if ("number".equals(hf.Type)) {
 
@@ -513,10 +519,10 @@ public class BaseHeader extends DefaultHandler implements ISOHeader {
 
 	public Object clone() {
 		try {
-			BaseHeader o = (BaseHeader)super.clone();
-			o.header=(byte[])header.clone();
+			BaseHeader o = (BaseHeader) super.clone();
+			o.header = (byte[]) header.clone();
 			return o;
-			
+
 		} catch (Exception e) {
 			return null;
 		}
@@ -544,7 +550,7 @@ public class BaseHeader extends DefaultHandler implements ISOHeader {
 	public void setBtyesValueByName(String name, byte[] value) {
 		if (DEFINE.containsKey(name) || value != null) {
 			HeaderField hf = (HeaderField) DEFINE.get(name);
-			hf.setValue(this,value);
+			hf.setValue(this, value);
 		}
 	}
 
@@ -569,13 +575,13 @@ public class BaseHeader extends DefaultHandler implements ISOHeader {
 	 */
 	public void startElement(String ns, String name, String qName,
 			Attributes atts) throws SAXException {
-		stk.push(name);
+		stk.get().push(name);
 	}
 
 	public void characters(char[] p0, int p1, int p2) throws SAXException {
 		try {
 			// 从栈中得到当前节点的信息
-			String name = (String) stk.peek();
+			String name = (String) stk.get().peek();
 			String text = new String(p0, p1, p2);
 			byte[] bvalue = text.getBytes();
 			if (DEFINE.containsKey(name)) {
@@ -590,14 +596,14 @@ public class BaseHeader extends DefaultHandler implements ISOHeader {
 				}
 
 				if ("int".equalsIgnoreCase(type)) {
-					hf.setValue(this,ISOUtil.int2Bytes(Integer.parseInt(text),
+					hf.setValue(this, ISOUtil.int2Bytes(Integer.parseInt(text),
 							hf.Len));
 				} else if ("hex".equalsIgnoreCase(type)) {
-					hf.setValue(this,ISOUtil.hex2byte(bvalue, 0, hf.Len));
+					hf.setValue(this, ISOUtil.hex2byte(bvalue, 0, hf.Len));
 				} else if ("number".equals(type)) {
 					String txt = ISOUtil
 							.int2Str(Integer.parseInt(text), hf.Len);
-					hf.setValue(this,ISOUtil.str2FixedLenBytes(txt, hf.Len,
+					hf.setValue(this, ISOUtil.str2FixedLenBytes(txt, hf.Len,
 							(byte) '0'));
 				} else if ("ebcdicr".equals(type)) {// 右补空格
 					byte[] ascByte = ISOUtil.str2FixedLenBytes(text, hf.Len,
@@ -605,7 +611,7 @@ public class BaseHeader extends DefaultHandler implements ISOHeader {
 
 					byte[] ebcdByte = EBCaASCtransfer.pub_base_ASCtoEBC(
 							ascByte, ascByte.length);
-					hf.setValue(this,ebcdByte);
+					hf.setValue(this, ebcdByte);
 				} else if ("ebcdicl".equals(type)) {// 左补0
 					String txt = ISOUtil
 							.int2Str(Integer.parseInt(text), hf.Len);
@@ -614,9 +620,9 @@ public class BaseHeader extends DefaultHandler implements ISOHeader {
 
 					byte[] ebcdByte = EBCaASCtransfer.pub_base_ASCtoEBC(
 							ascByte, ascByte.length);
-					hf.setValue(this,ebcdByte);
+					hf.setValue(this, ebcdByte);
 				} else {
-					hf.setValue(this,ISOUtil.str2FixedLenBytes(text, hf.Len,
+					hf.setValue(this, ISOUtil.str2FixedLenBytes(text, hf.Len,
 							(byte) ' '));
 				}
 			}
@@ -626,8 +632,8 @@ public class BaseHeader extends DefaultHandler implements ISOHeader {
 	}
 
 	public void endElement(String p0, String p1, String p2) throws SAXException {
-		if (!stk.empty()){
-			stk.pop();
+		if (!stk.get().empty()) {
+			stk.get().pop();
 		}
 	}
 

@@ -52,8 +52,7 @@ System.out.println(p.transform("<isomsg><field id=\"0\" value=\"abc\" /> <field 
   }
   
   public void setHeader(BaseHeader header){
-   // this.header = header;
-    this.header =(BaseHeader)header.clone();
+    this.header = header;
   }
   public String transform(String isoXml) throws ISOException, UnsupportedEncodingException{
     sbBody = new StringBuffer();

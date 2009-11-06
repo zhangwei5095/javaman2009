@@ -258,8 +258,8 @@ public class PackagerFactory {
 		Element root = doc.getRootElement();
 		List allList = root.getChildren();
 		Set uSet = new HashSet();
-
 		for (int i = 0; i < allList.size(); i++) {
+			//
 			Element e = (Element) allList.get(i);
 			String nodeId = Utilities.getXmlNodeValue(e.getChild("NodeID", root
 					.getNamespace()), "");
