@@ -52,6 +52,8 @@ http://blog.csdn.net/wolf_linn/archive/2009/07/24/4377018.aspx
 
 一周学会Flex 中文版 
 http://subject.csdn.net/flexapp/
+
+论坛：http://blog.chinaunix.net/u/21684/article_67906.html
  
 4.http://ajava.org/opens/cytool/9924.html
   各种java 技术群和资源
