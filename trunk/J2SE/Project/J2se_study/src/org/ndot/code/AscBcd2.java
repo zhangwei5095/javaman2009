@@ -1,5 +1,7 @@
 package org.ndot.code;
 
+import java.nio.charset.Charset;
+
 import org.ndot.ISOUtil;
 
 /**
@@ -40,7 +42,7 @@ public class AscBcd2 {
 	 */
 	public static void main(String[] args) {
 		/**/
-		String sTestData = "kfldsfjdlsfjwdjkfdjskalkdfkdlsakdkjfdslfakdfkdsa";
+		String sTestData = "d6d0b9fa206161";
 //		sTestData = "11 =   4   5 1";
 		byte bBCD[] = new byte[(sTestData.length() + 1) / 2];
 
