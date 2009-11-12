@@ -116,9 +116,9 @@ public class HelloWorldServer {
 			
 			ByteBuffer block = encoder.encode(CharBuffer
 					.wrap("Hello !" + name));
+			
 			channel.write(block);
 			channel.close();
-
 		}
 	}
 
