@@ -36,9 +36,9 @@ public class BankServerHandler extends IoHandlerAdapter {
 	public void messageReceived(IoSession session, Object message)
 			throws Exception {
 		String str = message.toString();
-		Date date = new Date();
-		session.write(date.toString());// 返回当前时间的字符串
 		System.out.println("接收到数据：" + str);
+		session.write(str.getBytes());// 返回当前时间的字符串
+		
 		session.close(true);
 	}
 }
