@@ -38,6 +38,11 @@ import com.nasoft.PackagerFactory;
  * 
  */
 public class BankProtocolDecoder implements ProtocolDecoder {
+	public BankProtocolDecoder() {
+		System.out.println("start init......");
+		init();
+		System.out.println("finish init......");
+	}
 
 	public void decode(IoSession session, IoBuffer in, ProtocolDecoderOutput out)
 			throws Exception {
@@ -46,8 +51,8 @@ public class BankProtocolDecoder implements ProtocolDecoder {
 		in.flip();
 		byte[] inBytes = new byte[len];
 		System.arraycopy(inBytesArr, 0, inBytes, 0, len);
-		init();
 		String msg = PackUnpackHelper.unpack("C009", inBytes);
+		System.out.println("Receive Message : " + msg);
 		out.write(msg);
 	}
 
