@@ -39,24 +39,26 @@ public class TimeClient {
 	public static void main(String[] args) {
 		try {
 
-			// 创建客户端连接器. 
-			NioSocketConnector connector = new NioSocketConnector(); 
-			connector.getFilterChain().addLast( "logger", new LoggingFilter() ); 
-			connector.getFilterChain().addLast( "codec", new ProtocolCodecFilter( new TextLineCodecFactory( Charset.forName( "UTF-8" )))); //设置编码过滤器 
-			connector.setConnectTimeout(30); 
-			connector.setHandler(new TimeClientHandler());//设置事件处理器 
-			ConnectFuture cf = connector.connect( 
-			new InetSocketAddress("127.0.0.1", 9123));//建立连接 
-			cf.awaitUninterruptibly();//等待连接创建完成 
-			cf.getSession().write("hello");//发送消息 
-			cf.getSession().write("quit");//发送消息 
-			cf.getSession().getCloseFuture().awaitUninterruptibly();//等待连接断开 
-			connector.dispose(); 
-			
+			// 创建客户端连接器.
+			NioSocketConnector connector = new NioSocketConnector();
+			connector.getFilterChain().addLast("logger", new LoggingFilter());
+			connector.getFilterChain().addLast(
+					"codec",
+					new ProtocolCodecFilter(new TextLineCodecFactory(Charset
+							.forName("UTF-8")))); // 设置编码过滤器
+			connector.setConnectTimeout(30);
+			connector.setHandler(new TimeClientHandler());// 设置事件处理器
+			ConnectFuture cf = connector.connect(new InetSocketAddress(
+					"127.0.0.1", 9123));// 建立连接
+			cf.awaitUninterruptibly();// 等待连接创建完成
+			cf.getSession().write("hello");// 发送消息
+			cf.getSession().write("quit");// 发送消息
+			cf.getSession().getCloseFuture().awaitUninterruptibly();// 等待连接断开
+			connector.dispose();
+
 		} catch (Exception e) {
 			// TODO: handle exception
+			e.printStackTrace();
 		}
 	}
-} 
-
-
+}
