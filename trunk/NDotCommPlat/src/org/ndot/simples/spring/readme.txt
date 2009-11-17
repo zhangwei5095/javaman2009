@@ -1,0 +1,1 @@
+±ØĞëÌí¼Ó mina-integration-beans-2.0.0-RC1.jarµ½classpath
