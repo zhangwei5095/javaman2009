@@ -51,13 +51,13 @@ public class BankProtocolDecoder implements ProtocolDecoder {
 		out.write(msg);
 	}
 
-	
 	public void dispose(IoSession session) throws Exception {
 
 	}
 
 	public void finishDecode(IoSession session, ProtocolDecoderOutput out)
 			throws Exception {
+		System.out.println("FinishDecode ......");
 
 	}
 
