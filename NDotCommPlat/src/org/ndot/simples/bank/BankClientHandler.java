@@ -36,7 +36,8 @@ public class BankClientHandler extends IoHandlerAdapter {
 	@Override
 	public void messageReceived(IoSession session, Object message)
 			throws Exception {
-		System.out.println(message);// 显示接收到的消息
+		System.out.println("接收到服务器的应答信息：" + message.toString());
+		session.close(true);
 	}
 
 }

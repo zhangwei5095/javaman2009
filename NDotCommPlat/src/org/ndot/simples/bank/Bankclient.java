@@ -7,6 +7,7 @@ import org.apache.mina.filter.codec.ProtocolCodecFilter;
 import org.apache.mina.filter.logging.LoggingFilter;
 import org.apache.mina.transport.socket.nio.NioSocketConnector;
 
+import com.nasoft.PackUnpackHelper;
 import com.nasoft.iso.ISOUtil;
 
 /**
@@ -43,8 +44,7 @@ public class Bankclient {
 			// 创建客户端连接器.
 			NioSocketConnector connector = new NioSocketConnector();
 			connector.getFilterChain().addLast("logger", new LoggingFilter());
-			connector.getFilterChain().addLast(
-					"codec",
+			connector.getFilterChain().addLast("codec",
 					new ProtocolCodecFilter(new BankProtocolCodecFactory())); // 设置编码过滤器
 			connector.setConnectTimeout(30);
 			connector.setHandler(new BankClientHandler());// 设置事件处理器
@@ -53,12 +53,11 @@ public class Bankclient {
 			cf.awaitUninterruptibly();// 等待连接创建完成
 			String hexPack = "005B30303030303032313331303035343430303030303832302238000000802800313630343030313131333130303534343130303535323230303931303133313030303030323131323130333131303631303030303030303030303030";
 			byte[] packe = ISOUtil.hex2byte(hexPack);
-			cf.getSession().write(packe);
+			String msg = PackUnpackHelper.unpack("C009", packe);
+			cf.getSession().write(msg);
 			cf.getSession().getCloseFuture().awaitUninterruptibly();// 等待连接断开
 			connector.dispose();
-
 		} catch (Exception e) {
-			// TODO: handle exception
 			e.printStackTrace();
 		}
 	}

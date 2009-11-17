@@ -7,6 +7,8 @@ import org.apache.mina.core.session.IoSession;
 import org.apache.mina.filter.codec.ProtocolEncoder;
 import org.apache.mina.filter.codec.ProtocolEncoderOutput;
 
+import com.nasoft.PackUnpackHelper;
+
 /**
  * °æ–°¬Ï“œ—ßÃ√ ÷Æ J2EE°ø
  * 
@@ -42,9 +44,9 @@ public class BankProtocolEncoder implements ProtocolEncoder {
 
 	public void encode(IoSession session, Object message,
 			ProtocolEncoderOutput out) throws Exception {
-		byte[] msgBytes = (byte[]) message;
-		IoBuffer buf = IoBuffer.allocate(msgBytes.length).setAutoExpand(true);
-		buf.put(msgBytes);
+		byte[] packe = PackUnpackHelper.pack("C009",(String)message);
+		IoBuffer buf = IoBuffer.allocate(packe.length).setAutoExpand(true);
+		buf.put(packe);
 		buf.flip();
 		out.write(buf);
 	}
