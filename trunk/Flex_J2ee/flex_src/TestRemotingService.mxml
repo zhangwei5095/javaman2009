@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" color="#D2DEE1" backgroundGradientAlphas="[1.0, 1.0]" backgroundGradientColors="[#E3C1FB, #EFEEEE]" borderColor="#D2C4EF" fontSize="14" fontWeight="bold">
+    <mx:Script>
+    	<![CDATA[
+    	    import mx.rpc.events.FaultEvent; 
+	        import mx.rpc.events.ResultEvent; 
+	        import mx.controls.Alert;
+	         
+    	    internal function resultHandler(event:ResultEvent):void{
+    	    	Alert.show((event.result as String),"服务器返回数据：");
+    	    }
+    	    
+    	    internal function faultHandler(event:FaultEvent):void{
+    	    	Alert.show(event.fault as String,"错误信息：");
+    	    }
+    	
+    		internal function doCall():void{
+    			ro.say(this.nameTxt.text);
+    		}
+    	]]>
+    </mx:Script>
+    <mx:RemoteObject id="ro" destination="RemotService" result="resultHandler(event)"  fault="faultHandler(event)"/>
+	<mx:Button label="获取服务数据" horizontalCenter="0" verticalCenter="-13" fontSize="14" fontWeight="bold" id="callRemot" click="doCall()" color="#FB0E51"/>
+	<mx:Label text="调用 RemotingService 实例" fontSize="16" width="234" fontWeight="bold" id="lab" horizontalCenter="0" verticalCenter="-90" color="#F50867" enabled="true"/>
+	<mx:Label text="姓名：" id="inlav" fontSize="14" fontStyle="italic" fontWeight="bold" horizontalCenter="-86" verticalCenter="-63" color="#F10775"/>
+	<mx:TextInput id="nameTxt" text="userName" horizontalCenter="27" verticalCenter="-61"/>
+	
+</mx:Application>

@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application creationComplete="init()"
+				xmlns:mx="http://www.adobe.com/2006/mxml"
+				fontSize="12">
+	<mx:Script>
+		<![CDATA[
+			import mx.controls.Alert;
+			import mx.messaging.messages.AsyncMessage;
+			import mx.messaging.messages.IMessage;
+			import flash.external.ExternalInterface;
+			import mx.validators.ValidationResult;
+			import mx.rpc.events.FaultEvent;
+			import mx.messaging.events.*;
+
+			//以下代码向浏览器反向插入js方法监听浏览器关闭事件  
+			private function init():void
+			{
+				ExternalInterface.call(FUNCTION_USEREXIT);
+				ExternalInterface.addCallback("checkExit", checkExit);
+			}
+
+			//关闭浏览器时退出  
+			public function checkExit():String
+			{
+				logout();
+				var userExitStr:String="你已经离开聊天室，下次再见！";
+				return userExitStr;
+			}
+
+			//监听浏览器关闭事件函数  
+			private static var FUNCTION_USEREXIT:String="document.insertScript = function () " + "{ " + "window.onbeforeunload = function() " + "{ " + "var flexObj = JMSChat.checkExit(); " + //JMSChat是swf在html中object的id     
+				"if(flexObj != \"\") " + "{ " + "return flexObj; " + "}else{ " + "return; " + "} " + "} " + "} ";
+
+
+			private function login():void
+			{
+				//订阅主题的时候带上一个唯一ID，jms服务器会记录ID,在下次登录时发送离线消息  
+				if (userName.text == "")
+				{
+					Alert.show("请输入您的用户名");
+				}
+				else
+				{
+					consumer.subscribe(userName.text);
+					userName.enabled=false;
+				}
+			}
+
+			private function logout():void
+			{
+				//退订消息的时候，true表示在jms服务器端记录离线消息，flase的时候将不记录离线消息  
+				consumer.unsubscribe(true);
+				userName.text="";
+				userName.enabled=true;
+			}
+
+			private function send():void
+			{
+				var message:IMessage=new AsyncMessage();
+				if (userName.enabled)
+				{
+					Alert.show("您还未登录！");
+				}
+				else
+				{
+					message.body=userName.text + " : " + msg.text;
+					producer.send(message);
+					msg.text="";
+				}
+			}
+
+			private function messageHandler(message:IMessage):void
+			{
+				chatRoom.text+=message.body + "\n";
+			}
+
+			/*
+			 * 处理成功发送消息事件
+			 */
+			private function acknowledgeHandler(event:MessageAckEvent):void
+			{
+				//Alert.show(event.acknowledgeMessage.messageId as String,"成功提示:");
+			}
+
+			/*
+			 * 处理消息发送失败事件
+			 */
+			private function faultHandler(event:MessageFaultEvent):void
+			{
+				//trace("错误细节："+event.faultDetail+"\n");
+				trace("错误概述"+ event.faultString +"\n");
+				Alert.show(event.faultString,"失败提示");
+			}
+		]]>
+	</mx:Script>
+	<mx:ChannelSet id="cs">
+		<!--
+			 <mx:AMFChannel url="http://localhost:8400/Flex_J2ee/messagebroker/amflongpolling"/>
+		-->
+		<mx:AMFChannel url="http://localhost:8400/Flex_J2ee/messagebroker/amfpolling"/>
+	</mx:ChannelSet>
+	<mx:Producer id="producer"
+				 destination="JMSChat"
+				 channelSet="{cs}"
+				 acknowledge="this.acknowledgeHandler(event)"
+				 fault="this.faultHandler(event)"/>
+	<mx:Consumer id="consumer"
+				 destination="JMSChat"
+				 channelSet="{cs}"
+				 message="messageHandler(event.message)"
+				 fault="this.faultHandler(event)"/>
+
+	<mx:Panel title="聊天室"
+			  width="100%"
+			  height="100%">
+		<mx:TextArea id="chatRoom"
+					 width="100%"
+					 height="100%"/>
+		<mx:ControlBar>
+			<mx:Label text="用户名"/>
+			<mx:TextInput id="userName"/>
+			<mx:TextInput id="msg"
+						  width="100%"
+						  enter="send()"/>
+			<mx:Button label="发送"
+					   click="send()"/>
+			<mx:Button label="登陆"
+					   click="login()"/>
+			<mx:Button label="退出"
+					   click="logout()"/>
+			<mx:Button label="清屏"
+					   click="chatRoom.text=''"/>
+		</mx:ControlBar>
+	</mx:Panel>
+
+</mx:Application>
+
