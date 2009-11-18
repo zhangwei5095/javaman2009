@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" backgroundGradientAlphas="[1.0, 1.0]" backgroundGradientColors="[#F6DBDB, #F6DBDB]"
+	applicationComplete="logon();">
+	<mx:Script>
+		<![CDATA[
+			import mx.validators.ValidationResult;
+			import mx.rpc.events.FaultEvent;
+			import mx.messaging.*;
+			import mx.messaging.messages.*;
+			import mx.messaging.events.*;
+			import mx.controls.Alert;
+			/*
+			* 处理成功发送消息事件
+			*/
+			private function acknowledgeHandler(event:MessageAckEvent):void{
+			    	//Alert.show(event.acknowledgeMessage as String,"成功提示:");
+			}
+			
+			/*
+			* 处理消息发送失败事件
+			*/
+			private function faultHandler(event:MessageFaultEvent):void{
+				//Alert.show(event.faultString,"失败提示");
+			}
+			//消息生产者---------------------------------start
+			/*
+			* 创建 AsyncMessage对象，并应用Producer.send() 发送消息
+			*/
+			private function sendMessage():void{
+				var message:AsyncMessage = new AsyncMessage();
+				message.headers = new Array();
+				message.headers["property1"] = 5;
+				message.body= userName.text + ": "+input.text;
+				producer.send(message);
+			}
+			//消息生产者---------------------------------end
+			
+			
+			//消息消费者---------------------------------start
+			
+			/*
+			* 消息订阅
+			*/
+			
+			private function logon():void{
+				consumer.subscribe();
+			}
+			
+			/*
+			* 接受消息，并显示到 TestArea中
+			*/
+			
+			private function messageHandler(event:MessageEvent):void{
+				ta.text+="\n"+event.message.body  + "\n";
+			}
+			//消息消费者---------------------------------end
+			
+		]]>
+	</mx:Script>
+	
+	<!--start 生产者  start-->
+	<mx:Producer id="producer"
+	   destination="chat"
+	   acknowledge="this.acknowledgeHandler(event)"
+	   fault="this.faultHandler(event)"/>
+	<mx:TextInput id="userName" fontSize="12" fontWeight="bold" horizontalCenter="-127" verticalCenter="-62"/>
+	<mx:TextInput id="input" horizontalCenter="-127" verticalCenter="-11"/>
+	<mx:Button label="Send Message" click="this.sendMessage()" horizontalCenter="-164" verticalCenter="47"/>
+	<mx:Label text="用户名：" id="ulab" fontSize="12" fontWeight="bold" horizontalCenter="-262" verticalCenter="-62"/>
+	<mx:Label text="内  容：" fontWeight="bold" id="clab" fontSize="12" horizontalCenter="-265" verticalCenter="-12"/>
+	<mx:Label text="消息生产者" width="132" horizontalCenter="-162" verticalCenter="-112" id="mlab" fontWeight="bold" fontSize="21"/>
+	
+  <!--end 生产者  end-->
+
+  <!--start 消费者  start-->   
+  <mx:Consumer id="consumer"
+   destination="chat"
+   selector="property1 > 4"
+   message="messageHandler(event)"/>
+   
+   <mx:Label text="消息订阅者" width="132" horizontalCenter="148" verticalCenter="-112" id="mlab0" fontWeight="bold" fontSize="21"/>
+   <mx:TextArea id="ta" width="256" height="137" horizontalCenter="149" verticalCenter="-10" fontWeight="bold" fontSize="12" color="#3C0B17"/>
+  
+  <!--end 消费者  end--> 
+	 
+	  
+	
+	</mx:Application>

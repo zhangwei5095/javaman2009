@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" backgroundGradientAlphas="[1.0, 1.0]" backgroundGradientColors="[#DBE5F6, #F6DBDB]"
+	applicationComplete="logon();">
+	<mx:Script>
+		<![CDATA[
+			import mx.validators.ValidationResult;
+			import mx.rpc.events.FaultEvent;
+			import mx.messaging.*;
+			import mx.messaging.messages.*;
+			import mx.messaging.events.*;
+			import mx.controls.Alert;
+			/*
+			* 处理成功发送消息事件
+			*/
+			private function acknowledgeHandler(event:MessageAckEvent):void{
+			    	//Alert.show(event.acknowledgeMessage as String,"成功提示:");
+			}
+			
+			/*
+			* 处理消息发送失败事件
+			*/
+			private function faultHandler(event:MessageFaultEvent):void{
+				//Alert.show(event.faultString,"失败提示");
+			}
+			
+						
+			//消息消费者---------------------------------start
+			
+			/*
+			* 消息订阅
+			*/
+			
+			private function logon():void{
+				consumer.subscribe();
+			}
+			
+			/*
+			* 接受消息，并显示到 TestArea中
+			*/
+			
+			private function messageHandler(event:MessageEvent):void{
+				ta.text+="\n"+event.message.body  + "\n";
+			}
+			//消息消费者---------------------------------end
+			
+		]]>
+	</mx:Script>
+	
+
+  <!--start 消费者  start-->   
+  <mx:Consumer id="consumer"
+   destination="chat"
+   selector="property1 > 4"
+   message="messageHandler(event)"
+   fault="this.faultHandler(event)"
+   acknowledge="this.acknowledgeHandler(event)"/>
+   
+   <mx:Label text="消息订阅者-2" width="156" horizontalCenter="0" verticalCenter="-90" id="mlab0" fontWeight="bold" fontSize="21"/>
+   <mx:TextArea id="ta" width="256" height="137" horizontalCenter="0" verticalCenter="26" fontWeight="bold" fontSize="12" color="#3C0B17"/>
+  
+  <!--end 消费者  end--> 
+	 
+	  
+	
+	</mx:Application>
