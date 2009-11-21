@@ -386,7 +386,7 @@
 					c.selected=true;
 				else
 					c.selected=false;
-				intVar=(intVar << 1) % 255;
+				intVar=(intVar << 1) % 256;
 				return intVar;
 			}
 		]]>
