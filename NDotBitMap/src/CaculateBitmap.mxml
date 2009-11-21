@@ -1,0 +1,952 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml"
+				layout="absolute"
+				creationComplete="initCollections();"
+				fontSize="12">
+	<mx:Style>
+        Alert {
+      titleStyleName: "alertTitle";
+            messageStyleName: "alertMessage";
+            buttonStyleName: "alertButton";
+        }
+
+        .alertTitle {
+            letterSpacing: 0;
+            fontSize: 15;
+            color: red;
+        }
+
+        .alertMessage {
+            letterSpacing: 0;
+            fontSize: 15;
+            fontWeight: normal;
+            color: black;
+        }
+
+        .alertButton {
+            letterSpacing: 0;
+            fontSize: 12;
+        }
+    </mx:Style>
+
+	<mx:Script>
+		<![CDATA[
+			import mx.events.MenuEvent;
+			import mx.controls.Alert;
+			import mx.collections.*;
+			import org.ndot.BitMapUtil;
+
+			[Bindable]
+			public var menuBarCollection:XMLListCollection;
+			[Bindable]
+			private var bitMapHexValue:String="00000000000000000000000000000000";
+			private var bitMap1Flag:int=0;
+
+			private var menubarXML:XMLList=
+				<>
+					<menuitem label="Edit" data="top">
+
+						<menuitem label="Select ALL" data="1A"/>
+						<menuitem type="separator"/>
+						<menuitem label="Clear ALL" data="1B"/>
+
+					</menuitem>
+					<menuitem label="Help" data="top">
+						<menuitem label="Help Content" data="2A"/>
+						<menuitem type="separator"/>
+						<menuitem label="About Soft" data="2A"/>
+					</menuitem>
+				</>;
+
+			// Event handler to initialize the MenuBar control.
+			private function initCollections():void
+			{
+				menuBarCollection=new XMLListCollection(menubarXML);
+			}
+
+			// Event handler for the MenuBar control's itemClick event.
+			private function menuHandler(event:MenuEvent):void
+			{
+				// Don't open the Alert for a menu bar item that 
+				// opens a popup submenu.
+				if (event.item.@label == "About Soft")
+				{
+					Alert.show("功能：BitMap计算 \n版本: 1.0 \n作者: 孙金城 \nQQ：289272063 ", "软件简介：");
+				}
+				if (event.item.@label == "Select ALL")
+				{
+					changeSelected(true);
+					setInputHexValue("FF");
+					updateBMHexValue();
+				}
+				if (event.item.@label == "Clear ALL")
+				{
+					changeSelected(false);
+					setInputHexValue("00");
+					updateBMHexValue();
+				}
+			}
+
+			private function setInputHexValue(str:String):void
+
+			{
+				in1.text=str;
+				in2.text=str;
+				in3.text=str;
+				in4.text=str;
+				in5.text=str;
+				in6.text=str;
+				in7.text=str;
+				in8.text=str;
+				in9.text=str;
+				in10.text=str;
+				in11.text=str;
+				in12.text=str;
+				in13.text=str;
+				in14.text=str;
+				in15.text=str;
+				in16.text=str;
+
+			}
+
+			private function changeSelected(b:Boolean):void
+
+			{
+
+				c1.selected=b;
+				c2.selected=b;
+				c3.selected=b;
+				c4.selected=b;
+				c5.selected=b;
+				c6.selected=b;
+				c7.selected=b;
+				c8.selected=b;
+				c9.selected=b;
+				c10.selected=b;
+
+				c11.selected=b;
+				c21.selected=b;
+				c31.selected=b;
+				c41.selected=b;
+				c51.selected=b;
+				c61.selected=b;
+				c71.selected=b;
+				c81.selected=b;
+				c91.selected=b;
+				c20.selected=b;
+
+				c12.selected=b;
+				c22.selected=b;
+				c32.selected=b;
+				c42.selected=b;
+				c52.selected=b;
+				c62.selected=b;
+				c72.selected=b;
+				c82.selected=b;
+				c92.selected=b;
+				c30.selected=b;
+
+				c13.selected=b;
+				c23.selected=b;
+				c33.selected=b;
+				c43.selected=b;
+				c53.selected=b;
+				c63.selected=b;
+				c73.selected=b;
+				c83.selected=b;
+				c93.selected=b;
+				c40.selected=b;
+
+				c14.selected=b;
+				c24.selected=b;
+				c34.selected=b;
+				c44.selected=b;
+				c54.selected=b;
+				c64.selected=b;
+				c74.selected=b;
+				c84.selected=b;
+				c94.selected=b;
+				c50.selected=b;
+
+
+				c15.selected=b;
+				c25.selected=b;
+				c35.selected=b;
+				c45.selected=b;
+				c55.selected=b;
+				c65.selected=b;
+				c75.selected=b;
+				c85.selected=b;
+				c95.selected=b;
+				c60.selected=b;
+
+
+				c16.selected=b;
+				c26.selected=b;
+				c36.selected=b;
+				c46.selected=b;
+				c56.selected=b;
+				c66.selected=b;
+				c76.selected=b;
+				c86.selected=b;
+				c96.selected=b;
+				c70.selected=b;
+
+				c17.selected=b;
+				c27.selected=b;
+				c37.selected=b;
+				c47.selected=b;
+				c57.selected=b;
+				c67.selected=b;
+				c77.selected=b;
+				c87.selected=b;
+				c97.selected=b;
+				c80.selected=b;
+
+				c18.selected=b;
+				c28.selected=b;
+				c38.selected=b;
+				c48.selected=b;
+				c58.selected=b;
+				c68.selected=b;
+				c78.selected=b;
+				c88.selected=b;
+				c98.selected=b;
+				c90.selected=b;
+
+				c19.selected=b;
+				c29.selected=b;
+				c39.selected=b;
+				c49.selected=b;
+				c59.selected=b;
+				c69.selected=b;
+				c79.selected=b;
+				c89.selected=b;
+				c99.selected=b;
+				c100.selected=b;
+
+				c101.selected=b;
+				c102.selected=b;
+				c103.selected=b;
+				c104.selected=b;
+				c105.selected=b;
+				c106.selected=b;
+				c107.selected=b;
+				c108.selected=b;
+				c109.selected=b;
+
+
+				c110.selected=b;
+				c111.selected=b;
+				c112.selected=b;
+				c113.selected=b;
+				c114.selected=b;
+				c115.selected=b;
+				c116.selected=b;
+				c117.selected=b;
+				c118.selected=b;
+				c119.selected=b;
+
+				c120.selected=b;
+				c121.selected=b;
+				c122.selected=b;
+				c123.selected=b;
+				c124.selected=b;
+				c125.selected=b;
+				c126.selected=b;
+				c127.selected=b;
+				c128.selected=b;
+
+			}
+
+			/*更加CheckBox 的选择状态改变BitMap的值 ,num为2-128*/
+			private function doCalc(cb:CheckBox, num:int, hexTest:TextInput):void
+			{
+				var byteBase:int=1;
+				var bitNum:int=0;
+				//所在bit位的数值
+				var bitValue:int=byteBase;
+				//该CheckBox所在的 位图字节的位索引(0-7)，余1是最高位，余0是最低位
+				var tem:int=num % 8;
+				if (tem > 0)
+				{
+					bitNum=8 - tem;
+					bitValue=byteBase << bitNum;
+				}
+
+				var cruentVar:int=BitMapUtil.hex2int(hexTest.text);
+				var changerVar:int;
+
+				if (cb.selected == true)
+				{
+					changerVar=cruentVar + bitValue;
+				}
+				else
+				{
+					changerVar=cruentVar - bitValue;
+				}
+				hexTest.text=BitMapUtil.int2hex(changerVar);
+				updateBMHexValue();
+				//如果存在大于64的位，则更新标志位
+				if (num > 64)
+				{
+					setBitMap1(num, cb.selected);
+				}
+
+			}
+
+			private function updateBMHexValue():void
+			{
+				bitMapHexValue=in1.text + in2.text + in3.text + in4.text + in5.text + in6.text + in7.text + in8.text + in9.text + in10.text + in11.text + in12.text + in13.text + in14.text + in15.text + in16.text;
+			}
+
+			private function setBitMap1(num:int, isSelect:Boolean):void
+			{
+				if (isSelect)
+				{
+					bitMap1Flag+=num;
+				}
+				else
+				{
+					bitMap1Flag-=num;
+				}
+				if (bitMap1Flag > 0 && this.c1.selected == false)
+				{
+					//当有大于64的域，并且当前bitmap1没有选择，就要这事bitmap1位选择状态重新计算bitmap值
+					this.c1.selected=true;
+
+					doCalc(this.c1, 1, this.in1);
+				}
+				else if (bitMap1Flag <= 0 && this.c1.selected == true)
+				{
+					this.c1.selected=false;
+					doCalc(this.c1, 1, this.in1);
+				}
+
+			}
+
+			private function calcBitMap():void
+			{
+				var hexVar:String=(this.inhex.text).toUpperCase();
+
+				this.in1.text=hexVar.substr(0, 2);
+				this.in2.text=hexVar.substr(2, 2);
+				this.in3.text=hexVar.substr(4, 2);
+				this.in4.text=hexVar.substr(6, 2);
+				this.in5.text=hexVar.substr(8, 2);
+				this.in6.text=hexVar.substr(10, 2);
+				this.in7.text=hexVar.substr(12, 2);
+				this.in8.text=hexVar.substr(14, 2);
+				this.in9.text=hexVar.substr(16, 2);
+				this.in10.text=hexVar.substr(18, 2);
+				this.in11.text=hexVar.substr(20, 2);
+				this.in12.text=hexVar.substr(22, 2);
+				this.in13.text=hexVar.substr(24, 2);
+				this.in14.text=hexVar.substr(26, 2);
+				this.in15.text=hexVar.substr(28, 2);
+				this.in16.text=hexVar.substr(30, 2);
+
+				selectCheckBox(in1.text, c1, c2, c3, c4, c5, c6, c7, c8);
+				selectCheckBox(in2.text, c9, c10, c11, c12, c13, c14, c15, c16);
+				selectCheckBox(in3.text, c17, c18, c19, c20, c21, c22, c23, c24);
+				selectCheckBox(in4.text, c25, c26, c27, c28, c29, c30, c31, c32);
+				selectCheckBox(in5.text, c33, c34, c35, c36, c37, c38, c39, c40);
+				selectCheckBox(in6.text, c41, c42, c43, c44, c45, c46, c47, c48);
+				selectCheckBox(in7.text, c49, c50, c51, c52, c53, c54, c55, c56);
+				selectCheckBox(in8.text, c57, c58, c59, c60, c61, c62, c63, c64);
+				selectCheckBox(in9.text, c65, c66, c67, c68, c69, c70, c71, c72);
+				selectCheckBox(in10.text, c73, c74, c75, c76, c77, c78, c79, c80);
+				selectCheckBox(in11.text, c81, c82, c83, c84, c85, c86, c87, c88);
+				selectCheckBox(in12.text, c89, c90, c91, c92, c93, c94, c95, c96);
+				selectCheckBox(in13.text, c97, c98, c99, c100, c101, c102, c103, c104);
+				selectCheckBox(in14.text, c105, c106, c107, c108, c109, c110, c111, c112);
+				selectCheckBox(in15.text, c113, c114, c115, c116, c117, c118, c119, c120);
+				selectCheckBox(in16.text, c121, c122, c123, c124, c125, c126, c127, c128);
+
+			}
+
+
+			private function selectCheckBox(str:String, c1:CheckBox, c2:CheckBox, c3:CheckBox, c4:CheckBox, c5:CheckBox, c6:CheckBox, c7:CheckBox, c8:CheckBox):void
+			{
+				var intVar:int=BitMapUtil.hex2int(str);
+				intVar=setSelect(intVar, c1);
+				intVar=setSelect(intVar, c2);
+				intVar=setSelect(intVar, c3);
+				intVar=setSelect(intVar, c4);
+				intVar=setSelect(intVar, c5);
+				intVar=setSelect(intVar, c6);
+				intVar=setSelect(intVar, c7);
+				intVar=setSelect(intVar, c8);
+			}
+
+			private function setSelect(intVar:int, c:CheckBox):int
+			{
+				var tem:int=intVar >> 7;
+				if (tem == 1)
+					c.selected=true;
+				else
+					c.selected=false;
+				intVar=(intVar << 1) % 255;
+				return intVar;
+			}
+		]]>
+	</mx:Script>
+	<mx:Panel width="600"
+			  height="600"
+			  layout="absolute"
+			  horizontalCenter="7"
+			  verticalCenter="-13"
+			  title="NDot小蚂蚁学堂-之-BitMap计算 QQ：289272063"
+			  id="main">
+		<mx:VBox x="0"
+				 y="0"
+				 width="100%"
+				 height="100%">
+			<mx:MenuBar labelField="@label"
+						itemClick="menuHandler(event);"
+						dataProvider="{menuBarCollection}"
+						fontSize="12"
+						width="100%"
+						height="10%"/>
+
+
+			<mx:HBox width="100%"
+					 height="80%"
+					 paddingLeft="5"
+					 paddingRight="5">
+				<mx:Tile width="90%"
+						 height="100%"
+						 borderStyle="solid"
+						 borderThickness="3">
+					<mx:CheckBox label="1"
+								 enabled="false"
+								 paddingLeft="5"
+								 id="c1"/>
+					<mx:CheckBox change="doCalc(this.c2,2,this.in1)"
+								 label="2"
+								 id="c2"/>
+					<mx:CheckBox change="doCalc(this.c3,3,this.in1)"
+								 label="3"
+								 id="c3"/>
+					<mx:CheckBox change="doCalc(this.c4,4,this.in1)"
+								 label="4"
+								 id="c4"/>
+					<mx:CheckBox change="doCalc(this.c5,5,this.in1)"
+								 label="5"
+								 id="c5"/>
+					<mx:CheckBox change="doCalc(this.c6,6,this.in1)"
+								 label="6"
+								 id="c6"/>
+					<mx:CheckBox change="doCalc(this.c7,7,this.in1)"
+								 label="7"
+								 id="c7"/>
+					<mx:CheckBox change="doCalc(this.c8,8,this.in1)"
+								 label="8"
+								 id="c8"/>
+					<mx:CheckBox change="doCalc(this.c9,9,this.in2)"
+								 label="9"
+								 paddingLeft="5"
+								 id="c9"/>
+					<mx:CheckBox change="doCalc(this.c10,10,this.in2)"
+								 label="10"
+								 id="c10"
+								 fillAlphas="[1.0, 1.0]"/>
+					<mx:CheckBox change="doCalc(this.c11,11,this.in2)"
+								 label="11"
+								 id="c11"/>
+					<mx:CheckBox change="doCalc(this.c12,12,this.in2)"
+								 label="12"
+								 id="c12"/>
+					<mx:CheckBox change="doCalc(this.c13,13,this.in2)"
+								 label="13"
+								 id="c13"/>
+					<mx:CheckBox change="doCalc(this.c14,14,this.in2)"
+								 label="14"
+								 id="c14"/>
+					<mx:CheckBox change="doCalc(this.c15,15,this.in2)"
+								 label="15"
+								 id="c15"/>
+					<mx:CheckBox change="doCalc(this.c16,16,this.in2)"
+								 label="16"
+								 id="c16"/>
+					<mx:CheckBox change="doCalc(this.c17,17,this.in3)"
+								 label="17"
+								 paddingLeft="5"
+								 id="c17"/>
+					<mx:CheckBox change="doCalc(this.c18,18,this.in3)"
+								 label="18"
+								 id="c18"/>
+					<mx:CheckBox change="doCalc(this.c19,19,this.in3)"
+								 label="19"
+								 id="c19"/>
+					<mx:CheckBox change="doCalc(this.c20,20,this.in3)"
+								 label="20"
+								 id="c20"/>
+					<mx:CheckBox change="doCalc(this.c21,21,this.in3)"
+								 label="21"
+								 id="c21"/>
+					<mx:CheckBox change="doCalc(this.c22,22,this.in3)"
+								 label="22"
+								 id="c22"/>
+					<mx:CheckBox change="doCalc(this.c23,23,this.in3)"
+								 label="23"
+								 id="c23"/>
+					<mx:CheckBox change="doCalc(this.c24,24,this.in3)"
+								 label="24"
+								 id="c24"/>
+					<mx:CheckBox change="doCalc(this.c25,25,this.in4)"
+								 label="25"
+								 paddingLeft="5"
+								 id="c25"/>
+					<mx:CheckBox change="doCalc(this.c26,26,this.in4)"
+								 label="26"
+								 id="c26"/>
+					<mx:CheckBox change="doCalc(this.c27,27,this.in4)"
+								 label="27"
+								 id="c27"/>
+					<mx:CheckBox change="doCalc(this.c28,28,this.in4)"
+								 label="28"
+								 id="c28"/>
+					<mx:CheckBox change="doCalc(this.c29,29,this.in4)"
+								 label="29"
+								 id="c29"/>
+					<mx:CheckBox change="doCalc(this.c30,30,this.in4)"
+								 label="30"
+								 id="c30"/>
+					<mx:CheckBox change="doCalc(this.c31,31,this.in4)"
+								 label="31"
+								 id="c31"/>
+					<mx:CheckBox change="doCalc(this.c32,32,this.in4)"
+								 label="32"
+								 id="c32"/>
+					<mx:CheckBox change="doCalc(this.c33,33,this.in5)"
+								 label="33"
+								 paddingLeft="5"
+								 id="c33"/>
+					<mx:CheckBox change="doCalc(this.c34,34,this.in5)"
+								 label="34"
+								 id="c34"/>
+					<mx:CheckBox change="doCalc(this.c35,35,this.in5)"
+								 label="35"
+								 id="c35"/>
+					<mx:CheckBox change="doCalc(this.c36,36,this.in5)"
+								 label="36"
+								 id="c36"/>
+					<mx:CheckBox change="doCalc(this.c37,37,this.in5)"
+								 label="37"
+								 id="c37"/>
+					<mx:CheckBox change="doCalc(this.c38,38,this.in5)"
+								 label="38"
+								 id="c38"/>
+					<mx:CheckBox change="doCalc(this.c39,39,this.in5)"
+								 label="39"
+								 id="c39"/>
+					<mx:CheckBox change="doCalc(this.c40,40,this.in5)"
+								 label="40"
+								 id="c40"/>
+					<mx:CheckBox change="doCalc(this.c41,41,this.in6)"
+								 label="41"
+								 paddingLeft="5"
+								 id="c41"/>
+					<mx:CheckBox change="doCalc(this.c42,42,this.in6)"
+								 label="42"
+								 id="c42"/>
+					<mx:CheckBox change="doCalc(this.c43,43,this.in6)"
+								 label="43"
+								 id="c43"/>
+					<mx:CheckBox change="doCalc(this.c44,44,this.in6)"
+								 label="44"
+								 id="c44"/>
+					<mx:CheckBox change="doCalc(this.c45,45,this.in6)"
+								 label="45"
+								 id="c45"/>
+					<mx:CheckBox change="doCalc(this.c46,46,this.in6)"
+								 label="46"
+								 id="c46"/>
+					<mx:CheckBox change="doCalc(this.c47,47,this.in6)"
+								 label="47"
+								 id="c47"/>
+					<mx:CheckBox change="doCalc(this.c48,48,this.in6)"
+								 label="48"
+								 id="c48"/>
+					<mx:CheckBox change="doCalc(this.c49,49,this.in7)"
+								 label="49"
+								 paddingLeft="5"
+								 id="c49"/>
+					<mx:CheckBox change="doCalc(this.c50,50,this.in7)"
+								 label="50"
+								 id="c50"/>
+					<mx:CheckBox change="doCalc(this.c51,51,this.in7)"
+								 label="51"
+								 id="c51"/>
+					<mx:CheckBox change="doCalc(this.c52,52,this.in7)"
+								 label="52"
+								 id="c52"/>
+					<mx:CheckBox change="doCalc(this.c53,53,this.in7)"
+								 label="53"
+								 id="c53"/>
+					<mx:CheckBox change="doCalc(this.c54,54,this.in7)"
+								 label="54"
+								 id="c54"/>
+					<mx:CheckBox change="doCalc(this.c55,55,this.in7)"
+								 label="55"
+								 id="c55"/>
+					<mx:CheckBox change="doCalc(this.c56,56,this.in7)"
+								 label="56"
+								 id="c56"/>
+					<mx:CheckBox change="doCalc(this.c57,57,this.in8)"
+								 label="57"
+								 paddingLeft="5"
+								 id="c57"/>
+					<mx:CheckBox change="doCalc(this.c58,58,this.in8)"
+								 label="58"
+								 id="c58"/>
+					<mx:CheckBox change="doCalc(this.c59,59,this.in8)"
+								 label="59"
+								 id="c59"/>
+					<mx:CheckBox change="doCalc(this.c60,60,this.in8)"
+								 label="60"
+								 id="c60"/>
+					<mx:CheckBox change="doCalc(this.c61,61,this.in8)"
+								 label="61"
+								 id="c61"/>
+					<mx:CheckBox change="doCalc(this.c62,62,this.in8)"
+								 label="62"
+								 id="c62"/>
+					<mx:CheckBox change="doCalc(this.c63,63,this.in8)"
+								 label="63"
+								 id="c63"/>
+					<mx:CheckBox change="doCalc(this.c64,64,this.in8)"
+								 label="64"
+								 id="c64"/>
+					<mx:CheckBox change="doCalc(this.c65,65,this.in9)"
+								 label="65"
+								 paddingLeft="5"
+								 id="c65"/>
+					<mx:CheckBox change="doCalc(this.c66,66,this.in9)"
+								 label="66"
+								 id="c66"/>
+					<mx:CheckBox change="doCalc(this.c67,67,this.in9)"
+								 label="67"
+								 id="c67"/>
+					<mx:CheckBox change="doCalc(this.c68,68,this.in9)"
+								 label="68"
+								 id="c68"/>
+					<mx:CheckBox change="doCalc(this.c69,69,this.in9)"
+								 label="69"
+								 id="c69"/>
+					<mx:CheckBox change="doCalc(this.c70,70,this.in9)"
+								 label="70"
+								 id="c70"/>
+					<mx:CheckBox change="doCalc(this.c71,71,this.in9)"
+								 label="71"
+								 id="c71"/>
+					<mx:CheckBox change="doCalc(this.c72,72,this.in9)"
+								 label="72"
+								 id="c72"/>
+					<mx:CheckBox change="doCalc(this.c73,73,this.in10)"
+								 label="73"
+								 paddingLeft="5"
+								 id="c73"/>
+					<mx:CheckBox change="doCalc(this.c74,74,this.in10)"
+								 label="74"
+								 id="c74"/>
+					<mx:CheckBox change="doCalc(this.c75,75,this.in10)"
+								 label="75"
+								 id="c75"/>
+					<mx:CheckBox change="doCalc(this.c76,76,this.in10)"
+								 label="76"
+								 id="c76"/>
+					<mx:CheckBox change="doCalc(this.c77,77,this.in10)"
+								 label="77"
+								 id="c77"/>
+					<mx:CheckBox change="doCalc(this.c78,78,this.in10)"
+								 label="78"
+								 id="c78"/>
+					<mx:CheckBox change="doCalc(this.c79,79,this.in10)"
+								 label="79"
+								 id="c79"/>
+					<mx:CheckBox change="doCalc(this.c80,80,this.in10)"
+								 label="80"
+								 id="c80"/>
+					<mx:CheckBox change="doCalc(this.c81,81,this.in11)"
+								 label="81"
+								 paddingLeft="5"
+								 id="c81"/>
+					<mx:CheckBox change="doCalc(this.c82,82,this.in11)"
+								 label="82"
+								 id="c82"/>
+					<mx:CheckBox change="doCalc(this.c83,83,this.in11)"
+								 label="83"
+								 id="c83"/>
+					<mx:CheckBox change="doCalc(this.c84,84,this.in11)"
+								 label="84"
+								 id="c84"/>
+					<mx:CheckBox change="doCalc(this.c85,85,this.in11)"
+								 label="85"
+								 id="c85"/>
+					<mx:CheckBox change="doCalc(this.c86,86,this.in11)"
+								 label="86"
+								 id="c86"/>
+					<mx:CheckBox change="doCalc(this.c87,87,this.in11)"
+								 label="87"
+								 id="c87"/>
+					<mx:CheckBox change="doCalc(this.c88,88,this.in11)"
+								 label="88"
+								 id="c88"/>
+					<mx:CheckBox change="doCalc(this.c89,89,this.in12)"
+								 label="89"
+								 paddingLeft="5"
+								 id="c89"/>
+					<mx:CheckBox change="doCalc(this.c90,90,this.in12)"
+								 label="90"
+								 id="c90"/>
+					<mx:CheckBox change="doCalc(this.c91,91,this.in12)"
+								 label="91"
+								 id="c91"/>
+					<mx:CheckBox change="doCalc(this.c92,92,this.in12)"
+								 label="92"
+								 id="c92"/>
+					<mx:CheckBox change="doCalc(this.c93,93,this.in12)"
+								 label="93"
+								 id="c93"/>
+					<mx:CheckBox change="doCalc(this.c94,94,this.in12)"
+								 label="94"
+								 id="c94"/>
+					<mx:CheckBox change="doCalc(this.c95,95,this.in12)"
+								 label="95"
+								 id="c95"/>
+					<mx:CheckBox change="doCalc(this.c96,96,this.in12)"
+								 label="96"
+								 id="c96"/>
+					<mx:CheckBox change="doCalc(this.c97,97,this.in13)"
+								 label="97"
+								 paddingLeft="5"
+								 id="c97"/>
+					<mx:CheckBox change="doCalc(this.c98,98,this.in13)"
+								 label="98"
+								 id="c98"/>
+					<mx:CheckBox change="doCalc(this.c99,99,this.in13)"
+								 label="99"
+								 id="c99"/>
+					<mx:CheckBox change="doCalc(this.c100,100,this.in13)"
+								 label="100"
+								 id="c100"/>
+					<mx:CheckBox change="doCalc(this.c101,101,this.in13)"
+								 label="101"
+								 id="c101"/>
+					<mx:CheckBox change="doCalc(this.c102,102,this.in13)"
+								 label="102"
+								 id="c102"/>
+					<mx:CheckBox change="doCalc(this.c103,103,this.in13)"
+								 label="103"
+								 id="c103"/>
+					<mx:CheckBox change="doCalc(this.c104,104,this.in13)"
+								 label="104"
+								 id="c104"/>
+					<mx:CheckBox change="doCalc(this.c105,105,this.in14)"
+								 label="105"
+								 paddingLeft="5"
+								 id="c105"/>
+					<mx:CheckBox change="doCalc(this.c106,106,this.in14)"
+								 label="106"
+								 id="c106"/>
+					<mx:CheckBox change="doCalc(this.c107,107,this.in14)"
+								 label="107"
+								 id="c107"/>
+					<mx:CheckBox change="doCalc(this.c108,108,this.in14)"
+								 label="108"
+								 id="c108"/>
+					<mx:CheckBox change="doCalc(this.c109,109,this.in14)"
+								 label="109"
+								 id="c109"/>
+					<mx:CheckBox change="doCalc(this.c110,110,this.in14)"
+								 label="110"
+								 id="c110"/>
+					<mx:CheckBox change="doCalc(this.c111,111,this.in14)"
+								 label="111"
+								 id="c111"/>
+					<mx:CheckBox change="doCalc(this.c112,112,this.in14)"
+								 label="112"
+								 id="c112"/>
+					<mx:CheckBox change="doCalc(this.c113,113,this.in15)"
+								 label="113"
+								 paddingLeft="5"
+								 id="c113"/>
+					<mx:CheckBox change="doCalc(this.c114,114,this.in15)"
+								 label="114"
+								 id="c114"/>
+					<mx:CheckBox change="doCalc(this.c115,115,this.in15)"
+								 label="115"
+								 id="c115"/>
+					<mx:CheckBox change="doCalc(this.c116,116,this.in15)"
+								 label="116"
+								 id="c116"/>
+					<mx:CheckBox change="doCalc(this.c117,117,this.in15)"
+								 label="117"
+								 id="c117"/>
+					<mx:CheckBox change="doCalc(this.c118,118,this.in15)"
+								 label="118"
+								 id="c118"/>
+					<mx:CheckBox change="doCalc(this.c119,119,this.in15)"
+								 label="119"
+								 id="c119"/>
+					<mx:CheckBox change="doCalc(this.c120,120,this.in15)"
+								 label="120"
+								 id="c120"/>
+					<mx:CheckBox change="doCalc(this.c121,121,this.in16)"
+								 label="121"
+								 paddingLeft="5"
+								 id="c121"/>
+					<mx:CheckBox change="doCalc(this.c122,122,this.in16)"
+								 label="122"
+								 id="c122"/>
+					<mx:CheckBox change="doCalc(this.c123,123,this.in16)"
+								 label="123"
+								 id="c123"/>
+					<mx:CheckBox change="doCalc(this.c124,124,this.in16)"
+								 label="124"
+								 id="c124"/>
+					<mx:CheckBox change="doCalc(this.c125,125,this.in16)"
+								 label="125"
+								 id="c125"/>
+					<mx:CheckBox change="doCalc(this.c126,126,this.in16)"
+								 label="126"
+								 id="c126"/>
+					<mx:CheckBox change="doCalc(this.c127,127,this.in16)"
+								 label="127"
+								 id="c127"/>
+					<mx:CheckBox change="doCalc(this.c128,128,this.in16)"
+								 label="128"
+								 id="c128"/>
+
+				</mx:Tile>
+				<mx:VBox x="0"
+						 y="0"
+						 width="10%"
+						 height="100%"
+						 borderStyle="solid"
+						 borderThickness="3"
+						 paddingLeft="2"
+						 paddingRight="2"
+						 paddingBottom="2"
+						 paddingTop="2">
+					<mx:TextInput width="100%"
+								  enabled="false"
+								  backgroundDisabledColor="#EEF5F9"
+								  text="00"
+								  fontWeight="bold"
+								  id="in1"/>
+					<mx:TextInput width="100%"
+								  enabled="false"
+								  backgroundDisabledColor="#EEF5F9"
+								  text="00"
+								  fontWeight="bold"
+								  id="in2"/>
+					<mx:TextInput width="100%"
+								  enabled="false"
+								  backgroundDisabledColor="#EEF5F9"
+								  text="00"
+								  fontWeight="bold"
+								  id="in3"/>
+					<mx:TextInput width="100%"
+								  enabled="false"
+								  backgroundDisabledColor="#EEF5F9"
+								  text="00"
+								  fontWeight="bold"
+								  id="in4"/>
+					<mx:TextInput width="100%"
+								  enabled="false"
+								  backgroundDisabledColor="#EEF5F9"
+								  text="00"
+								  fontWeight="bold"
+								  id="in5"/>
+					<mx:TextInput width="100%"
+								  enabled="false"
+								  backgroundDisabledColor="#EEF5F9"
+								  text="00"
+								  fontWeight="bold"
+								  id="in6"/>
+					<mx:TextInput width="100%"
+								  enabled="false"
+								  backgroundDisabledColor="#EEF5F9"
+								  text="00"
+								  fontWeight="bold"
+								  id="in7"/>
+					<mx:TextInput width="100%"
+								  enabled="false"
+								  backgroundDisabledColor="#EEF5F9"
+								  text="00"
+								  fontWeight="bold"
+								  id="in8"/>
+					<mx:TextInput width="100%"
+								  enabled="false"
+								  backgroundDisabledColor="#EEF5F9"
+								  text="00"
+								  fontWeight="bold"
+								  id="in9"/>
+					<mx:TextInput width="100%"
+								  enabled="false"
+								  backgroundDisabledColor="#EEF5F9"
+								  text="00"
+								  fontWeight="bold"
+								  id="in10"/>
+					<mx:TextInput width="100%"
+								  enabled="false"
+								  backgroundDisabledColor="#EEF5F9"
+								  text="00"
+								  fontWeight="bold"
+								  id="in11"/>
+					<mx:TextInput width="100%"
+								  enabled="false"
+								  backgroundDisabledColor="#EEF5F9"
+								  text="00"
+								  fontWeight="bold"
+								  id="in12"/>
+					<mx:TextInput width="100%"
+								  enabled="false"
+								  backgroundDisabledColor="#EEF5F9"
+								  text="00"
+								  fontWeight="bold"
+								  id="in13"/>
+					<mx:TextInput width="100%"
+								  enabled="false"
+								  backgroundDisabledColor="#EEF5F9"
+								  text="00"
+								  fontWeight="bold"
+								  id="in14"/>
+					<mx:TextInput width="100%"
+								  enabled="false"
+								  backgroundDisabledColor="#EEF5F9"
+								  text="00"
+								  fontWeight="bold"
+								  id="in15"/>
+					<mx:TextInput width="100%"
+								  enabled="false"
+								  backgroundDisabledColor="#EEF5F9"
+								  text="00"
+								  fontWeight="bold"
+								  id="in16"/>
+				</mx:VBox>
+			</mx:HBox>
+			<mx:HBox width="100%"
+					 height="10%"
+					 paddingLeft="10">
+				<mx:TextInput width="75%"
+							  height="95%"
+							  borderStyle="solid"
+							  borderThickness="3"
+							  id="inhex"
+							  maxChars="32"
+							  text="{bitMapHexValue}"
+							  fontWeight="bold"/>
+				<mx:Button label="计 算"
+						   height="95%"
+						   width="20%"
+						   fontSize="12"
+						   id="cacuBut"
+						   click="calcBitMap()"/>
+			</mx:HBox>
+		</mx:VBox>
+	</mx:Panel>
+</mx:Application>

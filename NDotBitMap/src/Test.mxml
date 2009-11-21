@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml"
+				layout="absolute"
+				backgroundGradientAlphas="[1.0, 1.0]"
+				backgroundGradientColors="[#D6B8EE, #D6B8EE]">
+	<mx:Script>
+		<![CDATA[
+			import org.ndot.BitMapUtil;
+			import mx.controls.Alert;
+
+
+			public function doInt2Hex():void
+			{
+				var num:Number=new Number(this.intText.text);
+				var intVar:int=new int(num);
+				var hexVar:String=BitMapUtil.int2hex(intVar);
+				this.hexText.text=hexVar;
+			}
+
+			public function doHex2Intx():void
+			{
+				var hexStr:String=this.hexText.text;
+				var intVar:int=BitMapUtil.hex2int(hexStr);
+				this.intText.text=new String(intVar);
+			}
+		]]>
+	</mx:Script>
+	<mx:TextInput horizontalCenter="-124"
+				  verticalCenter="22"
+				  id="intText"
+				  text="0"
+				  fontSize="12"
+				  fontWeight="bold"/>
+	<mx:TextInput horizontalCenter="123"
+				  verticalCenter="22"
+				  fontSize="12"
+				  fontWeight="bold"
+				  id="hexText"
+				  text="00"/>
+	<mx:Button label="Int2Hex"
+			   fontSize="12"
+			   id="changeBut"
+			   click="doInt2Hex()"
+			   horizontalCenter="0"
+			   verticalCenter="11"/>
+	<mx:Label text="输入0-255之间的整数："
+			  horizontalCenter="-129"
+			  verticalCenter="-7"
+			  fontSize="12"
+			  id="inLab"
+			  enabled="true"
+			  fontWeight="bold"
+			  width="150"/>
+	<mx:Label text="转换后HEX表示："
+			  horizontalCenter="98"
+			  verticalCenter="-7"
+			  id="outLab"
+			  fontSize="12"
+			  fontWeight="bold"/>
+	<mx:Label text="－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－"
+			  width="421.5"
+			  horizontalCenter="6"
+			  verticalCenter="-34"/>
+	<mx:Label text="十进制与十六进制间的简单转换"
+			  fontSize="16"
+			  fontWeight="bold"
+			  width="266"
+			  id="title"
+			  color="#290B3C"
+			  horizontalCenter="0"
+			  verticalCenter="-53"/>
+	<mx:Button label="Hex2Int"
+			   fontSize="12"
+			   id="changeBut0"
+			   click="doHex2Intx()"
+			   horizontalCenter="0"
+			   verticalCenter="43"/>
+</mx:Application>
