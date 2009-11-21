@@ -1,0 +1,90 @@
+<?xml version="1.0"?>
+<!-- Bitmap 计算  -->
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml"
+				creationComplete="initCollections();">
+	<mx:Style>
+        Alert {
+            titleStyleName: "alertTitle";
+            messageStyleName: "alertMessage";
+            buttonStyleName: "alertButton";
+        }
+
+        .alertTitle {
+            letterSpacing: 0;
+            fontSize: 18;
+            color: red;
+        }
+
+        .alertMessage {
+            letterSpacing: 0;
+            fontSize: 18;
+            fontWeight: normal;
+            color: black;
+        }
+
+        .alertButton {
+            letterSpacing: 0;
+            fontSize: 12;
+        }
+    </mx:Style>
+
+	<mx:Script>
+		<![CDATA[
+			import mx.events.MenuEvent;
+			import mx.controls.Alert;
+			import mx.collections.*;
+
+			[Bindable]
+			public var menuBarCollection:XMLListCollection;
+
+			private var menubarXML:XMLList=
+				<>
+					<menuitem label="Edit" data="top">
+
+						<menuitem label="Select ALL" data="1A"/>
+						<menuitem type="separator"/>
+						<menuitem label="Clear ALL" data="1B"/>
+
+					</menuitem>
+					<menuitem label="Help" data="top">
+						<menuitem label="Help Content" data="2A"/>
+						<menuitem type="separator"/>
+						<menuitem label="About Soft" data="2A"/>
+					</menuitem>
+				</>;
+
+			// Event handler to initialize the MenuBar control.
+			private function initCollections():void
+			{
+				menuBarCollection=new XMLListCollection(menubarXML);
+			}
+
+			// Event handler for the MenuBar control's itemClick event.
+			private function menuHandler(event:MenuEvent):void
+			{
+				// Don't open the Alert for a menu bar item that 
+				// opens a popup submenu.
+				if (event.item.@label == "About Soft")
+				{
+					Alert.show("软件名称：NDotBitMap \n版本: 1.0 \n作者: 孙金城 \nQQ：289272063 ", "软件简介：");
+				}
+			}
+		]]>
+	</mx:Script>
+
+	<mx:Panel title="Bitmap 计算 "
+			  height="75%"
+			  width="75%"
+			  paddingTop="10"
+			  paddingLeft="10"
+			  fontSize="12">
+
+		<mx:MenuBar labelField="@label"
+					itemClick="menuHandler(event);"
+					dataProvider="{menuBarCollection}"
+					fontSize="12"
+					x="10"
+					y="10"/>
+
+	</mx:Panel>
+</mx:Application>
