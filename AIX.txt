@@ -13,3 +13,4 @@ uname -v  显示操作系统版本。
 uname -m  显示运行系统的硬件的计算机 ID 编号。 
 uname -u  显示系统 ID 编号。
 5.查看内存 topas  
+6.while true; do netstat -an | grep 28009 >> 1.txt ;done
