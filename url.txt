@@ -8,6 +8,7 @@
   http://www.k-zone.cn/zblog/post/adobe-flex-air-traing-diagrams-data-2.html
 
     3DÐ§¹û£ºhttp://www.fusioncharts.com/flex/download/
+    http://www.fusioncharts.com/flex/download/?_doPostback=770507287
     
     
     http://opensource.adobe.com/wiki/display/site/Home
