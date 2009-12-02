@@ -7,7 +7,9 @@
   数据篇
   http://www.k-zone.cn/zblog/post/adobe-flex-air-traing-diagrams-data-2.html
 
-  
+    3D效果：http://www.fusioncharts.com/flex/download/
+    
+    
     http://opensource.adobe.com/wiki/display/site/Home
 
    http://livedocs.adobe.com/blazeds/1/blazeds_devguide/
