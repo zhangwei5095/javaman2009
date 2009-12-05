@@ -24,6 +24,11 @@
   cairngorm flex MVC For Eclipse
   http://download.macromedia.com/pub/opensource/cairngorm/plugin/ 
   
+  Spring ActionScript 
+  http://www.springactionscript.org
+  http://www.springsource.org/extensions/se-springactionscript-as
+https://fisheye.springsource.org/browse/se-springactionscript-as
+  
   Spring+flex
   http://www.springsource.org/spring-flex
  ÂÛÌ³ £ºhttp://www.airia.cn/
