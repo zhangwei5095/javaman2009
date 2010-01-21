@@ -1,7 +1,12 @@
 1. http://blog.csdn.net/surpaimb/archive/2008/04/08/2264171.aspx
    Flex Builder 3.0 For Eclipse 3.3 安装方法
 2.http://bbs.actionscript3.cn
-3. Flex 学习路线：http://flex.csdn.net/
+3. Flex 学习路线：
+ 深入学习网站：
+ http://flex.csdn.net/
+http://www.mindtheflex.com/ 
+ http://www.mindtheflex.com/?p=67
+http://www.adobe.com/devnet/flex/articles/flex_security.html
   控件篇
   http://www.k-zone.cn/zblog/post/adobe-flex-air-traing-diagrams-data-1.html
   数据篇
