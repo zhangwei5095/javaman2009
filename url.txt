@@ -4,9 +4,16 @@
 3. Flex 学习路线：
  深入学习网站：
  http://flex.csdn.net/
+http://www.gridshore.nl/tag/blazeds/
+http://www.gridshore.nl/2009/04/13/doing-flex-with-jms-combining-blazeds-spring-jms-and-activemq/
+http://www.gridshore.nl/2009/01/05/wow-springframework-enters-the-actionscript-and-flex-domain/
+http://www.gridshore.nl/2008/07/14/integration-spring-security-acegi-and-flex-3-the-sequel/
+http://www.gridshore.nl/2008/05/11/integrating-flex-3-with-spring-security-formerly-known-as-acegi/
+http://www.gridshore.nl/2009/05/24/integrate-flex-security-in-mate-using-the-spring-blazeds-integration-project/
 http://www.mindtheflex.com/ 
  http://www.mindtheflex.com/?p=67
 http://www.adobe.com/devnet/flex/articles/flex_security.html
+http://www.gridshore.nl/2008/05/11/integrating-flex-3-with-spring-security-formerly-known-as-acegi/
   控件篇
   http://www.k-zone.cn/zblog/post/adobe-flex-air-traing-diagrams-data-1.html
   数据篇
